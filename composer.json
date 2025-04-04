@@ -1,0 +1,17 @@
+{
+    "name": "keyxion/tdg",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JulioCabezaMartinez",
+            "email": "julio.cabeza.martinez@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}

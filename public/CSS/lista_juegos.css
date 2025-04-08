@@ -1,0 +1,56 @@
+.btn_redondo{
+    display: flex;
+    border-radius: 25px;
+
+    padding: 2%;
+}
+
+#filtros_icon{
+    width: fit-content;
+}
+
+.btn_redondo p{
+    padding-left: 5px;
+    margin: 0;
+}
+
+.juego{
+    display: flex;
+    border-radius: 10px;
+
+    border: 2px solid #000000;
+
+    margin: 5px;
+}
+
+.info_juego{
+    width: 100%;
+}
+
+.juego img{
+    padding: 10px;
+    max-width: 150px;
+}
+
+.btn_listas{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2%;
+}
+
+.btn_listas div{
+    border: 1px solid #000000;
+    border-radius: 50%;
+}
+
+.btn_listas i{
+    width: 10%;
+    padding: 10px;
+}
+
+.btn_listas img{
+    max-width: 14px;
+    padding: 0;
+}

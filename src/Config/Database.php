@@ -10,8 +10,8 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = 'localhost';
-        $dbName = 'mvc_example';
+        $host = '127.0.0.1';
+        $dbName = 'tdg';
         $user = 'root';
         $password = '';
 

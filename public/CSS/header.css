@@ -1,4 +1,7 @@
 header{
+    position: relative;
+    z-index: 100;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -13,6 +16,8 @@ header{
     top: 0;
 
     background-color: #fff;
+
+    max-width: 100vw;
 }
 
 header img{

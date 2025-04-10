@@ -1,0 +1,64 @@
+body{
+    background-color: cadetblue;
+}
+
+.juegos, .perfil{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+}
+
+.juegos{
+    display: flex;
+    margin-top: 20px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+
+    width: 90%;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.juegos > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem; /* espacio entre juegos, opcional */
+  }
+
+.juego{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    margin: 20px;
+    
+
+    cursor: pointer;
+
+    border-radius: 20px;
+}
+
+.juego img{
+    max-width: 200px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.view_all{
+    align-self: flex-end;
+    margin-left: auto;
+    align-self: start;
+    padding: 20px;
+    border-radius: 50px;
+    background-color:deepskyblue;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}

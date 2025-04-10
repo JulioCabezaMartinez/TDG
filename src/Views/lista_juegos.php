@@ -29,10 +29,10 @@ require_once __DIR__ . '\Templates\header.php';
                     <p>{$juego['released']}</p>
                     <p>{$juego['platforms']}</p>
                     <div class='btn_listas'>
-                        <div><i class='fa-regular fa-circle-play'></i></div>
-                        <div><i class='fa-solid fa-clock'></i></div>
-                        <div><i class='fa-solid fa-check'></i></div>
-                        <div><i class='fa-regular fa-heart'></i></div>
+                        <i class='fa-regular fa-circle-play'></i>
+                        <i class='fa-solid fa-clock'></i>
+                        <i class='fa-solid fa-check'></i>
+                        <i class='fa-regular fa-heart'></i>
                     </div>
                 </div>
             </div>";

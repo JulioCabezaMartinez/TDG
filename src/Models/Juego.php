@@ -63,8 +63,8 @@ class Juego extends EmptyModel {
                     $calificacion = $juego['metacritic'];
                 }
                 $calificacion = $juego['metacritic'];
-                // Obtener la descripción
 
+                // Obtener la descripción
                 $url2 = "https://api.rawg.io/api/games/" . $juego['id'] . "?key=" . $_ENV["API_KEY"];
 
                 $ch2 = curl_init();

@@ -15,6 +15,36 @@ require_once __DIR__ . '\Templates\header.php';
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
         <p>Filtros</p>
     </button>
+
+    <!-- Carrusel de Filtros activos -->
+    <div class="swiper">
+        <div class="card-wrapper">
+            <div class="card-list swiper-wrapper">
+
+                <div class="card-item swiper-slide">
+                    
+                </div>
+
+                <div class="card-item swiper-slide">
+                    
+                </div>
+
+                <div class="card-item swiper-slide">
+                    
+                </div>
+
+                <div class="card-item swiper-slide">
+                    
+                </div>
+
+                <div class="card-item swiper-slide">
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <div class="list_ventas">

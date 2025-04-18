@@ -3,7 +3,7 @@
         'name' => 'keyxion/tdg',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'bc2abbb2dcc5dbe216264b37be65e9e539c22b71',
+        'reference' => '835506f3ab585a45c0a92b57bab1837922b8ae90',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'keyxion/tdg' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'bc2abbb2dcc5dbe216264b37be65e9e539c22b71',
+            'reference' => '835506f3ab585a45c0a92b57bab1837922b8ae90',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

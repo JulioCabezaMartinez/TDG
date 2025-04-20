@@ -38,6 +38,8 @@ require_once __DIR__ . '\Templates\header.php';
         <p>Filtros</p>
     </button>
 
+    <!-- <hr> Poner una barra en vertical para separar el boton de los filtros -->
+
     <!-- Carrusel de Filtros activos -->
     <div class="swiper">
         <div class="card-wrapper">
@@ -90,8 +92,8 @@ require_once __DIR__ . '\Templates\header.php';
         numeroDeSlides = $(".filtros_activos").children().length; // Obtiene el número de slides actuales.
 
         if (window.swiper) {
-        swiper.update(); // Actualiza el swiper para que reconozca los nuevos elementos añadidos.
-    } 
+            swiper.update(); // Actualiza el swiper para que reconozca los nuevos elementos añadidos.
+        } 
     });
 
     $(document).on("click", ".eliminar-filtro", function () {

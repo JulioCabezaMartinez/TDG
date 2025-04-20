@@ -40,29 +40,46 @@
     flex-direction: column;
     justify-content: start;
     align-items: start;
+}
+
+.info_juego *{ /* Para poder modificar un dato de manera individual */
     padding-left: 10px;
 }
 
 .btn_listas{
-    align-self: flex-end;
-    margin-left: auto;
-
-    max-width: 70%;
+    width: 100%;
     padding: 2% 2% 2% 0%;
-    margin-right: 2%;
 
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.btn_listas i{
-    max-width: 10%;
+.btn_listas i{ /* Botones de Agregar a la lista */
+    
+    width: 8vw;
+    height: 8vw;
+    margin: 0% 5%;
+
     padding: 10px;
     border: 1px solid #000000;
     border-radius: 50%;
-    width: fit-content;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+    /* Para escalar todos los iconos de FA */
+.fa-regular{
+    font-size: 4vw;
+}
+
+.fa-solid{
+    font-size: 4vw;
+}
+
 
 /* Desplegable hamburguesa */
 

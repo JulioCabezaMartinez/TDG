@@ -1,9 +1,9 @@
-new Swiper('.card-wrapper', {
+window.swiper = new Swiper('.card-wrapper', {
     // Optional parameters
-    slidesPerView: 2,
-    centeredSlides: true,
+    slidesPerView: 3,
+    // centeredSlides: true,
     spaceBetween: 30,
-    loop: true,
+    // loop: true,
   
     // If we need pagination
     pagination: {

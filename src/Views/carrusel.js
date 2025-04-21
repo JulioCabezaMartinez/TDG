@@ -18,7 +18,7 @@ window.swiper = new Swiper('.card-wrapper', {
     },
 
     breakpoints: {
-        320: {
+        0: {
             slidesPerView: 1,
             spaceBetween: 10
         },

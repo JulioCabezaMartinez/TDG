@@ -1,17 +1,15 @@
 <?php
-$mas_vendidos = [
-    ["name" => "Juego 1", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "rating" => 4.5, "released" => "2023-01-01", "platforms" => "PC, PS5"],
-    ["name" => "Juego 2", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "rating" => 4.0, "released" => "2023-02-01", "platforms" => "Xbox, Switch"],
-    ["name" => "Juego 3", "background_image" => "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg", "rating" => 3.5, "released" => "2023-03-01", "platforms" => "PC, PS4"]
-];
-$reviews_populares = [
-    ["user_img" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "game_name" => "Juego 1", "review" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis incidunt vero ipsam magni eligendi, enim nisi quo officia, quia autem sunt consectetur optio laborum eius a magnam veniam, animi quisquam.
-Non odio optio minima pariatur quae nulla impedit iusto facere est, animi cumque illo quam aliquam magni omnis. Provident facere culpa rem totam! Laboriosam, autem. Ipsum inventore explicabo distinctio quis?
-Optio aut laborum non similique sit nisi id earum? Necessitatibus amet explicabo eum? Eum delectus, enim, est aspernatur provident perferendis sint architecto eos atque ipsam accusamus laboriosam, nostrum eveniet excepturi.
-Ut distinctio atque nisi nihil dignissimos consequuntur hic dolorem corrupti? Est consectetur, ipsa impedit recusandae id veritatis vitae consequuntur qui modi, minus distinctio harum nostrum error inventore quae incidunt culpa?", "rating" => 5],
-    ["user_img" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "game_name" => "Juego 2", "review" => "Muy divertido.", "rating" => 4],
-    ["user_img" => "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg", "game_name" => "Juego 3", "review" => "No está mal.", "rating" => 3]
-];
+require_once '../../vendor/autoload.php';
+
+use App\Models\Juego;
+use App\Models\Review;
+
+$juego = new Juego();
+$review = new Review();
+
+$mas_vendidos = $juego->getNew(); // Obtener los juegos más vendidos (recien añadidos).
+$reviews_populares = []; 
+
 $css = 'main';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -25,8 +23,8 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($mas_vendidos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <img src="<?= $recien_añadido['background_image'] ?>" alt="<?= $recien_añadido['name'] ?>">
-                <h3><?= $recien_añadido['name'] ?></h3>
+                <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
+                <h3><?= $recien_añadido['Nombre'] ?></h3>
             </div>
         <?php
         }
@@ -46,9 +44,9 @@ require_once __DIR__ . '\Templates\header.php';
                 ?>
 
                     <div class="card-item swiper-slide">
-                        <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                        <img src="<?php echo $juego['Imagen']; ?>" alt="">
                         <div class="card-content">
-                            <h3><?php echo $juego['name'] ?></h3>
+                            <h3><?php echo $juego['Nombre'] ?></h3>
                             <!-- Se pueden añadir más campos del juegos -->
                         </div>
                     </div>
@@ -81,9 +79,9 @@ require_once __DIR__ . '\Templates\header.php';
                     ?>
 
                         <div class="card-item swiper-slide">
-                            <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                            <img src="<?php echo $juego['Imagen']; ?>" alt="">
                             <div class="card-content">
-                                <h3><?php echo $juego['name'] ?></h3>
+                                <h3><?php echo $juego['Nombre'] ?></h3>
                                 <!-- Se pueden añadir más campos del juegos -->
                             </div>
                         </div>

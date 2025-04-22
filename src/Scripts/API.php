@@ -20,14 +20,14 @@ curl_close($ch);
 $data = json_decode($response, true);
 $countAPI = $data['count'];
 
-$database = new Juego();
-$numero_juegos_bd = $database->getCount();
+$juego = new Juego();
+$numero_juegos_bd = $juego->getCount();
 
 if($countAPI != $numero_juegos_bd){
     // Si el número de juegos ha cambiado, recogemos los nuevos juegos de la API de RAWG.io.
     // Recoger los juegos de la API de RAWG.io.
 
-    $database->rellenarBD(countAPI: $countAPI);
+    $juego->rellenarBD(countAPI: $countAPI);
 }
     
 ?>

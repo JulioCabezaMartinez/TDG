@@ -1,7 +1,10 @@
 <?php
-$juegos=[["name"=>"Juego 1","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","rating"=>4.5,"released"=>"2023-01-01","platforms"=>"PC, PS5"],
-["name"=>"Juego 2","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","rating"=>4.0,"released"=>"2023-02-01","platforms"=>"Xbox, Switch"],
-["name"=>"Juego 3","background_image"=>"https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg","rating"=>3.5,"released"=>"2023-03-01","platforms"=>"PC, PS4"]];
+require_once '../../vendor/autoload.php';
+
+use App\Models\Juego;
+
+$juego = new Juego();
+$juegos=$juego->get10(); // Obtener 10 juegos.
 $css = 'lista_juegos';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -56,12 +59,11 @@ require_once __DIR__ . '\Templates\header.php';
     <?php
     foreach ($juegos as $juego) {
         echo "<div class='juego'>
-                <img src='{$juego['background_image']}' alt=''>
+                <img src='{$juego['Imagen']}' alt=''>
                 <div class='info_juego'>
-                    <h1>{$juego['name']}</h1>
-                    <p>{$juego['rating']}</p>
-                    <p>{$juego['released']}</p>
-                    <p>{$juego['platforms']}</p>
+                    <h1>{$juego['Nombre']}</h1>
+                    <p><strong>Calificación:</strong> {$juego['calificacion']}</p>
+                    <p><strong>Fecha de salida:</strong> {$juego['Anyo_salida']}</p>
                     <div class='btn_listas'>
                         <i class='fa-regular fa-circle-play'></i>
                         <i class='fa-solid fa-clock'></i>

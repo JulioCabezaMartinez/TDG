@@ -18,6 +18,14 @@ class Juego extends EmptyModel {
         return (int) parent::query("SELECT COUNT(*) FROM {$this->table}")->fetchColumn();
     }
 
+    public function getNew(): array {
+        return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function get10(): array {
+        return parent::query("SELECT * FROM {$this->table} LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function rellenarBD($countAPI){
 
         $pages=$countAPI/40; // Asegurarse de que countAPI es un entero.
@@ -47,25 +55,31 @@ class Juego extends EmptyModel {
                     continue; // Si el juego ya existe, saltar al siguiente juego
                 }
 
+                // Obtener el ID del juego
+                $id_juego = $juego['id'];
+
                 // Obtener el nombre del juego
                 $nombre = $juego['name'];
+
                 // Obtener la fecha de lanzamiento
                 if($juego['released'] == null){
                     $fecha_lanzamiento = 0; // Si no hay fecha de lanzamiento, asignar 0
                 }else{
                     $fecha_lanzamiento = $juego['released'];
                 }
-                $fecha_lanzamiento = $juego['released'];
-                // Obtener la calificación en Metacritic
-                if($juego['metacritic'] == null){
-                    $calificacion = 0; // Si no hay calificación, asignar 0
+
+                // Obtener la imagen
+                if($juego['background_image'] == null){
+                    $imagen =  "https://www.teleadhesivo.com/es/img/arc226-jpg/folder/products-listado-merchanthover/pegatinas-coches-motos-space-invaders-marciano-iii.jpg"; // Si no hay imagen, asignar una imagen por defecto (Space Invaders)
                 }else{
-                    $calificacion = $juego['metacritic'];
+                    $imagen = $juego['background_image'];
                 }
-                $calificacion = $juego['metacritic'];
+
+                // Obtener la calificación
+                $calificacion = $juego['rating']; //Escala de 0 a 5.
 
                 // Obtener la descripción
-                $url2 = "https://api.rawg.io/api/games/" . $juego['id'] . "?key=" . $_ENV["API_KEY"];
+                $url2 = "https://api.rawg.io/api/games/" . $id_juego . "?key=" . $_ENV["API_KEY"];
 
                 $ch2 = curl_init();
                 curl_setopt($ch2, CURLOPT_URL, $url2);
@@ -76,13 +90,10 @@ class Juego extends EmptyModel {
                 ));
                 $response2 = curl_exec($ch2);
                 curl_close($ch2);
+
                 // Decodificar la respuesta JSON
                 $data2 = json_decode($response2, true);
                 $descripcion = $data2['description'];
-                // Obtener la imagen
-                $imagen = $juego['background_image'];
-                // Obtener el ID del juego
-                $id_juego = $juego['id'];
                 
                 // Guardar los datos en la base de datos.
                 $database = new Juego();
@@ -92,12 +103,11 @@ class Juego extends EmptyModel {
                         'nombre' => $nombre,
                         'descripcion' => $descripcion,
                         'imagen' => $imagen,
-                        'nota' => $calificacion,
                         'Anyo_salida' => $fecha_lanzamiento,
+                        'calificacion' => $calificacion,
                     )
                 );
                 echo "Juego: {$nombre} guardado en la base de datos.<br>";
-                //sleep(seconds: 1); // Esperar 1 segundo entre cada llamada a la API para no sobrecargar el servidor.
             }        
         }
 

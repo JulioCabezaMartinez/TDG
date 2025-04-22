@@ -31,6 +31,11 @@ class ControllerJuego {
         require_once '../src/Views/juegos.php';
     }
 
+    public function getNewJuegos(): void {
+        $this->juego->getNew();
+        require_once '../src/Views/juegos.php';
+    }
+
     /**
      * Obtiene un juego por su ID.
      *

@@ -22,6 +22,7 @@ class Database {
                 $password
             );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_TIMEOUT, 300);
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }

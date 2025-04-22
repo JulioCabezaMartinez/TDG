@@ -6,21 +6,8 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ .'/..');
 $dotenv->load();
 
-// use App\Controllers\UserController;
-// use App\Controllers\NoteController;
+// // Crear una instancia del enrutador
+// $router = new Router();
 
-// // Obtener la ruta
-// $route = $_GET['route'] ?? 'user/index';
-// $id = $_GET['id'] ?? null;
-
-
-// // Controlador frontal que maneja la ruta
-// switch ($route) {
-//     case '':
-//         break;
-
-//     default:
-//         echo "Ruta no encontrada.";
-// }
-
-require_once __DIR__ . '\Scripts\API.php';
+// // Definir las rutas
+// $router->add('/', 'ControllerHome@index');

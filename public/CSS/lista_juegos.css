@@ -46,6 +46,12 @@
     padding-left: 10px;
 }
 
+.info_juego h1{
+    width: 100%;
+    
+    text-align: center;
+}
+
 .btn_listas{
     width: 100%;
     padding: 2% 2% 2% 0%;

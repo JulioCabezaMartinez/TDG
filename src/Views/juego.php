@@ -1,58 +1,103 @@
 <?php
-$juego = ["name" => "Juego 1", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "rating" => 4.5, "released" => "2023-01-01", "platforms" => ["PC", "PS5"], "genres" => ["Acción", "Aventura"], "price" => 59.99];
+require_once '../../vendor/autoload.php';
+
+use App\Models\Juego;
+use App\Models\Genero;
+use App\Models\Plataforma;
+
+$id_juego=2093; // Cambiar el ID por el del juego que quieras mostrar.
+
+$juego = new Juego();
+$genero = new Genero();
+$plataforma = new Plataforma();
+
+$juego = $juego->getById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
+
+$generos = $genero->getGenerosJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
+$plataformas = $plataforma->getPlataformasJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
+
 $css = 'juego';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
 ?>
+<div class="header_juego">
+    <h1><?php echo $juego['Nombre'] ?></h1>
 
-<h1><?php echo $juego['name'] ?></h1>
+    <img class="imagen_juego" src="<?php echo $juego['Imagen'] ?>" alt="">
 
-<!-- <img src="<?php echo $juego['background_image'] ?>" alt=""> -->
+    <div class='btn_listas'>
+        <div class="btn_redondo">
+            <p>Añadir a la lista de Deseados</p>
+            <i class='fa-regular fa-heart btn_wishlist icono_ajustable'></i>
+        </div>
+        
+        <div>
 
-<div class='btn_listas'>
+            <div class="btn_redondo">
+                <!-- <p>Añadir a la lista de Pendientes</p> -->
+                <i class='fa-solid fa-clock icono_ajustable'></i>
+            </div>
 
-    <div><i class='fa-regular fa-circle-play'></i></div>
-    <div>
-        <div><i class='fa-solid fa-clock'></i></div>
-        <div><i class='fa-solid fa-check'></i></div>
-        <div><i class='fa-regular fa-heart'></i></div>
+            <div class="btn_redondo">
+                <!-- <p>Añadir a la lista de Completados</p> -->
+                <i class='fa-solid fa-check icono_ajustable'></i>
+            </div>
+
+            <div class="btn_redondo">
+                <!-- <p>Añadir a la lista de Jugando</p> -->
+                <i class='fa-regular fa-circle-play icono_ajustable'></i>
+            </div>
+            
+        </div>
+
     </div>
-
 </div>
 
-<div>
-    <div class="info_juego">
 
-        <div>
+<div class="info_juego">
+    <div class="caracteristicas_juego">
+
+        <div class="generos_juego">
             <h3>Géneros</h3>
             <div>
                 <?php
-                    foreach ($juego['genres'] as $genero) {
-                        echo "<p>$genero</p>";
+                    foreach ($generos as $genero) {
+                ?>
+                    <p class="btn_redondo"><?php echo $genero['Nombre'] ?></p>
+                <?php
                     }
                 ?>
             </div>
         </div>
-        <div>
+        <div class="plataformas_juego">
             <h3>Plataformas</h3>
             <div>
                 <?php
-                    foreach ($juego['platforms'] as $plataforma) {
-                        echo "<p>$plataforma</p>";
+                    foreach ($plataformas as $plataforma) {
+                ?>
+                    <p><?php echo $plataforma["Nombre"] ?></p>
+                <?php
                     }
                 ?>
             </div>
         </div>
         <div>
             <h3>Año de Salida</h3>
-            <p><?php echo $juego['released'] ?></p>
+            <p>
+            <?php
+                $fechaOriginal = $juego['Anyo_salida'];
+                $fecha = new DateTime($fechaOriginal);
+                echo $fecha->format('M j, Y'); // Un formato de fecha más legible.
+            ?>
+            </p>
         </div>
 
     </div>
+
     <div class="descripcion_juego">
         <h2>Descripción</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.</p>
+        <?php echo $juego['Descripcion'] ?>
     </div>
 
 </div>
@@ -61,49 +106,49 @@ require_once __DIR__ . '\Templates\header.php';
 
 <div class="ventas_juego">
     <h2>Ventas</h2>
-    <a href="/">Ventas de <?php echo $juego['name'] ?></a>
+    <a href="/">Ventas de <?php echo $juego['Nombre'] ?></a>
 
     <div class="swiper">
         <div class="card-wrapper">
             <div class="card-list swiper-wrapper">
 
                 <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
                     <div class="card-content">
-                        <h3><?php echo $juego['name'] ?></h3>
-                        <p><strong><?php echo $juego['price'] ?> €</strong></p>
+                        <h3><?php echo $juego['Nombre'] ?></h3>
+                        <p><strong><?php echo 30 ?> €</strong></p>
                     </div>
                 </div>
 
                 <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
                     <div class="card-content">
-                        <h3><?php echo $juego['name'] ?></h3>
-                        <p><strong><?php echo $juego['price'] ?> €</strong></p>
+                        <h3><?php echo $juego['Nombre'] ?></h3>
+                        <p><strong><?php echo 20 ?> €</strong></p>
                     </div>
                 </div>
 
                 <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
                     <div class="card-content">
-                        <h3><?php echo $juego['name'] ?></h3>
-                        <p><strong><?php echo $juego['price'] ?> €</strong></p>
+                        <h3><?php echo $juego['Nombre'] ?></h3>
+                        <p><strong><?php echo 12 ?> €</strong></p>
                     </div>
                 </div>
 
                 <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
                     <div class="card-content">
-                        <h3><?php echo $juego['name'] ?></h3>
-                        <p><strong><?php echo $juego['price'] ?> €</strong></p>
+                        <h3><?php echo $juego['Nombre'] ?></h3>
+                        <p><strong><?php echo 43 ?> €</strong></p>
                     </div>
                 </div>
 
                 <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego["background_image"]; ?>" alt="">
+                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
                     <div class="card-content">
-                        <h3><?php echo $juego['name'] ?></h3>
-                        <p><strong><?php echo $juego['price'] ?> €</strong></p>
+                        <h3><?php echo $juego['Nombre'] ?></h3>
+                        <p><strong><?php echo 54 ?> €</strong></p>
                     </div>
                 </div>
 
@@ -127,7 +172,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <div class="reseñas_juego">
     <h2>Reseñas</h2>
-    <a href="/">Reseñas de <?php echo $juego['name'] ?></a>
+    <a href="/">Reseñas de <?php echo $juego['Nombre'] ?></a>
 
     <div>
         

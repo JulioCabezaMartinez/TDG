@@ -11,3 +11,5 @@ $dotenv->load();
 
 // // Definir las rutas
 // $router->add('/', 'ControllerHome@index');
+
+require_once '../src/Scripts/API_Juegos.php';

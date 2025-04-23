@@ -51,7 +51,8 @@ class Juego extends EmptyModel {
                 // Comprobar si el juego ya existe en la base de datos
                 $juego_bd = $this->getById($juego['id']);
 
-                if($juego_bd == $juego['id']){
+                if($juego_bd!=null){ //En caso de que el juego sea diferente de null, significa que ya existe en la base de datos.
+
                     continue; // Si el juego ya existe, saltar al siguiente juego
                 }
 
@@ -95,9 +96,12 @@ class Juego extends EmptyModel {
                 $data2 = json_decode($response2, true);
                 $descripcion = $data2['description'];
                 
+                $database_juego_genero = new Genero();
+
                 // Guardar los datos en la base de datos.
-                $database = new Juego();
-                $database->create(
+
+                $database_juego = new Juego();
+                $database_juego->create(
                     array(
                         'id' => $id_juego,
                         'nombre' => $nombre,
@@ -108,6 +112,25 @@ class Juego extends EmptyModel {
                     )
                 );
                 echo "Juego: {$nombre} guardado en la base de datos.<br>";
+
+                // Rellenamos los generos y las plataformas una vez añadido el juego para evitar errores a la hora de repetir el proceso de rellenar la BD. (Si fuera antes no daría el salto en el bucle al no tener el juego registrado en la BD.)
+
+                // Rellenar los generos del Juego en la base de datos.
+                $generos = $juego['genres'];
+                foreach ($generos as $generoAPI) {
+                    // Comprobar si el genero ya existe en la base de datos
+                    $genero_bd = new Genero();
+
+                    $genero_bd = $genero_bd->rellenarBDJuegosGeneros($id_juego,  $generoAPI['id']);
+                }
+
+                $plataformas = $juego['platforms'];
+                foreach ($plataformas as $plataformaAPI) {
+                    // Comprobar si la plataforma ya existe en la base de datos
+                    $plataforma_bd = new Plataforma();
+
+                    $plataforma_bd = $plataforma_bd->rellenarBDJuegosPlataforma($id_juego,  $plataformaAPI["platform"]['id']); //Para las plataformas, en la API, existe dentro de una plataforma el campo "platform"
+                }
             }        
         }
 

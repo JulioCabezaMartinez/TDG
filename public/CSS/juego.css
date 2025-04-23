@@ -1,0 +1,129 @@
+/* CSS de la Vista de un Juego */
+
+/* Caracteristicas comunes de la página */
+
+.icono_ajustable{
+    font-size: 200%;
+}
+
+.btn_redondo{
+    border-radius: 25px;
+    background-color: #da4747; /* Color de prueba (diferenciación) */
+    border: none;
+    cursor: pointer;
+
+    padding: 10px;
+}
+
+/* Header de la página */
+
+.header_juego{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 5%;
+}
+
+.imagen_juego{
+    width: 90vw;
+}
+
+/* Botones de añadir a las listas */
+
+.btn_listas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+
+}
+
+.btn_listas > div:nth-child(1){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin: 2%;
+    padding: 0;
+}
+
+.btn_listas > div:nth-child(1) i{
+    padding-left: 5%;
+}
+
+.btn_listas > div:nth-child(2){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+}
+
+.btn_listas > div:nth-child(2) > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 33%;
+    padding: 10px;
+}
+
+.btn_listas > div:nth-child(2) > div:nth-child(2){
+    margin: 0 5%;
+}
+
+/* Información del Juego */
+
+.info_juego{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+}
+
+.caracteristicas_juego{
+
+    width: 40%;
+}
+
+.generos_juego div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.generos_juego div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* Generos Pills */
+
+.generos_juego div p{
+    margin: 5px;
+}
+
+.plataformas_juego div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.plataformas_juego div p{
+    margin: 5px;
+}
+
+.descripcion_juego{
+
+    width: 50%;
+    padding: 0 2% 2% 2%;
+
+    border: 1px solid #000;
+    border-radius: 25px;
+}

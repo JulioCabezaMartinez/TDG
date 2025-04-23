@@ -1,4 +1,13 @@
 /* Estilos para la lista de juegos */
+
+:root{
+    --color-btn-wishlist: #e05252;
+    --color-btn-pendiente: #e0a052;
+    --color-btn-completado: darkcyan;
+    --color-btn-jugando: #52a0e0;
+
+}
+
 .list_juegos{
     display: flex;
     flex-direction: column;
@@ -15,16 +24,23 @@
     padding: 20px;
 }
 
+.enlace_juego{
+    color: black;
+
+    width: 100%;
+    
+    text-align: center;
+}
+
 .juego{
     display: flex;
     flex-direction: column;
+    
+    border: 2px solid #000000;
     border-radius: 10px;
 
-    border: 2px solid #000000;
-
-    margin: 5px;
-
     width: 100%;
+    margin: 5px;
 }
 
 .juego img{
@@ -46,12 +62,6 @@
     padding-left: 10px;
 }
 
-.info_juego h1{
-    width: 100%;
-    
-    text-align: center;
-}
-
 .btn_listas{
     width: 100%;
     padding: 2% 2% 2% 0%;
@@ -69,12 +79,31 @@
     margin: 0% 5%;
 
     padding: 10px;
-    border: 1px solid #000000;
     border-radius: 50%;
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.fa-heart{
+    color: var(--color-btn-wishlist);
+    border: 1px solid var(--color-btn-wishlist);
+}
+
+.fa-clock{
+    color: var(--color-btn-pendiente);
+    border: 1px solid var(--color-btn-pendiente);
+}
+
+.fa-check{
+    color: var(--color-btn-completado);
+    border: 1px solid var(--color-btn-completado);
+}
+
+.fa-circle-play{
+    color: var(--color-btn-jugando);
+    border: 1px solid var(--color-btn-jugando);
 }
 
     /* Para escalar todos los iconos de FA */

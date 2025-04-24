@@ -1,16 +1,27 @@
 <?php
-$juego = ["name" => "Juego 1", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "precio" => 59.99, "estado" => "Usado", "Modelo" => "Playstation 3", "genero" => ["Acción", "Aventura"]];
+require_once '../../vendor/autoload.php'; // Autoload de Composer para pruebas. En la version debe de ir en el Index.php.
+
+use App\Models\Juego;
+use App\Models\Genero;
+$id_juego = 28; // ID del juego a mostrar
+
+$juego = new Juego();
+$genero = new Genero();
+
+$juego = $juego->getById($id_juego);
+$generos = $genero->getGenerosJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar.
+
 $css = 'venta';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
 ?>
 
-<h1><?php echo $juego['name'] ?></h1>
+<h1 class="nombre_juego"><?php echo $juego['Nombre'] ?></h1>
 
-<img src="<?php echo $juego['background_image'] ?>" alt="">
+<img src="<?php echo $juego['Imagen'] ?>" alt="">
 
-<h2><?php echo $juego['precio'] . " €" ?></h2>
+<h2><?php echo 34 . " €" ?></h2>
 
 <hr>
 
@@ -19,17 +30,19 @@ require_once __DIR__ . '\Templates\header.php';
     <div>
         <div class="info_juego">
             <div>
-                <p><strong>Estado: </strong><?php echo $juego['estado'] ?></p>
+                <p><strong>Estado: </strong><?php echo "Nuevo" ?></p>
             </div>
             <div>
-                <p><strong>Modelo: </strong><?php echo $juego['Modelo'] ?></p>
+                <p><strong>Modelo: </strong><?php echo "PS3" ?></p>
             </div>
             <div>
                 <h4>Géneros:</h4>
                 <div>
                     <?php
-                    foreach ($juego['genero'] as $genero) {
-                        echo "<p>$genero</p>";
+                    foreach ($generos as $genero) {
+                    ?>
+                        <p><?php echo $genero['Nombre'] ?></p>
+                    <?php
                     }
                     ?>
                 </div>
@@ -39,7 +52,7 @@ require_once __DIR__ . '\Templates\header.php';
         <hr>
         <div class="descripcion_juego">
             <h2>Descripción</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.</p>
+            <?php echo $juego['Descripcion'] ?>
         </div>
     </div>
 
@@ -47,7 +60,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <!-- Botón de compra -->
 <button id="btn_comprar">
-    <p>Añadir al carrito</p>
+    <p>Comprar</p>
     <i class='fa-solid fa-cart-shopping'></i>
 </button>
 

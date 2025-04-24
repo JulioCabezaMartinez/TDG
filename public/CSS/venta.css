@@ -1,3 +1,9 @@
+.nombre_juego{
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 2%;
+}
+
 img{
     width: 100%;
 }
@@ -14,4 +20,13 @@ img{
     bottom: 20px;
 
     width: 100%;
+}
+
+
+.descripcion_juego, .info_juego {
+    margin: 2%;
+}
+
+.descripcion_juego{
+    margin-bottom: 5%;
 }

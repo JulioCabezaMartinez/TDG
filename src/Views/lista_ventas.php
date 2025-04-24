@@ -85,11 +85,6 @@ require_once __DIR__ . '\Templates\header.php';
                 <div class='info_juego'>
                     <h1>{$juego['name']}</h1>
                     <p class='precio'>{$juego['precio']} €</p>
-                    <div class='btn_listas'>
-                        <div>
-                            <p>Añadir al carrito</p><i class='fa-solid fa-cart-shopping'></i>
-                        </div>
-                    </div>
                 </div>
             </div>";
     }

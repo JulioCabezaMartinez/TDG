@@ -1,3 +1,10 @@
+/* Css del Header */
+
+/* Escalar el tamaño de los iconos */
+.fa-bars{
+    font-size: clamp(20px, 4vw, 30px); /* clamp(MIN, PRED, MAX) */
+}
+
 header{
     position: relative;
     z-index: 100;
@@ -24,4 +31,3 @@ header img{
     width: 100px;
     height: 100px;
 }
-

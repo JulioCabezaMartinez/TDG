@@ -8,104 +8,6 @@
 
 }
 
-.list_juegos{
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
-    align-items: center;
-
-    margin-top: 20px;
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: white;
-
-    width: 90%;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.enlace_juego{
-    color: black;
-
-    width: 100%;
-    
-    text-align: center;
-}
-
-.juego{
-    display: flex;
-    flex-direction: column;
-    
-    border: 2px solid #000000;
-    border-radius: 10px;
-
-    width: 100%;
-    margin: 5px;
-}
-
-.juego img{
-    width: 100%;
-
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-}
-
-.info_juego{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-}
-
-.info_juego *{ /* Para poder modificar un dato de manera individual */
-    padding-left: 10px;
-}
-
-.btn_listas{
-    width: 100%;
-    padding: 2% 2% 2% 0%;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.btn_listas i{ /* Botones de Agregar a la lista */
-    
-    width: 8vw;
-    height: 8vw;
-    margin: 0% 5%;
-
-    padding: 10px;
-    border-radius: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fa-heart{
-    color: var(--color-btn-wishlist);
-    border: 1px solid var(--color-btn-wishlist);
-}
-
-.fa-clock{
-    color: var(--color-btn-pendiente);
-    border: 1px solid var(--color-btn-pendiente);
-}
-
-.fa-check{
-    color: var(--color-btn-completado);
-    border: 1px solid var(--color-btn-completado);
-}
-
-.fa-circle-play{
-    color: var(--color-btn-jugando);
-    border: 1px solid var(--color-btn-jugando);
-}
-
     /* Para escalar todos los iconos de FA */
 .fa-regular{
     font-size: 4vw;
@@ -114,7 +16,6 @@
 .fa-solid{
     font-size: 4vw;
 }
-
 
 /* Desplegable hamburguesa */
 
@@ -199,4 +100,116 @@
 
 .eliminar_filtro{
     cursor: pointer;
+}
+
+/* Lista de Juegos */
+
+.list_juegos{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+
+    margin-top: 20px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+
+    width: 90%;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.enlace_juego{
+    color: black;
+
+    width: 100%;
+    
+    text-align: center;
+}
+
+.juego{
+    display: flex;
+    flex-direction: column;
+    
+    border: 2px solid #000000;
+    border-radius: 10px;
+
+    width: 100%;
+    margin: 5px;
+}
+
+.juego img{
+    width: 100%;
+
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.info_juego{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.info_juego *{ /* Para poder modificar un dato de manera individual */
+    padding-left: 10px;
+}
+
+.info_juego a{
+    padding: 0;
+}
+
+.btn_listas{
+    width: 100%;
+    padding: 2% 2% 2% 0%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn_listas i{ /* Botones de Agregar a la lista */
+    
+    width: 8vw;
+    height: 8vw;
+    margin: 0% 5%;
+
+    padding: 10px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botones de listas */
+
+.fa-heart{
+    color: var(--color-btn-wishlist);
+    border: 1px solid var(--color-btn-wishlist);
+}
+
+.fa-clock{
+    color: var(--color-btn-pendiente);
+    border: 1px solid var(--color-btn-pendiente);
+}
+
+.fa-circle-check{
+    color: var(--color-btn-completado);
+    border: 1px solid var(--color-btn-completado);
+}
+
+.fa-circle-play{
+    color: var(--color-btn-jugando);
+    border: 1px solid var(--color-btn-jugando);
+}
+
+.en_lista{
+    background-color: currentColor;
+    color: white;
+    border: none;
 }

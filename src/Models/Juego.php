@@ -22,8 +22,8 @@ class Juego extends EmptyModel {
         return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function get10(): array {
-        return parent::query("SELECT * FROM {$this->table} LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
+    public function getListGames($limit): array {
+        return parent::query("SELECT * FROM {$this->table} LIMIT $limit")->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function rellenarBD($countAPI){

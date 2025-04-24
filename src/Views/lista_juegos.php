@@ -2,11 +2,15 @@
 require_once '../../vendor/autoload.php';
 
 use App\Models\Juego;
+use App\Models\Lista;
 
-$id_usuario = 1; // Cambiar el ID por el del usuario que quieras mostrar.
+$lista = new Lista();
+
+$id_usuario = 1; // Cambiar el ID por el del usuario que quieras mostrar
+$listas_usuario = $lista->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
 $juego = new Juego();
-$juegos = $juego->get10(); // Obtener 10 juegos.
+$juegos = $juego->getListGames(5); // Obtener 10 juegos. Paginación
 $css = 'lista_juegos';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -57,11 +61,9 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <div class="list_juegos">
-    </a>
     <?php
     foreach ($juegos as $juego) { // Cambiar Calificacion por Generos del Juego.
-        echo "
-                <div class='juego'>
+        echo "<div class='juego'>
                     <img src='{$juego['Imagen']}' alt=''>
                     <div class='info_juego'>
                         <a class='enlace_juego' href='#'>
@@ -70,13 +72,59 @@ require_once __DIR__ . '\Templates\header.php';
                         <p><strong>Calificación:</strong> {$juego['calificacion']} / 5</p> 
                         <p><strong>Fecha de salida:</strong> {$juego['Anyo_salida']}</p>
                         <div class='btn_listas'>
-                            <i id='wish@{$juego['id']}' class='fa-regular fa-heart'></i>
-                            <i id='pend@{$juego['id']}' class='fa-solid fa-clock'></i>
-                            <i id='comp@{$juego['id']}' class='fa-solid fa-check'></i>
-                            <i id='juga@{$juego['id']}' class='fa-regular fa-circle-play'></i>
-                        </div>
-                    </div>
-                </div>";
+                        ";
+                        $listas_juego = $lista->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+                        
+                        // Booleanos para comprobar si el juego está en las listas del usuario.
+                        $wishlist = false;
+                        $backlog = false;
+                        $completed = false;
+                        $playing = false;
+
+                        foreach ($listas_juego as $lista_usuario) {
+
+                            switch ($lista->getTipoLista($lista_usuario)) {
+                                case 1:
+                                    $wishlist = true;
+                                    break;
+                                case 2:
+                                    $completed = true;
+                                    break;
+                                case 3:
+                                    $playing = true;
+                                    break;
+                                case 4:
+                                    $backlog = true;
+                                    break;
+                            }
+                        }
+
+                            if ($wishlist) {
+                                echo "<i id='wish@{$juego['id']}' class='fa-solid fa-heart'></i>";
+                            } else {
+                                echo "<i id='wish@{$juego['id']}' class='fa-regular fa-heart'></i>";
+                            }
+
+                            if ($backlog) {
+                                echo "<i id='back@{$juego['id']}' class='fa-solid fa-clock'></i>";
+                            } else {
+                                echo "<i id='back@{$juego['id']}' class='fa-regular fa-clock'></i>";
+                            }
+
+                            if ($completed) {
+                                echo "<i id='comp@{$juego['id']}' class='fa-solid fa-circle-check'></i>";
+                            } else {
+                                echo "<i id='comp@{$juego['id']}' class='fa-regular fa-circle-check'></i>";
+                            }
+
+                            if ($playing) {
+                                echo "<i id='play@{$juego['id']}' class='fa-solid fa-circle-play'></i>";
+                            } else {
+                                echo "<i id='play@{$juego['id']}' class='fa-regular fa-circle-play'></i>";
+                            }
+        echo "</div>
+            </div>
+        </div>";
     }
     ?>
 </div>
@@ -119,22 +167,27 @@ require_once __DIR__ . '\Templates\header.php';
         // AJAX para añadir el juego a las listas.
 
         $(".btn_listas i").click(function() {
+            let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
+
             let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
             let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
-            
+
             $.ajax({
-                url: "src/Controllers/AJAX.php",
+                url: "../AJAX/AJAX.listas.php",
                 type: "POST",
                 data: {
+                    mode: "add_juego_lista",
                     id_juego: id_juego,
                     lista: lista,
                     // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
                 },
                 success: function(response) {
-                    console.log(response); // Manejar la respuesta del servidor si es necesario.
-                },
-                error: function(error) {
-                    console.error("Error en la solicitud AJAX:", error);
+                    console.log(response);
+                    let color_boton = getComputedStyle(boton).borderColor;
+                    boton.style.color = color_boton;
+                    $(boton).toggleClass("en-lista");
+                    $(boton).toggleClass("fa-solid");
+                    $(boton).toggleClass("fa-regular");
                 }
             });
         });

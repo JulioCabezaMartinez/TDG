@@ -14,27 +14,43 @@
     margin: 0;
 }
 
+.lista_ventas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
 .juego{
     display: flex;
-    border-radius: 10px;
 
+    border-radius: 10px;
     border: 2px solid #000000;
 
     margin: 5px;
+    width: 95%;
 }
 
 .info_juego{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+
+    padding: 2%;
     width: 100%;
 }
 
 .info_juego .precio{
-    font-size: 200%;
+    font-size: 250%;
     margin: 0;
 }
 
 .juego img{
     padding: 10px;
-    max-width: 150px;
+    max-width: 400px;
 }
 
 .btn_listas{

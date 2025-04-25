@@ -76,7 +76,7 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 
-<div class="list_ventas">
+<div class="lista_ventas">
     
     <?php
     foreach ($juegos as $juego) {
@@ -84,7 +84,7 @@ require_once __DIR__ . '\Templates\header.php';
                 <img src='{$juego['background_image']}' alt=''>
                 <div class='info_juego'>
                     <h1>{$juego['name']}</h1>
-                    <p class='precio'>{$juego['precio']} €</p>
+                    <p class='precio'><strong>{$juego['precio']} €</strong></p>
                 </div>
             </div>";
     }

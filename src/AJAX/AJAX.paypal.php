@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '../../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
+require __DIR__ . '/../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
 
 use Dotenv\Dotenv;
 
@@ -10,10 +10,10 @@ $dotenv->load();
 
 $clientId = $_ENV['PAYPAL_CLIENT_ID'];
 $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
-$body = json_decode(file_get_contents('php://input'), true);
-$productoId = $body['productoId'] ?? null;
+$body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
+$productoId = 12 ;//$body['productoId'] ?? null;
 
-$precio = 49.99;
+$precio = 49.99; // Precio fijo para la prueba. El precio real = $producto[precio].
 
 // SANDBOX: Obtener token
 $ch = curl_init();

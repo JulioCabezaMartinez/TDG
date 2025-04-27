@@ -1,19 +1,10 @@
 <?php
-require_once '../../vendor/autoload.php';
-
-use App\Models\Juego;
-use App\Models\Review;
-
-$juego = new Juego();
-$review = new Review();
-
-$mas_vendidos = $juego->getNew(); // Obtener los juegos más vendidos (recien añadidos).
-$reviews_populares = []; 
 
 $css = 'main';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
+
 ?>
 
 <div class="recien_añadidos">
@@ -149,7 +140,7 @@ require_once __DIR__ . '\Templates\header.php';
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Script de inicio del Swiper -->
-<script src="carrusel.js"></script>
+<script src="../../public/JS/carrusel.js"></script>
 
 <script>
     $(document).ready(function() {

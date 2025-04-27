@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\EmptyModel;
+
+use App\Core\EmptyModel;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de tipos de lista.

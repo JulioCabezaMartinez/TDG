@@ -1,6 +1,8 @@
 <?php
+
+namespace App\Core;
 class Router {
-    private $routes = [];
+    public $routes = [];
 
     /**
      * Agregar una ruta al enrutador.
@@ -36,10 +38,12 @@ class Router {
     private function executeAction(string $controllerAction): void {
         list($controllerName, $methodName) = explode('@', $controllerAction);
 
-        $controllerFile = __DIR__ . '/src/Controllers/' . $controllerName . '.php';
+        $controllerFile = __DIR__ . '/../Controllers/' . $controllerName . '.php';
 
         if (file_exists($controllerFile)) {
             require_once $controllerFile;
+
+            $controllerName = 'App\\Controllers\\' . $controllerName; // Namespace completo
 
             if (class_exists($controllerName)) {
                 $controller = new $controllerName();
@@ -50,6 +54,7 @@ class Router {
                     $this->handleError("El método $methodName no existe en $controllerName.");
                 }
             } else {
+                
                 $this->handleError("La clase $controllerName no existe.");
             }
         } else {

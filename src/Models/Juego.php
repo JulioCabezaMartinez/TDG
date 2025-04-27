@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Core\EmptyModel;
+
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de juegos.
  */

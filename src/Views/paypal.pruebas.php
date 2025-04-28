@@ -61,7 +61,7 @@ $dotenv->load(); // Esto carga las variables al entorno
                 .then(orderData => {
                     // Verifica si el orderID está presente
                     if (!orderData.orderID) {
-                        throw new Error("Expected an order id to be passed");
+                        throw new Error("Se esperaba un orderID en la respuesta.");
                     }
                     return orderData.orderID;  // Asegúrate de devolver el orderID
                 });
@@ -71,27 +71,18 @@ $dotenv->load(); // Esto carga las variables al entorno
             onApprove: function(data, actions) {
                 // Después de que el usuario autorice el pago, completar la transacción
                 return actions.order.capture().then(function(details) {
-                    // Aquí puedes manejar la respuesta del pago, por ejemplo mostrar el detalle
-                    alert('¡Pago realizado con éxito!');
-
-                    // Si necesitas, puedes enviar esta información a tu servidor para registrar el pago
-                    $.ajax({
-                        url: '/ruta-al-backend-para-registrar-pago', // Cambia esta ruta a tu backend
-                        method: 'POST',
-                        data: JSON.stringify({
-                            orderID: data.orderID,
-                            transactionDetails: details
-                        }),
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        success: function(response) {
-                            console.log('Pago registrado correctamente en el servidor.');
-                        },
-                        error: function() {
-                            console.log('Hubo un error al registrar el pago.');
-                        }
-                    });
+                    if(details.status !== 'COMPLETED') {
+                        throw new Error("El pago no se completó correctamente.");
+                    }else{
+                        alert('¡Pago realizado con éxito!');
+                        console.log('Detalles del pago: ', details);  // Puedes personalizar la respuesta
+                    }
                 });
+            },
+
+            onCancel: function(data) {
+                // Función para manejar la cancelación del pago
+                alert('El pago ha sido cancelado.');  // Puedes personalizar el mensaje
             },
 
             // Función para manejar los errores

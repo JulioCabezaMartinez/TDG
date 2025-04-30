@@ -12,14 +12,32 @@ img{
     display:flex;
     justify-content: center;
     align-items: center;
-    background-color: #cdff50; /* Green */
+    background-color: var(--color-secundario); /* Green */
 
     border-radius: 20px;
+
+    color: black;
 
     position: sticky;
     bottom: 20px;
 
     width: 100%;
+    padding: 0.3rem;
+}
+
+#btn_comprar p{
+    font-size: 1.3em;
+    font-weight: bold;
+
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    color: black !important;
+}
+
+#btn_comprar i{
+    padding-left: 10px;
+    background-color: transparent;
 }
 
 

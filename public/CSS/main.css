@@ -10,7 +10,7 @@
     margin: 10px;
     border: 1px solid #00000033;
     border-radius: 10px;
-    background-color: #f0f0f033;
+    background-color: var(--color-tarjeta);
 }
 
 .recien_añadidos__item img{
@@ -106,6 +106,13 @@
 @media screen and (min-width: 640px) {
     .recien_añadidos__item{
         width: 40vw;
+        transition: 0.3s;
+    }
+
+    .recien_añadidos__item:hover{
+        width: 41vw;
+        background-color: var(--color-primario);
+        transition: 0.3s;
     }
     
 }
@@ -113,6 +120,12 @@
 @media screen and (min-width: 768px) {
     .recien_añadidos__item{
         width: 20vw;
+    }
+
+    .recien_añadidos__item:hover{
+        width: 25vw;
+        background-color: var(--color-primario);
+        transition: 0.3s;
     }
     
 }

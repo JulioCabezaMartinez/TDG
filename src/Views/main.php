@@ -34,6 +34,7 @@ require_once __DIR__ . '\Templates\header.php';
                 foreach ($mas_vendidos as $juego) {
                 ?>
 
+                    <a href=""></a> <!-- Se llena este enlace va a ser todo el div con el id del juego enviado con $_GET -->
                     <div class="card-item swiper-slide">
                         <img src="<?php echo $juego['Imagen']; ?>" alt="">
                         <div class="card-content">
@@ -112,7 +113,7 @@ require_once __DIR__ . '\Templates\header.php';
                 <p class="review_texto" ><?php echo $review['review']; ?><!-- Texto de la reseña --></p>
 
                 <div class="review_footer">
-                    <div class="review_rating">
+                    <div class="review_rating"> 
                         <i class="fa-light fa-thumbs-up"></i>
                         <p>
                             <?php echo $review['rating'] ?> <!-- Valoración de la reseña -->

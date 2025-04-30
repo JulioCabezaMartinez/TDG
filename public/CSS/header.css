@@ -25,9 +25,18 @@ header{
     background-color: #fff;
 
     max-width: 100vw;
+
+    color: var(--color-texto) !important;
+    background-color: var(--color-fondo) !important;
 }
 
 header img{
     width: 100px;
     height: 100px;
+}
+
+header i{
+    padding: 10px;
+    background-color: var(--color-primario);
+    border-radius: 8px;
 }

@@ -3,9 +3,38 @@
     margin: 0%;
 
     box-sizing: border-box;
+
+    --color-primario: #5C6BC0;
+    --color-secundario: #BFA75C;
+    
+    --color-fondo: #1C1C1E; /* Fondo de modo oscuro */
+    --color-texto: #FFFFFF;
+    --color-texto-secundario: #B0BEC5;
+    
+    --color-tarjeta: #2C2C2E;
+    --color-tarjeta-secundario: #3A3A3C; 
+
+    --color-boton-texto: black;
+
+    --color-wishlist: #e05252; /* Color de wishlist */
+    --color-backlog: #e0a052; /* Color de backlog */
+    --color-completed: darkcyan; /* Color de completed */
+    --color-playing: #52a0e0; /* Color de playing */
+    
 }
 
 html, body{
     margin: 0;
     padding: 5px;
+
+    background-color: var(--color-fondo) !important;
+    color: var(--color-texto-secundario) !important;
+}
+
+p{
+    color: var(--color-texto-secundario) !important;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: var(--color-texto) !important;
 }

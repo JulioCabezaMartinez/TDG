@@ -1,22 +1,5 @@
 /* Estilos para la lista de juegos */
 
-:root{
-    --color-btn-wishlist: #e05252;
-    --color-btn-pendiente: #e0a052;
-    --color-btn-completado: darkcyan;
-    --color-btn-jugando: #52a0e0;
-
-}
-
-    /* Para escalar todos los iconos de FA */
-.fa-regular{
-    font-size: 4vw;
-}
-
-.fa-solid{
-    font-size: 4vw;
-}
-
 /* Desplegable hamburguesa */
 
 .filtros_desplegable{
@@ -70,6 +53,14 @@
     padding: 2%;
 
     max-height: fit-content;
+
+    background-color: var(--color-secundario);
+    color: var(--color-boton-texto);
+}
+
+.btn_filtros i{
+    justify-self: center;
+    align-self: center;
 }
 
 .btn_filtros p{
@@ -78,6 +69,8 @@
 
     max-height: fit-content;
     min-height: fit-content;
+
+    color: var(--color-boton-texto) !important;
 }
 
 #filtros_icon{
@@ -112,8 +105,8 @@
 
     margin-top: 20px;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: white;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    background-color: var(--color-tarjeta-secundario);
 
     width: 90%;
     border-radius: 20px;
@@ -137,6 +130,8 @@
 
     width: 100%;
     margin: 5px;
+
+    background-color: var(--color-tarjeta);
 }
 
 .juego img{
@@ -160,6 +155,7 @@
 
 .info_juego a{
     padding: 0;
+    text-decoration: underline var(--color-texto);
 }
 
 .btn_listas{
@@ -189,23 +185,23 @@
 /* Botones de listas */
 
 .fa-heart{
-    color: var(--color-btn-wishlist);
-    border: 1px solid var(--color-btn-wishlist);
+    color: var(--color-wishlist);
+    border: 1px solid var(--color-wishlist);
 }
 
 .fa-clock{
-    color: var(--color-btn-pendiente);
-    border: 1px solid var(--color-btn-pendiente);
+    color: var(--color-backlog);
+    border: 1px solid var(--color-backlog);
 }
 
 .fa-circle-check{
-    color: var(--color-btn-completado);
-    border: 1px solid var(--color-btn-completado);
+    color: var(--color-completed);
+    border: 1px solid var(--color-completed);
 }
 
 .fa-circle-play{
-    color: var(--color-btn-jugando);
-    border: 1px solid var(--color-btn-jugando);
+    color: var(--color-playing);
+    border: 1px solid var(--color-playing);
 }
 
 .en_lista{

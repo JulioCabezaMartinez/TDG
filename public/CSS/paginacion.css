@@ -1,0 +1,10 @@
+.pagination .page-link{
+    color: var(--color-texto);
+    background-color: rgb(128, 128, 128, 0.25);
+    border-color: transparent;
+}
+
+.pagination .active > .page-link{
+    background-color: var(--color-secundario);
+    border-color: transparent;
+}

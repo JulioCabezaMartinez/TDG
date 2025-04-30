@@ -12,7 +12,7 @@
 
     width: 100%; 
     max-width: 100%; 
-    background: #86bbe5;
+    background: var(--color-tarjeta);
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 18px; 
@@ -41,3 +41,23 @@
     text-align: center;
 }
 
+.swiper-button-prev, .swiper-button-next{
+    color: var(--color-secundario);
+}
+
+.swiper-pagination-bullet {
+    background: gray;
+    opacity: 0.25;
+}
+
+.swiper-pagination-bullet-active{
+    background: var(--color-secundario);
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .swiper-button-prev, .swiper-button-next{
+        display: none;
+    }
+    
+}

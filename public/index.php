@@ -1,5 +1,5 @@
 <?php
-require_once '..\vendor\autoload.php'; // Esto debe estar al principio del archivo
+require_once '..\vendor\autoload.php'; // Esto debe estar al principio del archivo para cargar las dependencias de Composer
 use Dotenv\Dotenv;
 use App\Core\Router;
 
@@ -29,7 +29,7 @@ $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 
 // No entiendo como funciona el enrutador, pero aquí se define la ruta para la página de inicio
 
-// // Procesar la solicitud
-// $solicitud = $_SERVER['REQUEST_URI'] ?? '/'; // Obtener la URI solicitada
-// $router->dispatch($solicitud); // Despachar la ruta correspondiente
+// Procesar la solicitud
+$solicitud = $_SERVER['REQUEST_URI'] ?? '/'; // Obtener la URI solicitada
+$router->dispatch("/"); // Despachar la ruta correspondiente
 ?>

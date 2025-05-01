@@ -1,10 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php'; // Autoload de Composer para pruebas. En la version debe de ir en el Index.php.
-
 use App\Models\Juego;
 
-$perfil = ["nick" => "Keyxion", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "wishlist"=>[32, 39, 750, 4639, 9767]];
 $css = 'perfil';
 require_once __DIR__ . '\Templates\inicio.php';
 

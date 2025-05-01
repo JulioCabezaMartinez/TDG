@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-require_once __DIR__ . '/../../vendor/autoload.php'; // Cargar el autoload de Composer
-
 use App\Models\Juego;
 use App\Models\Review;
 
@@ -22,5 +20,3 @@ class ControllerHome{
     }
 
 }
-
-ControllerHome::index(); // Llamar al método index para mostrar la página principal.

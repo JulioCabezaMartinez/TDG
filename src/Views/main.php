@@ -141,7 +141,7 @@ require_once __DIR__ . '\Templates\header.php';
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Script de inicio del Swiper -->
-<script src="../../public/JS/carrusel.js"></script>
+<script src="/TDG/public/JS/carrusel.js"></script>
 
 <script>
     $(document).ready(function() {

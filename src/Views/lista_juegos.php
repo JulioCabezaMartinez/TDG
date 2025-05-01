@@ -1,29 +1,5 @@
 <?php
-require_once '../../vendor/autoload.php';
 
-use App\Models\Juego;
-use App\Models\Lista;
-
-$lista = new Lista();
-
-$id_usuario = 1; // Cambiar el ID por el del usuario que quieras mostrar
-$listas_usuario = $lista->getListasUsuario($id_usuario); // Obtener las listas del usuario.
-
-$juego = new Juego();
-
-// Paginación provisional. Cambiar por la paginación real por AJAX.
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Obtener la página actual desde la URL. Si no existe, se establece en 1.
-$limite = 5; // Número de juegos por página.
-$total_juegos = $juego->getCount(); // Obtener el total de juegos en la base de datos.
-$total_paginas = ceil($total_juegos / $limite); // Calcular el total de páginas.
-
-if($pagina<=0){
-    $inicio = 0;
-    $pagina = 1;
-}else{
-    $inicio = ($pagina-1)*$limite; // 5 juegos por página. 
-}
-$juegos = $juego->getListGames($inicio, $limite); // Obtener 10 juegos. Paginación falta
 $css = 'lista_juegos';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -93,7 +69,7 @@ require_once __DIR__ . '\Templates\header.php';
             if ($i == $pagina) {
                 echo "<li class='page-item active'><a class='page-link' href='#'>{$i}</a></li>";
             } else {
-                echo "<li class='page-item'><a class='page-link' href='lista_juegos.php?pagina={$i}'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
+                echo "<li class='page-item'><a class='page-link' href='/TDG/juegos?pagina={$i}'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
             }
         }
         ?>
@@ -194,12 +170,6 @@ require_once __DIR__ . '\Templates\header.php';
         ?>
     </ul>
 </nav>
-
-<!-- JS del Swiper (Carrusel) -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<!-- Script de inicio del Swiper -->
-<script src="carrusel.js"></script>
 
 <script>
     $(document).ready(function() {

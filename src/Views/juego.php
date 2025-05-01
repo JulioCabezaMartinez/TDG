@@ -1,21 +1,4 @@
 <?php
-require_once '../../vendor/autoload.php';
-
-use App\Models\Juego;
-use App\Models\Genero;
-use App\Models\Plataforma;
-
-$id_juego=2093; // Cambiar el ID por el del juego que quieras mostrar.
-
-$juego = new Juego();
-$genero = new Genero();
-$plataforma = new Plataforma();
-
-$juego = $juego->getById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
-
-$generos = $genero->getGenerosJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
-$plataformas = $plataforma->getPlataformasJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
-
 $css = 'juego';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -184,7 +167,7 @@ require_once __DIR__ . '\Templates\header.php';
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Script de inicio del Swiper -->
-<script src="carrusel.js"></script>
+<script src="/TDG/public/JS/carrusel.js"></script>
 
 <?php
 require_once __DIR__ . '\Templates\final.php';

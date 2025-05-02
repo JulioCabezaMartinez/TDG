@@ -10,8 +10,11 @@ $dotenv->load();
 // Crear una instancia del enrutador
 $router = new Router();
 
-// Ruta Principal
+// Rutas Principales
 $router->add('/', 'ControllerHome@index');
+$router->add('/login', 'ControllerHome@login');
+$router->add('/register', 'ControllerHome@register');
+$router->add('/registrar-usuario', 'ControllerHome@registrarUsuario');
 
 // Rutas de Juegos
 $router->add('/juegos', 'ControllerJuego@lista_juegos');

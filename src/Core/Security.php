@@ -1,6 +1,6 @@
 <?php
 // Declaración del namespace
-namespace App\Utils;
+namespace App\Core;
 
 /**
  * Clase de seguridad con métodos estáticos

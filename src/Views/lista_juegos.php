@@ -6,7 +6,7 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\header.php';
 ?>
 
-<h3 style="text-align: center;">Juegos</h3>
+<h3 class="text-center mt-4">Juegos</h3>
 
 <div class="filtros_desplegable">
     <div class="filtros_texto">

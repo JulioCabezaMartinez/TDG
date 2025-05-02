@@ -58,6 +58,11 @@ class EmptyModel {
         return $this->query($sql, [$id])->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function compruebaCampo($campo, $valor) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$campo} = ?";
+        return $this->query($sql, [$valor])->fetch(PDO::FETCH_ASSOC);
+    }
+
     /**
      * Método genérico para crear un nuevo registro.
      *

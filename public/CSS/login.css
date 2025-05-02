@@ -1,0 +1,44 @@
+/* Css de la página Login */
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tarjeta-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    
+    width: 70vw;
+    height: auto;
+
+    margin-top: 5vh;
+
+    padding: 5vh;
+
+    background-color: var(--color-tarjeta-secundario);
+    border-radius: 10px;
+    box-shadow: 0 0 20px white;
+}
+
+
+.tarjeta-login label, .tarjeta-login h1{
+    color: var(--color-texto) !important;
+}
+
+form{
+    width: 100%;
+}
+
+.registro{
+    background-color: var(--color-secundario);
+}
+
+.tarjeta-login .logo-TDG{
+    align-self: center;
+    width: 50%;
+}

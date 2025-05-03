@@ -126,7 +126,7 @@ require_once __DIR__ . '\Templates\header.php';
                     </div>
                     
                 </div>
-        </div>
+            </div>
 
 
         <?php

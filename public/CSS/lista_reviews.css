@@ -1,0 +1,42 @@
+.lista_reviews{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.review{
+    width: 90vw;
+    background-color: var(--color-tarjeta);
+
+    padding: 2%;
+    margin: 3%;
+}
+
+.cabecera_review img{
+    width: 15%;
+    clip-path: circle(50% at 50% 50%);
+}
+
+.review_footer{
+    display: flex;
+    justify-content: end;
+}
+
+.review_ver_mas_container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    color: var(--color-boton-texto);
+    background-color: var(--color-secundario);
+
+    width: fit-content;
+    padding: 2%;
+
+    border-radius: 20px;
+}
+
+.review_ver_mas{
+    margin: 0;
+}

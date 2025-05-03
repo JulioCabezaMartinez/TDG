@@ -20,14 +20,19 @@ $router->add('/registrar-usuario', 'ControllerHome@registrarUsuario');
 $router->add('/juegos', 'ControllerJuego@lista_juegos');
 $router->add('/juegos/view', 'ControllerJuego@view_juego');
 
+// Rutas de Reviews
+$router->add('/juegos/view/review', 'ControllerReview@lista_reviews_juego');
+
 // Rutas de Ventas
 $router->add('/ventas', 'ControllerVenta@lista_ventas');
 $router->add('/ventas/view', 'ControllerVenta@view_venta');
 
-// Rutas del Perfil
+// Rutas de Perfil
 $router->add('/perfil', 'ControllerUsuario@perfil_listas');
 $router->add('/perfil/lista', 'ControllerUsuario@lista');
 $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
+
+
 
 
 // No entiendo como funciona el enrutador, pero aquí se define la ruta para la página de inicio

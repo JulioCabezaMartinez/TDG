@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Review;
+use App\Models\Juego;
+use App\Models\Usuario;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con el modelo Review.
@@ -63,5 +65,16 @@ class ControllerReview {
     public function deleteReview($id): void {
         $this->review->delete($id);
         require_once '../src/Views/reviews.php';
+    }
+
+    public function lista_reviews_juego(){
+        $juegoBD=new Juego();
+        $reviewBD=new Review();
+        $usuarioBD=new Usuario();
+        $juego=$juegoBD->getById(28); // Aqui va el $_GET["id_juego"].
+
+        $lista_reviews=$reviewBD->getAllReviewsJuego(28); // Aqui va el $_GET["id_juego"].
+
+        require_once 'src/Views/lista_reviews.php';
     }
 }

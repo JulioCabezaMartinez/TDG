@@ -89,6 +89,8 @@ require_once 'Templates/header.php';
         $("#add-review").click(function(){
             $("#creacion_review_modal").modal('show');
         });
+
+        // Aqui va el codigo del texto reducido.
     });
 </script>
 

@@ -72,6 +72,10 @@ class ControllerVenta {
         require_once __DIR__. "/../Views/lista_ventas.php";
     }
 
+    public function view_venta(){
+        require_once __DIR__. "/../Views/venta.php";
+    }
+
     public function detalles_Compra(){
 
 
@@ -80,8 +84,16 @@ class ControllerVenta {
 
     public function checkout(){
         $id_venta=$_GET["id"] ?? null;
+        $_SESSION["id_venta"]=$id_venta;
         $venta=$this->venta->getById($id_venta);
 
-        require_once __DIR__. "/../Views/checkout.php";
+        
+        if($venta["Estado_Venta"]!="Disponible"){
+            unset($_SESSION["id_venta"]);
+            header("Location: /TDG/ventas");
+        }else{
+
+            require_once __DIR__. "/../Views/checkout.php";
+        }
     }
 }

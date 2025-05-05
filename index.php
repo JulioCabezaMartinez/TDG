@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'vendor\autoload.php'; // Esto debe estar al principio del archivo para cargar las dependencias de Composer
 use Dotenv\Dotenv;
 use App\Core\Router;

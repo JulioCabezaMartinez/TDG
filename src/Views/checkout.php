@@ -22,6 +22,7 @@ require_once __DIR__ . '\Templates\header.php';
             </div>
 
             <div class="precios">
+                <input type="hidden" id="id_producto" value="<?php echo $venta["id"] ?>">
                 <p>Coste de Gestion:</p>
                 <p>€</p> <!-- Coste de gestión -->
                 <p>Precio del producto:</p>
@@ -50,12 +51,13 @@ require_once __DIR__ . '\Templates\header.php';
         createOrder: function(data, actions) {
             let texto_precio=$("#precio").text().trim();
             let precio=texto_precio.split("€")[0].trim();
+
+            let id_producto=$("#id_producto").val();
             // Hacer la solicitud al backend para crear la orden
             return fetch('/TDG/src/AJAX/AJAX.paypal.php', {
                     method: 'POST',
                     body: JSON.stringify({
-                        productoId: '123', // Aquí pasa el ID del producto o lo que sea necesario
-                        precio: precio
+                        productoId: id_producto,
                     }),
                     headers: {
                         'Content-Type': 'application/json'

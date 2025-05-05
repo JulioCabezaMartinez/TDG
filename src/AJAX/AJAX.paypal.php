@@ -1,7 +1,9 @@
 <?php
+session_start();
 require __DIR__ . '/../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
 
 use Dotenv\Dotenv;
+use App\Models\Venta;
 
 header('Content-Type: application/json');
 
@@ -13,7 +15,14 @@ $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
 $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
 $productoId = $body['productoId'] ?? null;
 
-$precio = $body["precio"] ?? null; // Precio fijo para la prueba. El precio real = $producto[precio].
+if($productoId != $_SESSION["id_venta"]){
+    echo json_encode(["error" => "La Id del producto ha sido modificada"]);
+    exit;
+}
+
+$ventaBD=new Venta();
+
+$precio = $ventaBD->getById($productoId)["Precio"];
 
 // SANDBOX: Obtener token
 $ch = curl_init();

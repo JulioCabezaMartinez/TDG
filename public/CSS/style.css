@@ -28,13 +28,13 @@ html, body{
     padding: 5px;
 
     background-color: var(--color-fondo) !important;
-    color: var(--color-texto-secundario) !important;
+    /* color: var(--color-texto-secundario) !important; */
 }
 
-/* p{
-    color: var(--color-texto-secundario) !important;
-} */
+p{
+    color: var(--color-texto-secundario);
+}
 
-/* h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6{
     color: var(--color-texto) !important;
-} */
+}

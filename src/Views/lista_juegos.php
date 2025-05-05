@@ -49,32 +49,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 </div>
 
-<nav class="pag">
-    <ul class="pagination">
-        <?php
-
-        $numero_inicio=1;
-
-        if(($pagina-4)>1){ // 4 es para tener 4 páginas a la izquierda.
-            $numero_inicio=$pagina-4;
-        }
-
-        $numero_fin=$numero_inicio + 8; // 9 páginas en total. 4 izq + 4 der + 1 central.
-
-        if($numero_fin > $total_paginas){ // 4 es para tener 4 páginas a la izquierda.
-            $numero_fin=$total_paginas;
-        }
-
-        for ($i = $numero_inicio; $i <= $numero_fin; $i++) {
-            if ($i == $pagina) {
-                echo "<li class='page-item active'><a class='page-link' href='#'>{$i}</a></li>";
-            } else {
-                echo "<li class='page-item'><a class='page-link' href='/TDG/juegos?pagina={$i}'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
-            }
-        }
-        ?>
-    </ul>
-</nav>
+<?php include __DIR__."/Templates/paginacion.php" ?>
 
 <div class="list_juegos">
     <?php
@@ -144,32 +119,8 @@ require_once __DIR__ . '\Templates\header.php';
     }
     ?>
 </div>
-<nav class="pag">
-    <ul class="pagination">
-        <?php
 
-        $numero_inicio=1;
-
-        if(($pagina-4)>1){ // 4 es para tener 4 páginas a la izquierda.
-            $numero_inicio=$pagina-4;
-        }
-
-        $numero_fin=$numero_inicio + 8; // 9 páginas en total. 4 izq + 4 der + 1 central.
-
-        if($numero_fin > $total_paginas){ // 4 es para tener 4 páginas a la izquierda.
-            $numero_fin=$total_paginas;
-        }
-
-        for ($i = $numero_inicio; $i <= $numero_fin; $i++) {
-            if ($i == $pagina) {
-                echo "<li class='page-item active'><a class='page-link' href='#'>{$i}</a></li>";
-            } else {
-                echo "<li class='page-item'><a class='page-link' href='lista_juegos.php?pagina={$i}'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
-            }
-        }
-        ?>
-    </ul>
-</nav>
+<?php include __DIR__."/Templates/paginacion.php" ?>
 
 <script>
     $(document).ready(function() {
@@ -203,29 +154,64 @@ require_once __DIR__ . '\Templates\header.php';
         // AJAX para añadir el juego a las listas.
 
         $(".btn_listas i").click(function() {
-            let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
 
-            let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
-            let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
+            if($(this).hasClass("fa-solid")){ // En caso de que el boton esté coloreado, es decir que el juego esté en la lista, se elimina de esta.
 
-            $.ajax({
-                url: "../AJAX/AJAX.listas.php",
-                type: "POST",
-                data: {
-                    mode: "add_juego_lista",
-                    id_juego: id_juego,
-                    lista: lista,
-                    // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
-                },
-                success: function(response) {
-                    console.log(response);
-                    let color_boton = getComputedStyle(boton).borderColor;
-                    boton.style.color = color_boton;
-                    $(boton).toggleClass("en-lista");
-                    $(boton).toggleClass("fa-solid");
-                    $(boton).toggleClass("fa-regular");
-                }
-            });
+                console.log("Eliminando");
+
+                let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
+
+                let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
+                let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
+
+                $.ajax({
+                    url: "/TDG/src/AJAX/AJAX.listas.php",
+                    type: "POST",
+                    data: {
+                        mode: "delete_juego_lista",
+                        id_juego: id_juego,
+                        lista: lista,
+                        // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        let color_boton = getComputedStyle(boton).borderColor;
+                        boton.style.color = color_boton;
+                        $(boton).toggleClass("fa-solid");
+                        $(boton).toggleClass("fa-regular");
+                    }
+                });
+
+            }else if($(this).hasClass("fa-regular")){ // En caso de que el boton NO esté coloreado, es decir que el juego NO esté en la lista, se añade a esta.
+                
+                console.log("Añadiendo");
+
+                let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
+
+                let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
+                let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
+
+                $.ajax({
+                    url: "/TDG/src/AJAX/AJAX.listas.php",
+                    type: "POST",
+                    data: {
+                        mode: "add_juego_lista",
+                        id_juego: id_juego,
+                        lista: lista,
+                        // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        let color_boton = getComputedStyle(boton).borderColor;
+                        boton.style.color = color_boton;
+                        $(boton).toggleClass("en-lista");
+                        $(boton).toggleClass("fa-solid");
+                        $(boton).toggleClass("fa-regular");
+                    }
+                });
+            }
+
+            
         });
 
     });

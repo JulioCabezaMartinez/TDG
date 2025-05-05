@@ -23,7 +23,7 @@ class Lista extends EmptyModel {
      * @param int $id_Lista ID de la lista donde se agregará el juego.
      * @return void
      */
-    public function addJuegotoLista($id_Juego, $lista, $id_user): bool|string{
+    public function addJuegoToLista($id_Juego, $lista, $id_user): bool|string{
         $nombre_lista= match($lista){
             'wish' => 'wishlist',
             'back' => 'backlog',
@@ -53,6 +53,36 @@ class Lista extends EmptyModel {
         }
     }
 
+    public function deleteJuegoOfLista($id_Juego, $lista, $id_user): bool|string{
+        $nombre_lista= match($lista){
+            'wish' => 'wishlist',
+            'back' => 'backlog',
+            'comp' => 'completed',
+            'play' => 'playing',
+            default => null
+        };
+
+        if($nombre_lista){
+            $id_tipo_lista = $this->getIdTipoLista($nombre_lista);
+            $id_lista = $this->getIdLista($id_user, $id_tipo_lista);
+
+            if($id_lista){
+                // Preguntar a Ruben si crear otro modelo para la lista de juegos en tablas o usar el metodo privado que se ha creado.
+                
+                // $this->create(array(
+                //     'id_Juego' => $id_Juego,
+                //     'id_Lista' => $id_lista
+                // )); 
+                $this->deleteJuegoLista($id_Juego, $id_lista); // Agregar el juego a la lista.
+                return true;
+            } else {
+                return "idLista=null"; // La lista no existe para el usuario.
+            }
+        }else{
+            return "nombreLista=null"; // El nombre de la lista no es válido.
+        }
+    }
+
     private function getIdTipoLista($nombre_lista): int {
         $query = "SELECT id FROM listas_tipo WHERE nombre = :nombre_lista";
         $params = [':nombre_lista' => $nombre_lista];
@@ -72,6 +102,12 @@ class Lista extends EmptyModel {
 
     private function insertJuegoLista($id_Juego, $id_Lista): void {
         $query = "INSERT INTO juegos_lista (id_Juego, id_Lista) VALUES (:id_Juego, :id_Lista)";
+        $params = [':id_Juego' => $id_Juego, ':id_Lista' => $id_Lista];
+        $this->query($query, $params);
+    }
+
+    private function deleteJuegoLista($id_Juego, $id_Lista): void {
+        $query = "DELETE FROM juegos_lista WHERE id_juego=:id_Juego AND id_lista=:id_Lista;";
         $params = [':id_Juego' => $id_Juego, ':id_Lista' => $id_Lista];
         $this->query($query, $params);
     }

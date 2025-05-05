@@ -49,6 +49,8 @@ require_once 'Templates/header.php';
 <?php
     foreach ($lista_reviews as $review) {
         $usuario = $usuarioBD->getbyId($review["id_Escritor"]);
+        $contenido_reducido=str_split($review['Contenido'], 10)[0];
+        $contenido_reducido.=" ...";
     ?>
 
         <div class="review">
@@ -59,13 +61,13 @@ require_once 'Templates/header.php';
 
             <?php
             if(strlen($review['Contenido'])>=10){
-                $contenido_reducido=str_split($review['Contenido'], 10)[0];
-                $contenido_reducido.=" ...";
             ?>
                 <p id="texto_reducido" class="review_texto"><?php echo $contenido_reducido;?></p>
+                <p class="review_texto d-none"><?php echo $review['Contenido'];?></p>
             <?php
             }else{
             ?>
+                <p id="texto_reducido" class="review_texto d-none"><?php echo $contenido_reducido;?></p>
                 <p class="review_texto"><?php echo $review['Contenido'];?></p> <!-- Texto completo de la Review -->
             <?php
             }
@@ -90,7 +92,11 @@ require_once 'Templates/header.php';
             $("#creacion_review_modal").modal('show');
         });
 
-        // Aqui va el codigo del texto reducido.
+        $(".review_ver_mas_container").click(function(){
+            const $review = $(this).closest('.review'); // Busca el elemento más cercano con la clase .review.
+
+            $review.find('p.review_texto').toggleClass('d-none'); // Seleccionamos todos los <p> con clase review_texto dentro de esa review
+        });
     });
 </script>
 

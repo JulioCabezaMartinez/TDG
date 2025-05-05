@@ -13,7 +13,7 @@ class Venta extends EmptyModel {
      * Configura la tabla asociada al modelo.
      */
     public function __construct() {
-        parent::__construct('ventas', 'id');
+        parent::__construct('post_venta', 'id');
     }
 
     /**

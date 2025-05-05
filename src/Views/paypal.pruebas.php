@@ -59,37 +59,38 @@ $dotenv->load(); // Esto carga las variables al entorno
                 })
                 .then(response => response.json())  // Respuesta del backend que debe incluir 'orderID'
                 .then(orderData => {
+                    console.log(orderData);
                     // Verifica si el orderID está presente
-                    if (!orderData.orderID) {
-                        throw new Error("Se esperaba un orderID en la respuesta.");
-                    }
-                    return orderData.orderID;  // Asegúrate de devolver el orderID
+                    // if (!orderData.orderID) {
+                    //     throw new Error("Se esperaba un orderID en la respuesta.");
+                    // }
+                    // return orderData.orderID;  // Asegúrate de devolver el orderID
                 });
     },
 
-            // Función para manejar el pago
-            onApprove: function(data, actions) {
-                // Después de que el usuario autorice el pago, completar la transacción
-                return actions.order.capture().then(function(details) {
-                    if(details.status !== 'COMPLETED') {
-                        throw new Error("El pago no se completó correctamente.");
-                    }else{
-                        alert('¡Pago realizado con éxito!');
-                        console.log('Detalles del pago: ', details);  // Puedes personalizar la respuesta
-                    }
-                });
-            },
+            // // Función para manejar el pago
+            // onApprove: function(data, actions) {
+            //     // Después de que el usuario autorice el pago, completar la transacción
+            //     return actions.order.capture().then(function(details) {
+            //         if(details.status !== 'COMPLETED') {
+            //             throw new Error("El pago no se completó correctamente.");
+            //         }else{
+            //             alert('¡Pago realizado con éxito!');
+            //             console.log('Detalles del pago: ', details);  // Puedes personalizar la respuesta
+            //         }
+            //     });
+            // },
 
-            onCancel: function(data) {
-                // Función para manejar la cancelación del pago
-                alert('El pago ha sido cancelado.');  // Puedes personalizar el mensaje
-            },
+            // onCancel: function(data) {
+            //     // Función para manejar la cancelación del pago
+            //     alert('El pago ha sido cancelado.');  // Puedes personalizar el mensaje
+            // },
 
-            // Función para manejar los errores
-            onError: function(err) {
-                console.log("Error en el pago: ", err);
-                alert("Hubo un error en el proceso de pago.");
-            }
+            // // Función para manejar los errores
+            // onError: function(err) {
+            //     console.log("Error en el pago: ", err);
+            //     alert("Hubo un error en el proceso de pago.");
+            // }
 
         }).render('#paypal-buttons');
         // This function displays Smart Payment Buttons on your web page.

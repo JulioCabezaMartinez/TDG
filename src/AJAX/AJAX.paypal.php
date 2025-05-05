@@ -11,9 +11,9 @@ $dotenv->load();
 $clientId = $_ENV['PAYPAL_CLIENT_ID'];
 $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
 $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
-$productoId = 12 ;//$body['productoId'] ?? null;
+$productoId = $body['productoId'] ?? null;
 
-$precio = 49.99; // Precio fijo para la prueba. El precio real = $producto[precio].
+$precio = $body["precio"] ?? null; // Precio fijo para la prueba. El precio real = $producto[precio].
 
 // SANDBOX: Obtener token
 $ch = curl_init();

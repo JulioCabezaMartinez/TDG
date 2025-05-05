@@ -1,14 +1,4 @@
 <?php
-$juegos=[["name"=>"Juego 1","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>4.5],
-["name"=>"Juego 2","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>4.0],
-["name"=>"Juego 3","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>3.5],
-["name"=>"Juego 4","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>3.0],
-["name"=>"Juego 5","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>2.5],
-["name"=>"Juego 6","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>2.0],
-["name"=>"Juego 7","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>1.5],
-["name"=>"Juego 8","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>1.0],
-["name"=>"Juego 9","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>0.5],
-["name"=>"Juego 10","background_image"=>"https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg","precio"=>0.0]];
 $css = 'lista_ventas';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -79,22 +69,42 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="lista_ventas">
     
     <?php
-    foreach ($juegos as $juego) {
-        echo "<div class='juego'>
-                <img src='{$juego['background_image']}' alt=''>
+    foreach ($lista_ventas as $venta) {
+    ?>
+        <div id="<?php echo "{$venta['id']}" ?>" class='juego'>
+            <?php
+            if($venta['img_venta']){
+            ?>
+                <img src='<?php $venta['img_venta']?>' alt=''>
+            <?php
+            }else{
+            ?>
+                <img src='/TDG/public/IMG/default-game.jpg' alt=''>
+            <?php
+            }
+            ?>
                 <div class='info_juego'>
-                    <h1>{$juego['name']}</h1>
-                    <p class='precio'><strong>{$juego['precio']} €</strong></p>
+                    <h1><?php echo $venta['Titulo']?></h1>
+                    <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>
                 </div>
-            </div>";
+            </div>;
+    <?php
     }
     ?>
 </div>
 
 <script>
-    $("#boton_filtro").click(function() {
-        console.log("click");
-        $(".filtros_desplegable").toggleClass("active");
+    $(document).ready(function(){
+        $("#boton_filtro").click(function() {
+            console.log("click");
+            $(".filtros_desplegable").toggleClass("active");
+        });
+
+        $(".juego").click(function(){
+            let id_venta=$(this).attr("id");
+            <?php  ?>
+            window.location.href='/TDG/ventas/view/checkout?id='+id_venta;
+        });
     });
 </script>
 

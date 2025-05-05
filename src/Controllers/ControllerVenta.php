@@ -64,4 +64,24 @@ class ControllerVenta {
         $this->venta->delete($id);
         require_once '../src/Views/ventas.php';
     }
+
+    public function lista_ventas(){
+        $ventaBD=new Venta();
+        $lista_ventas=$ventaBD->getAll();
+
+        require_once __DIR__. "/../Views/lista_ventas.php";
+    }
+
+    public function detalles_Compra(){
+
+
+        require_once __DIR__. "../Views/detalles_compra.php";
+    }
+
+    public function checkout(){
+        $id_venta=$_GET["id"] ?? null;
+        $venta=$this->venta->getById($id_venta);
+
+        require_once __DIR__. "/../Views/checkout.php";
+    }
 }

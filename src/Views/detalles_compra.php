@@ -1,5 +1,5 @@
 <?php
-$css = 'ventas_perfil';
+$css = 'detalles_compra';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';

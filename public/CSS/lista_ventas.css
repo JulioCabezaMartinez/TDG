@@ -33,6 +33,11 @@
     width: 95%;
 }
 
+.juego img{
+    padding: 10px;
+    width: 25%;
+}
+
 .info_juego{
     display: flex;
     flex-direction: column;
@@ -46,11 +51,6 @@
 .info_juego .precio{
     font-size: 250%;
     margin: 0;
-}
-
-.juego img{
-    padding: 10px;
-    max-width: 400px;
 }
 
 .btn_listas{

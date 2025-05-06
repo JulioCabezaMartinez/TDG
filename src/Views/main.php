@@ -58,43 +58,49 @@ require_once __DIR__ . '\Templates\header.php';
         </div>
     </div>
 </div>
+<?php
+if($_SESSION["id_usuario"]){
+?>
+    <div class="recomendados">
+        <h2>Recomendados</h2>
+        <div class="recomendados__container">
+            <div class="swiper">
+                <div class="card-wrapper">
+                    <div class="card-list swiper-wrapper">
 
-<div class="recomendados">
-    <h2>Recomendados</h2>
-    <div class="recomendados__container">
-        <div class="swiper">
-            <div class="card-wrapper">
-                <div class="card-list swiper-wrapper">
+                        <?php
+                        foreach ($mas_vendidos as $juego) {
+                        ?>
 
-                    <?php
-                    foreach ($mas_vendidos as $juego) {
-                    ?>
-
-                        <div class="card-item swiper-slide">
-                            <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                            <div class="card-content">
-                                <h3><?php echo $juego['Nombre'] ?></h3>
-                                <!-- Se pueden añadir más campos del juegos -->
+                            <div class="card-item swiper-slide">
+                                <img src="<?php echo $juego['Imagen']; ?>" alt="">
+                                <div class="card-content">
+                                    <h3><?php echo $juego['Nombre'] ?></h3>
+                                    <!-- Se pueden añadir más campos del juegos -->
+                                </div>
                             </div>
-                        </div>
 
-                    <?php
-                    }
-                    ?>
+                        <?php
+                        }
+                        ?>
+
+                    </div>
+                    <!-- Paginación del Carrusel -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- Botones de navegación del Carrusel -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
 
                 </div>
-                <!-- Paginación del Carrusel -->
-                <div class="swiper-pagination"></div>
-
-                <!-- Botones de navegación del Carrusel -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
+<?php
+}
+?>
+
 
 <div id="reviews_populares">
 

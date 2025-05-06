@@ -1,7 +1,7 @@
 <header>
     <!-- Logo de la app -->
     <div>
-        <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
+        <a href="/TDG/"><img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt=""></a>
     </div>
 
     <!-- Las opciones del perfil van a ir en el desplegable -->

@@ -79,7 +79,7 @@ require_once __DIR__ . '\Templates\header.php';
             <?php
             }else{
             ?>
-                <img src='/TDG/public/IMG/default-game.jpg' alt=''>
+                <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
             <?php
             }
             ?>

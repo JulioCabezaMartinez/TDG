@@ -23,11 +23,6 @@ class Genero extends EmptyModel {
         $this->query($sql, [$nombre]);
     }
 
-    public function getGenerosJuego($id) {
-        $sql = "SELECT * FROM generos WHERE id = ?";
-        return $this->query($sql, [$id])->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function rellenarBDJuegosGeneros($id_juego, $id_genero): void {
         $sql = "INSERT INTO generos_juego (id_juego, id_genero) VALUES (?, ?)";
         $this->query($sql, [$id_juego, $id_genero]);
@@ -39,7 +34,7 @@ class Genero extends EmptyModel {
         $this->query($sql, [$id_genero, $nombre]);
     }
 
-    public function getGenerosJuegobyId($id_juego) {
+    public function getGenerosJuegoById($id_juego) {
         $sql = "SELECT g.Nombre FROM generos g
                 JOIN generos_juego gj ON g.id = gj.id_genero
                 WHERE gj.id_juego = ?";

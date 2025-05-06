@@ -14,7 +14,7 @@ class Review extends EmptyModel {
      * Configura la tabla asociada al modelo.
      */
     public function __construct() {
-        parent::__construct('reviews', 'id');
+        parent::__construct('review', 'id_Review');
     }
 
     public function getAllReviewsJuego($id_juego){

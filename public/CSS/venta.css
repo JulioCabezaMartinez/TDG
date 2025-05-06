@@ -1,11 +1,27 @@
-.nombre_juego{
+.principal_venta{
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
+}
+
+.nombre_venta{
     font-size: 2.5em;
     text-align: center;
     margin-top: 2%;
 }
 
-img{
-    width: 100%;
+.img_venta{
+    width: 95vw;
+}
+
+.precio_venta{
+    margin: 2%;
+    align-self: self-start;
+}
+
+a{
+    text-decoration: none;
 }
 
 #btn_comprar{
@@ -15,8 +31,6 @@ img{
     background-color: var(--color-secundario); /* Green */
 
     border-radius: 20px;
-
-    color: black;
 
     position: sticky;
     bottom: 20px;
@@ -32,7 +46,7 @@ img{
     padding: 0;
     margin: 0;
     background-color: transparent;
-    color: black !important;
+    color: var(--color-boton-texto);
 }
 
 #btn_comprar i{
@@ -40,9 +54,22 @@ img{
     background-color: transparent;
 }
 
-
-.descripcion_juego, .info_juego {
+.caracteristicas_producto{
     margin: 2%;
+}
+
+.generos_juego{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.genero{
+    margin: 1%;
+
+    padding: 1%;
+    background-color: var(--color-tarjeta-secundario);
+    border-radius: 20px;
 }
 
 .descripcion_juego{

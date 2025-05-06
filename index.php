@@ -38,6 +38,8 @@ $router->add('/perfil', 'ControllerUsuario@perfil_listas');
 $router->add('/perfil/lista', 'ControllerUsuario@lista');
 $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 
+// Rutas de Controladores.
+
 // No entiendo como funciona el enrutador, pero aquí se define la ruta para la página de inicio
 
 // Procesar la solicitud

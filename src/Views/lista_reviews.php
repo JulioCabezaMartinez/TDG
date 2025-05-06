@@ -16,18 +16,19 @@ require_once 'Templates/header.php';
                 <div>
                     <div>
                         <label for="">Nombre Juego:</label>
-                        <input id="nombre_juego" class="form-control" type="text">
+                        <input id="nombre_juego" class="form-control" type="text" value="<?php echo $juego["Nombre"] ?>" readonly>
                     </div>
                     <br>
                     <div>
                         <label for="">Review:</label>
                         <textarea id="contenido_review" class="form-control" rows="4" type="text"></textarea>
                     </div>
-                    <input id="id_juego_hidden" type="hidden">
+                    <input id="id_juego_hidden" type="hidden" value="<?php echo $_GET["id_juego"] ?>">
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btn_cerrar_creacion_review" type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button id="btn_cerrar_creacion_review" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="btn_agregar_review" type="button" class="btn btn-primary" data-dismiss="modal">Agregar Review</button>
             </div>
         </div>
     </div>
@@ -46,11 +47,11 @@ require_once 'Templates/header.php';
 
 <hr>
 <div class="lista_reviews">
-<?php
+    <?php
     foreach ($lista_reviews as $review) {
         $usuario = $usuarioBD->getbyId($review["id_Escritor"]);
-        $contenido_reducido=str_split($review['Contenido'], 10)[0];
-        $contenido_reducido.=" ...";
+        $contenido_reducido = str_split($review['Contenido'], 10)[0];
+        $contenido_reducido .= " ...";
     ?>
 
         <div class="review">
@@ -60,15 +61,15 @@ require_once 'Templates/header.php';
             </div>
 
             <?php
-            if(strlen($review['Contenido'])>=10){
+            if (strlen($review['Contenido']) >= 10) {
             ?>
-                <p id="texto_reducido" class="review_texto"><?php echo $contenido_reducido;?></p>
-                <p class="review_texto d-none"><?php echo $review['Contenido'];?></p>
+                <p id="texto_reducido" class="review_texto"><?php echo $contenido_reducido; ?></p>
+                <p class="review_texto d-none"><?php echo $review['Contenido']; ?></p>
             <?php
-            }else{
+            } else {
             ?>
-                <p id="texto_reducido" class="review_texto d-none"><?php echo $contenido_reducido;?></p>
-                <p class="review_texto"><?php echo $review['Contenido'];?></p> <!-- Texto completo de la Review -->
+                <p id="texto_reducido" class="review_texto d-none"><?php echo $contenido_reducido; ?></p>
+                <p class="review_texto"><?php echo $review['Contenido']; ?></p> <!-- Texto completo de la Review -->
             <?php
             }
             ?>
@@ -87,12 +88,40 @@ require_once 'Templates/header.php';
 
 
 <script>
-    $(document).ready(function(){
-        $("#add-review").click(function(){
+    $(document).ready(function() {
+        // Modal de Creación de Review
+
+        $("#add-review").click(function() {
             $("#creacion_review_modal").modal('show');
         });
 
-        $(".review_ver_mas_container").click(function(){
+        $("#btn_cerrar_creacion_review").click(function() {
+            $("#creacion_review_modal").modal('hide');
+            $("#contenido_review").val("");
+        });
+
+        // AJAX para enviar la información del modal a la BD.  
+        $("#btn_agregar_review").click(function(){
+            let id_juego = $("#id_juego_hidden").val();
+            let review = $("#contenido_review").val();
+
+            $.ajax({
+                url: "/TDG/src/AJAX/AJAX.review.php",
+                type: "POST",
+                data: {
+                    mode: "add_review",
+                    id_juego: id_juego,
+                    review: review,
+                    // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        });      
+        
+
+        $(".review_ver_mas_container").click(function() {
             const $review = $(this).closest('.review'); // Busca el elemento más cercano con la clase .review.
 
             $review.find('p.review_texto').toggleClass('d-none'); // Seleccionamos todos los <p> con clase review_texto dentro de esa review

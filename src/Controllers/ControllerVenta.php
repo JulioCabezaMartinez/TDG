@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Venta;
+use App\Models\Juego;
+use App\Models\Genero;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con el modelo Venta.
@@ -73,6 +75,16 @@ class ControllerVenta {
     }
 
     public function view_venta(){
+        $id_venta = $_GET["id_venta"];
+
+        $ventaBD= new Venta();
+        $juegoBD = new Juego();
+        $generoBD = new Genero();
+
+        $venta=$ventaBD->getById($id_venta);
+        $juego=$juegoBD->getById($venta["id_juego"]);
+        $generos=$generoBD->getGenerosJuegoById($juego["id"]);
+
         require_once __DIR__. "/../Views/venta.php";
     }
 

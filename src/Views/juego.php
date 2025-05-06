@@ -24,7 +24,7 @@ require_once __DIR__ . '\Templates\header.php';
 
             <div class="btn_redondo">
                 <!-- <p>Añadir a la lista de Completados</p> -->
-                <i class='fa-solid fa-check icono_ajustable'></i>
+                <i class='fa-solid fa-circle-check icono_ajustable'></i>
             </div>
 
             <div class="btn_redondo">

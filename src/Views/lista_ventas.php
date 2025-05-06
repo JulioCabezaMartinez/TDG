@@ -72,17 +72,9 @@ require_once __DIR__ . '\Templates\header.php';
     foreach ($lista_ventas as $venta) {
     ?>
         <div id="<?php echo "{$venta['id']}" ?>" class='juego'>
-            <?php
-            if($venta['img_venta']){
-            ?>
-                <img src='<?php $venta['img_venta']?>' alt=''>
-            <?php
-            }else{
-            ?>
+            
                 <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
-            <?php
-            }
-            ?>
+
                 <div class='info_juego'>
                     <h1><?php echo $venta['Titulo']?></h1>
                     <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>

@@ -119,12 +119,6 @@ if($_SESSION["id_usuario"]){
                 <p class="review_texto" ><?php echo $review['review']; ?><!-- Texto de la reseña --></p>
 
                 <div class="review_footer">
-                    <div class="review_rating"> 
-                        <i class="fa-light fa-thumbs-up"></i>
-                        <p>
-                            <?php echo $review['rating'] ?> <!-- Valoración de la reseña -->
-                        </p>
-                    </div>
                     
                     <div class="review_ver_mas_container">
                         <i class="fa-solid fa-arrow-down"></i>

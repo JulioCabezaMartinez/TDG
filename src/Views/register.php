@@ -1,8 +1,6 @@
 <?php
 $css = "login";
 require_once 'Templates/inicio.php';
-
-require_once 'Templates/header.php';
 ?>
 
 <div class="tarjeta-login">

@@ -7,6 +7,14 @@ require_once __DIR__ . '\Templates\header.php';
 
 ?>
 
+<div class="landing">
+    <h1>To Do Games</h1>
+    <p>Plataforma gamer donde puedes gestionar tus juegos con listas de deseados, pendientes, completados y en juego, además de comprar y vender títulos físicos con otros usuarios de forma segura.</p>
+    <div>
+        
+    </div>
+</div>
+
 <div class="recien_añadidos">
     <h2>Recien añadidos</h2>
     <div class="recien_añadidos__container">

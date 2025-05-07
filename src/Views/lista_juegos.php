@@ -8,6 +8,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <h3 class="text-center mt-4">Juegos</h3>
 
+<!-- Menu de Filtros -->
 <div class="filtros_desplegable">
     <div class="filtros_texto">
         <p>Filtros</p>
@@ -29,6 +30,7 @@ require_once __DIR__ . '\Templates\header.php';
         </div>
     </div>
 </div>
+<!-- Menu de Filtros -->
 
 <div id="filtros">
     <button id="boton_filtro" class="btn_filtros">
@@ -121,6 +123,12 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <?php include __DIR__."/Templates/paginacion.php" ?>
+
+<!-- JS del Swiper (Carrusel) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Script de inicio del Swiper -->
+<script src="/TDG/public/JS/carrusel.js"></script>
 
 <script>
     $(document).ready(function() {

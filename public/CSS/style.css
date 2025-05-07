@@ -28,7 +28,6 @@ html, body{
     padding: 5px;
 
     background-color: var(--color-fondo) !important;
-    /* color: var(--color-texto-secundario) !important; */
 }
 
 p{
@@ -40,4 +39,8 @@ h1, h2, h3, h4, h5, h6{
     color: var(--color-texto) !important;
 
     font-family: "Orbitron", sans-serif;
+}
+
+.boton p{
+    color: var(--color-boton-texto) !important;
 }

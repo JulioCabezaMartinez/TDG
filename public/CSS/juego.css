@@ -8,16 +8,18 @@
 
 .btn_redondo{
     border-radius: 25px;
-    background-color: #da4747; /* Color de prueba (diferenciación) */
+
     border: none;
     cursor: pointer;
 
     padding: 10px;
+
+    background-color: var(--color-tarjeta-secundario);
 }
 
-/* Header de la página */
+/* Parte de arriba de la página */
 
-.header_juego{
+.top_juego{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,10 +43,14 @@
 
 }
 
-.btn_listas > div:nth-child(1){
+/* Boton de Wishlist */
+
+.wishlist{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: var(--color-wishlist);
 
     width: 100%;
     margin: 2%;
@@ -55,6 +61,12 @@
     padding-left: 5%;
 }
 
+.btn_listas > div:nth-child(1) p{
+    padding: 1.5%;
+    margin: 0;
+}
+
+/* Botones de Backlog, Completed y Playing */
 .btn_listas > div:nth-child(2){
     display: flex;
     flex-direction: row;
@@ -64,6 +76,19 @@
     width: 100%;
 }
 
+.backlog{
+    background-color: var(--color-backlog);
+}
+
+.completed{
+    background-color: var(--color-completed);
+}
+
+.playing{
+    background-color: var(--color-playing)
+}
+
+/* Los 3 botones de añadir a las listas */
 .btn_listas > div:nth-child(2) > div{
     display: flex;
     justify-content: center;
@@ -73,8 +98,9 @@
     padding: 10px;
 }
 
+
 .btn_listas > div:nth-child(2) > div:nth-child(2){
-    margin: 0 5%;
+    margin: 0 5%; /* Separación de los botones */
 }
 
 /* Información del Juego */
@@ -87,17 +113,11 @@
 }
 
 .caracteristicas_juego{
-
     width: 40%;
 }
 
-.generos_juego div{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.generos_juego div{
+/* Distribución de Generos y Plataformas */
+.distr-wrap{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -107,12 +127,6 @@
 
 .generos_juego div p{
     margin: 5px;
-}
-
-.plataformas_juego div{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 
 .plataformas_juego div p{
@@ -126,4 +140,10 @@
 
     border: 1px solid #000;
     border-radius: 25px;
+
+    background-color: var(--color-tarjeta);
+}
+
+.descripcion_juego h2{
+    margin: 4%;
 }

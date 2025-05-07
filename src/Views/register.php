@@ -1,11 +1,12 @@
 <?php
-$css = "login";
+$css = "login_register";
 require_once 'Templates/inicio.php';
 ?>
 
 <div class="tarjeta-login">
+    <h1>TO Do Games</h1>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
-    <h1 class="text-center">Registro</h1>
+    <h2 class="text-center">Registro</h2>
     <form action="/TDG/registrar-usuario" method="POST" class="mt-4">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre:</label>
@@ -21,7 +22,7 @@ require_once 'Templates/inicio.php';
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen (Opcional):</label>
-            <input type="file" name="imagen_perfil" id="imagen_perfil">
+            <input class="imagen_form" type="file" name="imagen_perfil" id="imagen_perfil">
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">Nick de Usuario:</label>

@@ -42,3 +42,11 @@ form{
     align-self: center;
     width: 50%;
 }
+
+.tarjeta-login h1{
+    align-self: center;
+}
+
+.imagen_form{
+    color: var(--color-texto);
+}

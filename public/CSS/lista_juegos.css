@@ -22,17 +22,14 @@
     transition: 0.5s;
 }
 
-/* Carrusel Filtros */
+ /* Filtros especificos para el carrusel de Filtros aplicados */
 .swiper{
     margin: 0 !important;
     width: 100% !important;
 }
 
 .card-item{
-    max-width: fit-content !important;
-    max-height: fit-content !important;
-    min-height: fit-content !important;
-    min-width: fit-content !important;
+    max-width: fit-content;
     padding: 3%;
     margin: 1%;
 
@@ -41,7 +38,6 @@
 
     background-color: wheat;
 
-    display: flex;
     flex-direction: row;
 }
 

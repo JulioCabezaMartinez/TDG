@@ -4,30 +4,30 @@ require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
 ?>
-<div class="header_juego">
+<div class="top_juego">
     <h1><?php echo $juego['Nombre'] ?></h1>
 
     <img class="imagen_juego" src="<?php echo $juego['Imagen'] ?>" alt="">
 
     <div class='btn_listas'>
-        <div class="btn_redondo">
+        <div class="boton btn_redondo wishlist">
             <p>Añadir a la lista de Deseados</p>
             <i class='fa-regular fa-heart btn_wishlist icono_ajustable'></i>
         </div>
         
         <div>
 
-            <div class="btn_redondo">
+            <div class="boton btn_redondo backlog">
                 <!-- <p>Añadir a la lista de Pendientes</p> -->
                 <i class='fa-solid fa-clock icono_ajustable'></i>
             </div>
 
-            <div class="btn_redondo">
+            <div class="boton btn_redondo completed">
                 <!-- <p>Añadir a la lista de Completados</p> -->
                 <i class='fa-solid fa-circle-check icono_ajustable'></i>
             </div>
 
-            <div class="btn_redondo">
+            <div class="boton btn_redondo playing">
                 <!-- <p>Añadir a la lista de Jugando</p> -->
                 <i class='fa-regular fa-circle-play icono_ajustable'></i>
             </div>
@@ -43,7 +43,7 @@ require_once __DIR__ . '\Templates\header.php';
 
         <div class="generos_juego">
             <h3>Géneros</h3>
-            <div>
+            <div class="distr-wrap">
                 <?php
                     foreach ($generos as $genero) {
                 ?>
@@ -55,7 +55,7 @@ require_once __DIR__ . '\Templates\header.php';
         </div>
         <div class="plataformas_juego">
             <h3>Plataformas</h3>
-            <div>
+            <div class="distr-wrap">
                 <?php
                     foreach ($plataformas as $plataforma) {
                 ?>

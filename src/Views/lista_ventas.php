@@ -29,61 +29,46 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 
-<div>
-    <button id="boton_filtro" class="btn_redondo">
+<div id="filtros">
+    <button id="boton_filtro" class="btn_filtros">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
         <p>Filtros</p>
     </button>
 
+    <!-- <hr> Poner una barra en vertical para separar el boton de los filtros -->
+
     <!-- Carrusel de Filtros activos -->
     <div class="swiper">
         <div class="card-wrapper">
-            <div class="card-list swiper-wrapper">
-
-                <div class="card-item swiper-slide">
-                    
-                </div>
-
-                <div class="card-item swiper-slide">
-                    
-                </div>
-
-                <div class="card-item swiper-slide">
-                    
-                </div>
-
-                <div class="card-item swiper-slide">
-                    
-                </div>
-
-                <div class="card-item swiper-slide">
-                    
-                </div>
+            <div class="filtros_activos card-list swiper-wrapper">
 
             </div>
-
         </div>
+    </div>
+
+</div>
+
+<div class="centrar-di">
+    <div class="lista_ventas">
+        
+        <?php
+        foreach ($lista_ventas as $venta) {
+        ?>
+            <div id="<?php echo "{$venta['id']}" ?>" class='venta'>
+                
+                    <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
+
+                    <div class='info_juego'>
+                        <h1><?php echo $venta['Titulo']?></h1>
+                        <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>
+                    </div>
+                </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 
-<div class="lista_ventas">
-    
-    <?php
-    foreach ($lista_ventas as $venta) {
-    ?>
-        <div id="<?php echo "{$venta['id']}" ?>" class='juego'>
-            
-                <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
-
-                <div class='info_juego'>
-                    <h1><?php echo $venta['Titulo']?></h1>
-                    <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>
-                </div>
-            </div>;
-    <?php
-    }
-    ?>
-</div>
 
 <script>
     $(document).ready(function(){
@@ -92,7 +77,7 @@ require_once __DIR__ . '\Templates\header.php';
             $(".filtros_desplegable").toggleClass("active");
         });
 
-        $(".juego").click(function(){
+        $(".venta").click(function(){
             let id_venta=$(this).attr("id");
             <?php  ?>
             window.location.href='/TDG/ventas/view/checkout?id='+id_venta;

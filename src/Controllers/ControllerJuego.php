@@ -24,55 +24,6 @@ class ControllerJuego {
         $this->juego = new Juego();
     }
 
-    /**
-     * Obtiene todos los juegos.
-     *
-     * @return void
-     */
-    public function getAllJuegos(): void {
-        $this->juego->getAll();
-        require_once '../src/Views/juegos.php';
-    }
-
-    public function getNewJuegos(): void {
-        $this->juego->getNew();
-        require_once '../src/Views/juegos.php';
-    }
-
-    /**
-     * Obtiene un juego por su ID.
-     *
-     * @param int $id ID del juego a obtener.
-     * @return void
-     */
-    public function getJuegoById($id): void {
-        $this->juego->getById($id);
-        require_once '../src/Views/juegos.php';
-    }
-
-    /**
-     * Actualiza un juego existente.
-     *
-     * @param int $id ID del juego a actualizar.
-     * @param array $data Datos actualizados del juego.
-     * @return void
-     */
-    public function updateJuego($id, $data): void {
-        $this->juego->update(id: $id, data: $data);
-        require_once '../src/Views/juegos.php';
-    }
-
-    /**
-     * Elimina un juego por su ID.
-     *
-     * @param int $id ID del juego a eliminar.
-     * @return void
-     */
-    public function deleteJuego($id): void {
-        $this->juego->delete($id);
-        require_once '../src/Views/juegos.php';
-    }
-
     public function lista_juegos(): void {
         $lista = new Lista();
 
@@ -93,8 +44,41 @@ class ControllerJuego {
         }else{
             $inicio = ($pagina-1)*$limite; // 5 juegos por página. 
         }
-        $juegos = $juego->getListGames($inicio, $limite); // Obtener 10 juegos. Paginación falta
-        require_once 'src/Views/lista_juegos.php'; // Cargar la vista de juegos
+
+
+
+        $juegos = $juego->getListGames($inicio, $limite); // Obtener 10 juegos
+
+        foreach ($juegos as &$juego) {
+
+            // Booleanos para comprobar si el juego está en las listas del usuario.
+            $wishlist = false;
+            $backlog = false;
+            $completed = false;
+            $playing = false;
+        
+            $listas_juego = $lista->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+            foreach ($listas_juego as $lista_usuario) {
+
+                switch ($lista->getTipoLista($lista_usuario)) {
+                    case 1:
+                        $wishlist = true;
+                        break;
+                    case 2:
+                        $completed = true;
+                        break;
+                    case 3:
+                        $playing = true;
+                        break;
+                    case 4:
+                        $backlog = true;
+                        break;
+                }
+            }
+            $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
+        }
+
+        include_once 'src/Views/lista_juegos.php'; // Cargar la vista de juegos
     }
 
     public function view_juego(): void {
@@ -108,6 +92,6 @@ class ControllerJuego {
         $generos = $genero->getGenerosJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
         $plataformas = $plataforma->getPlataformasJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
 
-        require_once 'src/Views/juego.php'; // Cargar la vista del juego
+        include_once 'src/Views/juego.php'; // Cargar la vista del juego
     }
 }

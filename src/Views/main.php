@@ -22,8 +22,23 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($mas_vendidos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
-                <h3><?= $recien_añadido['Nombre'] ?></h3>
+                <a href="">
+                    <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
+                    <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
+                </a>
+            </div>
+        <?php
+        }
+        ?>
+        <!-- Para evitar el salto del carrusel al llegar al final se duplica el contenido para que se consiga el loop infinito -->
+        <?php
+        foreach ($mas_vendidos as $recien_añadido) {
+        ?>
+            <div class="recien_añadidos__item">
+                <a href="">
+                    <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
+                    <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
+                </a>
             </div>
         <?php
         }

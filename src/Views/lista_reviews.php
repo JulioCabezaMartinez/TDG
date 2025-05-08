@@ -35,14 +35,14 @@ require_once 'Templates/header.php';
 </div>
 <!-- Modal de creación de Review -->
 
-<h1 class="text-center mt-4"><?php echo $juego["Nombre"] ?></h1>
+<h1 class="text-center m-4"><?php echo $juego["Nombre"] ?></h1>
 
 <div class="reviews-h2">
     <h2>Reviews</h2>
-    <button id="add-review" class="btn-add-review">
+    <div id="add-review" class="btn-add-review">
         <i class="fa-regular fa-plus"></i>
         <i class="fa-regular fa-comment"></i>
-    </button>
+    </div>
 </div>
 
 <hr>

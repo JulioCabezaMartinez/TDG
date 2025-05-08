@@ -1,3 +1,18 @@
+.reviews-h2{
+    display: flex;
+}
+
+.btn-add-review{
+    display: inline;
+
+    margin-left: 2%;
+    padding: 1%;
+
+    background-color: var(--color-secundario);
+
+    border-radius: 20px;
+}
+
 .lista_reviews{
     display: flex;
     flex-direction: column;

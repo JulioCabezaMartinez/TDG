@@ -12,7 +12,7 @@
 }
 
 .img_venta{
-    width: 95vw;
+    max-width: 70vw;
 }
 
 .precio_venta{

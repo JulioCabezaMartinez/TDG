@@ -43,6 +43,17 @@
 
 /* Filtros */
 
+#filtros{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    /* justify-content: space-around;
+    align-items: center;
+    padding: 2%; */
+}
+
 .btn_filtros{
     display: flex;
     border-radius: 25px;
@@ -76,17 +87,6 @@
     min-height: fit-content;
 }
 
-#filtros{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    width: 100%;
-    /* justify-content: space-around;
-    align-items: center;
-    padding: 2%; */
-}
-
 .eliminar_filtro{
     cursor: pointer;
 }
@@ -109,26 +109,19 @@
     padding: 20px;
 }
 
-.enlace_juego{
-    color: var(--color-texto);
-
-    width: 100%;
-    margin-bottom: 1rem;
-    
-    text-align: center;
-}
-
 .juego{
     display: flex;
     flex-direction: column;
     
-    border: 2px solid #000000;
+    border: 2px solid var(--color-tarjeta);
     border-radius: 10px;
 
     width: 100%;
-    margin: 5px;
+    margin: 0px 5px 30px 5px;
 
     background-color: var(--color-tarjeta);
+
+    
 }
 
 .juego img{
@@ -150,10 +143,18 @@
     padding-left: 10px;
 }
 
-.info_juego a{
+.enlace_juego{
+    color: var(--color-texto);
+
+    width: 100%;
+    margin-bottom: 1rem;
+    
+    text-align: center;
+    
     padding: 0;
-    text-decoration: underline var(--color-texto);
+    text-decoration: underline var(--color-texto) !important;
 }
+
 
 .btn_listas{
     width: 100%;
@@ -177,6 +178,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.icono{
+    font-size: 150%;
 }
 
 /* Botones de listas */

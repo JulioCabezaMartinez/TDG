@@ -42,7 +42,7 @@
 }
 
 .swiper-button-prev, .swiper-button-next{
-    color: var(--color-secundario);
+    color: var(--color-texto);
 }
 
 .swiper-pagination-bullet {
@@ -51,7 +51,7 @@
 }
 
 .swiper-pagination-bullet-active{
-    background: var(--color-secundario);
+    background: var(--color-texto);
     opacity: 1;
 }
 

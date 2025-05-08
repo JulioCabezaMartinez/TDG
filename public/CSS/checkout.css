@@ -1,5 +1,10 @@
 /* Página de estilos de Checkout */
 
+body{
+    height: 100vh;
+    background: linear-gradient(180deg,rgba(28, 28, 30, 1) 50%, rgba(166, 166, 166, 1) 100% ) !important;
+}
+
 .cuerpo{
     margin-top: 1%;
     display: flex;

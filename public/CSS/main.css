@@ -1,16 +1,38 @@
+.recien_añadidos {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.recien_añadidos__container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: max-content;
+    height: 100%;
+    animation: scroll-marquee 40s linear infinite;
+}
+
 .recien_añadidos__item{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90vw;
-    height: 100%;
-    padding: 10px;
 
+    width: 40vw;
+    height: max-content;
+
+    padding: 10px;
     margin: 10px;
+
     border: 1px solid #00000033;
     border-radius: 10px;
+
     background-color: var(--color-tarjeta);
+
 }
 
 .recien_añadidos__item img{
@@ -19,12 +41,25 @@
     border-radius: 10px;
 }
 
-.recien_añadidos__container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+.recien_añadidos__item .titulo_juego{
+    text-align: center;
+}
+  
+
+  /* Animación de scroll horizontal continuo */
+  @keyframes scroll-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+/* Card Items Swipper */
+
+.card-item{
+    border: 5px solid transparent;
 }
 
 /* Reviews */
@@ -104,28 +139,48 @@
 /* Media Querys */
 
 @media screen and (min-width: 640px) {
+    .recien_añadidos__container:has(.recien_añadidos__item:hover){
+        animation-play-state: paused;
+    }
+    
     .recien_añadidos__item{
         width: 40vw;
         transition: 0.3s;
     }
 
     .recien_añadidos__item:hover{
-        width: 41vw;
-        background-color: var(--color-primario);
+        width: 45vw;
+        box-shadow: 0 0 20px white;
         transition: 0.3s;
+    }
+
+    .card-item:hover{
+        box-shadow: 0 0 20px var(--color-backlog);
+        border: 5px solid var(--color-backlog);
     }
     
 }
 
 @media screen and (min-width: 768px) {
+    .recien_añadidos__container:has(.recien_añadidos__item:hover){
+        animation-play-state: paused;
+    }
+    
     .recien_añadidos__item{
-        width: 20vw;
+        width: 30vw;
+        transition: 0.3s;
     }
 
     .recien_añadidos__item:hover{
-        width: 25vw;
-        background-color: var(--color-primario);
+        width: 32vw;
+        
+        box-shadow: 0 0 20px white;
+
         transition: 0.3s;
     }
-    
+
+    .card-item:hover{
+        border: 5px solid var(--color-backlog);
+        box-shadow: 0 0 20px var(--color-backlog);
+    }
 }

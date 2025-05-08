@@ -1,5 +1,9 @@
 /* Estilos para la lista de ventas */
 
+body{
+    height: 100vh;
+}
+
 .btn_redondo{
     display: flex;
     border-radius: 25px;
@@ -7,13 +11,68 @@
     padding: 2%;
 }
 
-#filtros_icon{
-    width: fit-content;
-}
-
 .btn_redondo p{
     padding-left: 5px;
     margin: 0;
+}
+
+
+/* Filtros */
+
+#filtros{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    /* justify-content: space-around;
+    align-items: center;
+    padding: 2%; */
+}
+
+.btn_filtros{
+    display: flex;
+    border-radius: 25px;
+    padding: 2%;
+
+    max-height: fit-content;
+
+    background-color: var(--color-secundario);
+    color: var(--color-boton-texto);
+}
+
+.btn_filtros i{
+    justify-self: center;
+    align-self: center;
+}
+
+.btn_filtros p{
+    padding-left: 5px;
+    margin: 0;
+
+    max-height: fit-content;
+    min-height: fit-content;
+
+    color: var(--color-boton-texto) !important;
+}
+
+#filtros_icon{
+    width: fit-content;
+
+    max-height: fit-content;
+    min-height: fit-content;
+}
+
+.eliminar_filtro{
+    cursor: pointer;
+}
+
+/* Lista de Ventas */
+
+.centrar-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lista_ventas{
@@ -22,10 +81,16 @@
     align-items: center;
     justify-content: center;
 
-    width: 100%;
+    border-radius: 20px;
+
+    margin-top: 20px;
+
+    width: 90%;
+    
+    /* padding: 20px; */
 }
 
-.juego{
+.venta{
     display: flex;
 
     border-radius: 10px;
@@ -33,9 +98,11 @@
 
     margin: 5px;
     width: 95%;
+
+    background-color: var(--color-tarjeta);
 }
 
-.juego img{
+.venta img{
     padding: 10px;
     width: 25%;
 }
@@ -48,6 +115,7 @@
 
     padding: 2%;
     width: 100%;
+
 }
 
 .info_juego .precio{

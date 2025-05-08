@@ -56,6 +56,7 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="list_juegos">
     <?php
     foreach ($juegos as $juego) { // Cambiar Calificacion por Generos del Juego.
+
         echo "<div class='juego'>
                     <img src='{$juego['Imagen']}' alt=''>
                     <div class='info_juego'>
@@ -66,55 +67,18 @@ require_once __DIR__ . '\Templates\header.php';
                         <p><strong>Fecha de salida:</strong> {$juego['Anyo_salida']}</p>
                         <div class='btn_listas'>
                         ";
-                        $listas_juego = $lista->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+
+                        $iconos = [
+                            ["wish", "heart"],
+                            ["back", "clock"],
+                            ["comp", "circle-check"],
+                            ["play", "circle-play"]
+                        ];
                         
-                        // Booleanos para comprobar si el juego está en las listas del usuario.
-                        $wishlist = false;
-                        $backlog = false;
-                        $completed = false;
-                        $playing = false;
-
-                        foreach ($listas_juego as $lista_usuario) {
-
-                            switch ($lista->getTipoLista($lista_usuario)) {
-                                case 1:
-                                    $wishlist = true;
-                                    break;
-                                case 2:
-                                    $completed = true;
-                                    break;
-                                case 3:
-                                    $playing = true;
-                                    break;
-                                case 4:
-                                    $backlog = true;
-                                    break;
-                            }
+                        foreach ($iconos as $i => [$prefix, $icono]) {
+                            $tipo = $juego["estados"][$i] ? "fa-solid" : "fa-regular";
+                            echo "<i id='{$prefix}@{$juego['id']}' class='icono {$tipo} fa-{$icono}'></i>";
                         }
-
-                            if ($wishlist) {
-                                echo "<i id='wish@{$juego['id']}' class='fa-solid fa-heart'></i>";
-                            } else {
-                                echo "<i id='wish@{$juego['id']}' class='fa-regular fa-heart'></i>";
-                            }
-
-                            if ($backlog) {
-                                echo "<i id='back@{$juego['id']}' class='fa-solid fa-clock'></i>";
-                            } else {
-                                echo "<i id='back@{$juego['id']}' class='fa-regular fa-clock'></i>";
-                            }
-
-                            if ($completed) {
-                                echo "<i id='comp@{$juego['id']}' class='fa-solid fa-circle-check'></i>";
-                            } else {
-                                echo "<i id='comp@{$juego['id']}' class='fa-regular fa-circle-check'></i>";
-                            }
-
-                            if ($playing) {
-                                echo "<i id='play@{$juego['id']}' class='fa-solid fa-circle-play'></i>";
-                            } else {
-                                echo "<i id='play@{$juego['id']}' class='fa-regular fa-circle-play'></i>";
-                            }
         echo "</div>
             </div>
         </div>";

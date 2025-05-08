@@ -88,6 +88,10 @@ require_once __DIR__ . '\Templates\header.php';
 
 <?php include __DIR__."/Templates/paginacion.php" ?>
 
+<?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
+
 <!-- JS del Swiper (Carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -96,6 +100,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <script>
     $(document).ready(function() {
+
         $("#boton_filtro").click(function() {
             console.log("click");
             $(".filtros_desplegable").toggleClass("active");

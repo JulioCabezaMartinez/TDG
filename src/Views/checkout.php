@@ -38,6 +38,10 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 
+<?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
+
 <script>
     paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,

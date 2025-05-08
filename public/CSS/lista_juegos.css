@@ -1,6 +1,6 @@
 /* Estilos para la lista de juegos */
 
-/* Desplegable hamburguesa */
+/* Desplegable Filtro */
 
 .filtros_desplegable{
     position: absolute;
@@ -17,6 +17,7 @@
 
 .active{
     left: 0%;
+    right: 0%;
 
     /* Transform */
     transition: 0.5s;

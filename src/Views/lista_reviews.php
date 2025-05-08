@@ -86,6 +86,9 @@ require_once 'Templates/header.php';
     ?>
 </div>
 
+<?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
 
 <script>
     $(document).ready(function() {

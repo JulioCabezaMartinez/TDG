@@ -88,8 +88,8 @@ require_once __DIR__ . '\Templates\header.php';
 <!-- Carrusel de ventas del Juego -->
 
 <div class="ventas_juego">
-    <h2>Ventas</h2>
-    <a href="/">Ventas de <?php echo $juego['Nombre'] ?></a>
+    
+    <a href="#"><h2 class="enlace">Ventas</h2></a> Me falta implementar el AJAX de los filtros.
 
     <div class="swiper">
         <div class="card-wrapper">
@@ -154,14 +154,16 @@ require_once __DIR__ . '\Templates\header.php';
 <!-- Reseñas del Juego -->
 
 <div class="reseñas_juego">
-    <h2>Reseñas</h2>
-    <a href="/">Reseñas de <?php echo $juego['Nombre'] ?></a>
+    <a href="/TDG/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas</h2></a>
 
     <div>
         
     </div>
 </div>
 
+<?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
 
 <!-- JS del Swiper (Carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

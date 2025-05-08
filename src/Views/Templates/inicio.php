@@ -6,6 +6,7 @@
     <title>TDG</title>
     <link rel="stylesheet" href="/TDG/public/CSS/style.css">
     <link rel="stylesheet" href="/TDG/public/CSS/header.css">
+    <link rel="stylesheet" href="/TDG/public/CSS/footer.css">
     <link rel="stylesheet" href="/TDG/public/CSS/paginacion.css">
     <!-- Paypal -->
     <script src="<?php echo $_ENV["PAYPAL_SRC"] ?>"></script>
@@ -32,6 +33,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <script>
+        $(document).ready(function(){
+            $(".fa-bars").click(function(){
+                console.log("Hola");
+                $(".menu-hamburguesa").toggleClass("active");
+            });
+
+            $(".cerrar-hamburguesa").click(function(){
+                console.log("Adios")
+                $(".menu-hamburguesa").toggleClass("active");
+            });
+        });
+    </script>
 
 </head>
 <body>

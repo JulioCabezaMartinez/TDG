@@ -27,10 +27,10 @@ class ControllerReview {
         $juegoBD=new Juego();
         $reviewBD=new Review();
         $usuarioBD=new Usuario();
-        $juego=$juegoBD->getById(25); // Aqui va el $_GET["id_juego"].
+        $juego=$juegoBD->getById(25); // Aqui va el $_GET["id"].
 
-        $lista_reviews=$reviewBD->getAllReviewsJuego($juego["id"]); // Aqui va el $_GET["id_juego"].
+        $lista_reviews=$reviewBD->getAllReviewsJuego($juego["id"]); // Aqui va el $_GET["id"].
 
-        require_once 'src/Views/lista_reviews.php';
+        include_once 'src/Views/lista_reviews.php';
     }
 }

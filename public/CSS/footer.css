@@ -1,0 +1,35 @@
+footer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    color: var(--color-boton-texto);
+}
+
+footer p{
+    color: var(--color-boton-texto);
+}
+
+footer div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+footer a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;               /* Tamaño fijo */
+  height: 50px;
+  margin: 3px;               /* Espaciado entre íconos */
+  border-radius: 50%;
+  border: 2px solid black;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.icono {
+  color: var(--color-boton-texto);
+  font-size: 24px;           /* Tamaño del ícono */
+}

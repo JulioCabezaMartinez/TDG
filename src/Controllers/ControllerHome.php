@@ -9,11 +9,11 @@ use App\Models\Review;
 class ControllerHome{
     
     public function login(){
-        require_once __DIR__. '/../Views/login.php';
+        include_once __DIR__. '/../Views/login.php';
     }
 
     public function register(){
-        require_once __DIR__. '/../Views/register.php';
+        include_once __DIR__. '/../Views/register.php';
     }
 
     public function registrarUsuario(){
@@ -45,7 +45,7 @@ class ControllerHome{
         $mas_vendidos = $juego->getNew(); // Obtener los juegos más vendidos (recien añadidos).
         $reviews_populares = []; // Obtener las reviews populares (recien añadidas).
         
-        require_once __DIR__. '/../Views/main.php'; // Cargar la vista principal.
+        include_once __DIR__. '/../Views/main.php'; // Cargar la vista principal.
     }
 
 }

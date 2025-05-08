@@ -8,21 +8,23 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <div class="landing">
-    <h1>To Do Games</h1>
-    <p>Plataforma gamer donde puedes gestionar tus juegos con listas de deseados, pendientes, completados y en juego, además de comprar y vender títulos físicos con otros usuarios de forma segura.</p>
-    <div>
+    <div class="landing-texto">
+        <h4>To Do Games</h>
+        <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
+        <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
         
+        <a href="/TDG/juegos"><p class="boton-ver-juegos">Ver Juegos</p></a> 
     </div>
 </div>
 
 <div class="recien_añadidos">
-    <h2>Recien añadidos</h2>
+    <a href="/TDG/juegos"><h2 class="enlace">Recien añadidos</h2></a>
     <div class="recien_añadidos__container">
         <?php
         foreach ($mas_vendidos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="">
+                <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
                 </a>
@@ -35,7 +37,7 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($mas_vendidos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="">
+                <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
                 </a>
@@ -82,7 +84,7 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 <?php
-if($_SESSION["id_usuario"]){
+if(isset($_SESSION["id_usuario"])){
 ?>
     <div class="recomendados">
         <h2>Recomendados</h2>
@@ -159,6 +161,10 @@ if($_SESSION["id_usuario"]){
     </div>
 
 </div>
+
+<?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
 
 <!-- JS del Swiper (Carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

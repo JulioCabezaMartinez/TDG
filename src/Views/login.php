@@ -21,4 +21,8 @@ require_once 'Templates/inicio.php';
 </div>
 
 <?php
+    include_once __DIR__. "./Templates/footer.php";
+?>
+
+<?php
 require_once 'Templates/final.php';

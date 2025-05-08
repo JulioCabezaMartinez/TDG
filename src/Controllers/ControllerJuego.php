@@ -82,7 +82,7 @@ class ControllerJuego {
     }
 
     public function view_juego(): void {
-        $id_juego = $_GET['id_juego'] ?? 2093; // Obtener el ID del juego desde la URL.
+        $id_juego = $_GET['id'] ?? 2093; // Obtener el ID del juego desde la URL.
         $juego = new Juego();
         $genero = new Genero();
         $plataforma = new Plataforma();

@@ -38,9 +38,8 @@ $router->add('/perfil', 'ControllerUsuario@perfil_listas');
 $router->add('/perfil/lista', 'ControllerUsuario@lista');
 $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 
-// Rutas de Controladores.
-
-// No entiendo como funciona el enrutador, pero aquí se define la ruta para la página de inicio
+//Rutas AJAX
+$router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

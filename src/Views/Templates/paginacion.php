@@ -16,9 +16,9 @@
 
         for ($i = $numero_inicio; $i <= $numero_fin; $i++) {
             if ($i == $pagina) {
-                echo "<li class='page-item active'><a class='page-link' href='#'>{$i}</a></li>";
+                echo "<li class='page-item active'><a class='page-link' href='#' onClick='paginacion({$i})'>{$i}</a></li>";
             } else {
-                echo "<li class='page-item'><a class='page-link' href='/TDG/juegos?pagina={$i}'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
+                echo "<li class='page-item'><a class='page-link' href='#' onClick='paginacion({$i})'>{$i}</a></li>"; //Pasar el número de página por GET. En Ajax no hará falta.
             }
         }
         ?>

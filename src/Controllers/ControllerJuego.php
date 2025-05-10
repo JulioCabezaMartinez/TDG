@@ -25,58 +25,55 @@ class ControllerJuego {
     }
 
     public function lista_juegos(): void {
-        $lista = new Lista();
+        // $lista = new Lista();
 
-        $id_usuario = 1; // $_GET['id_usuario']; // Obtener el ID del usuario desde la sesión.
-        $listas_usuario = $lista->getListasUsuario($id_usuario); // Obtener las listas del usuario.
+        // $id_usuario = 1; // $_GET['id_usuario']; // Obtener el ID del usuario desde la sesión.
+        // $listas_usuario = $lista->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
         $juego = new Juego();
 
-        // Paginación provisional. Cambiar por la paginación real por AJAX.
-        $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Obtener la página actual desde la URL. Si no existe, se establece en 1.
+        $pagina = 1; // Obtener la página actual, al inicio, se establece en 1.
         $limite = 5; // Número de juegos por página.
         $total_juegos = $juego->getCount(); // Obtener el total de juegos en la base de datos.
         $total_paginas = ceil($total_juegos / $limite); // Calcular el total de páginas.
 
-        if($pagina<=0){
-            $inicio = 0;
-            $pagina = 1;
-        }else{
-            $inicio = ($pagina-1)*$limite; // 5 juegos por página. 
-        }
+        // if($pagina<=0){
+        //     $inicio = 0;
+        //     $pagina = 1;
+        // }else{
+        //     $inicio = ($pagina-1)*$limite; // 5 juegos por página. 
+        // }
 
+        // $juegos = $juego->getListGames($inicio, $limite); // Obtener 10 juegos
 
+        // foreach ($juegos as &$juego) {
 
-        $juegos = $juego->getListGames($inicio, $limite); // Obtener 10 juegos
-
-        foreach ($juegos as &$juego) {
-
-            // Booleanos para comprobar si el juego está en las listas del usuario.
-            $wishlist = false;
-            $backlog = false;
-            $completed = false;
-            $playing = false;
+        //     // Booleanos para comprobar si el juego está en las listas del usuario.
+        //     $wishlist = false;
+        //     $backlog = false;
+        //     $completed = false;
+        //     $playing = false;
         
-            $listas_juego = $lista->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
-            foreach ($listas_juego as $lista_usuario) {
+        //     $listas_juego = $lista->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+        //     foreach ($listas_juego as $lista_usuario) {
 
-                switch ($lista->getTipoLista($lista_usuario)) {
-                    case 1:
-                        $wishlist = true;
-                        break;
-                    case 2:
-                        $completed = true;
-                        break;
-                    case 3:
-                        $playing = true;
-                        break;
-                    case 4:
-                        $backlog = true;
-                        break;
-                }
-            }
-            $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
-        }
+        //         switch ($lista->getTipoLista($lista_usuario)) {
+        //             case 1:
+        //                 $wishlist = true;
+        //                 break;
+        //             case 2:
+        //                 $completed = true;
+        //                 break;
+        //             case 3:
+        //                 $playing = true;
+        //                 break;
+        //             case 4:
+        //                 $backlog = true;
+        //                 break;
+        //         }
+        //     }
+        //     $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
+        // }
 
         include_once 'src/Views/lista_juegos.php'; // Cargar la vista de juegos
     }

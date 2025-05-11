@@ -1,96 +1,47 @@
-// $(document).ready(function() {
-//         $("#boton_filtro").click(function() {
-//             console.log("click");
-//             $(".filtros_desplegable").toggleClass("active");
-//         });
+"use strict";
 
-//         $(".opcion_filtro").click(function() {
-//             $(".filtros_activos").append("<div class='card-item swiper-slide'> <i class='fa-solid fa-xmark eliminar-filtro'></i>" + $(this).val() + "</div>");
+/* Eventos click de Click de la Página */
+function eventos() {
+    document.getElementById("boton_filtro").addEventListener("click", function () {
+        console.log("click");
+        document.querySelectorAll(".filtros_desplegable").forEach(function (el) {
+            el.classList.toggle("active");
+        });
+    });
 
-//             numeroDeSlides = $(".filtros_activos").children().length; // Obtiene el número de slides actuales.
+    document.querySelectorAll(".opcion_filtro").forEach(function (el) {
+        el.addEventListener("click", function () {
+            const filtrosActivos = document.querySelector(".filtros_activos");
 
-//             if (window.swiper) {
-//                 swiper.update(); // Actualiza el swiper para que reconozca los nuevos elementos añadidos.
-//             }
-//         });
+            const div = document.createElement("div");
+            div.className = "card-item swiper-slide";
+            div.innerHTML = `<i class='fa-solid fa-xmark eliminar-filtro'></i> ${this.value}`;
 
-//         $(document).on("click", ".eliminar-filtro", function() {
-//             // Eliminamos el slide padre (el div .swiper-slide)
-//             $(this).closest(".swiper-slide").remove();
+            filtrosActivos.appendChild(div);
 
-//             // Despues habría que eliminar el filtro de la lista de filtros activos y de la consulta.
+            const numeroDeSlides = filtrosActivos.children.length;
 
-//             // Actualizamos Swiper para que se entere del cambio
-//             if (window.swiper) {
-//                 swiper.update();
-//             }
-//         });
+            if (window.swiper) {
+                swiper.update();
+            }
+        });
+    });
 
-//         // AJAX para añadir el juego a las listas.
+    document.addEventListener("click", function (e) {
+        if (e.target && e.target.classList.contains("eliminar-filtro")) {
+            const slide = e.target.closest(".swiper-slide");
+            if (slide) {
+                slide.remove();
+            }
 
-//         $(".btn_listas i").click(function() {
-
-//             if($(this).hasClass("fa-solid")){ // En caso de que el boton esté coloreado, es decir que el juego esté en la lista, se elimina de esta.
-
-//                 console.log("Eliminando");
-
-//                 let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
-
-//                 let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
-//                 let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
-
-//                 $.ajax({
-//                     url: "/TDG/src/AJAX/AJAX.listas.php",
-//                     type: "POST",
-//                     data: {
-//                         mode: "delete_juego_lista",
-//                         id_juego: id_juego,
-//                         lista: lista,
-//                         // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
-//                     },
-//                     success: function(response) {
-//                         console.log(response);
-//                         let color_boton = getComputedStyle(boton).borderColor;
-//                         boton.style.color = color_boton;
-//                         $(boton).toggleClass("fa-solid");
-//                         $(boton).toggleClass("fa-regular");
-//                     }
-//                 });
-
-//             }else if($(this).hasClass("fa-regular")){ // En caso de que el boton NO esté coloreado, es decir que el juego NO esté en la lista, se añade a esta.
-                
-//                 console.log("Añadiendo");
-
-//                 let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
-
-//                 let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
-//                 let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
-
-//                 $.ajax({
-//                     url: "/TDG/src/AJAX/AJAX.listas.php",
-//                     type: "POST",
-//                     data: {
-//                         mode: "add_juego_lista",
-//                         id_juego: id_juego,
-//                         lista: lista,
-//                         // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
-//                     },
-//                     success: function(response) {
-//                         console.log(response);
-//                         let color_boton = getComputedStyle(boton).borderColor;
-//                         boton.style.color = color_boton;
-//                         $(boton).toggleClass("en-lista");
-//                         $(boton).toggleClass("fa-solid");
-//                         $(boton).toggleClass("fa-regular");
-//                     }
-//                 });
-//             }
-//         });
-//     });
-
+            if (window.swiper) {
+                swiper.update();
+            }
+        }
+    });
+}
 
 /* Paginación de listas */
-
 function crearTabla(juegos) {
     let list_juegos=document.getElementById("list_juegos");
     list_juegos.innerHTML='';
@@ -101,6 +52,8 @@ function crearTabla(juegos) {
         ['comp', 'circle-check'],
         ['play', 'circle-play']
     ];
+
+    
 
     juegos.forEach(juego => {
         // Crear contenedor principal
@@ -133,6 +86,13 @@ function crearTabla(juegos) {
         pCal.innerHTML = `<strong>Calificación:</strong> ${juego.calificacion} / 5`;
         infoJuego.appendChild(pCal);
 
+        /* Intenté hacerlo de esta manera pero el textContent de pCal sobreescribia el strong */
+
+        // const strongCal=document.createElement('strong');
+        // strongCal.textContent= "Calificación:";
+        // pCal.appendChild(strongCal);
+        // pCal.textContent=`${juego.calificacion} / 5`;
+
         // Año de salida
         const pFecha = document.createElement('p');
         pFecha.innerHTML = `<strong>Fecha de salida:</strong> ${juego.Anyo_salida}`;
@@ -157,11 +117,13 @@ function crearTabla(juegos) {
     });
 }
 
+/* Permite ver una paginación con todas las páginas que va a tener la página */
 function paginas(pagina, total_paginas){
     const paginas= document.getElementsByClassName("paginacion");
 
     for (let contenedorPag of paginas){
         contenedorPag.innerHTML='';
+        
         const nav = document.createElement('nav');
         nav.className = 'pag';
 
@@ -181,21 +143,21 @@ function paginas(pagina, total_paginas){
         }
 
         for (let i = numero_inicio; i <= numero_fin; i++) {
-        const li = document.createElement('li');
-        li.className = 'page-item' + (i == pagina ? ' active' : '');
+            const li = document.createElement('li');
+            li.className = 'page-item' + (i == pagina ? ' active' : '');
 
-        const a = document.createElement('a');
-        a.className = 'page-link';
-        a.href = '#';
-        a.textContent = i;
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = '#';
+            a.textContent = i;
 
-        a.addEventListener('click', function (e) {
-            e.preventDefault();
-            paginacion(i); // Llamada a la función
-        });
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                paginacion(i); // Llamada a la función
+            });
 
-        li.appendChild(a);
-        ul.appendChild(li);
+            li.appendChild(a);
+            ul.appendChild(li);
         }
 
         nav.appendChild(ul);
@@ -220,7 +182,6 @@ function paginacion(nPagina=null) {
 
     // Body del AJAX.
     let formData = new FormData();
-   
     formData.append("pagina", pagina);
     formData.append("inicio", inicio);
     formData.append("limite", limite);
@@ -230,12 +191,17 @@ function paginacion(nPagina=null) {
         body: formData
 
     }).then(response => response.json())
-        .then(data => {
+    .then(data => {
+        let mapRespuesta=new Map();
+        mapRespuesta.set("Juegos", data.juegos);
+        mapRespuesta.set("Pagina", data.pagina);
+        mapRespuesta.set("Total_paginas", data.total_paginas);
 
-            crearTabla(data.juegos);
-            paginas(data.pagina, data.total_paginas);
+        crearTabla(mapRespuesta.get("Juegos"));
+        paginas(mapRespuesta.get("Pagina"), mapRespuesta.get("Total_paginas"));
 
-        }).catch(err=>console.log(err));
+    }).catch(err => console.log(err));
 }
 
 paginacion();
+eventos();

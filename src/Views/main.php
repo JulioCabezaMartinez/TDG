@@ -126,40 +126,44 @@ if(isset($_SESSION["id_usuario"])){
 }
 ?>
 
+<h2>Ultimas Reviews</h2>
+<div class="lista_reviews">
+    <?php
+    foreach ($lista_reviews as $review) {
+        $contenido_reducido = str_split($review['Contenido'], 10)[0];
+        $contenido_reducido .= " ...";
+    ?>
 
-<div id="reviews_populares">
-
-    <h2>Reviews Populares</h2>
-
-    <div class="review">
-        <?php
-        foreach ($reviews_populares as $review) {
-        ?>
-            <div class="review_item">
-                <div class="cabecera_review">
-                    <img src="<?php echo $review["user_img"] ?>" alt=""> <!-- Imagen de usuario del Usuario asociado a la review -->
-                    <h3><?php echo $review['game_name'] ?></h3> <!-- Nombre del Juego reseñado -->
-                </div>
-
-                <p class="review_texto" ><?php echo $review['review']; ?><!-- Texto de la reseña --></p>
-
-                <div class="review_footer">
-                    
-                    <div class="review_ver_mas_container">
-                        <i class="fa-solid fa-arrow-down"></i>
-                        <p class="review_ver_mas">Ver más</p>
-                    </div>
-                    
-                </div>
+        <div class="review">
+            <div class="cabecera_review">
+                <img src="/TDG/public/IMG/Users-img/<?php echo $usuario["Imagen"] ?>" alt=""> <!-- Imagen de usuario del Usuario asociado a la review -->
+                <h3><?php echo $review["juego"] ?></h3> <!-- Nombre del Usuario que ha escrito la reseña -->
             </div>
 
+            <?php
+            if (strlen($review['Contenido']) >= 10) {
+            ?>
+                <p id="texto_reducido" class="review_texto"><?php echo $contenido_reducido; ?></p>
+                <p class="review_texto d-none"><?php echo $review['Contenido']; ?></p>
+            <?php
+            } else {
+            ?>
+                <p id="texto_reducido" class="review_texto d-none"><?php echo $contenido_reducido; ?></p>
+                <p class="review_texto"><?php echo $review['Contenido']; ?></p> <!-- Texto completo de la Review -->
+            <?php
+            }
+            ?>
+            <div class="review_footer">
+                <div class="review_ver_mas_container">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    <p class="review_ver_mas">Ver más</p>
+                </div>
+            </div>
+        </div>
 
-        <?php
-        }
-        ?>
-
-    </div>
-
+    <?php
+    }
+    ?>
 </div>
 
 <?php
@@ -172,17 +176,8 @@ if(isset($_SESSION["id_usuario"])){
 <!-- Script de inicio del Swiper -->
 <script src="/TDG/public/JS/carrusel.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.review_ver_mas').click(function() {
-            const btn = document.getElementById("verMas");
-            texto = $(this).parent().parent().find('.review_texto')[0];
-
-            texto.classList.toggle("expandido");
-            texto.classList.toggle("truncado");
-        });
-    });
-</script>
+<!-- Archivo JS de Main -->
+<script type="module" src="/TDG/public/JS/main.js"></script>
 <?php
 require_once __DIR__ . '\Templates\final.php';
 ?>

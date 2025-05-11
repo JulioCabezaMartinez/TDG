@@ -39,11 +39,19 @@ class ControllerHome{
 
     public function index(){
 
-        $juego = new Juego();
+        $juegoDB = new Juego();
         $review = new Review();
+        $reviewBD=new Review();
 
-        $mas_vendidos = $juego->getNew(); // Obtener los juegos más vendidos (recien añadidos).
-        $reviews_populares = []; // Obtener las reviews populares (recien añadidas).
+        $mas_vendidos = $juegoDB->getNew(); // Obtener los juegos más vendidos (recien añadidos).
+
+        $lista_reviews=$reviewBD->ultimasReviews();
+
+        foreach($lista_reviews as &$review){
+            $juego = $juegoDB->getbyId($review["id_Juego"]);
+
+            $review["juego"]=$juego["Nombre"];
+        }
         
         include_once __DIR__. '/../Views/main.php'; // Cargar la vista principal.
     }

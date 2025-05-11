@@ -40,6 +40,9 @@ $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 
 //Rutas AJAX
 $router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
+$router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
+$router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
+$router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

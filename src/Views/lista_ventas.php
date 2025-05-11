@@ -54,6 +54,7 @@ require_once __DIR__ . '\Templates\header.php';
         <?php
         foreach ($lista_ventas as $venta) {
         ?>
+        <a href="/TDG/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
             <div id="<?php echo "{$venta['id']}" ?>" class='venta'>
                 
                     <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
@@ -63,6 +64,7 @@ require_once __DIR__ . '\Templates\header.php';
                         <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>
                     </div>
                 </div>
+        </a>
         <?php
         }
         ?>
@@ -78,12 +80,6 @@ require_once __DIR__ . '\Templates\header.php';
         $("#boton_filtro").click(function() {
             console.log("click");
             $(".filtros_desplegable").toggleClass("active");
-        });
-
-        $(".venta").click(function(){
-            let id_venta=$(this).attr("id");
-            <?php  ?>
-            window.location.href='/TDG/ventas/view/checkout?id='+id_venta;
         });
     });
 </script>

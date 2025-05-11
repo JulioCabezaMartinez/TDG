@@ -2,13 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\Usuario;
 use App\Models\Juego;
 use App\Models\Lista;
+use App\Models\Review;
 
-/**
- * Controlador para gestionar las operaciones relacionadas con el modelo Usuario.
- */
+
 class ControllerAJAX {
 
     public function lista_juegos(){
@@ -58,8 +56,83 @@ class ControllerAJAX {
             $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
         }
 
-
-
         echo json_encode(["juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_review(){
+        $id_juego = $_POST["id_juego"];
+        $review = $_POST["review"];
+        $id_usuario = 1; //$_SESSION["id_usuario"];
+
+        $reviewDB = new Review();
+
+        if ($id_juego && $review && $id_usuario) {
+            if (!is_bool($reviewDB->create(array(
+                "Contenido" => $review,
+                "id_Escritor" => $id_usuario,
+                "id_Juego" => $id_juego
+            )))) {
+                echo json_encode(["result" => "Review insertada con exito"]);
+            }
+        } else {
+            echo json_encode(["result" => "Error: Datos incompletos"]);
+        }
+    }
+
+    public function addJuegoLista(){
+        $id_juego = $_POST['id_juego'] ?? null;
+        $lista = $_POST['lista'] ?? null;
+        $id_usuario = 1; //$_SESSION['id_usuario'] ?? null; // Obtener el ID del usuario desde la sesión.
+
+        $nombre_lista = match ($lista) {
+            'wish' => 'wishlist',
+            'back' => 'backlog',
+            'comp' => 'completed',
+            'play' => 'playing',
+            default => null
+        };
+
+        if ($id_juego && $lista && $id_usuario) {
+            $lista_bd = new Lista();
+
+            if ($lista_bd->addJuegoToLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
+
+                echo json_encode(["result" =>"Juego añadido a la lista {$nombre_lista} correctamente."]);
+            } else {
+
+                echo json_encode(["result" =>"Error: No se ha podido añadir el juego a la lista."]);
+            }
+        } else {
+            echo json_encode(["result" =>"Error: Datos incompletos."]);
+        }
+    }
+
+    public function eliminarJuegoLista(){
+
+        $id_juego = $_POST['id_juego'] ?? null;
+        $lista = $_POST['lista'] ?? null;
+        $id_usuario = 1; //$_SESSION['id_usuario'] ?? null; // Obtener el ID del usuario desde la sesión.
+
+        $nombre_lista = match ($lista) {
+            'wish' => 'wishlist',
+            'back' => 'backlog',
+            'comp' => 'completed',
+            'play' => 'playing',
+            default => null
+        };
+
+        if ($id_juego && $lista && $id_usuario) {
+            $lista_bd = new Lista();
+
+            if ($lista_bd->deleteJuegoOfLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
+
+                echo json_encode(["result" =>"Juego eliminado de la lista {$nombre_lista} correctamente."]);
+            } else {
+
+                echo json_encode(["result" =>"Error: No se ha podido eliminar el juego a la lista."]);
+            }
+        } else {
+            echo json_encode(["result" =>"Error: Datos incompletos."]);
+        }
     }
 }

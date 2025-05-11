@@ -23,7 +23,7 @@ require_once 'Templates/header.php';
                         <label for="">Review:</label>
                         <textarea id="contenido_review" class="form-control" rows="4" type="text"></textarea>
                     </div>
-                    <input id="id_juego_hidden" type="hidden" value="<?php echo $_GET["id_juego"] ?>">
+                    <input id="id_juego_hidden" type="hidden" value="<?php echo 25; //$_GET["id_juego"] ?>">
                 </div>
             </div>
             <div class="modal-footer">
@@ -90,47 +90,7 @@ require_once 'Templates/header.php';
     include_once __DIR__. "./Templates/footer.php";
 ?>
 
-<script>
-    $(document).ready(function() {
-        // Modal de Creación de Review
-
-        $("#add-review").click(function() {
-            $("#creacion_review_modal").modal('show');
-        });
-
-        $("#btn_cerrar_creacion_review").click(function() {
-            $("#creacion_review_modal").modal('hide');
-            $("#contenido_review").val("");
-        });
-
-        // AJAX para enviar la información del modal a la BD.  
-        $("#btn_agregar_review").click(function(){
-            let id_juego = $("#id_juego_hidden").val();
-            let review = $("#contenido_review").val();
-
-            $.ajax({
-                url: "/TDG/src/AJAX/AJAX.review.php",
-                type: "POST",
-                data: {
-                    mode: "add_review",
-                    id_juego: id_juego,
-                    review: review,
-                    // El id de Usuario lo conseguimos desde la sesión del usuario en el archivo de AJAX.
-                },
-                success: function(response) {
-                    console.log(response);
-                }
-            });
-        });      
-        
-
-        $(".review_ver_mas_container").click(function() {
-            const $review = $(this).closest('.review'); // Busca el elemento más cercano con la clase .review.
-
-            $review.find('p.review_texto').toggleClass('d-none'); // Seleccionamos todos los <p> con clase review_texto dentro de esa review
-        });
-    });
-</script>
+<script type="module" src="/TDG/public/JS/lista_review.js"></script> <!-- Se necesita que el HTML trate al script como un modulo para que se puedan importar clases usando import y export -->
 
 <?php
 require_once 'Templates/final.php';

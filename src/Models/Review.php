@@ -22,5 +22,9 @@ class Review extends EmptyModel {
         $params=[":id_juego"=>$id_juego];
         return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function ultimasReviews(){
+        return $this->query("SELECT * from review ORDER BY id DESC LIMIT 3")->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

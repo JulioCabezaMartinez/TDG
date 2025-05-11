@@ -1,3 +1,8 @@
+
+.modal h5{
+    color: var(--color-boton-texto) !important;
+}
+
 .reviews-h2{
     display: flex;
 }

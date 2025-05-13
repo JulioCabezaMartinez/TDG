@@ -5,7 +5,10 @@ namespace App\Controllers;
 use App\Models\Juego;
 use App\Models\Lista;
 use App\Models\Review;
+use App\Models\Usuario;
 
+use App\Core\Validators;
+use App\Core\Security;
 
 class ControllerAJAX {
 
@@ -82,7 +85,7 @@ class ControllerAJAX {
     public function addJuegoLista(){
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
-        $id_usuario = 1; //$_SESSION['id_usuario'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = 1; //$_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
 
         $nombre_lista = match ($lista) {
             'wish' => 'wishlist',
@@ -111,7 +114,7 @@ class ControllerAJAX {
 
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
-        $id_usuario = 1; //$_SESSION['id_usuario'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = 1; //$_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
 
         $nombre_lista = match ($lista) {
             'wish' => 'wishlist',
@@ -134,5 +137,48 @@ class ControllerAJAX {
         } else {
             echo json_encode(["result" =>"Error: Datos incompletos."]);
         }
+    }
+
+    public function registrarUsuario(){
+        $usuario = new Usuario();
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $correo = $_POST['correo'];
+        $pass = $_POST['password'];
+        $nick = $_POST['username'];
+        $imagen = $_FILES['imagen_perfil']['name'] ?? null; // Obtener la imagen si se proporciona
+
+        // Lógica para registrar al usuario
+        $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $imagen);
+
+        if ($resultado === "Exito") {
+            // Registro exitoso
+            echo "Registro exitoso. Bienvenido, $nick!";
+        } else {
+            // Manejar el error de registro
+            echo "Error: " . $resultado;
+        }
+    }
+
+    public function compruebaLogin(){
+        $usuarioDB=new Usuario();
+        $correoValido=Validators::evitarInyeccion($_POST["correo"]);
+        $passwordValida=Validators::evitarInyeccion($_POST["password"]);
+
+        $usuario=$usuarioDB->logIn($correoValido, $passwordValida);
+
+        if(!is_bool($usuario)){
+            $_SESSION["usuarioActivo"]=$usuario["id"];
+            $_SESSION["Nick"]=$usuario["Nick"];
+            $_SESSION["Admin"]=$usuario["Admin"];
+
+            echo json_encode(["Success"=>"Todo Correcto."]);
+        }else{
+            echo json_encode(["Error"=>"Datos incorrectos."]);
+        }
+    }
+
+    public function logout(){
+        Security::closeSession();
     }
 }

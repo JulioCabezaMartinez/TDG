@@ -1,10 +1,21 @@
 <header>
     <i class="fa-solid fa-bars"></i>
 
-    <!-- Logo de la app -->
-    <a href="/TDG/">
-        <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
-    </a>
+    <div class="izq">
+        <!-- Logo de la app -->
+        <a href="/TDG/">
+            <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
+        </a>
+        
+        <?php
+            if(!empty($_SESSION)){
+        ?>
+            <!-- <p><?php echo $_SESSION["Nick"] ?></p> -->
+        <?php
+            }
+        ?>
+
+    </div>
 
 </header>
 
@@ -14,6 +25,24 @@
         <a href="/TDG/"><img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt=""></a>
     </div>
 
+    <?php
+    if(!empty($_SESSION)){
+    ?>
+
+        <h4>Bienvenido, <?php echo $_SESSION["Nick"] ?></h4>
+        <a href="/TDG/AJAX/logout" id="logout-btn" class="btn btn-primary">Cerrar Sesion</a>
+
+    <?php
+    }else{
+    ?>
+        <div>
+            <a class="btn btn-primary" href="/TDG/login" class="login">Iniciar Sesión</a>
+            <a class="btn btn-secondary" href="/TDG/register" class="register">Registrarme</a>
+        </div>
+    <?php
+    }
+    ?>
+    
     <div class="d-flex justify-content-start align-items-center m-4">
         <h4 for="neon">NEON: </h4>
         <select name="neon" id="neon_cookie" class="form-select w-25 ms-3">

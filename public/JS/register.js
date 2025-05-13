@@ -1,6 +1,6 @@
 const expresiones_regulares=new Map();
 
-expresiones_regulares.set("correo", /@/);
+expresiones_regulares.set("correo", /^[\w.-]+@[\w.-]+\.\w+$/);
 expresiones_regulares.set("password_completa", /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/);
 expresiones_regulares.set("password_mayusculas", /[A-Z]/);
 expresiones_regulares.set("password_minusculas", /[a-z]/);

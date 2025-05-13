@@ -4,6 +4,8 @@ footer{
     align-items: center;
 
     color: var(--color-boton-texto);
+
+    margin-top: auto;
 }
 
 footer p{
@@ -16,6 +18,7 @@ footer div{
 }
 
 footer a {
+
   display: flex;
   align-items: center;
   justify-content: center;

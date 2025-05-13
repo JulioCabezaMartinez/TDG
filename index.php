@@ -44,6 +44,10 @@ $router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
 
+$router->add('/AJAX/CompruebaLogin', 'ControllerAJAX@compruebaLogin');
+
+$router->add('/AJAX/logout', 'ControllerAJAX@logout');
+
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente
 ?>

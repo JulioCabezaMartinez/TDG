@@ -30,6 +30,14 @@ html, body{
     padding: 5px;
 
     background: var(--color-fondo) !important;
+    min-height: 100vh;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 p{
@@ -53,5 +61,5 @@ a{
 
 .enlace{
     display: inline;
-    text-decoration: underline;
+    text-decoration: underline !important;
 }

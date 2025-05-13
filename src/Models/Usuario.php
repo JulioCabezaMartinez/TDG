@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Core\EmptyModel;
 use App\Core\Security;
 
+use PDO;
+
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de usuarios.
  */
@@ -25,7 +27,13 @@ class Usuario extends EmptyModel {
      * @return mixed Resultado de la operación de inicio de sesión.
      */
     public function logIn($correo, $pass) {
+        $usuario=$this->query("Select * from usuarios where correo='{$correo}';")->fetchAll(PDO::FETCH_ASSOC);
 
+        if(password_verify($pass, $usuario[0]["Password"])){
+            return $usuario[0];
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -81,6 +89,8 @@ class Usuario extends EmptyModel {
      * @param string $nuevaPass Nueva contraseña del usuario.
      * @return mixed Resultado de la operación de cambio de contraseña.
      */
-    public function cambiarPass($correo, $AntiguaPass, $nuevaPass) {}
+    public function cambiarPass($correo, $AntiguaPass, $nuevaPass) {
+        
+    }
 }
 ?>

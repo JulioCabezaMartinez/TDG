@@ -32,4 +32,8 @@ class ControllerUsuario {
         $perfil = ["nick" => "Keyxion", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "wishlist"=>[32, 39, 750, 4639, 9767]];
         include_once __DIR__.'/../Views/listas_perfil.php';
     }
+
+    public function compruebaLogin($correo, $passwordValida){
+        
+    }
 }

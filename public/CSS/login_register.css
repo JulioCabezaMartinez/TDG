@@ -50,3 +50,7 @@ form{
 .imagen_form{
     color: var(--color-texto);
 }
+
+.enlace{
+    color: var(--color-texto);
+}

@@ -1,6 +1,11 @@
 <?php
 $css = "login_register";
 require_once 'Templates/inicio.php';
+
+if(!empty($_SESSION)){
+    header("Location: /TDG/");
+}
+
 ?>
 
 <div class="tarjeta-login">
@@ -22,7 +27,7 @@ require_once 'Templates/inicio.php';
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen (Opcional):</label>
-            <input class="imagen_form" type="file" name="imagen_perfil" id="imagen_perfil">
+            <input class="imagen_form form-control" type="file" name="imagen_perfil" id="imagen_perfil">
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">*Nick de Usuario:</label>
@@ -33,7 +38,7 @@ require_once 'Templates/inicio.php';
             <input type="password" class="form-control w-75" id="password" name="password" required>
             <br>
             <!-- Barra de progreso -->
-            <div class="progress mt-2 w-50">
+            <div class="progress mt-2 w-75">
                 <div id="password-strength-bar" class="progress-bar" style="width: 0%;"></div>
             </div>
 
@@ -51,6 +56,7 @@ require_once 'Templates/inicio.php';
             <input type="password" class="form-control w-75" id="confirm" name="confirm" required>
         </div>
         <button type="submit" id="btn-registro" class="btn registro">Registrarse</button>
+        <a class="enlace ms-3" href="/TDG/">Volver al Inicio</a>
     </form>
 </div>
 

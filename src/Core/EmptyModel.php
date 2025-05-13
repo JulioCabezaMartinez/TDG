@@ -9,7 +9,7 @@ use PDOStatement;
 /**
  * Modelo base vacío que puede ser extendido por otros modelos.
  */
-class EmptyModel {
+abstract class EmptyModel {
     protected $db;
     protected $table;
     protected $primaryKey;

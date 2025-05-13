@@ -67,6 +67,7 @@ header i{
     /* Transform */
     transition: 0.5s;
 
+    border-bottom: 5px solid var(--color-borde-neon);
 }
 
 .menu-hamburguesa div:nth-child(1){
@@ -78,11 +79,18 @@ header i{
 .links-hamburguesa{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: self-start;
     justify-content: center;
 }
+
 .busqueda-juego{
+
+    display: flex;
+    flex-direction: column;
+
     width: 90% !important;
+
+    align-self: center;
 
     margin-bottom: 5%;
 }
@@ -98,6 +106,7 @@ header i{
     text-align: start;
 
     margin-bottom: 2%;
+    margin-left: 5vh;
 }
 
 .link-hamburguesa i{

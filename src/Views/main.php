@@ -4,6 +4,7 @@ $css = 'main';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
+
 ?>
 
 <div class="landing">
@@ -16,6 +17,7 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 <div class="recien_añadidos">
+    
     <a href="/TDG/juegos"><h2 class="enlace">Recien añadidos</h2></a>
     <div class="recien_añadidos__container">
         <?php

@@ -17,6 +17,7 @@
 
     <!-- Swiper.js (Carrusel y paginación de este) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
     <!-- CSS propio del Carrusel -->
     <link rel="stylesheet" href="/TDG/public/CSS/carrusel.css">
 

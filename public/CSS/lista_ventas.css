@@ -1,9 +1,4 @@
 /* Estilos para la lista de ventas */
-
-body{
-    height: 100vh;
-}
-
 .btn_redondo{
     display: flex;
     border-radius: 25px;
@@ -76,11 +71,8 @@ body{
 }
 
 .lista_ventas{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     border-radius: 20px;
 
     margin-top: 20px;
@@ -92,6 +84,7 @@ body{
 
 .venta{
     display: flex;
+    flex-direction: column;
 
     border-radius: 10px;
     border: 2px solid #000000;
@@ -104,7 +97,7 @@ body{
 
 .venta img{
     padding: 10px;
-    width: 25%;
+    width: 100%;
 }
 
 .info_juego{

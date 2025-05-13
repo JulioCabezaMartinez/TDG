@@ -48,7 +48,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 </div>
 
-<div class="centrar-di">
+<div class="centrar-div">
     <div class="lista_ventas">
         
         <?php

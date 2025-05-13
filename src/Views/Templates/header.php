@@ -57,20 +57,32 @@
     <hr>
 
     <div class="links-hamburguesa">
-        <div class="input-group busqueda-juego">
-            <input class="form-control" type="text">
-            <button class="btn btn-outline-secondary bg-white" type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
 
+        <div class="busqueda-juego">
+            <h2>Buscar Juego: </h2>
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <button class="btn btn-outline-secondary bg-white" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+        </div>
+        <br>
+        <a href="/TDG/">
+            <div class="link-hamburguesa">
+                <i class="fa-solid fa-house"></i>
+                <h2>HOME</h2>
+            </div>
+        </a>
+        <br>
         <a href="/TDG/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>
                 <h2>JUEGOS</h2>
             </div>
         </a>
-        <hr>
+        <br>
         <a href="/TDG/ventas">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-store"></i>

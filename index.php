@@ -18,6 +18,10 @@ $router->add('/login', 'ControllerHome@login');
 $router->add('/register', 'ControllerHome@register');
 $router->add('/registrar-usuario', 'ControllerHome@registrarUsuario');
 
+//Rutas de Administrador
+$router->add('/panel-admin', 'ControllerHome@admin');
+$router->add('/panel-admin/tabla', 'ControllerAdmin@tabla');
+
 // Rutas de Juegos
 $router->add('/juegos', 'ControllerJuego@lista_juegos');
 $router->add('/juegos/view', 'ControllerJuego@view_juego');

@@ -170,7 +170,12 @@ class ControllerAJAX {
         if(!is_bool($usuario)){
             $_SESSION["usuarioActivo"]=$usuario["id"];
             $_SESSION["Nick"]=$usuario["Nick"];
-            $_SESSION["Admin"]=$usuario["Admin"];
+            if($usuario["Admin"]==1){
+                $_SESSION["Admin"]=true;
+            }else{
+                $_SESSION["Admin"]=false;
+            }
+            
 
             echo json_encode(["Success"=>"Todo Correcto."]);
         }else{

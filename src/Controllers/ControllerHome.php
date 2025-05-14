@@ -37,4 +37,8 @@ class ControllerHome{
         include_once __DIR__. '/../Views/main.php'; // Cargar la vista principal.
     }
 
+    public function admin(){
+        include_once __DIR__. '/../Views/panelAdmin.php';
+    }
+
 }

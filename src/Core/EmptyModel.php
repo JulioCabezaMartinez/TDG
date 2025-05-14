@@ -100,5 +100,16 @@ abstract class EmptyModel {
         $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
         $this->query($sql, [$id]);
     }
+
+    public function listaColumnas(){
+        $sql="SHOW COLUMNS from {$this->table};";
+        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function listaAdmin(){
+        $sql="Select id, nombre from {$this->table};";
+        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

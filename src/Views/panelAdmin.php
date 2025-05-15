@@ -11,7 +11,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
 
 <div class="content">
     <h1>Panel de Administrador</h1>
-    <a href="/TDG/panel-admin/tabla?tabla=usuarios">
+    <a href="/TDG/panelAdmin/tabla?tabla=usuarios">
         <div class="contenedor-admin">
             <div class="icono">
                 <i class="fa-solid fa-rectangle-list"></i>
@@ -21,7 +21,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
         </div>
     </a>
 
-    <a href="/TDG/panel-admin/tabla?tabla=juegos">
+    <a href="/TDG/panelAdmin/tabla?tabla=juegos">
         <div class="contenedor-admin">
             <div class="icono">
                 <i class="fa-solid fa-rectangle-list"></i>
@@ -31,7 +31,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
         </div>
     </a>
 
-    <a href="/TDG/panel-admin/tabla?tabla=reviews">
+    <a href="/TDG/panelAdmin/tabla?tabla=reviews">
         <div class="contenedor-admin">
             <div class="icono">
                 <i class="fa-solid fa-rectangle-list"></i>
@@ -41,7 +41,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
         </div>
     </a>
 
-    <a href="/TDG/panel-admin/tabla?tabla=productos">
+    <a href="/TDG/panelAdmin/tabla?tabla=productos">
         <div class="contenedor-admin">
             <div class="icono">
                 <i class="fa-solid fa-rectangle-list"></i>
@@ -51,7 +51,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
         </div>
     </a>
 
-    <a href="/TDG/panel-admin/tabla?tabla=post_vendidos">
+    <a href="/TDG/panelAdmin/tabla?tabla=post_vendidos">
         <div class="contenedor-admin">
             <div class="icono">
                 <i class="fa-solid fa-boxes-stacked"></i>

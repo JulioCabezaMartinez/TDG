@@ -106,10 +106,5 @@ abstract class EmptyModel {
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     }
-
-    public function listaAdmin(){
-        $sql="Select id, nombre from {$this->table};";
-        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
 }
 ?>

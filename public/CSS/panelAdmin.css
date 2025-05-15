@@ -10,6 +10,13 @@ body{
     display: none;
 }
 
+
+.header-movil i{
+    padding: 10px;
+    background-color: var(--color-primario);
+    border-radius: 8px;
+}
+
 /* Barra Lateral */
 .barra-lateral{
     position: fixed;
@@ -29,6 +36,8 @@ body{
     background-color: var(--color-tarjeta);
 
 }
+
+
 
 /* Contenedor de contenido */
 .content{
@@ -113,9 +122,9 @@ footer{
     color: white;
 }
 
-/* .columna-final{
-    border-bottom: 4px solid white;
-} */
+.columna-final{
+    border-bottom: 2px solid white;
+}
 
 .tabla-movil .fila:nth-child(even) .columna .contenido{
     background-color: var(--color-tarjeta);

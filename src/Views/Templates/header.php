@@ -6,15 +6,6 @@
         <a href="/TDG/">
             <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
         </a>
-        
-        <?php
-            if(!empty($_SESSION)){
-        ?>
-            <!-- <p><?php echo $_SESSION["Nick"] ?></p> -->
-        <?php
-            }
-        ?>
-
     </div>
 
 </header>
@@ -41,7 +32,14 @@
         </div>
     <?php
     }
+    if(!empty($_SESSION) && $_SESSION["Admin"]){
     ?>
+            <a class="btn btn-secondary" href="/TDG/panelAdmin">Panel de Administrador</a>
+    <?php
+    }
+    ?>
+
+
     
     <div class="d-flex justify-content-start align-items-center m-4">
         <h4 for="neon">NEON: </h4>

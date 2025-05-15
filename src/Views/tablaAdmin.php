@@ -5,7 +5,66 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 ?>
 
+<!-- Modal de creación de Review -->
+<div class="modal fade" id="creacion_modificar_dato" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificación <?php echo $entidad ?></h5>
+            </div>
+            <div class="modal-body">
+                <?php
+                    foreach($columnas as $columna){
+                ?>
+                    <div>
+                        
+                        <?php
+                            if($columna=="Descripcion"){
+                        ?>
+                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                                <textarea class="form-control" id="<?php echo $columna ?>Input" rows="3"></textarea>
+                        <?php
+                            }elseif($columna=="id"){
+                        ?>
+                                <input type="hidden" id="<?php echo $columna ?>Input" value="">
+                        <?php
+                            }elseif($columna=="Imagen"){
+                        ?>
+                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?> (URL):</strong></label>
+                                <input type="text" class="form-control" id="<?php echo $columna ?>Input">
+
+                        <?php
+                            }elseif($columna=="Anyo_salida"){
+                        ?>
+                                <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>
+                                <input type="date" class="form-control" id="<?php echo $columna ?>Input">
+
+                        <?php
+                            }else{
+                        ?>
+                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                                <input type="text" class="form-control" id="<?php echo $columna ?>Input">
+                        <?php
+                            }
+                        ?>
+                        
+                    </div>
+                    <br>
+                <?php        
+                    }
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_cerrar_modal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="btn_modificar" type="button" class="btn btn-primary" data-dismiss="modal">Agregar Review</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de creación de Review -->
+
 <div class="content">
+    <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
     <h2>Tabla <?php echo $entidad ?></h2>
     <table class="table table-striped table-dark tabla-datos">
         <thead>
@@ -41,8 +100,8 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                                     Acciones
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <button class="dropdown-item btn btn-danger">Eliminar</button>
-                                    <button class="dropdown-item btn btn-primary">Modificar</button>';
+                                    <button id="{$item["id"]}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
+                                    <button class="dropdown-item btn btn-primary modificar-dato">Modificar</button>';
 
                 if ($entidad == "usuarios") {
                     echo '<button class="dropdown-item btn btn-primary">Ver Listas</button>';
@@ -91,8 +150,8 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                             Acciones
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item btn btn-danger">Eliminar</button>
-                            <button class="dropdown-item btn btn-primary">Modificar</button>
+                            <button id="btnEliminar@<?php echo $item["id"]?>" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
+                            <button id="btnModificar@<?php echo $item["id"]?>" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
                             <?php
                             if ($entidad == "usuarios") {
                                 echo '<button class="dropdown-item btn btn-primary">Ver Listas</button>';
@@ -110,6 +169,61 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 <?php
 include_once __DIR__ . "./Templates/footer.php";
 ?>
+
+<script>
+
+    $(document).ready(function(){
+        $(".eliminar-dato").click(function(){
+            let idBoton=$(this).attr("id");
+            let id= idBoton.split("@")[1];
+
+            let entidad=$("#entidad").val();
+
+            $.ajax({
+                url: "/TDG/AJAX/eliminarDato",
+                type: "POST",
+                data: {
+                    "id": id,
+                    "entidad": entidad
+                },
+                success: function(data){
+                    if(data=="Todo Correcto"){
+                        console.log("Eliminado con exito");
+                    }else{
+                        console.log("Error en la eliminación")
+                    }
+                }
+            });
+        });
+        
+        $(".modificar-dato").click(function(){
+            $("#creacion_modificar_dato").modal("show");
+            let idBoton=$(this).attr("id");
+            let id= idBoton.split("@")[1];
+
+            let entidad=$("#entidad").val();
+
+            $.ajax({
+                url: "/TDG/AJAX/modificarDato",
+                type: "POST",
+                data: {
+                    "id": id,
+                    "entidad": entidad
+                },
+                success: function(data){
+                    $.each(JSON.parse(data)["dato"], function(key, value) {
+                        $('#' + key + 'Input').val(value);
+                    });
+                }
+            });
+        });
+
+        $("#btn_modificar").click(function(){
+            
+        });
+    });
+
+</script>
 <script>
     window.addEventListener('resize', updateContentMargin);
 

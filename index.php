@@ -19,8 +19,8 @@ $router->add('/register', 'ControllerHome@register');
 $router->add('/registrar-usuario', 'ControllerHome@registrarUsuario');
 
 //Rutas de Administrador
-$router->add('/panel-admin', 'ControllerHome@admin');
-$router->add('/panel-admin/tabla', 'ControllerAdmin@tabla');
+$router->add('/panelAdmin', 'ControllerHome@admin');
+$router->add('/panelAdmin/tabla', 'ControllerAdmin@tabla');
 
 // Rutas de Juegos
 $router->add('/juegos', 'ControllerJuego@lista_juegos');
@@ -48,9 +48,13 @@ $router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
 
+    //AJAX de LogIn/Out
 $router->add('/AJAX/CompruebaLogin', 'ControllerAJAX@compruebaLogin');
-
 $router->add('/AJAX/logout', 'ControllerAJAX@logout');
+
+    //AJAX del Admin
+$router->add('/AJAX/eliminarDato', 'ControllerAJAX@eliminarDato');
+$router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

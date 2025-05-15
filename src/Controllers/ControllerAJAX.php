@@ -9,6 +9,7 @@ use App\Models\Usuario;
 
 use App\Core\Validators;
 use App\Core\Security;
+use App\Models\Venta;
 
 class ControllerAJAX {
 
@@ -185,5 +186,79 @@ class ControllerAJAX {
 
     public function logout(){
         Security::closeSession();
+    }
+
+    public function eliminarDato(){
+        $id=$_POST["id"];
+        $entidad=$_POST["entidad"];
+
+        switch ($entidad) {
+            case "usuarios":
+                $usuarioDB=new Usuario();
+                $usuarioDB->delete($id);
+                echo "Todo Correcto";
+                break;
+            case "juegos":
+                $juegosDB=new Juego();
+                $juegosDB->delete($id);
+                echo "Todo Correcto";
+                break;
+            case "reviews":
+                $reviewsDB=new Review();
+                $reviewsDB->delete($id);
+                echo "Todo Correcto";
+                break;
+            case "productos":
+                $ventaDB=new Venta();
+                $ventaDB->delete($id);
+                echo "Todo Correcto";
+                break;
+            case "post_vendidos":
+                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
+                // $usuarioDB->delete($id);
+                // echo "Todo Correcto";
+                echo "Error de Entidad, entidad equivocada";
+                break;
+            default:
+                echo "Error de Entidad";
+                break;
+        }
+    }
+
+    public function modificarDato(){
+        $id=$_POST["id"];
+        $entidad=$_POST["entidad"];
+
+        switch ($entidad) {
+            case "usuarios":
+                $usuarioDB=new Usuario();
+                $item=$usuarioDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "juegos":
+                $juegosDB=new Juego();
+                $item=$juegosDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "reviews":
+                $reviewsDB=new Review();
+                $item=$reviewsDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "productos":
+                $ventaDB=new Venta();
+                $item=$ventaDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "post_vendidos":
+                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
+                // $usuarioDB->delete($id);
+                // echo "Todo Correcto";
+                echo "Error de Entidad, entidad equivocada";
+                break;
+            default:
+                echo "Error de Entidad";
+                break;
+        }
     }
 }

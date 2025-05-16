@@ -3,41 +3,45 @@
 /* Eventos click de Click de la Página */
 function eventos() {
     document.getElementById("boton_filtro").addEventListener("click", function () {
-        console.log("click");
+
         document.querySelectorAll(".filtros_desplegable").forEach(function (el) {
             el.classList.toggle("active");
         });
     });
 
-    document.querySelectorAll(".opcion_filtro").forEach(function (el) {
-        el.addEventListener("click", function () {
-            const filtrosActivos = document.querySelector(".filtros_activos");
+    // document.querySelectorAll(".opcion_filtro").forEach(function (el) {
+    //     el.addEventListener("click", function () {
+    //         const filtrosActivos = document.querySelector(".filtros_activos");
 
-            const div = document.createElement("div");
-            div.className = "card-item swiper-slide";
-            div.innerHTML = `<i class='fa-solid fa-xmark eliminar-filtro'></i> ${this.value}`;
+    //         const div = document.createElement("div");
+    //         div.className = "card-item swiper-slide";
+    //         div.innerHTML = `<i class='fa-solid fa-xmark eliminar-filtro'></i> ${this.value}`;
 
-            filtrosActivos.appendChild(div);
+    //         filtrosActivos.appendChild(div);
 
-            const numeroDeSlides = filtrosActivos.children.length;
+    //         const numeroDeSlides = filtrosActivos.children.length;
 
-            if (window.swiper) {
-                swiper.update();
-            }
-        });
-    });
+    //         if (window.swiper) {
+    //             swiper.update();
+    //         }
+    //     });
+    // });
 
-    document.addEventListener("click", function (e) {
-        if (e.target && e.target.classList.contains("eliminar-filtro")) {
-            const slide = e.target.closest(".swiper-slide");
-            if (slide) {
-                slide.remove();
-            }
+    // document.addEventListener("click", function (e) {
+    //     if (e.target && e.target.classList.contains("eliminar-filtro")) {
+    //         const slide = e.target.closest(".swiper-slide");
+    //         if (slide) {
+    //             slide.remove();
+    //         }
 
-            if (window.swiper) {
-                swiper.update();
-            }
-        }
+    //         if (window.swiper) {
+    //             swiper.update();
+    //         }
+    //     }
+    // });
+
+    document.getElementById("aplicarFiltros").addEventListener("click", function(){
+
     });
 }
 
@@ -53,7 +57,7 @@ function crearTabla(juegos) {
         ['play', 'circle-play']
     ];
 
-    
+
 
     juegos.forEach(juego => {
         // Crear contenedor principal
@@ -112,24 +116,43 @@ function crearTabla(juegos) {
 
         infoJuego.appendChild(btnListas);
         divJuego.appendChild(infoJuego);
-        
+
         list_juegos.appendChild(divJuego);
     });
 }
 
 /* Permite ver una paginación con todas las páginas que va a tener la página */
 function paginas(pagina, total_paginas){
+
+    let filtros={};
+
+    document.querySelectorAll('[id$="Input"]').forEach(function(input){
+        let valor=input.value;
+        let clave=input.id.replace('Input', '');
+
+        if(valor){
+            if(clave=="nombre"){
+                filtros[clave]="%"+valor+"%";
+            }else{
+                filtros[clave]=valor;
+            }
+        }
+    });
+
+    // console.log(filtros);
+
     const paginas= document.getElementsByClassName("paginacion");
 
     for (let contenedorPag of paginas){
         contenedorPag.innerHTML='';
-        
+
         const nav = document.createElement('nav');
         nav.className = 'pag';
 
         const ul = document.createElement('ul');
         ul.className = 'pagination';
 
+        /* De esta manera indicamos cuantos numeros queremos que aparezcan a la izquierda y derecha del activo */
         let numero_inicio = 1;
 
         if ((pagina - 4) > 1) {
@@ -153,7 +176,7 @@ function paginas(pagina, total_paginas){
 
             a.addEventListener('click', function (e) {
                 e.preventDefault();
-                paginacion(i); // Llamada a la función
+                paginacion(i, filtros); // Llamada a la función
             });
 
             li.appendChild(a);
@@ -166,10 +189,11 @@ function paginas(pagina, total_paginas){
     }
 }
 
-function paginacion(nPagina=null) {
+function paginacion(nPagina=null, filtros={}) {
+
+    // console.log(filtros);
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
-
 
     let limite = 5; // Número de juegos por página.
     let inicio = 0;
@@ -177,7 +201,7 @@ function paginacion(nPagina=null) {
     if (pagina <= 0) {
         pagina = 1;
     } else {
-        inicio = (pagina - 1) * limite; // 5 juegos por página. 
+        inicio = (pagina - 1) * limite; // 5 juegos por página.
     }
 
     // Body del AJAX.
@@ -185,6 +209,9 @@ function paginacion(nPagina=null) {
     formData.append("pagina", pagina);
     formData.append("inicio", inicio);
     formData.append("limite", limite);
+    formData.append("filtros", JSON.stringify(filtros));
+
+    // console.log(formData.get("filtros"));
 
     fetch("/TDG/AJAX/lista_juegos", {
         method: "POST",
@@ -203,5 +230,5 @@ function paginacion(nPagina=null) {
     }).catch(err => console.log(err));
 }
 
-paginacion();
+paginacion(undefined, {"nombre" :    "%Hola%"});
 eventos();

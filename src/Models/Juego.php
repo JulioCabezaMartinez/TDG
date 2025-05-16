@@ -24,8 +24,37 @@ class Juego extends EmptyModel {
         return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getListGames($inicio, $limit): array {
-        return parent::query("SELECT * FROM {$this->table} LIMIT $inicio, $limit")->fetchAll(\PDO::FETCH_ASSOC);
+    public function getListGames(int $inicio, int $limit, $filtros=[]){
+
+        $sql = "SELECT * FROM {$this->table}";
+
+        if (!empty($filtros)) {
+            $conditions = []; 
+
+            // Si hay filtro para 'Nombre', agregamos la condición correspondiente
+            if (!empty($filtros['nombre'])) {
+                $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+            }
+
+            // Si hay filtro para 'Anyo_salida', agregamos la condición correspondiente
+            if (!empty($filtros['Anyo_salida'])) {
+                $conditions[] = "Anyo_salida = {$filtros['Anyo_salida']}";
+            }
+
+            // Si hay filtro para 'Calificacion', agregamos la condición correspondiente
+            if (!empty($filtros['calificacion'])) {
+                $conditions[] = "calificacion = {$filtros['calificacion']}";
+            }
+
+            // Si hay condiciones, las unimos con AND y las añadimos a la consulta
+            if (!empty($conditions)) {
+                $sql .= " WHERE " . implode(" AND ", $conditions);
+            }
+        }
+        // Añadimos el LIMIT (esto siempre se añade al final)
+        $sql .= " LIMIT {$inicio}, {$limit}";
+
+        return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC); //Se puede poner $param pero no en el Limit, execute(sql, param) no admite parametros como Integers.
     }
 
     public function rellenarBD($countAPI){

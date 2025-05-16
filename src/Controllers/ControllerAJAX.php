@@ -26,10 +26,11 @@ class ControllerAJAX {
         $pagina = $_POST["pagina"];
         $limite = $_POST["limite"];
         $inicio = $_POST["inicio"];
+        $filtros=json_decode($_POST["filtros"], true);
 
         $total_paginas = ceil($total_juegos / $limite);
         
-        $juegos = $juegoDB->getListGames($inicio, $limite); // Obtener 10 juegos
+        $juegos = $juegoDB->getListGames((int)$inicio, (int)$limite, $filtros); // Obtener 10 juegos
 
         foreach ($juegos as &$juego) {
 

@@ -8,29 +8,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <h3 class="text-center mt-4">Juegos</h3>
 
-<!-- Menu de Filtros -->
-<div class="filtros_desplegable">
-    <div class="filtros_texto">
-        <p>Filtros</p>
-        <i id="filtros_icon" class="fa-solid fa-filter"></i>
-    </div>
 
-    <div class="filtros_opciones">
-        <div>
-            <input class="opcion_filtro" type="checkbox" id="opcion1" name="opcion1" value="opcion1">
-            <label for="opcion1">Opción 1</label>
-        </div>
-        <div>
-            <input class="opcion_filtro" type="checkbox" id="opcion2" name="opcion2" value="opcion2">
-            <label for="opcion2">Opción 2</label>
-        </div>
-        <div>
-            <input class="opcion_filtro" type="checkbox" id="opcion3" name="opcion3" value="opcion3">
-            <label for="opcion3">Opción 3</label>
-        </div>
-    </div>
-</div>
-<!-- Menu de Filtros -->
 
 <div id="filtros">
     <button id="boton_filtro" class="btn_filtros">
@@ -38,18 +16,40 @@ require_once __DIR__ . '\Templates\header.php';
         <p>Filtros</p>
     </button>
 
-    <!-- <hr> Poner una barra en vertical para separar el boton de los filtros -->
-
-    <!-- Carrusel de Filtros activos -->
+    <!-- Carrusel de Filtros activos
     <div class="swiper">
         <div class="card-wrapper">
             <div class="filtros_activos card-list swiper-wrapper">
 
             </div>
         </div>
-    </div>
+    </div> -->
+
+    
 
 </div>
+
+<!-- Menu de Filtros -->
+<div class="filtros_desplegable">
+    <div class="filtros_opciones">
+        <div>
+           <label for="">Nombre del Juego:</label>
+           <input class="form-control" id="nombreInput" type="text" value="Hola">
+        </div>
+        <div>
+            <label for="opcion2">Fecha de Salida:</label>
+            <input class="form-control" id="fechaSalidaInput" type="date" name="">
+        </div>
+        <div>
+            <label for="">Puntuacion 1/5:</label>
+            <input class="form-control" id="calificacionInput" type="number" max="5" min="1">
+        </div>
+        <br><br>
+        <button id="aplicarFiltros" class="btn btn-primary w-50">Filtrar</button>
+    </div>
+</div>
+<!-- Menu de Filtros -->
+
 
 <div class="paginacion"></div>
 

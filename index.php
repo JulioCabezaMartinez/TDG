@@ -49,12 +49,13 @@ $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
 
     //AJAX de LogIn/Out
-$router->add('/AJAX/CompruebaLogin', 'ControllerAJAX@compruebaLogin');
-$router->add('/AJAX/logout', 'ControllerAJAX@logout');
+    $router->add('/AJAX/CompruebaLogin', 'ControllerAJAX@compruebaLogin');
+    $router->add('/AJAX/logout', 'ControllerAJAX@logout');
 
     //AJAX del Admin
-$router->add('/AJAX/eliminarDato', 'ControllerAJAX@eliminarDato');
-$router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
+    $router->add('/AJAX/eliminarDato', 'ControllerAJAX@eliminarDato');
+    $router->add('/AJAX/datosModificarDato', 'ControllerAJAX@datosModificarDato');
+    $router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

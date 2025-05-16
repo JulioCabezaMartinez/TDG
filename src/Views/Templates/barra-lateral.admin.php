@@ -1,5 +1,5 @@
 <div class="header-movil">
-    <i class="fa-solid fa-bars"></i>
+    <i class="fa-solid fa-bars icono"></i>
 </div>
 
 <div class="barra-lateral">

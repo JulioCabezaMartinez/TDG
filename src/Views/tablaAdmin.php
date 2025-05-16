@@ -1,5 +1,5 @@
 <?php
-$css = 'panelAdmin';
+$css = 'tablaAdmin';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\barra-lateral.admin.php';
@@ -56,7 +56,7 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
             </div>
             <div class="modal-footer">
                 <button id="btn_cerrar_modal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button id="btn_modificar" type="button" class="btn btn-primary" data-dismiss="modal">Agregar Review</button>
+                <button id="btn_modificar" type="button" class="btn btn-primary" data-dismiss="modal">Modificar Dato</button>
             </div>
         </div>
     </div>
@@ -196,6 +196,8 @@ include_once __DIR__ . "./Templates/footer.php";
             });
         });
         
+        // Modal de Modificación
+
         $(".modificar-dato").click(function(){
             $("#creacion_modificar_dato").modal("show");
             let idBoton=$(this).attr("id");
@@ -204,7 +206,7 @@ include_once __DIR__ . "./Templates/footer.php";
             let entidad=$("#entidad").val();
 
             $.ajax({
-                url: "/TDG/AJAX/modificarDato",
+                url: "/TDG/AJAX/datosModificarDato",
                 type: "POST",
                 data: {
                     "id": id,
@@ -219,7 +221,42 @@ include_once __DIR__ . "./Templates/footer.php";
         });
 
         $("#btn_modificar").click(function(){
-            
+            let entidad=$("#entidad").val();
+            let datos = {};
+
+            $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
+                let id = $(this).attr('id');
+                let key = id.replace('Input', ''); 
+                let valor = $(this).val();
+                datos[key] = valor;
+            });
+
+            let formData=new FormData();
+            formData.append("datos", JSON.stringify(datos));
+            formData.append("entidad", entidad);
+
+            $.ajax({
+                url: "/TDG/AJAX/modificarDato",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            })
+        });
+
+        $("#btn_cerrar_modal").click(function(){
+            $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
+                $(this).val("");
+            });
+
+            $("#creacion_modificar_dato").modal("hide");
         });
     });
 

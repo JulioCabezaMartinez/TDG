@@ -59,8 +59,8 @@
         <div class="busqueda-juego">
             <h2>Buscar Juego: </h2>
             <div class="input-group">
-                <input class="form-control" type="text">
-                <button class="btn btn-outline-secondary bg-white" type="button">
+                <input id="busquedaJuego" class="form-control" type="text">
+                <button id="btnBusquedaJuego" class="btn btn-outline-secondary bg-white" type="button">
                     <i class="fas fa-search"></i>
                 </button>
             </div>

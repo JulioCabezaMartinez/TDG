@@ -1,3 +1,7 @@
+    
+    <!-- Script del Header -->
+    <script src="/TDG/public/JS/header.js"></script>
+    
     <!-- Script cookies -->
     <script src="/TDG/public/JS/cookies.js"></script>
 

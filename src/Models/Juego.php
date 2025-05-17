@@ -20,6 +20,36 @@ class Juego extends EmptyModel {
         return (int) parent::query("SELECT COUNT(*) FROM {$this->table}")->fetchColumn();
     }
 
+    public function getCountFiltros($filtros){
+        $sql = "SELECT COUNT(*) FROM {$this->table}";
+
+        if (!empty($filtros)) {
+            $conditions = []; 
+
+            // Si hay filtro para 'Nombre', agregamos la condición correspondiente
+            if (!empty($filtros['nombre'])) {
+                $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+            }
+
+            // Si hay filtro para 'fechaSalida', agregamos la condición correspondiente
+            if (!empty($filtros['fechaSalida'])) {
+                $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
+            }
+
+            // Si hay filtro para 'Calificacion', agregamos la condición correspondiente
+            if (!empty($filtros['calificacion'])) {
+                $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
+            }
+
+            // Si hay condiciones, las unimos con AND y las añadimos a la consulta
+            if (!empty($conditions)) {
+                $sql .= " WHERE " . implode(" AND ", $conditions);
+            }
+        }
+
+        return parent::query($sql)->fetchColumn();
+    }
+
     public function getNew(): array {
         return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -36,14 +66,14 @@ class Juego extends EmptyModel {
                 $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
             }
 
-            // Si hay filtro para 'Anyo_salida', agregamos la condición correspondiente
-            if (!empty($filtros['Anyo_salida'])) {
-                $conditions[] = "Anyo_salida = {$filtros['Anyo_salida']}";
+            // Si hay filtro para 'fechaSalida', agregamos la condición correspondiente
+            if (!empty($filtros['fechaSalida'])) {
+                $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
             }
 
             // Si hay filtro para 'Calificacion', agregamos la condición correspondiente
             if (!empty($filtros['calificacion'])) {
-                $conditions[] = "calificacion = {$filtros['calificacion']}";
+                $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
             }
 
             // Si hay condiciones, las unimos con AND y las añadimos a la consulta

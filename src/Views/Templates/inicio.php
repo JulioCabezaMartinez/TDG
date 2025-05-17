@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/TDG/public/CSS/header.css">
     <link rel="stylesheet" href="/TDG/public/CSS/footer.css">
     <link rel="stylesheet" href="/TDG/public/CSS/paginacion.css">
+    
     <!-- Paypal -->
     <script src="<?php echo $_ENV["PAYPAL_SRC"] ?>"></script>
 
@@ -46,7 +47,6 @@
             });
         });
     </script>
-
 </head>
 <body>
     

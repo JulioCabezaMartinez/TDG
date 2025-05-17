@@ -1,5 +1,23 @@
 "use strict";
 
+function buscarFiltros() {
+    let filtros={};
+    document.querySelectorAll('[id$="Input"]').forEach(function (input) {
+        let valor = input.value;
+        let clave = input.id.replace('Input', '');
+
+        if (valor) {
+            if (clave == "nombre") {
+                filtros[clave] = "%" + valor + "%";
+            } else {
+                filtros[clave] = valor;
+            }
+        }
+    })
+
+    return filtros;
+}
+
 /* Eventos click de Click de la Página */
 function eventos() {
     document.getElementById("boton_filtro").addEventListener("click", function () {
@@ -8,6 +26,8 @@ function eventos() {
             el.classList.toggle("active");
         });
     });
+
+    // Antigua idea de filtros en scroll.
 
     // document.querySelectorAll(".opcion_filtro").forEach(function (el) {
     //     el.addEventListener("click", function () {
@@ -40,8 +60,20 @@ function eventos() {
     //     }
     // });
 
+    // Aplicar Filtros
     document.getElementById("aplicarFiltros").addEventListener("click", function(){
+        let filtros=buscarFiltros();
 
+        paginacion(undefined, filtros);
+    });
+
+    // Quitar filtros
+    document.getElementById("resetFiltros").addEventListener("click", function(){
+        document.querySelectorAll('[id$="Input"]').forEach(function(input){
+            input.value="";
+        })
+
+        paginacion();
     });
 }
 
@@ -124,22 +156,7 @@ function crearTabla(juegos) {
 /* Permite ver una paginación con todas las páginas que va a tener la página */
 function paginas(pagina, total_paginas){
 
-    let filtros={};
-
-    document.querySelectorAll('[id$="Input"]').forEach(function(input){
-        let valor=input.value;
-        let clave=input.id.replace('Input', '');
-
-        if(valor){
-            if(clave=="nombre"){
-                filtros[clave]="%"+valor+"%";
-            }else{
-                filtros[clave]=valor;
-            }
-        }
-    });
-
-    // console.log(filtros);
+    let filtros=buscarFiltros();
 
     const paginas= document.getElementsByClassName("paginacion");
 
@@ -191,8 +208,6 @@ function paginas(pagina, total_paginas){
 
 function paginacion(nPagina=null, filtros={}) {
 
-    // console.log(filtros);
-
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
 
     let limite = 5; // Número de juegos por página.
@@ -230,5 +245,14 @@ function paginacion(nPagina=null, filtros={}) {
     }).catch(err => console.log(err));
 }
 
-paginacion(undefined, {"nombre" :    "%Hola%"});
+/* Buscamos el hidden que indica que se ha buscado por la busqueda y hacemos la busqueda con filtros, en caso de que no este hacemos una busqueda normal */
+let busquedaHeader=document.getElementById("hiddenBusqueda");
+
+if(busquedaHeader){
+    
+    let filtros=buscarFiltros();
+    paginacion(undefined, filtros);
+}else{
+    paginacion();
+}
 eventos();

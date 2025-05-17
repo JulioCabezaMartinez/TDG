@@ -34,18 +34,37 @@ require_once __DIR__ . '\Templates\header.php';
     <div class="filtros_opciones">
         <div>
            <label for="">Nombre del Juego:</label>
-           <input class="form-control" id="nombreInput" type="text" value="Hola">
+           <?php
+            if(!empty($juegoBusqueda)){
+            ?>
+            <input type="hidden" id="hiddenBusqueda" value="<?php echo $juegoBusqueda ?>">
+            <input class="form-control" id="nombreInput" type="text" value="<?php echo $juegoBusqueda ?>">
+            <?php
+            }else{
+            ?>
+                <input class="form-control" id="nombreInput" type="text">
+            <?php    
+            }
+           ?>
+           
         </div>
+        <br>
         <div>
-            <label for="opcion2">Fecha de Salida:</label>
+            <label for="opcion2">Mes de Salida:</label>
             <input class="form-control" id="fechaSalidaInput" type="date" name="">
         </div>
+        <br>
+        <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->
         <div>
             <label for="">Puntuacion 1/5:</label>
-            <input class="form-control" id="calificacionInput" type="number" max="5" min="1">
+            <br>
+            <input class="form-control" id="calificacionInput" type="number" max="5" min="1" data-decimal="2" step="0.5">
         </div>
-        <br><br>
+        <br>
+        <p id="resetFiltros" class="enlace">Quitar filtros</p>
+        <br>
         <button id="aplicarFiltros" class="btn btn-primary w-50">Filtrar</button>
+        
     </div>
 </div>
 <!-- Menu de Filtros -->

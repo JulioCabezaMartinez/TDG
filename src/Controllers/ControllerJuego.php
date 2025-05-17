@@ -25,6 +25,9 @@ class ControllerJuego {
     }
 
     public function lista_juegos(): void {
+        if(!empty($_GET)){
+            $juegoBusqueda=$_GET["juego"];
+        }
         include_once 'src/Views/lista_juegos.php'; // Cargar la vista de juegos
     }
 

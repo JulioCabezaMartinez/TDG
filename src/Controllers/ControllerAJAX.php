@@ -11,6 +11,8 @@ use App\Core\Validators;
 use App\Core\Security;
 use App\Models\Venta;
 
+use DateTime;
+
 class ControllerAJAX {
 
     public function lista_juegos(){
@@ -18,15 +20,29 @@ class ControllerAJAX {
         $juegoDB=new Juego();
         $listaDB=new Lista();
 
-        $id_usuario = 1; // $_GET['id_usuario']; // Obtener el ID del usuario desde la sesión.
-        $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
-
-        $total_juegos = $juegoDB->getCount();
-
         $pagina = $_POST["pagina"];
         $limite = $_POST["limite"];
         $inicio = $_POST["inicio"];
         $filtros=json_decode($_POST["filtros"], true);
+
+        $id_usuario = 1; // $_GET['id_usuario']; // Obtener el ID del usuario desde la sesión.
+        $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
+
+        if(empty($filtros)){
+            $total_juegos = $juegoDB->getCount();
+        }else{
+            if(!empty($filtros["fechaSalida"])){
+                $fechaFin = new DateTime($filtros["fechaSalida"]);
+                $fechaFin->modify('+1 year');
+
+                $fechaFinStr = $fechaFin->format('Y-m-d');
+
+                $filtros["fechaNextMonth"]=$fechaFinStr;
+            }
+
+            $total_juegos = $juegoDB->getCountFiltros($filtros);
+        }
+        
 
         $total_paginas = ceil($total_juegos / $limite);
         
@@ -61,7 +77,7 @@ class ControllerAJAX {
             $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
         }
 
-        echo json_encode(["juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_review(){

@@ -70,9 +70,9 @@
     justify-content: center;
 }
 
-.lista_ventas{
+#lista_ventas{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     border-radius: 20px;
 
     margin-top: 20px;

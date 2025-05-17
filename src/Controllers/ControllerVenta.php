@@ -21,8 +21,6 @@ class ControllerVenta {
     
 
     public function lista_ventas(){
-        $ventaBD=new Venta();
-        $lista_ventas=$ventaBD->getAll();
 
         include_once __DIR__. "/../Views/lista_ventas.php";
     }

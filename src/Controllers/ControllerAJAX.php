@@ -25,7 +25,7 @@ class ControllerAJAX {
         $inicio = $_POST["inicio"];
         $filtros=json_decode($_POST["filtros"], true);
 
-        $id_usuario = 1; // $_GET['id_usuario']; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = 1; // $_SESSION['id_usuario']; // Obtener el ID del usuario desde la sesión.
         $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
         if(empty($filtros)){
@@ -78,6 +78,43 @@ class ControllerAJAX {
         }
 
         echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_ventas(){
+        
+        $ventaDB=new Venta();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        //$filtros=json_decode($_POST["filtros"], true);
+
+        // if(empty($filtros)){
+        //     $total_ventas = $ventaDB->getCount();
+        // }
+
+        $total_ventas = $ventaDB->getCount();
+
+        // Filtros
+
+        // else{
+        //     if(!empty($filtros["fechaSalida"])){
+        //         $fechaFin = new DateTime($filtros["fechaSalida"]);
+        //         $fechaFin->modify('+1 year');
+
+        //         $fechaFinStr = $fechaFin->format('Y-m-d');
+
+        //         $filtros["fechaNextMonth"]=$fechaFinStr;
+        //     }
+
+        //     $total_juegos = $juegoDB->getCountFiltros($filtros);
+        // }
+
+        $total_paginas = ceil($total_ventas / $limite);
+        
+        $ventas = $ventaDB->getListSells((int)$inicio, (int)$limite); // Obtener 10 juegos
+
+        echo json_encode(["ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_review(){

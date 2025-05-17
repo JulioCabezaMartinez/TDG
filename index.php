@@ -44,6 +44,7 @@ $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 
 //Rutas AJAX
 $router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
+$router->add('/AJAX/lista_ventas', 'ControllerAJAX@lista_ventas');
 $router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');

@@ -16,10 +16,6 @@ class Juego extends EmptyModel {
         parent::__construct('juegos', 'id');
     }
 
-    public function getCount(): int {
-        return (int) parent::query("SELECT COUNT(*) FROM {$this->table}")->fetchColumn();
-    }
-
     public function getCountFiltros($filtros){
         $sql = "SELECT COUNT(*) FROM {$this->table}";
 

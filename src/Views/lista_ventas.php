@@ -5,7 +5,7 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\header.php';
 ?>
 
-<h3 style="text-align: center;">Ventas</h3>
+<h3 class="mt-4" style="text-align: center;">Productos</h3>
 
 <div class="filtros_desplegable">
     <div class="filtros_texto">
@@ -37,43 +37,32 @@ require_once __DIR__ . '\Templates\header.php';
 
     <!-- <hr> Poner una barra en vertical para separar el boton de los filtros -->
 
-    <!-- Carrusel de Filtros activos -->
+    <!-- Carrusel de Filtros activos
     <div class="swiper">
         <div class="card-wrapper">
             <div class="filtros_activos card-list swiper-wrapper">
 
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
+
+<div class="paginacion"></div>
 
 <div class="centrar-div">
-    <div class="lista_ventas">
+    <div id="lista_ventas">
         
-        <?php
-        foreach ($lista_ventas as $venta) {
-        ?>
-        <a href="/TDG/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
-            <div id="<?php echo "{$venta['id']}" ?>" class='venta'>
-                
-                    <img src='/TDG/public/IMG/<?php echo $venta["img_venta"] ?>' alt=''>
-
-                    <div class='info_juego'>
-                        <h1><?php echo $venta['Titulo']?></h1>
-                        <p class='precio'><strong><?php echo $venta['Precio']?>€</strong></p>
-                    </div>
-                </div>
-        </a>
-        <?php
-        }
-        ?>
     </div>
 </div>
+
+<div class="paginacion"></div>
 
 <?php
     include_once __DIR__. "./Templates/footer.php";
 ?>
+
+<script src="/TDG/public/JS/lista_ventas.js" ></script>
 
 <script>
     $(document).ready(function(){

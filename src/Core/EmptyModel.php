@@ -106,5 +106,8 @@ abstract class EmptyModel {
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     }
+        public function getCount(): int {
+        return (int) $this->query("SELECT COUNT(*) FROM {$this->table}")->fetchColumn();
+    }
 }
 ?>

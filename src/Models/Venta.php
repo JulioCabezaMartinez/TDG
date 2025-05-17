@@ -18,16 +18,7 @@ class Venta extends EmptyModel {
         parent::__construct('post_venta', 'id');
     }
 
-    /**
-     * Registra la compra de un juego por parte de un usuario.
-     *
-     * @param int $id_Juego ID del juego a comprar.
-     * @param int $id_Usuario ID del usuario que realiza la compra.
-     * @return void
-     */
-    public function comprarJuego($id_Juego, $id_Usuario): void {
-
-    }
+    
 
     // Crear Modelo aparte para las ventas.
     public function muestraColumnasVentas(){
@@ -36,6 +27,10 @@ class Venta extends EmptyModel {
 
     public function muestraAllVentas(){
         return parent::query("Select * from post_vendidos;")->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getNew(): array {
+        return parent::query("SELECT * FROM {$this->table} ORDER BY id  DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
 ?>

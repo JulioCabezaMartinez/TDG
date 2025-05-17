@@ -10,18 +10,22 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="landing">
     <div class="landing-texto">
         <h4>To Do Games</h>
-        <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
-        <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
-        
-        <a href="/TDG/juegos"><p class="boton-ver-juegos">Ver Juegos</p></a> 
+            <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
+            <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
+
+            <a href="/TDG/juegos">
+                <p class="boton-ver-juegos">Ver Juegos</p>
+            </a>
     </div>
 </div>
 <div class="recien_añadidos">
-    
-    <a href="/TDG/juegos"><h2 class="enlace">Recien añadidos</h2></a>
+
+    <a href="/TDG/juegos">
+        <h2 class="enlace">Recien añadidos</h2>
+    </a>
     <div class="recien_añadidos__container">
         <?php
-        foreach ($mas_vendidos as $recien_añadido) {
+        foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
@@ -34,7 +38,7 @@ require_once __DIR__ . '\Templates\header.php';
         ?>
         <!-- Para evitar el salto del carrusel al llegar al final se duplica el contenido para que se consiga el loop infinito -->
         <?php
-        foreach ($mas_vendidos as $recien_añadido) {
+        foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
@@ -56,15 +60,15 @@ require_once __DIR__ . '\Templates\header.php';
             <div class="card-list swiper-wrapper">
 
                 <?php
-                foreach ($mas_vendidos as $juego) {
+                foreach ($mas_vendidos as $venta) {
                 ?>
 
                     <a href=""></a> <!-- Se llena este enlace va a ser todo el div con el id del juego enviado con $_GET -->
                     <div class="card-item swiper-slide">
-                        <img src="<?php echo $juego['Imagen']; ?>" alt="">
+                        <img src="/TDG/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
                         <div class="card-content">
-                            <h3><?php echo $juego['Nombre'] ?></h3>
-                            <!-- Se pueden añadir más campos del juegos -->
+                            <h3><?php echo $venta['Titulo'] ?></h3>
+                            <h5><?php echo $venta['Precio'] ?> €</h5>
                         </div>
                     </div>
 
@@ -84,7 +88,7 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 <?php
-if(isset($_SESSION["id_usuario"])){
+if (isset($_SESSION["id_usuario"])) {
 ?>
     <div class="recomendados">
         <h2>Recomendados</h2>
@@ -126,8 +130,9 @@ if(isset($_SESSION["id_usuario"])){
 }
 ?>
 
-<h2>Ultimas Reviews</h2>
+
 <div class="lista_reviews">
+    <h2>Ultimas Reviews</h2>
     <?php
     foreach ($lista_reviews as $review) {
         $contenido_reducido = str_split($review['Contenido'], 10)[0];
@@ -167,7 +172,7 @@ if(isset($_SESSION["id_usuario"])){
 </div>
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+include_once __DIR__ . "./Templates/footer.php";
 ?>
 
 <!-- JS del Swiper (Carrusel) -->

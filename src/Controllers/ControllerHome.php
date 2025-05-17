@@ -7,6 +7,7 @@ use App\Core\Validators;
 use App\Models\Usuario;
 use App\Models\Juego;
 use App\Models\Review;
+use App\Models\Venta;
 use Dotenv\Validator;
 
 class ControllerHome{
@@ -21,10 +22,12 @@ class ControllerHome{
     public function index(){
 
         $juegoDB = new Juego();
-        $review = new Review();
         $reviewBD=new Review();
+        $ventaDB=new Venta();
 
-        $mas_vendidos = $juegoDB->getNew(); // Obtener los juegos más vendidos (recien añadidos).
+        $ultimos_juegos=$juegoDB->getNew();
+
+        $mas_vendidos = $ventaDB->getNew(); // Obtener las ventas recien añadidos.
 
         $lista_reviews=$reviewBD->ultimasReviews();
 

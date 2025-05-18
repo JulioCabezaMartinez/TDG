@@ -44,11 +44,21 @@ function eventos() {
         })
             .then(response => response.text())
             .then(data => {
-                // Sweet Alert falta.
+                Swal.fire({
+                        icon: "success",
+                        title: "Review publicada con exito",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 console.log(data);
             })
             .catch(error => {
-                // Sweet Alert falta.
+                Swal.fire({
+                        icon: "error",
+                        title: "Error en el Servidor",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 console.error("Error en la petición AJAX:", error);
             });
     });

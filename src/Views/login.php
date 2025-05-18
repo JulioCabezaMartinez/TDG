@@ -45,12 +45,10 @@ if(!empty($_SESSION)){
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    //Sweet Alert
-                    console.log(response);
                     window.location.href="/TDG/";
                 },
                 error: function(error){
-                    //Sweet Alert
+                    // Agregar p de error.
                     console.log(error)
                 }
 

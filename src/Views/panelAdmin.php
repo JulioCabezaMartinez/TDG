@@ -72,9 +72,7 @@ include_once __DIR__ . "./Templates/footer.php";
     window.addEventListener('resize', updateContentMargin);
 
     function updateContentMargin() {
-        console.log("Cambiando tamaño");
         const sidebarWidth = document.querySelector('.barra-lateral').offsetWidth;
-        console.log("Tamaño sideBar= " + sidebarWidth);
         document.querySelector('.content').style.marginLeft = `${sidebarWidth}px`;
     }
 

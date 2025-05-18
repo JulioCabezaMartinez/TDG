@@ -106,6 +106,13 @@ class Lista extends EmptyModel {
         $this->query($query, $params);
     }
 
+    /**
+     * Elimina un juego de una lista específica.
+     *
+     * @param int $id_Juego ID del juego a eliminar.
+     * @param int $id_Lista ID de la lista de la que se eliminará el juego.
+     * @return void
+     */
     private function deleteJuegoLista($id_Juego, $id_Lista): void {
         $query = "DELETE FROM juegos_lista WHERE id_juego=:id_Juego AND id_lista=:id_Lista;";
         $params = [':id_Juego' => $id_Juego, ':id_Lista' => $id_Lista];
@@ -140,13 +147,5 @@ class Lista extends EmptyModel {
         return $this->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Elimina un juego de una lista específica.
-     *
-     * @param int $id_Juego ID del juego a eliminar.
-     * @param int $id_Lista ID de la lista de la que se eliminará el juego.
-     * @return void
-     */
-    public function removeJuegotoLista($id_Juego, $id_Lista): void {}
 }
 ?>

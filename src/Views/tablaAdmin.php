@@ -14,44 +14,44 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
             </div>
             <div class="modal-body">
                 <?php
-                    foreach($columnas as $columna){
+                foreach ($columnas as $columna) {
                 ?>
                     <div>
-                        
-                        <?php
-                            if($columna=="Descripcion"){
-                        ?>
-                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
-                                <textarea class="form-control" id="<?php echo $columna ?>Input" rows="3"></textarea>
-                        <?php
-                            }elseif($columna=="id"){
-                        ?>
-                                <input type="hidden" id="<?php echo $columna ?>Input" value="">
-                        <?php
-                            }elseif($columna=="Imagen"){
-                        ?>
-                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?> (URL):</strong></label>
-                                <input type="text" class="form-control" id="<?php echo $columna ?>Input">
 
                         <?php
-                            }elseif($columna=="Anyo_salida"){
+                        if ($columna == "Descripcion") {
                         ?>
-                                <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>
-                                <input type="date" class="form-control" id="<?php echo $columna ?>Input">
+                            <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                            <textarea class="form-control" id="<?php echo $columna ?>Input" rows="3"></textarea>
+                        <?php
+                        } elseif ($columna == "id") {
+                        ?>
+                            <input type="hidden" id="<?php echo $columna ?>Input" value="">
+                        <?php
+                        } elseif ($columna == "Imagen") {
+                        ?>
+                            <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?> (URL):</strong></label>
+                            <input type="text" class="form-control" id="<?php echo $columna ?>Input">
 
                         <?php
-                            }else{
+                        } elseif ($columna == "Anyo_salida") {
                         ?>
-                                <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
-                                <input type="text" class="form-control" id="<?php echo $columna ?>Input">
+                            <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>
+                            <input type="date" class="form-control" id="<?php echo $columna ?>Input">
+
                         <?php
-                            }
+                        } else {
                         ?>
-                        
+                            <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                            <input type="text" class="form-control" id="<?php echo $columna ?>Input">
+                        <?php
+                        }
+                        ?>
+
                     </div>
                     <br>
-                <?php        
-                    }
+                <?php
+                }
                 ?>
             </div>
             <div class="modal-footer">
@@ -150,8 +150,8 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                             Acciones
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button id="btnEliminar@<?php echo $item["id"]?>" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                            <button id="btnModificar@<?php echo $item["id"]?>" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
+                            <button id="btnEliminar@<?php echo $item["id"] ?>" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
+                            <button id="btnModificar@<?php echo $item["id"] ?>" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
                             <?php
                             if ($entidad == "usuarios") {
                                 echo '<button class="dropdown-item btn btn-primary">Ver Listas</button>';
@@ -171,13 +171,12 @@ include_once __DIR__ . "./Templates/footer.php";
 ?>
 
 <script>
+    $(document).ready(function() {
+        $(".eliminar-dato").click(function() {
+            let idBoton = $(this).attr("id");
+            let id = idBoton.split("@")[1];
 
-    $(document).ready(function(){
-        $(".eliminar-dato").click(function(){
-            let idBoton=$(this).attr("id");
-            let id= idBoton.split("@")[1];
-
-            let entidad=$("#entidad").val();
+            let entidad = $("#entidad").val();
 
             $.ajax({
                 url: "/TDG/AJAX/eliminarDato",
@@ -186,24 +185,38 @@ include_once __DIR__ . "./Templates/footer.php";
                     "id": id,
                     "entidad": entidad
                 },
-                success: function(data){
-                    if(data=="Todo Correcto"){
-                        console.log("Eliminado con exito");
-                    }else{
-                        console.log("Error en la eliminación")
+                success: function(data) {
+                    if (data == "Todo Correcto") {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Dato eliminado con exito",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "serror",
+                            title: "Error en el servidor",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false
+                        });
                     }
                 }
             });
         });
-        
+
         // Modal de Modificación
 
-        $(".modificar-dato").click(function(){
+        $(".modificar-dato").click(function() {
             $("#creacion_modificar_dato").modal("show");
-            let idBoton=$(this).attr("id");
-            let id= idBoton.split("@")[1];
+            let idBoton = $(this).attr("id");
+            let id = idBoton.split("@")[1];
 
-            let entidad=$("#entidad").val();
+            let entidad = $("#entidad").val();
 
             $.ajax({
                 url: "/TDG/AJAX/datosModificarDato",
@@ -212,7 +225,7 @@ include_once __DIR__ . "./Templates/footer.php";
                     "id": id,
                     "entidad": entidad
                 },
-                success: function(data){
+                success: function(data) {
                     $.each(JSON.parse(data)["dato"], function(key, value) {
                         $('#' + key + 'Input').val(value);
                     });
@@ -220,18 +233,18 @@ include_once __DIR__ . "./Templates/footer.php";
             });
         });
 
-        $("#btn_modificar").click(function(){
-            let entidad=$("#entidad").val();
+        $("#btn_modificar").click(function() {
+            let entidad = $("#entidad").val();
             let datos = {};
 
             $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
                 let id = $(this).attr('id');
-                let key = id.replace('Input', ''); 
+                let key = id.replace('Input', '');
                 let valor = $(this).val();
                 datos[key] = valor;
             });
 
-            let formData=new FormData();
+            let formData = new FormData();
             formData.append("datos", JSON.stringify(datos));
             formData.append("entidad", entidad);
 
@@ -242,16 +255,30 @@ include_once __DIR__ . "./Templates/footer.php";
                 processData: false,
                 contentType: false,
 
-                success: function(data){
-                    console.log(data);
+                success: function(data) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Dato modificado con exito",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false
+                    });
                 },
-                error: function(error){
-                    console.log(error);
+                error: function(error) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "serror",
+                        title: "Error en el servidor",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false
+                    });
                 }
             })
         });
 
-        $("#btn_cerrar_modal").click(function(){
+        $("#btn_cerrar_modal").click(function() {
             $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
                 $(this).val("");
             });
@@ -259,15 +286,12 @@ include_once __DIR__ . "./Templates/footer.php";
             $("#creacion_modificar_dato").modal("hide");
         });
     });
-
 </script>
 <script>
     window.addEventListener('resize', updateContentMargin);
 
     function updateContentMargin() {
-        console.log("Cambiando tamaño");
         const sidebarWidth = document.querySelector('.barra-lateral').offsetWidth;
-        console.log("Tamaño sideBar= " + sidebarWidth);
         document.querySelector('.content').style.marginLeft = `${sidebarWidth}px`;
     }
 

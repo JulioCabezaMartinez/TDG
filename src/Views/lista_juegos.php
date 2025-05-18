@@ -114,11 +114,21 @@ require_once __DIR__ . '\Templates\header.php';
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log(response);
-                        let color_boton = getComputedStyle(boton).borderColor;
-                        boton.style.color = color_boton;
+                        let respuesta=JSON.parse(response).result;
+
+                        Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        text: respuesta,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false
+                    });
+
                         $(boton).toggleClass("fa-solid");
                         $(boton).toggleClass("fa-regular");
+
+                        
                     }
                 });
 
@@ -142,10 +152,17 @@ require_once __DIR__ . '\Templates\header.php';
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log(response);
-                        let color_boton = getComputedStyle(boton).borderColor;
-                        boton.style.color = color_boton;
-                        $(boton).toggleClass("en-lista");
+                        let respuesta=JSON.parse(response).result;
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            text: respuesta,
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false
+                        });
+
                         $(boton).toggleClass("fa-solid");
                         $(boton).toggleClass("fa-regular");
                     }

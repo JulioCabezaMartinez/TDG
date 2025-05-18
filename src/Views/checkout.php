@@ -4,7 +4,7 @@ require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
 ?>
-
+<input type="hidden" id="id_producto" value="<?php echo $_SESSION["id_venta"]?>">
 <div class="cuerpo">
     <div class="metodo_pago">
         <h2>Metodo de Pago</h2>
@@ -43,6 +43,8 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <script>
+    let id=document.getElementById("id_producto").value;
+
     paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,
         style: {
@@ -85,8 +87,7 @@ require_once __DIR__ . '\Templates\header.php';
                 if (details.status !== 'COMPLETED') {
                     throw new Error("El pago no se completó correctamente.");
                 } else {
-                    alert('¡Pago realizado con éxito!');
-                    console.log('Detalles del pago: ', details); // Puedes personalizar la respuesta
+                    window.location.href="/TDG/ventas/view/finalizacionCompra?producto="+id;
                 }
             });
         },

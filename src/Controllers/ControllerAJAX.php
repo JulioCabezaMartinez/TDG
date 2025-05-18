@@ -158,10 +158,10 @@ class ControllerAJAX {
                 echo json_encode(["result" =>"Juego añadido a la lista {$nombre_lista} correctamente."]);
             } else {
 
-                echo json_encode(["result" =>"Error: No se ha podido añadir el juego a la lista."]);
+                echo json_encode(["error" =>"No se ha podido añadir el juego a la lista."]);
             }
         } else {
-            echo json_encode(["result" =>"Error: Datos incompletos."]);
+            echo json_encode(["error" =>"Datos incompletos."]);
         }
     }
 

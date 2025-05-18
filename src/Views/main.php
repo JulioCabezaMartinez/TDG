@@ -53,8 +53,8 @@ require_once __DIR__ . '\Templates\header.php';
 
 </div>
 
-<div class="mas_vendidos">
-    <h2>Más vendidos</h2>
+<div class="ultimos_productos">
+    <h2>Ultimos Productos</h2>
     <div class="swiper">
         <div class="card-wrapper">
             <div class="card-list swiper-wrapper">

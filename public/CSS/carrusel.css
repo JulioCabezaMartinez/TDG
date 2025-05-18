@@ -2,7 +2,7 @@
 
 /* Sin esto los slides se aumentan exponencialmente */
 .swiper{ 
-    width: 100vw;
+    width: 100%;
 }
 
 .card-wrapper{

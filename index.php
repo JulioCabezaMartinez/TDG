@@ -35,6 +35,7 @@ $router->add('/ventas/view', 'ControllerVenta@view_venta');
 
 //Rutas Compra
 $router->add('/ventas/view/checkout', 'ControllerVenta@checkout');
+$router->add('/ventas/view/finalizacionCompra', 'ControllerVenta@finalizacion_compra');
 
 
 // Rutas de Perfil

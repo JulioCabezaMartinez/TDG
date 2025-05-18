@@ -1,0 +1,14 @@
+/* Pagina de CSS de Finalizacion de Compra */
+
+.detalles_compra{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.imagen_venta{
+    max-width: 300px;
+    margin: 10%;
+}

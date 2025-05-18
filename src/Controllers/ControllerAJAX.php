@@ -87,34 +87,28 @@ class ControllerAJAX {
         $pagina = $_POST["pagina"];
         $limite = $_POST["limite"];
         $inicio = $_POST["inicio"];
-        //$filtros=json_decode($_POST["filtros"], true);
+        $filtros=json_decode($_POST["filtros"], true);
 
-        // if(empty($filtros)){
-        //     $total_ventas = $ventaDB->getCount();
-        // }
+        if(empty($filtros)){
+            $total_ventas = $ventaDB->getCount();
+        }else{
+            if(!empty($filtros["fechaSalida"])){
+                $fechaFin = new DateTime($filtros["fechaSalida"]);
+                $fechaFin->modify('+1 year');
 
-        $total_ventas = $ventaDB->getCount();
+                $fechaFinStr = $fechaFin->format('Y-m-d');
 
-        // Filtros
+                $filtros["fechaNextMonth"]=$fechaFinStr;
+            }
 
-        // else{
-        //     if(!empty($filtros["fechaSalida"])){
-        //         $fechaFin = new DateTime($filtros["fechaSalida"]);
-        //         $fechaFin->modify('+1 year');
-
-        //         $fechaFinStr = $fechaFin->format('Y-m-d');
-
-        //         $filtros["fechaNextMonth"]=$fechaFinStr;
-        //     }
-
-        //     $total_juegos = $juegoDB->getCountFiltros($filtros);
-        // }
+            $total_ventas = $ventaDB->getCountFiltros($filtros);
+        }
 
         $total_paginas = ceil($total_ventas / $limite);
         
-        $ventas = $ventaDB->getListSells((int)$inicio, (int)$limite); // Obtener 10 juegos
+        $ventas = $ventaDB->getListSells((int)$inicio, (int)$limite, $filtros); // Obtener 10 juegos
 
-        echo json_encode(["ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_review(){
@@ -352,4 +346,20 @@ class ControllerAJAX {
         }
     }
     
+    public function gestionarCompra(){
+        $ventaDB=new Venta();
+
+        $id_producto=Validators::evitarInyeccion($_POST["id_producto"]);
+        $id_usuario=$_SESSION["usuarioActivo"];
+        $fecha_compra=date("Y-m-d H:i:s");
+
+        $baja_stock=$ventaDB->bajarStock($id_producto);
+        $agregar_vendido=$ventaDB->agregarVendido($id_producto, $id_usuario, $fecha_compra);
+
+        if($baja_stock && $agregar_vendido){
+            echo json_encode(["result"=> "Producto Vendido con exito."]);
+        }else{
+            echo json_encode(["error"=>"Error de Base de datos."]);
+        }
+    }
 }

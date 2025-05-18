@@ -1,3 +1,7 @@
+.paginacion{
+    margin-top: 5%;
+}
+
 .pagination .page-link{
     color: var(--color-texto);
     background-color: rgb(128, 128, 128, 0.25);

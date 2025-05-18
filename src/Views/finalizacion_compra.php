@@ -5,7 +5,6 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\header.php';
 ?>
 
-
 <div>
     <a class="enlace" href="/TDG/ventas">< Volver a Tienda</a>
 </div>

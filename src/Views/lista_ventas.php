@@ -7,28 +7,6 @@ require_once __DIR__ . '\Templates\header.php';
 
 <h3 class="mt-4" style="text-align: center;">Productos</h3>
 
-<div class="filtros_desplegable">
-    <div class="filtros_texto">
-        <p>Filtros</p>
-        <i id="filtros_icon" class="fa-solid fa-filter"></i>
-    </div>
-
-    <div class="filtros_opciones">
-        <div class="opcion_filtro">
-            <input type="checkbox" id="opcion1" name="opcion1" value="opcion1">
-            <label for="opcion1">Opción 1</label>
-        </div>
-        <div class="opcion_filtro">
-            <input type="checkbox" id="opcion2" name="opcion2" value="opcion2">
-            <label for="opcion2">Opción 2</label>
-        </div>
-        <div class="opcion_filtro">
-            <input type="checkbox" id="opcion3" name="opcion3" value="opcion3">
-            <label for="opcion3">Opción 3</label>
-        </div>
-    </div>
-</div>
-
 <div id="filtros">
     <button id="boton_filtro" class="btn_filtros">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
@@ -48,6 +26,72 @@ require_once __DIR__ . '\Templates\header.php';
 
 </div>
 
+<!-- Menu de Filtros -->
+<div class="filtros_desplegable">
+    <div class="filtros_opciones">
+        <div>
+           <label for="nombre">Nombre del Juego:</label>
+            <input class="form-control" id="nombreInput" type="text">
+        </div>
+        <br>
+        <div>
+            <label for="stock">Stock:</label>
+            <br>
+            <label for="si">Sí</label>
+            <input class="form-check-input" type="radio" id="si" name="stock" value="si">
+
+            <label for="no">No</label>
+            <input class="form-check-input" type="radio" id="no" name="stock" value="no">
+        </div>
+        <br>
+        <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->
+        <div>
+            <label for="">Precio Máximo: </label>
+            <br>
+            <input class="form-control w-50" id="precioMaxInput" type="number">
+        </div>
+        <br>
+        <div>
+            <label for="">Precio Mínimo: </label>
+            <br>
+            <input class="form-control w-50" id="precioMinInput" type="number">
+        </div>
+        <br>
+        <div>
+            <label for="">Consola: </label>
+            <br>
+            <select class="form-select" id="ConsolaInput">
+                <option value="" selected disabled>Selecciona una consola</option>
+                <?php
+                foreach($lista_plataformas as $plataforma){
+                ?>
+                <option value="<?php echo $plataforma["id"]?>"><?php echo $plataforma["nombre"]?></option>
+                <?php
+                }
+                ?>
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="">Estado: </label>
+            <br>
+            <select class="form-select" id="EstadoInput">
+                <option value="" selected disabled>Selecciona un estado</option>
+                <option value="Nuevo">Nuevo</option>
+                <option value="Buen Estado">Buen Estado</option>
+                <option value="Usado">Usado</option>
+            </select>
+        </div>
+        <br>
+        <p id="resetFiltros" class="enlace">Quitar filtros</p>
+        <br>
+        <button id="aplicarFiltros" class="btn btn-primary w-50">Filtrar</button>
+        
+    </div>
+</div>
+<!-- Menu de Filtros -->
+
+
 <div class="paginacion"></div>
 
 <div class="centrar-div">
@@ -63,15 +107,6 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <script src="/TDG/public/JS/lista_ventas.js" ></script>
-
-<script>
-    $(document).ready(function(){
-        $("#boton_filtro").click(function() {
-            console.log("click");
-            $(".filtros_desplegable").toggleClass("active");
-        });
-    });
-</script>
 
 <?php
 require_once __DIR__ . '\Templates\final.php';

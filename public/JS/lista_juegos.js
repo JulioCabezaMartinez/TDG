@@ -9,7 +9,19 @@ function buscarFiltros() {
         if (valor) {
             if (clave == "nombre") {
                 filtros[clave] = "%" + valor + "%";
-            } else {
+
+            }else if(clave == "calificacion"){
+                if(valor>5){
+                    input.value="5";
+                    valor=5;
+                    filtros[clave] = valor;
+                
+                } else if(valor<= 0){
+                    input.value="1";
+                    valor=1;
+                    filtros[clave] = valor;
+                }
+            }else {
                 filtros[clave] = valor;
             }
         }
@@ -63,6 +75,8 @@ function eventos() {
     // Aplicar Filtros
     document.getElementById("aplicarFiltros").addEventListener("click", function(){
         let filtros=buscarFiltros();
+
+        console.log(filtros);
 
         paginacion(undefined, filtros);
     });

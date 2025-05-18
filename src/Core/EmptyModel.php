@@ -84,10 +84,10 @@ abstract class EmptyModel {
      * @param array $data Datos actualizados del registro.
      * @return void
      */
-    public function update($data, $id): void {
+    public function update($data, $id): PDOStatement{
         $setClause = implode(', ', array_map(fn($field) => "{$field} = ?", array_keys($data)));
         $sql = "UPDATE {$this->table} SET {$setClause} WHERE {$this->primaryKey} = ?";
-        $this->query($sql, array_merge(array_values($data), [$id]));
+        return $this->query($sql, array_merge(array_values($data), [$id]));
     }
 
     /**

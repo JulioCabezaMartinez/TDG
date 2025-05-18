@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Venta;
 use App\Models\Juego;
 use App\Models\Genero;
+use App\Models\Plataforma;
 
 use App\Core\Validators;
 
@@ -24,6 +25,10 @@ class ControllerVenta {
 
     public function lista_ventas(){
 
+        $plataformaDB=new Plataforma();
+
+        $lista_plataformas=$plataformaDB->getAll();
+
         include_once __DIR__. "/../Views/lista_ventas.php";
     }
 
@@ -41,10 +46,14 @@ class ControllerVenta {
         include_once __DIR__. "/../Views/venta.php";
     }
     public function finalizacion_compra(){
+        // Eliminar la seguridad de esa venta una vez hecha.
+        unset($_SESSION["id_venta"]);
+
         if(empty($_SESSION["usuarioActivo"])){
             header("Location:/TDG/login");
             exit;
         }
+
         $id_producto=Validators::evitarInyeccion($_GET["producto"]);
 
         $productoBD=new Venta();

@@ -43,7 +43,7 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <script>
-    let id=document.getElementById("id_producto").value;
+    let id_producto=document.getElementById("id_producto").value;
 
     paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,
@@ -87,7 +87,16 @@ require_once __DIR__ . '\Templates\header.php';
                 if (details.status !== 'COMPLETED') {
                     throw new Error("El pago no se completó correctamente.");
                 } else {
-                    window.location.href="/TDG/ventas/view/finalizacionCompra?producto="+id;
+                    $.ajax({
+                        url: "/TDG/AJAX/gestionarCompra",
+                        type: "POST",
+                        data: {
+                            id_producto: id_producto
+                        },
+                        success: function(data){
+                            window.location.href="/TDG/ventas/view/finalizacionCompra?producto="+id_producto;
+                        }
+                    })
                 }
             });
         },

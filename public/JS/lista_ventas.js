@@ -13,7 +13,15 @@ function buscarFiltros() {
                 filtros[clave] = valor;
             }
         }
-    })
+    });
+
+    // Recoger el valor de los radio buttons con el nombre 'stock'
+    const radios = document.getElementsByName('stock');
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            filtros["Stock"] = radios[i].value;
+        }
+    }
 
     return filtros;
 }
@@ -60,21 +68,21 @@ function eventos() {
     //     }
     // });
 
-    // // Aplicar Filtros
-    // document.getElementById("aplicarFiltros").addEventListener("click", function(){
-    //     let filtros=buscarFiltros();
+    // Aplicar Filtros
+    document.getElementById("aplicarFiltros").addEventListener("click", function(){
+        let filtros=buscarFiltros();
 
-    //     paginacion(undefined, filtros);
-    // });
+        paginacion(undefined, filtros);
+    });
 
-    // // Quitar filtros
-    // document.getElementById("resetFiltros").addEventListener("click", function(){
-    //     document.querySelectorAll('[id$="Input"]').forEach(function(input){
-    //         input.value="";
-    //     })
+    // Quitar filtros
+    document.getElementById("resetFiltros").addEventListener("click", function(){
+        document.querySelectorAll('[id$="Input"]').forEach(function(input){
+            input.value="";
+        })
 
-    //     paginacion();
-    // });
+        paginacion();
+    });
 }
 
 /* Paginación de listas */
@@ -218,11 +226,6 @@ function paginacion(nPagina=null, filtros={}) {
 /* Buscamos el hidden que indica que se ha buscado por la busqueda y hacemos la busqueda con filtros, en caso de que no este hacemos una busqueda normal */
 let busquedaHeader=document.getElementById("hiddenBusqueda");
 
-if(busquedaHeader){
-    
-    let filtros=buscarFiltros();
-    paginacion(undefined, filtros);
-}else{
-    paginacion();
-}
+
+paginacion();
 eventos();

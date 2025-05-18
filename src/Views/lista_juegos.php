@@ -58,7 +58,7 @@ require_once __DIR__ . '\Templates\header.php';
         <div>
             <label for="">Puntuacion 1/5:</label>
             <br>
-            <input class="form-control" id="calificacionInput" type="number" max="5" min="1" data-decimal="2" step="0.5">
+            <input class="form-control" id="calificacionInput" type="number" max="5" min="0" data-decimal="2" step="0.5">
         </div>
         <br>
         <p id="resetFiltros" class="enlace">Quitar filtros</p>

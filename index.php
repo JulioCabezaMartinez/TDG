@@ -49,6 +49,7 @@ $router->add('/AJAX/lista_ventas', 'ControllerAJAX@lista_ventas');
 $router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
+$router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
 
     //AJAX de LogIn/Out
     $router->add('/AJAX/CompruebaLogin', 'ControllerAJAX@compruebaLogin');

@@ -10,18 +10,19 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="landing">
     <div class="landing-texto">
         <h4>To Do Games</h>
-            <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
-            <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
+        <br>
+        <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
+        <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
 
-            <a href="/TDG/juegos">
-                <p class="boton-ver-juegos">Ver Juegos</p>
-            </a>
+        <a href="/TDG/juegos">
+            <p class="boton-ver-juegos">Ver Juegos</p>
+        </a>
     </div>
 </div>
 <div class="recien_añadidos">
 
     <a href="/TDG/juegos">
-        <h2 class="enlace">Recien añadidos</h2>
+        <h2 class="enlace">Recién añadidos</h2>
     </a>
     <div class="recien_añadidos__container">
         <?php
@@ -54,7 +55,7 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <div class="ultimos_productos">
-    <h2>Ultimos Productos</h2>
+    <h2>Últimos Productos</h2>
     <div class="swiper">
         <div class="card-wrapper">
             <div class="card-list swiper-wrapper">
@@ -68,6 +69,7 @@ require_once __DIR__ . '\Templates\header.php';
                         <img src="/TDG/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
                         <div class="card-content">
                             <h3><?php echo $venta['Titulo'] ?></h3>
+                            <br>
                             <h5><?php echo $venta['Precio'] ?> €</h5>
                         </div>
                     </div>

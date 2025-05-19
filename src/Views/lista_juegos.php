@@ -38,11 +38,11 @@ require_once __DIR__ . '\Templates\header.php';
             if(!empty($juegoBusqueda)){
             ?>
             <input type="hidden" id="hiddenBusqueda" value="<?php echo $juegoBusqueda ?>">
-            <input class="form-control" id="nombreInput" type="text" value="<?php echo $juegoBusqueda ?>">
+            <input class="form-control w-50" id="nombreInput" type="text" value="<?php echo $juegoBusqueda ?>">
             <?php
             }else{
             ?>
-                <input class="form-control" id="nombreInput" type="text">
+                <input class="form-control w-50" id="nombreInput" type="text">
             <?php    
             }
            ?>
@@ -51,19 +51,19 @@ require_once __DIR__ . '\Templates\header.php';
         <br>
         <div>
             <label for="opcion2">Mes de Salida:</label>
-            <input class="form-control" id="fechaSalidaInput" type="date" name="">
+            <input class="form-control w-25" id="fechaSalidaInput" type="date" name="">
         </div>
         <br>
         <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->
         <div>
             <label for="">Puntuacion 1/5:</label>
             <br>
-            <input class="form-control" id="calificacionInput" type="number" max="5" min="0" data-decimal="2" step="0.5">
+            <input class="form-control w-25" id="calificacionInput" type="number" max="5" min="0" data-decimal="2" step="0.5">
         </div>
         <br>
         <p id="resetFiltros" class="enlace">Quitar filtros</p>
         <br>
-        <button id="aplicarFiltros" class="btn btn-primary w-50">Filtrar</button>
+        <button id="aplicarFiltros" class="btn btn-primary w-25">Filtrar</button>
         
     </div>
 </div>
@@ -116,19 +116,18 @@ require_once __DIR__ . '\Templates\header.php';
                     success: function(response) {
                         let respuesta=JSON.parse(response).result;
 
+                        console.log("Hola" + respuesta.addjuego);
+
                         Swal.fire({
                         position: "top-end",
-                        icon: "success",
+                        icon: "error",
                         text: respuesta,
                         showConfirmButton: false,
                         timer: 1500,
                         backdrop: false
                     });
-
                         $(boton).toggleClass("fa-solid");
                         $(boton).toggleClass("fa-regular");
-
-                        
                     }
                 });
 

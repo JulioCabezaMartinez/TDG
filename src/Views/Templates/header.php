@@ -1,6 +1,8 @@
 <header>
     <i class="fa-solid fa-bars"></i>
 
+    <h3>To Do Games</h3>
+
     <div class="izq">
         <!-- Logo de la app -->
         <a href="/TDG/">
@@ -21,6 +23,7 @@
     ?>
 
         <h4>Bienvenido, <?php echo $_SESSION["Nick"] ?></h4>
+        <br><br>
         <a href="/TDG/AJAX/logout" id="logout-btn" class="btn btn-primary">Cerrar Sesion</a>
 
     <?php

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Juego;
 use App\Models\Lista;
+use App\Models\Plataforma;
 use App\Models\Review;
 use App\Models\Usuario;
 
@@ -83,6 +84,7 @@ class ControllerAJAX {
     public function lista_ventas(){
         
         $ventaDB=new Venta();
+        $plataformaDB=new Plataforma();
 
         $pagina = $_POST["pagina"];
         $limite = $_POST["limite"];
@@ -107,6 +109,12 @@ class ControllerAJAX {
         $total_paginas = ceil($total_ventas / $limite);
         
         $ventas = $ventaDB->getListSells((int)$inicio, (int)$limite, $filtros); // Obtener 10 juegos
+
+        foreach ($ventas as &$venta) {
+            $consola=$plataformaDB->getById($venta["Consola"]);
+
+            $venta["Consola"]=$consola["nombre"];
+        }
 
         echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
@@ -134,7 +142,7 @@ class ControllerAJAX {
     public function addJuegoLista(){
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
-        $id_usuario = 1; //$_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
 
         $nombre_lista = match ($lista) {
             'wish' => 'wishlist',
@@ -146,7 +154,7 @@ class ControllerAJAX {
 
         if ($id_juego && $lista && $id_usuario) {
             $lista_bd = new Lista();
-
+            
             if ($lista_bd->addJuegoToLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
 
                 echo json_encode(["result" =>"Juego añadido a la lista {$nombre_lista} correctamente."]);

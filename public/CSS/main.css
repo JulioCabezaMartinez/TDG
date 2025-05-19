@@ -34,7 +34,7 @@
 /* Juegos recien Añadidos */
 .recien_añadidos {
     width: 100%;
-    height: 60vh;
+    height: 30vh;
     overflow: hidden;
     padding: 20px 0;
 }
@@ -67,6 +67,13 @@
 
     background-color: var(--color-tarjeta);
 
+}
+
+.recien_añadidos__item a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .recien_añadidos__item img{
@@ -190,7 +197,7 @@
 
 @media screen and (min-width: 768px) {
     .recien_añadidos{
-        height: 60vh;
+        height: 40vh;
     }
 
     .recien_añadidos__container:has(.recien_añadidos__item:hover){
@@ -213,5 +220,11 @@
     .card-item:hover{
         border: 5px solid var(--color-borde-neon);
         box-shadow: 0 0 20px var(--color-borde-neon);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .recien_añadidos{
+        height: 60vh;
     }
 }

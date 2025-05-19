@@ -37,12 +37,7 @@ class Lista extends EmptyModel {
             $id_lista = $this->getIdLista($id_user, $id_tipo_lista);
 
             if($id_lista){
-                // Preguntar a Ruben si crear otro modelo para la lista de juegos en tablas o usar el metodo privado que se ha creado.
                 
-                // $this->create(array(
-                //     'id_Juego' => $id_Juego,
-                //     'id_Lista' => $id_lista
-                // )); 
                 $this->insertJuegoLista($id_Juego, $id_lista); // Agregar el juego a la lista.
                 return true;
             } else {

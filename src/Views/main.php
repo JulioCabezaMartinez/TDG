@@ -31,7 +31,17 @@ require_once __DIR__ . '\Templates\header.php';
             <div class="recien_añadidos__item">
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
-                    <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
+                    <?php
+                    if(strlen($recien_añadido['Nombre'])>7){
+                    ?>
+                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 7) . "..." ?></h3>
+                    <?php
+                    }else{
+                    ?>
+                        <h3 class="titulo_juego" data-prueba="hola"><?php echo $recien_añadido['Nombre'] ?></h3>
+                    <?php
+                    }
+                    ?>
                 </a>
             </div>
         <?php
@@ -44,7 +54,18 @@ require_once __DIR__ . '\Templates\header.php';
             <div class="recien_añadidos__item">
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
-                    <h3 class="titulo_juego"><?= $recien_añadido['Nombre'] ?></h3>
+                    <?php
+                    if(strlen($recien_añadido['Nombre'])>7){
+                    ?>
+                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 7) . "..." ?></h3>
+                    <?php
+                    }else{
+                    ?>
+                        <h3 class="titulo_juego" data-prueba="hola"><?php echo $recien_añadido['Nombre'] ?></h3>
+                    <?php
+                    }
+                    ?>
+
                 </a>
             </div>
         <?php

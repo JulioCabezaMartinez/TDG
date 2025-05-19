@@ -141,6 +141,12 @@
 
 }
 
+.info_juego .titulo{
+    align-self: center;
+
+    margin-bottom: 5%;
+}
+
 .info_juego .precio{
     font-size: 250%;
     margin: 0;

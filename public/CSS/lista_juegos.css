@@ -10,6 +10,7 @@
 
     overflow: hidden;
     max-height: 0;
+    width: 100%;
     transition: max-height 0.5s ease;
     /* background-color: rgba(0, 0, 0, 0.5); */
     /* z-index: 9999; */
@@ -25,7 +26,7 @@
 }
 
 .active{
-    max-height: 400px;
+    max-height: 650px;
     
     /* Transform */
     transition: 0.8s ease;
@@ -190,29 +191,25 @@
 }
 
 .icono{
-    font-size: 150%;
+    font-size: 300%;
 }
 
 /* Botones de listas */
 
 .fa-heart{
     color: var(--color-wishlist);
-    border: 1px solid var(--color-wishlist);
 }
 
 .fa-clock{
     color: var(--color-backlog);
-    border: 1px solid var(--color-backlog);
 }
 
 .fa-circle-check{
     color: var(--color-completed);
-    border: 1px solid var(--color-completed);
 }
 
 .fa-circle-play{
     color: var(--color-playing);
-    border: 1px solid var(--color-playing);
 }
 
 .en_lista{

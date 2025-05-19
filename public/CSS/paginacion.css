@@ -12,3 +12,11 @@
     background-color: var(--color-secundario);
     border-color: transparent;
 }
+
+.active a{
+    color: var(--color-boton-texto) !important;
+}
+
+.page-item:hover .page-link{
+    color: var(--color-boton-texto) !important;
+}

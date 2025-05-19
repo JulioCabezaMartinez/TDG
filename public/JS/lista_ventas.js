@@ -111,6 +111,7 @@ function crearTabla(ventas) {
 
         // Crear el título
         const tituloH1 = document.createElement('h1');
+        tituloH1.classList.add('titulo');
         tituloH1.textContent = venta.Titulo;
 
         // Crear el precio
@@ -120,8 +121,21 @@ function crearTabla(ventas) {
         precioStrong.textContent = `${venta.Precio}€`;
         precioP.appendChild(precioStrong);
 
+        // Crear el Estado
+        const estadoP = document.createElement('p');
+        estadoP.classList.add('estado_producto');
+        estadoP.innerHTML = `<strong>Estado:</strong> ${venta.Estado}`;
+
+        // Crear la consola
+        const consolaP = document.createElement('p');
+        consolaP.classList.add('consola_producto');
+        consolaP.innerHTML = `<strong>Estado:</strong> ${venta.Consola}`;
+        
+
         // Añadir todos los elementos a sus respectivos contenedores
         infoJuegoDiv.appendChild(tituloH1);
+        infoJuegoDiv.appendChild(estadoP);
+        infoJuegoDiv.appendChild(consolaP);
         infoJuegoDiv.appendChild(precioP);
         ventaDiv.appendChild(img);
         ventaDiv.appendChild(infoJuegoDiv);

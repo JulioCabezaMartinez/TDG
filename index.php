@@ -56,6 +56,7 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     $router->add('/AJAX/logout', 'ControllerAJAX@logout');
 
     //AJAX del Admin
+    $router->add('/AJAX/lista_Admin', 'ControllerAJAX@listaAdmin');
     $router->add('/AJAX/eliminarDato', 'ControllerAJAX@eliminarDato');
     $router->add('/AJAX/datosModificarDato', 'ControllerAJAX@datosModificarDato');
     $router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');

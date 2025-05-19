@@ -317,7 +317,7 @@ class ControllerAJAX {
             case "usuarios":
                 $usuarioDB=new Usuario();
                 $item=$usuarioDB->getById($id);
-                echo json_encode(["dato" => $item]);
+                echo json_encode(["dato" => $item, "id"=>$id]);
                 break;
             case "juegos":
                 $juegosDB=new Juego();
@@ -361,5 +361,52 @@ class ControllerAJAX {
         }else{
             echo json_encode(["error"=>"Error de Base de datos."]);
         }
+    }
+
+    public function listaAdmin(){
+        
+        $pagina = Validators::evitarInyeccion($_POST["pagina"]);
+        $limite = Validators::evitarInyeccion($_POST["limite"]);
+        $inicio = Validators::evitarInyeccion($_POST["inicio"]);
+        $entidad=Validators::evitarInyeccion($_POST["entidad"]);
+
+        switch ($entidad) {
+            case "usuarios":
+                $entidadDB=new Usuario();
+                break;
+            case "juegos":
+                $entidadDB=new Juego();
+                break;
+            case "reviews":
+                $entidadDB=new Review();
+                break;
+            case "productos":
+                $entidadDB=new Venta();
+                break;
+            case "post_vendidos":
+                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
+                // $usuarioDB->delete($id);
+                // echo "Todo Correcto";
+                echo "Error de Entidad, entidad equivocada";
+                break;
+            default:
+                echo "Error de Entidad";
+                break;
+        }
+
+
+        $total_datos = $entidadDB->getCount();
+
+        $total_paginas = ceil($total_datos / $limite);
+        
+        $datos = $entidadDB->getAllLimit((int)$inicio, (int)$limite); // Obtener 10 juegos
+
+        $columnasDB = $entidadDB->listaColumnas();
+        $columnas = [];
+        foreach ($columnasDB as $columnaDB) {
+            array_push($columnas, $columnaDB["Field"]);
+        }
+
+        echo json_encode(["columnas"=>$columnas ,"datos"=>$datos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 }

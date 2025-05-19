@@ -66,227 +66,14 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 <div class="content">
     <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
     <h2>Tabla <?php echo $entidad ?></h2>
-    <table class="table table-striped table-dark tabla-datos">
-        <thead>
-            <tr>
-                <?php
-                foreach ($columnas as $columna) {
-                ?>
-                    <th><?php echo $columna ?></th>
-                <?php
-                }
-                ?>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="paginacion"></div>
+    <table id="tabla-datos" class="table table-striped table-dark tabla-datos"></table>
 
-            <?php
-            foreach ($lista as $item) {
-                echo '<tr>';
-                foreach ($item as $campo) {
-
-                    if (strlen($campo) >= 20) {
-                        $campo = str_split($campo, 20)[0];
-                        $campo .= "...";
-                    }
-            ?>
-                    <td><?php echo $campo ?></td>
-            <?php
-                }
-                echo '<td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Acciones
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <button id="{$item["id"]}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                                    <button class="dropdown-item btn btn-primary modificar-dato">Modificar</button>';
-
-                if ($entidad == "usuarios") {
-                    echo '<button class="dropdown-item btn btn-primary">Ver Listas</button>';
-                }
-
-                echo '</div>
-                            </div>
-                        </td>
-                    </tr>';
-            }
-            ?>
-
-            </tr>
-
-
-        </tbody>
-    </table>
-
-    <div class="tabla-movil">
-        <?php
-        foreach ($lista as $item) {
-            echo '<div class="fila">';
-            $contador = 0;
-            // Iterar sobre cada celda de la fila
-            foreach ($item as $index => $campo) {
-                // Obtener el nombre de la columna correspondiente al índice
-                $columna = $columnas[$contador];
-                if (strlen($campo) >= 20) {
-                    $campo = str_split($campo, 20)[0];
-                    $campo .= "...";
-                }
-
-                echo '<div class="columna">';
-                echo '<div class="header">' . $columna . '</div>';
-                echo '<div class="contenido">' . strip_tags($campo) . '</div>';
-                echo '</div>';
-                $contador++;
-            }
-            $contador = 0;
-        ?>
-            <div class="columna columna-final">
-                <div class="header">Acciones</div>
-                <div class="contenido">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Acciones
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button id="btnEliminar@<?php echo $item["id"] ?>" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                            <button id="btnModificar@<?php echo $item["id"] ?>" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
-                            <?php
-                            if ($entidad == "usuarios") {
-                                echo '<button class="dropdown-item btn btn-primary">Ver Listas</button>';
-                            }
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div><!-- // Cerrar div.fila -->
-<?php
-        }
-?>
-</div>
+    <div id="tabla-movil" class="tabla-movil"></div> 
 <?php
 include_once __DIR__ . "./Templates/footer.php";
 ?>
 
-<script>
-    $(document).ready(function() {
-        $(".eliminar-dato").click(function() {
-            let idBoton = $(this).attr("id");
-            let id = idBoton.split("@")[1];
-
-            let entidad = $("#entidad").val();
-
-            $.ajax({
-                url: "/TDG/AJAX/eliminarDato",
-                type: "POST",
-                data: {
-                    "id": id,
-                    "entidad": entidad
-                },
-                success: function(data) {
-                    if (data == "Todo Correcto") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Dato eliminado con exito",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            backdrop: false
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "serror",
-                            title: "Error en el servidor",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            backdrop: false
-                        });
-                    }
-                }
-            });
-        });
-
-        // Modal de Modificación
-
-        $(".modificar-dato").click(function() {
-            $("#creacion_modificar_dato").modal("show");
-            let idBoton = $(this).attr("id");
-            let id = idBoton.split("@")[1];
-
-            let entidad = $("#entidad").val();
-
-            $.ajax({
-                url: "/TDG/AJAX/datosModificarDato",
-                type: "POST",
-                data: {
-                    "id": id,
-                    "entidad": entidad
-                },
-                success: function(data) {
-                    $.each(JSON.parse(data)["dato"], function(key, value) {
-                        $('#' + key + 'Input').val(value);
-                    });
-                }
-            });
-        });
-
-        $("#btn_modificar").click(function() {
-            let entidad = $("#entidad").val();
-            let datos = {};
-
-            $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
-                let id = $(this).attr('id');
-                let key = id.replace('Input', '');
-                let valor = $(this).val();
-                datos[key] = valor;
-            });
-
-            let formData = new FormData();
-            formData.append("datos", JSON.stringify(datos));
-            formData.append("entidad", entidad);
-
-            $.ajax({
-                url: "/TDG/AJAX/modificarDato",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-
-                success: function(data) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Dato modificado con exito",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        backdrop: false
-                    });
-                },
-                error: function(error) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "serror",
-                        title: "Error en el servidor",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        backdrop: false
-                    });
-                }
-            })
-        });
-
-        $("#btn_cerrar_modal").click(function() {
-            $('[id$="Input"]').each(function() { //Este selector me permite buscar en el atributo, en este caso id, cuyo sufijo coincida con el indicado, en este caso Input (Como si fueran expresiones regulares).
-                $(this).val("");
-            });
-
-            $("#creacion_modificar_dato").modal("hide");
-        });
-    });
-</script>
 <script>
     window.addEventListener('resize', updateContentMargin);
 
@@ -298,6 +85,9 @@ include_once __DIR__ . "./Templates/footer.php";
     //Llamar la función al cargar la página para asegurarse de que se ajuste desde el principio
     updateContentMargin();
 </script>
+
+<script src="/TDG/public/JS/tablaAdmin.js"></script>
+
 <?php
 require_once __DIR__ . '\Templates\final.php';
 ?>

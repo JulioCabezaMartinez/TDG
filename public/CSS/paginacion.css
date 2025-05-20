@@ -13,7 +13,7 @@
     border-color: transparent;
 }
 
-.active a{
+.pagination.active a{
     color: var(--color-boton-texto) !important;
 }
 

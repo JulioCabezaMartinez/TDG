@@ -201,6 +201,7 @@
     .menu-hamburguesa-escritorio{
         display: inline;
         height: 0px;
+        overflow: hidden;
 
         align-self: flex-end;
         justify-self: end;

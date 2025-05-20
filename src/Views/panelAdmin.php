@@ -11,6 +11,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
 
 <div class="content">
     <h1>Panel de Administrador</h1>
+    <a class="enlace-vuelta enlace m-3" href="/TDG/ ">< Volver a Inicio</a>
     <a href="/TDG/panelAdmin/tabla?tabla=usuarios">
         <div class="contenedor-admin">
             <div class="icono">
@@ -62,11 +63,6 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
     
 
 </div>
-
-
-<?php
-include_once __DIR__ . "./Templates/footer.php";
-?>
 
 <script>
     window.addEventListener('resize', updateContentMargin);

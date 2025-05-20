@@ -25,7 +25,7 @@
     flex-direction: column;
 }
 
-.active{
+.filtros_desplegable.active{
     max-height: 650px;
     
     /* Transform */
@@ -191,7 +191,7 @@
 }
 
 .icono{
-    font-size: 300%;
+    font-size: 400%;
 }
 
 /* Botones de listas */
@@ -227,4 +227,20 @@
     align-items: center;
 
     margin-top: 20px;
+}
+
+@media screen and (min-width: 425px) and (max-width: 768px) {
+
+    .icono{
+        font-size: 250%;
+    }
+    
+}
+
+@media screen and (max-width: 425px) {
+
+    .icono{
+        font-size: 180%;
+    }
+    
 }

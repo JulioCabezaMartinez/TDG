@@ -16,7 +16,7 @@ body{
     width: 70vw;
     height: auto;
 
-    margin-top: 5vh;
+    margin-top: 15vh;
 
     padding: 5vh;
 
@@ -34,11 +34,30 @@ form{
     width: 100%;
 }
 
+.container-login{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#correo {
+    width: 75%;
+}
+
+#password {
+    width: 75%;
+}
+
 .registro{
     background-color: var(--color-secundario);
 }
 
-.tarjeta-login .logo-TDG{
+#texto-registro {
+    width: 100%;
+    text-align: center;
+}
+
+.tarjeta-login .logo-TDG {
     align-self: center;
     width: 50%;
 }
@@ -53,4 +72,28 @@ form{
 
 .enlace{
     color: var(--color-texto);
+}
+
+@media screen and (min-width: 768px) {
+    .tarjeta-login {
+        width: 40vw;
+        height: auto;
+    }
+
+    #texto-registro {
+        width: auto;
+        text-align: center;
+    }
+
+    .tarjeta-login h1{
+        font-size: 180%;
+    }
+
+    #correo{
+        width: 50%;
+    }
+
+    #password{
+        width: 50%;
+    }
 }

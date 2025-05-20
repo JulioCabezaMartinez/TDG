@@ -1,9 +1,8 @@
 /* Pagina de CSS de Panel Administrador */
 
 body{
+    display: block;
     min-height: 100vh;
-    /* Para poder ajustar la barra lateral */
-    align-items: start;
 }
 
 .header-movil{
@@ -34,20 +33,36 @@ body{
     max-width: 200px;
 
     background-color: var(--color-tarjeta);
-
 }
 
+.barra-lateral h5{
+    text-align: center;
+    margin-top: 10%;
+}
 
+.barra-lateral ul{
+    padding-top: 15%;
+}
+
+li{
+    list-style: none;
+
+    margin: 5%;
+}
 
 /* Contenedor de contenido */
 .content{
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     flex-direction: column;
     align-self: center;
 
     width: 80%;
+}
+
+.enlace-vuelta{
+    display: none;
 }
 
 .contenedor-admin{
@@ -61,6 +76,8 @@ body{
 
     margin: 1%;
     padding: 3%;
+
+    width: 500px;
 }
 
 .contenedor-admin *{
@@ -94,45 +111,14 @@ footer{
 }
 
 
-/* Tabla movil */
-
-.tabla-movil{
-    display: none;
-}
-
-.tabla-movil .fila .columna{
-    display: flex;
-}
-
-.tabla-movil .fila .columna .header, .tabla-movil .fila .columna .contenido{
-    border: 1px solid var(--color-tarjeta-secundario);
-    border-bottom: none;
-    padding: 10px;
-}
-
-.tabla-movil .fila .columna .header{
-    width: 40%;
-    background-color: black;
-    color: white;
-    font-weight: bold;
-}
-
-.tabla-movil .fila .columna .contenido{
-    width: 60%;
-    color: white;
-}
-
-.columna-final{
-    border-bottom: 2px solid white;
-}
-
-.tabla-movil .fila:nth-child(even) .columna .contenido{
-    background-color: var(--color-tarjeta);
-}
 
 /* Media Querys */
 
 @media (max-width: 775px){
+    .enlace-vuelta{
+        display: inline;
+    }
+
     .header-movil{
         display: block;
     }
@@ -163,9 +149,16 @@ footer{
 }
 
 @media (min-width: 768px) {
+
     .contenedor-admin:hover{
 
         border: 2px solid var(--color-borde-neon);
         box-shadow: 0 0 20px var(--color-borde-neon);
+    }
+}
+
+@media (max-width: 425px) {
+    .contenedor-admin{
+        max-width: 300px;
     }
 }

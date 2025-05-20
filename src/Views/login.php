@@ -15,14 +15,15 @@ if(!empty($_SESSION)){
     <form action="#" method="POST" class="mt-4">
         <div class="mb-3">
             <label for="correo" class="form-label">Correo:</label>
-            <input type="text" class="form-control w-75" id="correo" name="correo" required>
+            <input type="text" class="form-control" id="correo" name="correo" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control w-75" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <button id="submit-login" type="submit" class="btn btn-primary">Iniciar Sesión</button>
-        <a class="enlace ms-3" href="/TDG/">Volver al Inicio</a>    
+        <br><br>
+        <a class="enlace" href="/TDG/">Volver al Inicio</a>    
     </form>
 </div>
 

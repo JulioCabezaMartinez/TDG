@@ -78,7 +78,12 @@ class ControllerAJAX {
             $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
         }
 
-        echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        if(!empty($_SESSION)){
+            echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas, "sesion"=>$_SESSION["usuarioActivo"]]);
+        }else{
+            echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        }
+        
     }
 
     public function lista_ventas(){

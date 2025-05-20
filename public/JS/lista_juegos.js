@@ -92,7 +92,8 @@ function eventos() {
 }
 
 /* Paginación de listas */
-function crearTabla(juegos) {
+function crearTabla(juegos, sesion=undefined) {
+    console.log(sesion);
     let list_juegos=document.getElementById("list_juegos");
     list_juegos.innerHTML='';
 
@@ -123,7 +124,7 @@ function crearTabla(juegos) {
         // Enlace y título
         const enlace = document.createElement('a');
         enlace.className = 'enlace_juego';
-        enlace.href = '#';
+        enlace.href = '/TDG/juegos/view?juego=' + juego.id;
 
         const h1 = document.createElement('h1');
         h1.textContent = juego.Nombre;
@@ -148,19 +149,22 @@ function crearTabla(juegos) {
         pFecha.innerHTML = `<strong>Fecha de salida:</strong> ${juego.Anyo_salida}`;
         infoJuego.appendChild(pFecha);
 
-        // Botones/íconos
-        const btnListas = document.createElement('div');
-        btnListas.className = 'btn_listas';
+        if(sesion !== undefined){
+            // Botones/íconos
+            const btnListas = document.createElement('div');
+            btnListas.className = 'btn_listas';
 
-        iconos.forEach(([prefix, icono], i) => {
-            const tipo = juego.estados[i] ? 'fa-solid' : 'fa-regular';
-            const iElem = document.createElement('i');
-            iElem.id = `${prefix}@${juego.id}`;
-            iElem.className = `icono ${tipo} fa-${icono}`;
-            btnListas.appendChild(iElem);
-        });
+            iconos.forEach(([prefix, icono], i) => {
+                const tipo = juego.estados[i] ? 'fa-solid' : 'fa-regular';
+                const iElem = document.createElement('i');
+                iElem.id = `${prefix}@${juego.id}`;
+                iElem.className = `icono ${tipo} fa-${icono}`;
+                btnListas.appendChild(iElem);
+            });
 
-        infoJuego.appendChild(btnListas);
+            infoJuego.appendChild(btnListas);
+        }
+
         divJuego.appendChild(infoJuego);
 
         list_juegos.appendChild(divJuego);
@@ -252,8 +256,9 @@ function paginacion(nPagina=null, filtros={}) {
         mapRespuesta.set("Juegos", data.juegos);
         mapRespuesta.set("Pagina", data.pagina);
         mapRespuesta.set("Total_paginas", data.total_paginas);
+        mapRespuesta.set("Sesion", data.sesion);
 
-        crearTabla(mapRespuesta.get("Juegos"));
+        crearTabla(mapRespuesta.get("Juegos"), mapRespuesta.get("Sesion"));
         paginas(mapRespuesta.get("Pagina"), mapRespuesta.get("Total_paginas"));
 
     }).catch(err => console.log(err));
@@ -264,6 +269,9 @@ let busquedaHeader=document.getElementById("hiddenBusqueda");
 
 if(busquedaHeader){
     
+    let busqueda=document.getElementById("busquedaJuego");
+    busqueda.value=busquedaHeader.value;
+
     let filtros=buscarFiltros();
     paginacion(undefined, filtros);
 }else{

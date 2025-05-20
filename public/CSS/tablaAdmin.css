@@ -4,6 +4,7 @@ body{
     min-height: 100vh;
     /* Para poder ajustar la barra lateral */
     align-items: start;
+    justify-content: start;
 }
 
 .header-movil{
@@ -37,15 +38,32 @@ body{
 
 }
 
+.barra-lateral ul{
+    padding-top: 15%;
+}
+
+.barra-lateral li{
+    list-style: none;
+
+    margin: 5%;
+}
+
 /* Contenedor de contenido */
 .content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    align-self: center;
-
     width: 80%;
+}
+
+.enlace-vuelta{
+    display: none;
+}
+
+.h2-entidad{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.paginacion{
+    padding-left: 30%;
 }
 
 .icono{
@@ -108,11 +126,12 @@ footer{
 /* Media Querys */
 
 @media (max-width: 775px){
+    .enlace-vuelta{
+        display: inline;
+    }
     .header-movil{
         display: block;
         top: 0;
-
-        margin: 5%;
     }
 
     .barra-lateral{
@@ -129,6 +148,6 @@ footer{
     }
 
     .content{
-        width: 95vw;
+        width: 99vw;
     }
 }

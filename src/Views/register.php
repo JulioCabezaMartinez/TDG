@@ -11,7 +11,7 @@ if(!empty($_SESSION)){
 <div class="tarjeta-login">
     <h1>TO Do Games</h1>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
-    <h2 class="text-center">Registro</h2>
+    <h2 id="texto-registro" class="text-center">Registro</h2>
     <form action="/TDG/registrar-usuario" method="POST" class="mt-4" id="register-form">
         <div class="mb-3">
             <label for="nombre" class="form-label">*Nombre:</label>

@@ -65,14 +65,14 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 
 <div class="content">
     <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
-    <h2>Tabla <?php echo $entidad ?></h2>
+    <h2 class="h2-entidad">Tabla <?php echo $entidad ?></h2>
+    <br><br>
+    <a class="enlace-vuelta enlace" href="/TDG/panelAdmin">< Volver a Panel de Administrador</a>
     <div class="paginacion"></div>
     <table id="tabla-datos" class="table table-striped table-dark tabla-datos"></table>
 
     <div id="tabla-movil" class="tabla-movil"></div> 
-<?php
-include_once __DIR__ . "./Templates/footer.php";
-?>
+</div>
 
 <script>
     window.addEventListener('resize', updateContentMargin);

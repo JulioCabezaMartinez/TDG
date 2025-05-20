@@ -151,3 +151,26 @@ body{
 .descripcion_juego h2{
     margin: 4%;
 }
+
+@media screen and (max-width: 425px){
+    .info_juego{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .caracteristicas_juego{
+        width: 100%;
+    }
+
+    .descripcion_juego{
+        width: 90%;
+    }
+
+    .generos_juego div p{
+        margin: 2px;
+    }
+
+    .plataformas_juego div p{
+        margin: 2px;
+    }
+}

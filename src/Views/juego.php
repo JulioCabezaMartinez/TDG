@@ -9,6 +9,10 @@ require_once __DIR__ . '\Templates\header.php';
 
     <img class="imagen_juego" src="<?php echo $juego['Imagen'] ?>" alt="">
 
+    <?php
+    if(!empty($_SESSION)){
+    ?>
+
     <div class='btn_listas'>
         <div class="boton btn_redondo wishlist">
             <p>Añadir a la lista de Deseados</p>
@@ -35,6 +39,11 @@ require_once __DIR__ . '\Templates\header.php';
         </div>
 
     </div>
+
+    <?php
+    }
+    ?>
+    
 </div>
 
 
@@ -84,6 +93,10 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 
 </div>
+
+<?php
+    if(!empty($_SESSION)){
+?>
 
 <!-- Carrusel de ventas del Juego -->
 
@@ -149,6 +162,10 @@ require_once __DIR__ . '\Templates\header.php';
     
 
 </div>
+
+<?php
+    }
+?>
 
 
 <!-- Reseñas del Juego -->

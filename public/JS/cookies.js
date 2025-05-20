@@ -34,17 +34,27 @@ function setNeon(){
     console.log("Color Neon" + color);
 }
 
-function eventos(){
-    let guardarNeon=document.getElementById("btn-neon");
+function eventos() {
+  let guardarNeonMovil = document.getElementById("btn-neon-movil");
+  let guardarNeonEscritorio = document.getElementById("btn-neon-escritorio");
 
-    guardarNeon.addEventListener("click", function(){
+  guardarNeonMovil.addEventListener("click", function () {
 
-      let color = document.getElementById("neon_cookie").value;
-      console.log("Guardando neon");
-      let cookie = getCookie("colorNeon");
-      cambiarNeon(color);
+    let color = document.getElementById("neon-cookie-movil").value;
+    console.log("Guardando neon");
+    let cookie = getCookie("colorNeon");
+    cambiarNeon(color);
 
-    });
+  });
+
+  guardarNeonEscritorio.addEventListener("click", function () {
+
+    let color = document.getElementById("neon-cookie-escritorio").value;
+    console.log("Guardando neon");
+    let cookie = getCookie("colorNeon");
+    cambiarNeon(color);
+
+  });
 }
 
 if(getCookie("colorNeon")){

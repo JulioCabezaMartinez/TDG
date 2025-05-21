@@ -203,6 +203,7 @@ class ControllerAJAX {
 
     public function registrarUsuario(){
         $usuario = new Usuario();
+        $listaDB=new Lista();
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $correo = $_POST['correo'];
@@ -212,13 +213,14 @@ class ControllerAJAX {
 
         // Lógica para registrar al usuario
         $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $imagen);
+        $listaDB->creaListasBasicas($nick);
 
         if ($resultado === "Exito") {
             // Registro exitoso
-            echo "Registro exitoso. Bienvenido, $nick!";
+            echo json_encode(["Result" =>"Registro exitoso. Bienvenido, $nick!"]);
         } else {
             // Manejar el error de registro
-            echo "Error: " . $resultado;
+            echo json_encode(["Error:" => $resultado]);
         }
     }
 

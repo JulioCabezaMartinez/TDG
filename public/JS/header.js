@@ -16,7 +16,13 @@ function eventos(){
 
         const chevron = this.querySelector(".fa-chevron-down");
         chevron.classList.toggle("rotado");
-    });     
+    });   
+    
+    document.getElementById("hamBtn").addEventListener("click", function (e) {
+        document.querySelectorAll(".menu-hamburguesa").forEach(function (el) {
+            el.classList.toggle("active");
+        });
+    });
 }
 
 eventos();

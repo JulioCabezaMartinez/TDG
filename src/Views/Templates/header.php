@@ -1,8 +1,17 @@
+<section id="hamBtn" class="hamBtn">
+    <input type="checkbox" checked>
+    <span class="linea1"></span>
+    <span class="linea2"></span>
+    <span class="linea3"></span>
+</section>
+
 <header>
     <div class="header-movil">
-        <i class="fa-solid fa-bars"></i>
+        <p></p>
 
-        <h3>To Do Games</h3>
+        <a class="text-header-movil" href="/TDG/">
+            <h3>To Do Games</h3>
+        </a>
 
         <div class="izq">
             <!-- Logo de la app -->
@@ -15,7 +24,7 @@
         <a href="/TDG/">
             <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
         </a>
-        
+
         <a href="/TDG/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>

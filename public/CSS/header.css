@@ -9,9 +9,78 @@
     font-size: clamp(20px, 4vw, 30px); /* clamp(MIN, PRED, MAX) */
 }
 
+/* This section is where all about the hamburguer button is setted */
+
+.hamBtn{
+    position: absolute;
+    left: 4%;
+    top: 3.5%;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+}
+
+/* Reference all the lines in the default icon */
+.hamBtn span{
+    position: absolute;
+    width: 100%;
+    height: 12%;
+    background-color: var(--color-borde-neon);;
+    border-radius: 10px;
+    z-index: 2;
+}
+/* These has all the properties os the lines that form the default icon */
+.hamBtn .linea1{
+    position: absolute;
+    top: 0;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    transform-origin: 0%;
+}
+
+.hamBtn .linea2{
+    position: absolute;
+    top: 15px;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    transform-origin: center left;
+}
+
+.hamBtn .linea3{
+    position: absolute;
+    top: 30px;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    transform-origin: 0%;
+}
+
+.hamBtn input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 3;
+}
+
+/* Transition of the change of icon in the hamburguer button */
+.hamBtn:has(input:not(:checked)) .linea1{
+    transform: rotateZ(45deg) scale(0.85);
+    background-color: white;
+
+}
+
+.hamBtn:has(input:not(:checked)) .linea2{
+    transform: scale(0.5);
+    background-color: transparent;
+}
+
+.hamBtn:has(input:not(:checked)) .linea3{
+    transform: rotateZ(-45deg) scale(0.85);
+    background-color: white;
+
+}
+
 .header-movil{
     position: relative;
-    z-index: 100;
+    z-index: 1;
 
     /* position: sticky;
     top: 0; */
@@ -32,20 +101,24 @@
 }
 
 .header-movil h3{
-    margin-left: 5%;
+    width: 100%;
 }
 
-.izq{
+.text-header-movil{
+    margin-left: 11%;
+}
+
+.der{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.izq a{
+.der a{
     max-width: 80px;
 }
 
-.izq p{
+.der p{
     margin: 0 10%;
 }
 
@@ -70,7 +143,7 @@
 
     height: fit-content;
     background-color: var(--color-tarjeta);
-    z-index: 9999;
+    z-index: 4;
 
     /* Transform */
     transition: 0.5s;
@@ -136,14 +209,6 @@
     color: var(--color-texto);
 }
 
-.cerrar-hamburguesa{
-    color: var(--color-texto);
-
-    font-size: 200%;
-
-    margin: 3%;
-}
-
 .logo-TDG{
     max-width: 80px;
 }
@@ -169,6 +234,10 @@
 /* Media Queries */
 @media screen and (min-width: 1024px) {
     .header-movil{
+        display: none;
+    }
+
+    .hamBtn{
         display: none;
     }
 
@@ -218,5 +287,17 @@
 
         transition: 1s;
     }
+}
+
+@media screen and (max-width: 321px) {
+    
+    .text-header-movil{
+        margin-left: 17%;
+    }
+
+    .text-header-movil h3{
+        font-size: 100%;
+    }
 
 }
+

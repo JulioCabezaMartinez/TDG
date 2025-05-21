@@ -16,6 +16,20 @@ class Lista extends EmptyModel {
         parent::__construct('listas', 'id');
     }
 
+    public function creaListasBasicas($nick_usuario): void {
+        $query = "INSERT INTO listas (id_tipo, nombre) VALUES (:id_tipo, :nombre)";
+        $params = [
+            [':id_tipo' => 1, ':nombre' => 'wishlist-'.$nick_usuario],
+            [':id_tipo' => 2, ':nombre' => 'backlog-'.$nick_usuario],
+            [':id_tipo' => 3, ':nombre' => 'completed-'.$nick_usuario],
+            [':id_tipo' => 4, ':nombre' => 'playing-'.$nick_usuario]
+        ];
+
+        foreach ($params as $param) {
+            $this->query($query, $param);
+        }
+    }
+
     /**
      * Agrega un juego a una lista específica.
      *

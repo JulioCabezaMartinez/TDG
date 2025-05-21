@@ -152,6 +152,10 @@ body{
     margin: 4%;
 }
 
+.ventas_juego{
+    width: 100%;
+}
+
 @media screen and (max-width: 425px){
     .info_juego{
         flex-direction: column;

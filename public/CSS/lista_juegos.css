@@ -114,7 +114,7 @@
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
     background-color: var(--color-tarjeta-secundario);
 
-    width: 90%;
+    width: 60%;
     border-radius: 20px;
     padding: 20px;
 }

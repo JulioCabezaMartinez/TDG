@@ -71,7 +71,8 @@ a{
 /* Modales Bootstrap */
 
 .modal-content{
-    background-color: var(--color-tarjeta) !important;
+    background-color: var(--color-tarjeta-secundario) !important;
+    box-shadow: 0 0 20px var(--color-borde-neon);
 }
 
 .modal-title{

@@ -204,23 +204,24 @@ class ControllerAJAX {
     public function registrarUsuario(){
         $usuario = new Usuario();
         $listaDB=new Lista();
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $correo = $_POST['correo'];
-        $pass = $_POST['password'];
-        $nick = $_POST['username'];
-        $imagen = $_FILES['imagen_perfil']['name'] ?? null; // Obtener la imagen si se proporciona
+        $nombre = Validators::evitarInyeccion($_POST['nombre']);
+        $apellido = Validators::evitarInyeccion($_POST['apellido']);
+        $correo = Validators::evitarInyeccion($_POST['correo']);
+        $pass = Validators::evitarInyeccion($_POST['password']);
+        $nick = Validators::evitarInyeccion($_POST['nick']);
+        $direccion = Validators::evitarInyeccion($_POST['direccion']);
+        // $imagen = $_FILES['imagen_perfil']['name'] ?? null; // Obtener la imagen si se proporciona
 
         // Lógica para registrar al usuario
-        $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $imagen);
+        $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion);
         $listaDB->creaListasBasicas($nick);
 
         if ($resultado === "Exito") {
             // Registro exitoso
-            echo json_encode(["Result" =>"Registro exitoso. Bienvenido, $nick!"]);
+            echo json_encode(["result" =>"Registro exitoso. Bienvenido, $nick!"]);
         } else {
             // Manejar el error de registro
-            echo json_encode(["Error:" => $resultado]);
+            echo json_encode(["result"=>"error", "Error" => "correo"]);
         }
     }
 

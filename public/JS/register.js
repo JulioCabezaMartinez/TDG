@@ -74,18 +74,82 @@ function eventos(){
 
     //Validacion de los campos del fomulario
     document.getElementById("register-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let errores=[];
+
     // Obtener el valor de la contraseña
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+    const email = document.getElementById("email").value;
+    const nombre = document.getElementById("nombre").value;
+    const apellidos = document.getElementById("apellido").value;
+    const correo = document.getElementById("correo").value;
+    const nick= document.getElementById("nick").value;
+    const direccion= document.getElementById("direccion").value;
+
+    if(!password || !confirmPassword || !email || !nombre || !apellidos || !correo || !nick || !direccion){
+        errores["campos"]="Todos los campos son obligatorios.";
+    }
 
     // Expresión regular para validar la contraseña
     const pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/;
 
+    
+
     // Verificar si la contraseña cumple con el patrón
     if (!pattern.test(password)) {
-        // Mostrar mensaje de error
-        alert("La contraseña no cumple con los requisitos.");
-        // Prevenir el envío del formulario
-        event.preventDefault();
+        
+        errores["password"]="Contraseña no válida. Debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+        
+    }else if(expresiones_regulares.get("correo").test(email)){
+        errores["correo"]="Correo no válido.";
+       
+    }else if(password !== confirmPassword){
+
+        errores["confirm"]="Las contraseñas no coinciden.";
+
+    }else{
+
+        fetch("/TDG/registrar-usuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                password: password,
+                email: email,
+                nombre: nombre,
+                apellidos: apellidos,
+                nick: nick,
+                direccion: direccion
+            })
+        }).then(response => response.json())
+        .then(data => {
+            if (data.result && data.result == "ok") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Registro completado",
+                    text: "Registro exitoso. Bienvenido, " + nick + "!",
+                });
+                
+
+            }else if(data.result=="error" && data.error=="correo"){
+               
+                errores["correo"]="El correo ya está registrado.";
+                
+            
+            }else{
+                Swal.fire({
+                    icon: "error",
+                    title: "Algo salió mal",
+                    text: "Ha fallado el registro, intentelo más tarde.",
+                });
+            }
+                
+        }).catch(error => {
+            console.error("Error:", error);
+        });
     }
 });
 

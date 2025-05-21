@@ -12,7 +12,8 @@ if(!empty($_SESSION)){
     <h1>TO Do Games</h1>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
     <h2 id="texto-registro" class="text-center">Registro</h2>
-    <form action="/TDG/registrar-usuario" method="POST" class="mt-4" id="register-form">
+    <form action="#" method="POST" class="mt-4" id="register-form">
+        <p class="d-none" id="error-campos"></p>
         <div class="mb-3">
             <label for="nombre" class="form-label">*Nombre:</label>
             <input type="text" class="form-control w-75" id="nombre" name="nombre" required>
@@ -24,10 +25,15 @@ if(!empty($_SESSION)){
         <div class="mb-3">
             <label for="correo" class="form-label">*Correo:</label>
             <input type="text" class="form-control w-75" id="correo" name="correo" required>
+            <p class="d-none" id="error_correo"></p>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="imagen" class="form-label">Imagen (Opcional):</label>
             <input class="imagen_form form-control" type="file" name="imagen_perfil" id="imagen_perfil">
+        </div> -->
+        <div class="mb-3">
+            <label for="username" class="form-label">*Dirección de envio:</label>
+            <input type="text" class="form-control w-75" id="direccion" name="direccion" required>
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">*Nick de Usuario:</label>
@@ -36,6 +42,7 @@ if(!empty($_SESSION)){
         <div class="mb-3">
             <label for="password" class="form-label">*Contraseña:</label>
             <input type="password" class="form-control w-75" id="password" name="password" required>
+            <p class="d-none" id="error_password"></p>
             <br>
             <!-- Barra de progreso -->
             <div class="progress mt-2 w-75">
@@ -54,9 +61,11 @@ if(!empty($_SESSION)){
         <div class="mb-3">
             <label for="confirm" class="form-label">*Confirmar Contraseña:</label>
             <input type="password" class="form-control w-75" id="confirm" name="confirm" required>
+            <p class="d-none" id="error_confirm"></p>
         </div>
         <button type="submit" id="btn-registro" class="btn registro">Registrarse</button>
-        <a class="enlace ms-3" href="/TDG/">Volver al Inicio</a>
+        <br><br>
+        <a class="enlace" href="/TDG/">< Volver al Inicio</a>
     </form>
 </div>
 

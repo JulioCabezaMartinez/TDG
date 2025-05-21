@@ -54,11 +54,7 @@ class Usuario extends EmptyModel {
      * @param string|null $imagen Ruta o URL de la imagen del usuario (opcional).
      * @return mixed Resultado de la operación de registro.
      */
-    public function register($nombre, $apellido, $correo, $pass, $nick, $imagen = null) {
-        // Validar el correo electrónico y la contraseña
-        if (empty($correo) || empty($pass) || empty($nick)) {
-            return "Faltan Datos"; // O lanzar una excepción
-        }
+    public function register($nombre, $apellido, $correo, $pass, $nick, $direccion) {
 
         // Comprobar si el correo ya está registrado
         $usuarioExistente = $this->compruebaCampo('correo', $correo);
@@ -73,7 +69,8 @@ class Usuario extends EmptyModel {
             'correo' => $correo,
             'password' => Security::encryptPass($pass),
             'nick' => $nick,
-            'imagen' => $imagen,
+            'direccion' => $direccion,
+            'imagen' => "default-user.png", // Ruta de la imagen por defecto
         ];
 
         $this->create($nuevoUsuario);

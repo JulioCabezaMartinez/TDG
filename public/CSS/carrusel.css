@@ -1,8 +1,9 @@
 /* CSS del Carrusel*/
 
 /* Sin esto los slides se aumentan exponencialmente */
+/* Por algun motivo cuando paso de vw a % se expande exponencialmente */
 .swiper{ 
-    width: 100vw;
+    width: 100%;
 }
 
 .card-wrapper{

@@ -34,6 +34,9 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                             <input type="text" class="form-control" id="<?php echo $columna ?>Input">
 
                         <?php
+                        } elseif ($columna == "Password") {
+                        ?>
+                        <?php
                         } elseif ($columna == "Anyo_salida") {
                         ?>
                             <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>

@@ -1,20 +1,17 @@
-
-.modal h5{
-    color: var(--color-boton-texto) !important;
-}
-
+/* Página CSS de la lista de Reviews */
 .reviews-h2{
     display: flex;
+    align-self: start;
+
+    margin: 3%;
 }
 
 .btn-add-review{
-    display: inline;
-
-    margin-left: 2%;
-    padding: 1%;
-
+    display: flex;
+    align-items: center;
+    margin-left: 3%;
+    padding: 8%;
     background-color: var(--color-secundario);
-
     border-radius: 20px;
 }
 

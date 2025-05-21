@@ -185,6 +185,7 @@ function crearTabla(lista, columnas, entidad) {
                 <button id="btn@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
                 <button id="btn@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
                 ${entidad === "usuarios" ? '<button class="dropdown-item btn btn-primary">Ver Listas</button>' : ''}
+                ${entidad === "usuarios" ? '<button class="dropdown-item btn btn-primary">Cambiar Contraseña</button>' : ''}
                 </div>
             </div>
             `;

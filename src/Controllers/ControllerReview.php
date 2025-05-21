@@ -6,6 +6,8 @@ use App\Models\Review;
 use App\Models\Juego;
 use App\Models\Usuario;
 
+use App\Core\Validators;
+
 /**
  * Controlador para gestionar las operaciones relacionadas con el modelo Review.
  */
@@ -27,7 +29,8 @@ class ControllerReview {
         $juegoBD=new Juego();
         $reviewBD=new Review();
         $usuarioBD=new Usuario();
-        $juego=$juegoBD->getById(25); // Aqui va el $_GET["id"].
+        $id=Validators::evitarInyeccion($_GET["id"]);
+        $juego=$juegoBD->getById($id);
 
         $lista_reviews=$reviewBD->getAllReviewsJuego($juego["id"]); // Aqui va el $_GET["id"].
 

@@ -125,7 +125,7 @@ footer{
 
 /* Media Querys */
 
-@media (max-width: 775px){
+@media (max-width: 1024px){
     .enlace-vuelta{
         display: inline;
     }

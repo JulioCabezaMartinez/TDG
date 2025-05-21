@@ -8,7 +8,7 @@ require_once 'Templates/header.php';
 <!-- Modal de creación de Review -->
 <div class="modal fade" id="creacion_review_modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content modal-background-color">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Creación Review</h5>
             </div>

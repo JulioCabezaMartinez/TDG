@@ -67,3 +67,17 @@ a{
     display: inline;
     text-decoration: underline !important;
 }
+
+/* Modales Bootstrap */
+
+.modal-content{
+    background-color: var(--color-tarjeta) !important;
+}
+
+.modal-title{
+    color: var(--color-texto) !important;
+}
+
+.modal-body label{
+    color: var(--color-texto) !important;
+}

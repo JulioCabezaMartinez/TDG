@@ -23,12 +23,12 @@ require_once __DIR__ . '\Templates\header.php';
 
             <div class="boton btn_redondo backlog">
                 <!-- <p>Añadir a la lista de Pendientes</p> -->
-                <i class='fa-solid fa-clock icono_ajustable'></i>
+                <i class='fa-regular fa-clock icono_ajustable'></i>
             </div>
 
             <div class="boton btn_redondo completed">
                 <!-- <p>Añadir a la lista de Completados</p> -->
-                <i class='fa-solid fa-circle-check icono_ajustable'></i>
+                <i class='fa-regular fa-circle-check icono_ajustable'></i>
             </div>
 
             <div class="boton btn_redondo playing">
@@ -88,7 +88,7 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 
     <div class="descripcion_juego">
-        <h2>Descripción</h2>
+        <h2>Descripción (Falta poner boton verMas)</h2>
         <?php echo $juego['Descripcion'] ?>
     </div>
 

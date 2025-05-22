@@ -1,14 +1,16 @@
 .principal_venta{
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: baseline;
     align-items: center;
+
+    width: 100%;
 }
 
 .nombre_venta{
     font-size: 2.5em;
     text-align: center;
-    margin-top: 2%;
+    margin: 2%;
 }
 
 .img_venta{
@@ -16,6 +18,7 @@
 }
 
 .precio_venta{
+    font-size: 300%;
     margin: 2%;
     align-self: self-start;
 }
@@ -32,10 +35,7 @@ a{
 
     border-radius: 20px;
 
-    position: sticky;
-    bottom: 20px;
-
-    width: 100%;
+    
     padding: 0.3rem;
 }
 
@@ -68,10 +68,52 @@ a{
     margin: 1%;
 
     padding: 1%;
-    background-color: var(--color-tarjeta-secundario);
+    background-color: white;
+    color: var(--color-boton-texto);
+
+    border: 2px solid black;
+    border-radius: 50px;
+}
+
+.info_venta{
     border-radius: 20px;
+    padding: 2%;
+    background-color: var(--color-tarjeta-secundario);
+}
+
+.info_venta h3{
+    margin-bottom: 2%;
 }
 
 .descripcion_juego{
     margin-bottom: 5%;
+    padding: 2%;
+    background-color: var(--color-tarjeta);
+    border-radius: 20px;
+}
+
+.descripcion_juego h2{
+    margin-bottom: 2%;
+}
+
+@media screen and (max-width: 769px) {
+    .nombre_venta{
+        font-size: 2em;
+    }
+
+    .precio_venta{
+        font-size: 200%;
+    }
+
+    #btn_comprar p{
+        font-size: 1.2em;
+    }
+    
+    #boton-comprar{
+        position: sticky;
+        bottom: 20px;
+
+        width: 80vw;
+    }
+
 }

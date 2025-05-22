@@ -33,7 +33,7 @@ class ControllerVenta {
     }
 
     public function view_venta(){
-        $id_venta = $_GET["id_venta"];
+        $id_venta = $_GET["id"];
 
         $ventaBD= new Venta();
         $juegoBD = new Juego();

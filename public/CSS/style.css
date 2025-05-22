@@ -27,7 +27,7 @@
 
 html, body{
     margin: 0;
-    padding: 5px;
+    /* padding: 5px; */
 
     background: var(--color-fondo) !important;
     min-height: 100vh;

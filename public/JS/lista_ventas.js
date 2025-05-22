@@ -94,7 +94,7 @@ function crearTabla(ventas) {
     ventas.forEach(venta => {
         // Crear el enlace
         const link = document.createElement('a');
-        link.href = `/TDG/ventas/view/checkout?id=${venta.id}`;
+        link.href = `/TDG/ventas/view?id=${venta.id}`;
 
         // Crear el div de la venta
         const ventaDiv = document.createElement('div');

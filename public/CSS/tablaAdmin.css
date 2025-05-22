@@ -1,10 +1,13 @@
 /* Pagina de CSS de Panel Administrador */
 
 body{
+    flex-direction: row;
     min-height: 100vh;
     /* Para poder ajustar la barra lateral */
     align-items: start;
     justify-content: start;
+
+    padding: 0;
 }
 
 .header-movil{
@@ -20,13 +23,10 @@ body{
 
 /* Barra Lateral */
 .barra-lateral{
-    position: fixed;
-    top: 0;
-    left: 0;
-
     display: flex;
     flex-direction: column;
 
+    min-height: 100vh;
     height: 100%;
 
     border-right: 2px solid grey;
@@ -50,7 +50,7 @@ body{
 
 /* Contenedor de contenido */
 .content{
-    width: 80%;
+    width: 100%;
 }
 
 .enlace-vuelta{

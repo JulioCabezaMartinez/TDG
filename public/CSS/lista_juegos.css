@@ -173,7 +173,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .btn_listas i{ /* Botones de Agregar a la lista */
@@ -240,7 +240,11 @@
 @media screen and (max-width: 425px) {
 
     .icono{
-        font-size: 180%;
+        font-size: 150%;
+    }
+
+    .btn_listas i{
+        margin: 0;
     }
     
 }

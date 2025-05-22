@@ -1,7 +1,8 @@
 /* Pagina de CSS de Panel Administrador */
 
 body{
-    display: block;
+    flex-direction: row;
+    padding: 0;
     min-height: 100vh;
 }
 
@@ -18,14 +19,11 @@ body{
 
 /* Barra Lateral */
 .barra-lateral{
-    position: fixed;
-    top: 0;
-    left: 0;
-
     display: flex;
     flex-direction: column;
 
     height: 100%;
+    min-height: 100vh;
 
     border-right: 2px solid grey;
 
@@ -53,12 +51,11 @@ li{
 /* Contenedor de contenido */
 .content{
     display: flex;
-    align-items: start;
     justify-content: center;
     flex-direction: column;
-    align-self: center;
+    align-self: self-start;
 
-    width: 80%;
+    width: 100%;
 }
 
 .enlace-vuelta{

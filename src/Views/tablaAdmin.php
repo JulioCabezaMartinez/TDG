@@ -77,18 +77,6 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
     <div id="tabla-movil" class="tabla-movil"></div> 
 </div>
 
-<script>
-    window.addEventListener('resize', updateContentMargin);
-
-    function updateContentMargin() {
-        const sidebarWidth = document.querySelector('.barra-lateral').offsetWidth;
-        document.querySelector('.content').style.marginLeft = `${sidebarWidth}px`;
-    }
-
-    //Llamar la función al cargar la página para asegurarse de que se ajuste desde el principio
-    updateContentMargin();
-</script>
-
 <script src="/TDG/public/JS/tablaAdmin.js"></script>
 
 <?php

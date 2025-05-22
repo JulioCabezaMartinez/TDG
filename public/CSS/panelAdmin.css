@@ -42,6 +42,11 @@ body{
     padding-top: 15%;
 }
 
+.tabla-actual{
+    background-color: blue;
+    opacity: 0.5;
+}
+
 li{
     list-style: none;
 
@@ -70,11 +75,12 @@ li{
     background-color: var(--color-tarjeta-secundario);
 
     border-radius: 20px;
+    border: 2px solid black;
 
     margin: 1%;
     padding: 3%;
 
-    width: 500px;
+    width: 80vw;
 }
 
 .contenedor-admin *{
@@ -91,6 +97,10 @@ li{
 
 .icono *{
     color: var(--color-texto);
+}
+
+.boton-tabla{
+    width: fit-content;
 }
 
 footer{

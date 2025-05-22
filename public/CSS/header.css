@@ -141,8 +141,9 @@
     width: 100%;
     padding: 10px 20px;
 
-    height: fit-content;
+    height: 100vh;
     background-color: var(--color-tarjeta);
+    opacity: 0.98;
     z-index: 4;
 
     /* Transform */
@@ -161,7 +162,7 @@
     left: 0;
     top: 0;
 
-    max-height: 100vh;
+    min-height: 100vh;
     height: fit-content;
 
     transition: 0.5s;
@@ -231,6 +232,15 @@
 .fa-chevron-down.rotado {
     transform: rotate(180deg);
 }
+
+.neon-cookies{
+    margin-top: auto;
+    width: 100%;
+
+    position: inherit;
+    bottom: 21px;
+}
+
 /* Media Queries */
 @media screen and (min-width: 1024px) {
     .header-movil{

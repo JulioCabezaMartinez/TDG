@@ -16,7 +16,7 @@ body{
     width: 70vw;
     height: auto;
 
-    margin-top: 15vh;
+    margin-top: 10vh;
 
     padding: 5vh;
 
@@ -40,14 +40,6 @@ form{
     justify-content: space-between;
 }
 
-#correo {
-    width: 75%;
-}
-
-#password {
-    width: 75%;
-}
-
 .registro{
     background-color: var(--color-secundario);
 }
@@ -62,7 +54,7 @@ form{
     width: 50%;
 }
 
-.tarjeta-login h1{
+.nombreApp{
     align-self: center;
 }
 
@@ -75,25 +67,13 @@ form{
 }
 
 @media screen and (min-width: 768px) {
-    .tarjeta-login {
-        width: 40vw;
-        height: auto;
-    }
 
     #texto-registro {
         width: auto;
         text-align: center;
     }
 
-    .tarjeta-login h1{
+    .tarjeta-login .nombreApp{
         font-size: 180%;
-    }
-
-    #correo{
-        width: 50%;
-    }
-
-    #password{
-        width: 50%;
     }
 }

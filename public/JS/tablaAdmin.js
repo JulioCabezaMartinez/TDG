@@ -166,12 +166,24 @@ function crearTabla(lista, columnas, entidad) {
         for (const key in item) {
             if (key === "id") continue; // omitir id en las columnas si no se desea mostrarlo directamente
             let campo = item[key];
-            if (typeof campo === "string" && campo.length >= 20) {
+            if (campo.length >= 20) {
                 campo = campo.substring(0, 20) + "...";
             }
-            const td = document.createElement("td");
-            td.textContent = campo;
-            tr.appendChild(td);
+            
+            if(key=="Imagen"){
+                const td = document.createElement("td");
+                const enlace = document.createElement('a');
+                enlace.className = "sub";
+                enlace.href = item[key];
+                enlace.target = "_blank"; // Abrir en nueva pestaña
+                enlace.textContent = campo;
+                td.appendChild(enlace);
+                tr.appendChild(td);
+            }else{
+                const td = document.createElement("td");
+                td.textContent = campo;
+                tr.appendChild(td);
+            }
         }
 
         // Celda de acciones
@@ -209,22 +221,37 @@ function crearTabla(lista, columnas, entidad) {
       if (key === "id") continue; // omitir si no quieres mostrar 'id'
 
       const campoOriginal = item[key];
-      let campo = typeof campoOriginal === "string" && campoOriginal.length >= 20
-        ? campoOriginal.substring(0, 20) + "..."
-        : campoOriginal;
+      let campo;
+      if(campoOriginal.length >= 20){
+        campo=campoOriginal.substring(0, 20) + "..."
+      }else{
+        campo=campoOriginal;
+      }
 
-      const columna = columnas[contador] || key;
+      const columna = key;
 
       const divColumna = document.createElement("div");
       divColumna.classList.add("columna");
 
+      if(columna !== "id"){
+        
+      }
       const header = document.createElement("div");
       header.classList.add("header");
       header.textContent = columna;
 
       const contenido = document.createElement("div");
       contenido.classList.add("contenido");
-      contenido.textContent = campo.replace(/(<([^>]+)>)/gi, ""); // strip HTML tags
+      if(key === "Imagen"){
+        const enlace = document.createElement('a');
+          enlace.className = "sub";
+          enlace.href = campoOriginal;
+          enlace.target = "_blank"; // Abrir en nueva pestaña
+          enlace.textContent = campo;
+          contenido.appendChild(enlace);
+      }else{
+        contenido.textContent = campo;
+      }
 
       divColumna.appendChild(header);
       divColumna.appendChild(contenido);
@@ -369,6 +396,7 @@ function paginacion(nPagina=null, filtros={}) {
 
     }).then(response => response.json())
     .then(data => {
+        console.log(data.columnas);
         let mapRespuesta=new Map();
         mapRespuesta.set("Datos", data.datos);
         mapRespuesta.set("Pagina", data.pagina);

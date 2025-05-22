@@ -42,7 +42,7 @@ require_once __DIR__ . '\Templates\header.php';
             <?php
             }else{
             ?>
-                <input class="form-control w-50" id="nombreInput" type="text">
+                <input class="form-control" id="nombreInput" type="text">
             <?php    
             }
            ?>
@@ -51,7 +51,7 @@ require_once __DIR__ . '\Templates\header.php';
         <br>
         <div>
             <label for="opcion2">Mes de Salida:</label>
-            <input class="form-control w-25" id="fechaSalidaInput" type="date" name="">
+            <input class="form-control" id="fechaSalidaInput" type="date" name="">
         </div>
         <br>
         <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->

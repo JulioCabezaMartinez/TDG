@@ -9,7 +9,7 @@ if(!empty($_SESSION)){
 ?>
 
 <div class="tarjeta-login">
-    <h1 class="">To Do Games</h1>
+    <h2 class="nombreApp">To Do Games</h2>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
     <h2 class="text-center">Iniciar Sesión</h2>
     <form action="#" method="POST" class="mt-4">
@@ -23,7 +23,7 @@ if(!empty($_SESSION)){
         </div>
         <button id="submit-login" type="submit" class="btn btn-primary">Iniciar Sesión</button>
         <br><br>
-        <a class="enlace" href="/TDG/">Volver al Inicio</a>    
+        <a class="enlace" href="/TDG/">< Volver al Inicio</a>    
     </form>
 </div>
 

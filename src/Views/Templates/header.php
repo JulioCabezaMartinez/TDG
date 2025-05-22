@@ -103,19 +103,6 @@
     }
     ?>
 
-
-
-    <div class="d-flex justify-content-start align-items-center m-4">
-        <h4 for="neon">NEON: </h4>
-        <select name="neon" id="neon-cookie-movil" class="form-select w-25 ms-3">
-            <option value="#FFFFFF">Blanco</option>
-            <option value="#9f00c7">Morado</option>
-            <option value="#0099ff">Azul</option>
-            <option value="#ff0000">Rojo</option>
-        </select>
-        <button class="btn btn-primary ms-3" id="btn-neon-movil">Guardar</button>
-    </div>
-
     <hr>
 
     <div class="links-hamburguesa">
@@ -151,6 +138,16 @@
                 <h2>VENTAS</h2>
             </div>
         </a>
+    </div>
+
+    <div class="neon-cookies d-flex justify-content-start align-items-center">
+        <h4 for="neon">NEON: </h4>
+        <select name="neon" id="neon-cookie-movil" class="form-select w-25 ms-3">
+            <option value="#9f00c7">Morado</option>
+            <option value="#0099ff">Azul</option>
+            <option value="#ff0000">Rojo</option>
+        </select>
+        <button class="btn btn-primary ms-3" id="btn-neon-movil">Guardar</button>
     </div>
 </div>
 

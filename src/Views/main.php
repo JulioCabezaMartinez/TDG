@@ -8,20 +8,18 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <div class="landing">
-    <div class="landing-texto">
         <h4>To Do Games</h>
-        <br>
         <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
         <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
 
         <a href="/TDG/juegos">
             <p class="boton-ver-juegos">Ver Juegos</p>
         </a>
-    </div>
 </div>
 <div class="recien_añadidos">
 
-    <a href="/TDG/juegos">
+    <a class="enlace-main" href="/TDG/juegos">
+        <i class="fa-solid fa-gamepad"></i>
         <h2 class="enlace">Recién añadidos</h2>
     </a>
     <div class="recien_añadidos__container">
@@ -76,7 +74,11 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <div class="ultimos_productos">
-    <h2>Últimos Productos</h2>
+    <a class="enlace-main" href="/TDG/ventas">
+        <i class="fa-solid fa-store"></i>
+        <h2>Últimos Productos</h2>
+    </a>
+    
     <div class="swiper">
         <div class="card-wrapper">
             <div class="card-list swiper-wrapper">

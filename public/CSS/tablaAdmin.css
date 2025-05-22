@@ -38,6 +38,10 @@ body{
 
 }
 
+.tabla-actual a{
+    color: var(--color-primario) !important;
+}
+
 .barra-lateral ul{
     padding-top: 15%;
 }
@@ -84,6 +88,10 @@ footer{
 
 .tabla-datos th{
     max-width: 100px;
+}
+
+.sub{
+    text-decoration: underline !important;
 }
 
 

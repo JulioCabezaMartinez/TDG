@@ -14,7 +14,7 @@
     --color-tarjeta: #2C2C2E;
     --color-tarjeta-secundario: #67676efd; 
 
-    --color-borde-neon: #FFFFFF;
+    --color-borde-neon: #9f00c7;
 
     --color-boton-texto: black;
 
@@ -65,7 +65,7 @@ a{
 .enlace{
     color: var(--color-texto);
     display: inline;
-    text-decoration: underline !important;
+    cursor: pointer;
 }
 
 /* Modales Bootstrap */

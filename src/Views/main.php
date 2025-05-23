@@ -30,9 +30,9 @@ require_once __DIR__ . '\Templates\header.php';
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
-                    if(strlen($recien_añadido['Nombre'])>7){
+                    if(strlen($recien_añadido['Nombre'])>20){
                     ?>
-                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 7) . "..." ?></h3>
+                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 20) . "..." ?></h3>
                     <?php
                     }else{
                     ?>
@@ -53,9 +53,9 @@ require_once __DIR__ . '\Templates\header.php';
                 <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
-                    if(strlen($recien_añadido['Nombre'])>7){
+                    if(strlen($recien_añadido['Nombre'])>20){
                     ?>
-                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 7) . "..." ?></h3>
+                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 20) . "..." ?></h3>
                     <?php
                     }else{
                     ?>

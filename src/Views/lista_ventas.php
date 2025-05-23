@@ -85,7 +85,7 @@ require_once __DIR__ . '\Templates\header.php';
         <br>
         <p id="resetFiltros" class="enlace">Quitar filtros</p>
         <br>
-        <button id="aplicarFiltros" class="btn btn-primary w-50">Filtrar</button>
+        <button id="aplicarFiltros" class="boton-perso w-25">Filtrar</button>
         
     </div>
 </div>

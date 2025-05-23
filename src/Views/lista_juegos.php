@@ -63,7 +63,7 @@ require_once __DIR__ . '\Templates\header.php';
         <br>
         <p id="resetFiltros" class="enlace">Quitar filtros</p>
         <br>
-        <button id="aplicarFiltros" class="btn btn-primary w-25">Filtrar</button>
+        <button id="aplicarFiltros" class="boton-perso w-25">Filtrar</button>
         
     </div>
 </div>
@@ -123,7 +123,9 @@ require_once __DIR__ . '\Templates\header.php';
                         showConfirmButton: false,
                         timer: 1500,
                         backdrop: false,
-                        width: "15%"
+                        width: "15%",
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
                     });
                         $(boton).toggleClass("fa-solid");
                         $(boton).toggleClass("fa-regular");
@@ -158,7 +160,10 @@ require_once __DIR__ . '\Templates\header.php';
                             text: respuesta,
                             showConfirmButton: false,
                             timer: 1500,
-                            backdrop: false
+                            backdrop: false,
+                            width: "15%",
+                            background: "#2C2C2E",
+                            color: "#FFFFFF"
                         });
 
                         $(boton).toggleClass("fa-solid");

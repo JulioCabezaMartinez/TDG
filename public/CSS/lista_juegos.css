@@ -166,7 +166,6 @@
     text-align: center;
     
     padding: 0;
-    text-decoration: underline var(--color-texto) !important;
 }
 
 
@@ -198,7 +197,8 @@
 }
 
 .icono{
-    font-size: 400%;
+    font-size: 300%;
+    cursor: pointer;
 }
 
 /* Botones de listas */
@@ -248,13 +248,6 @@
 
     .juego{
         min-height: 100%;
-    }
-
-    .juego:last-child{
-        grid-column: 1 / -1;  /* Hace que el último elemento ocupe ambas columnas */
-        justify-self: center; 
-
-        width: 50%;
     }
     
 }

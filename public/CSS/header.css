@@ -143,7 +143,7 @@
 
     height: 100vh;
     background-color: var(--color-tarjeta);
-    opacity: 0.98;
+    opacity: 0.96;
     z-index: 4;
 
     /* Transform */
@@ -239,10 +239,12 @@
 
     position: inherit;
     bottom: 21px;
+
+    margin-left: 5vh;
 }
 
 /* Media Queries */
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1101px) {
     .header-movil{
         display: none;
     }

@@ -86,7 +86,7 @@
     }
 
     .active{
-        max-height: 650px;
+        max-height: 700px;
         
         /* Transform */
         transition: 0.8s ease;

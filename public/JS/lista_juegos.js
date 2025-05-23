@@ -233,7 +233,7 @@ function paginacion(nPagina=null, filtros={}) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
 
-    let limite = 5; // Número de juegos por página.
+    let limite = 6; // Número de juegos por página.
     let inicio = 0;
 
     if (pagina <= 0) {

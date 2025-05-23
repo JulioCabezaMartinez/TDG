@@ -46,12 +46,12 @@
         <?php
         if (!empty($_SESSION)) {
         ?>
-            <a href="/TDG/AJAX/logout" id="logout-btn" class="btn btn-primary">Cerrar Sesion</a>
+            <a href="/TDG/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
         <?php
         } else {
         ?>
             <div>
-                <a class="btn btn-primary" href="/TDG/login" class="login">Iniciar Sesión</a>
+                <a class="boton-perso" href="/TDG/login" class="login">Iniciar Sesión</a>
                 o
                 <a class="enlace" href="/TDG/register" class="register">Registrarse</a>
             </div>
@@ -59,7 +59,7 @@
         }
         if (!empty($_SESSION) && $_SESSION["Admin"]) {
         ?>
-            <a class="btn btn-secondary" href="/TDG/panelAdmin">Panel de Administrador</a>
+            <a class="boton-perso boton-perso-secundario" href="/TDG/panelAdmin">Panel de Administrador</a>
         <?php
         }
         ?>
@@ -84,13 +84,13 @@
 
         <h4>Bienvenido, <?php echo $_SESSION["Nick"] ?></h4>
         <br><br>
-        <a href="/TDG/AJAX/logout" id="logout-btn" class="btn btn-primary">Cerrar Sesion</a>
+        <a href="/TDG/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
 
     <?php
     } else {
     ?>
         <div>
-            <a class="btn btn-primary" href="/TDG/login" class="login">Iniciar Sesión</a>
+            <a class="boton-perso" href="/TDG/login" class="login">Iniciar Sesión</a>
             o
             <a class="enlace" href="/TDG/register" class="register">Registrarse</a>
         </div>
@@ -98,7 +98,7 @@
     }
     if (!empty($_SESSION) && $_SESSION["Admin"]) {
     ?>
-        <a class="btn btn-secondary" href="/TDG/panelAdmin">Panel de Administrador</a>
+        <a class="boton-perso boton-perso-secundario" href="/TDG/panelAdmin">Panel de Administrador</a>
     <?php
     }
     ?>
@@ -147,7 +147,7 @@
             <option value="#0099ff">Azul</option>
             <option value="#ff0000">Rojo</option>
         </select>
-        <button class="btn btn-primary ms-3" id="btn-neon-movil">Guardar</button>
+        <button class="boton-perso ms-3" id="btn-neon-movil">Guardar</button>
     </div>
 </div>
 
@@ -156,12 +156,11 @@
     <div class="d-flex justify-content-start align-items-center m-4">
         <h4 for="neon">NEON: </h4>
         <select name="neon" id="neon-cookie-escritorio" class="form-select ms-3">
-            <option value="#FFFFFF">Blanco</option>
             <option value="#9f00c7">Morado</option>
             <option value="#0099ff">Azul</option>
             <option value="#ff0000">Rojo</option>
         </select>
-        <button class="btn btn-primary ms-3" id="btn-neon-escritorio">Guardar</button>
+        <button class="boton-perso ms-2" id="btn-neon-escritorio">Guardar</button>
     </div>
 
 </div>

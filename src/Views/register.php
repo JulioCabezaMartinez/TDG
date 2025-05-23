@@ -63,7 +63,7 @@ if(!empty($_SESSION)){
             <input type="password" class="form-control  " id="confirm" name="confirm" required>
             <p class="d-none" id="error_confirm"></p>
         </div>
-        <button type="submit" id="btn-registro" class="btn registro">Registrarse</button>
+        <button type="submit" id="btn-registro" class="registro boton-perso">Registrarse</button>
         <br><br>
         <a class="enlace" href="/TDG/">< Volver al Inicio</a>
     </form>

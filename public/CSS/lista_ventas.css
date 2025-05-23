@@ -27,14 +27,9 @@
 
 .btn_filtros{
     display: flex;
-    border-radius: 25px;
-    padding: 2%;
     margin: 2%;
-    
     max-height: fit-content;
 
-    background-color: var(--color-secundario);
-    color: var(--color-boton-texto);
 }
 
 .btn_filtros i{
@@ -49,7 +44,7 @@
     max-height: fit-content;
     min-height: fit-content;
 
-    color: var(--color-boton-texto) !important;
+    color: var(--color-texto) !important;
 }
 
 #filtros_icon{
@@ -128,6 +123,11 @@
     width: 95%;
 
     background-color: var(--color-tarjeta);
+}
+
+.venta:hover{
+    border: 2px solid var(--color-borde-neon);
+    box-shadow: 0 0 20px var(--color-borde-neon);
 }
 
 .venta img{

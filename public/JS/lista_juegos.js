@@ -149,9 +149,11 @@ function crearTabla(juegos, sesion=undefined) {
         pFecha.innerHTML = `<strong>Fecha de salida:</strong> ${juego.Anyo_salida}`;
         infoJuego.appendChild(pFecha);
 
+        const btnListas = document.createElement('div');
+
         if(sesion !== undefined){
             // Botones/íconos
-            const btnListas = document.createElement('div');
+            
             btnListas.className = 'btn_listas';
 
             iconos.forEach(([prefix, icono], i) => {
@@ -162,10 +164,13 @@ function crearTabla(juegos, sesion=undefined) {
                 btnListas.appendChild(iElem);
             });
 
-            infoJuego.appendChild(btnListas);
+            
         }
 
         divJuego.appendChild(infoJuego);
+        if(btnListas!== undefined){
+            divJuego.appendChild(btnListas);
+        }
 
         list_juegos.appendChild(divJuego);
     });

@@ -46,7 +46,7 @@ a{
     padding: 0;
     margin: 0;
     background-color: transparent;
-    color: var(--color-boton-texto);
+    color: var(--color-texto);
 }
 
 #btn_comprar i{

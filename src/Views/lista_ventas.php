@@ -8,7 +8,7 @@ require_once __DIR__ . '\Templates\header.php';
 <h3 class="mt-4" style="text-align: center;">Catálogo</h3>
 
 <div id="filtros">
-    <button id="boton_filtro" class="btn_filtros">
+    <button id="boton_filtro" class="btn_filtros boton-perso">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
         <p>Filtros</p>
     </button>

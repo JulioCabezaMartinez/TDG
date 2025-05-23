@@ -13,7 +13,7 @@ require_once __DIR__ . '\Templates\header.php';
         <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
 
         <a href="/TDG/juegos">
-            <p class="boton-ver-juegos">Ver Juegos</p>
+            <p class="boton-perso">Ver Juegos</p>
         </a>
 </div>
 <div class="recien_añadidos">
@@ -184,7 +184,7 @@ if (isset($_SESSION["id_usuario"])) {
             }
             ?>
             <div class="review_footer">
-                <div class="review_ver_mas_container">
+                <div class="review_ver_mas_container boton-perso">
                     <i class="fa-solid fa-arrow-down"></i>
                     <p class="review_ver_mas">Ver más</p>
                 </div>

@@ -11,7 +11,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 
 <div id="filtros">
-    <button id="boton_filtro" class="btn_filtros">
+    <button id="boton_filtro" class="btn_filtros boton-perso">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
         <p>Filtros</p>
     </button>
@@ -116,15 +116,14 @@ require_once __DIR__ . '\Templates\header.php';
                     success: function(response) {
                         let respuesta=JSON.parse(response).result;
 
-                        console.log("Hola" + respuesta.addjuego);
-
                         Swal.fire({
                         position: "top-end",
                         icon: "error",
                         text: respuesta,
                         showConfirmButton: false,
                         timer: 1500,
-                        backdrop: false
+                        backdrop: false,
+                        width: "15%"
                     });
                         $(boton).toggleClass("fa-solid");
                         $(boton).toggleClass("fa-regular");

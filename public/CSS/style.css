@@ -82,3 +82,16 @@ a{
 .modal-body label{
     color: var(--color-texto) !important;
 }
+
+.boton-perso{
+    padding: 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--color-primario);
+    color: var(--color-texto) !important;
+}
+
+.boton-perso-secundario{
+    background-color: grey;
+}

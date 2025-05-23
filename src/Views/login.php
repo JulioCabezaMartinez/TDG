@@ -21,7 +21,7 @@ if(!empty($_SESSION)){
             <label for="password" class="form-label">Contraseña:</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button id="submit-login" type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        <button id="submit-login" type="submit" class="boton-perso">Iniciar Sesión</button>
         <br><br>
         <a class="enlace" href="/TDG/">< Volver al Inicio</a>    
     </form>

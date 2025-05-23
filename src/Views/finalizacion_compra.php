@@ -20,7 +20,7 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+    include_once __DIR__. "/Templates/footer.php";
 ?>
 
 <?php

@@ -48,7 +48,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 <!-- Botón de compra -->
 <a href="/TDG/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
-    <button id="btn_comprar">
+    <button id="btn_comprar" class="boton-perso">
         <p>Comprar</p>
         <i class='fa-solid fa-cart-shopping'></i>
     </button>

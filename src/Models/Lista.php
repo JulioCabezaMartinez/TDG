@@ -15,18 +15,26 @@ class Lista extends EmptyModel {
     public function __construct() {
         parent::__construct('listas', 'id');
     }
+    private function asociaListasUsuario($id_usuario, $id_lista): void {
+        $query = "INSERT INTO usuarios_listas (id_usuario, id_lista) VALUES (:id_usuario, :id_lista)";
+        $params = [':id_usuario' => $id_usuario, ':id_lista' => $id_lista];
+        $this->query($query, $params);
+    }
 
-    public function creaListasBasicas($nick_usuario): void {
+    public function creaListasBasicas($nick_usuario, $id_usuario): void {
         $query = "INSERT INTO listas (id_tipo, nombre) VALUES (:id_tipo, :nombre)";
         $params = [
-            [':id_tipo' => 1, ':nombre' => 'wishlist-'.$nick_usuario],
-            [':id_tipo' => 2, ':nombre' => 'backlog-'.$nick_usuario],
-            [':id_tipo' => 3, ':nombre' => 'completed-'.$nick_usuario],
-            [':id_tipo' => 4, ':nombre' => 'playing-'.$nick_usuario]
+            [':id_tipo' => 1, ':nombre' => 'Wish-'.$nick_usuario],
+            [':id_tipo' => 2, ':nombre' => 'Backlog-'.$nick_usuario],
+            [':id_tipo' => 3, ':nombre' => 'Completed-'.$nick_usuario],
+            [':id_tipo' => 4, ':nombre' => 'Playing-'.$nick_usuario]
         ];
 
         foreach ($params as $param) {
             $this->query($query, $param);
+        
+            // Asociar la lista recién creada al usuario.
+            $this->asociaListasUsuario($id_usuario, $this->db->lastInsertId()); // Asocia las listas creadas al usuario.
         }
     }
 

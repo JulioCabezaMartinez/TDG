@@ -59,7 +59,7 @@ class Usuario extends EmptyModel {
         // Comprobar si el correo ya está registrado
         $usuarioExistente = $this->compruebaCampo('correo', $correo);
         if (!is_bool($usuarioExistente)) {
-            return "El correo ya se encuentra registrado"; // O lanzar una excepción
+            return "Correo";
         }
 
         // Crear un nuevo usuario
@@ -70,12 +70,10 @@ class Usuario extends EmptyModel {
             'password' => Security::encryptPass($pass),
             'nick' => $nick,
             'direccion' => $direccion,
-            'imagen' => "default-user.png", // Ruta de la imagen por defecto
+            'imagen_usuario' => "default-user.png", // Ruta de la imagen por defecto
         ];
 
-        $this->create($nuevoUsuario);
-
-        return "Exito"; // O el ID del nuevo usuario
+        return $this->create($nuevoUsuario);
     }
 
     /**

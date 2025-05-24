@@ -16,15 +16,15 @@ if(!empty($_SESSION)){
         <p class="d-none" id="error-campos"></p>
         <div class="mb-3">
             <label for="nombre" class="form-label">*Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="Pepe" required>
         </div>
         <div class="mb-3">
             <label for="apellido" class="form-label">*Apellido:</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" required>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="Cabeza" required>
         </div>
         <div class="mb-3">
             <label for="correo" class="form-label">*Correo:</label>
-            <input type="text" class="form-control" id="correo" name="correo" required>
+            <input type="text" class="form-control" id="email" name="email" value="pepe@cabeza.es" required>
             <p class="d-none" id="error_correo"></p>
         </div>
         <!-- <div class="mb-3">
@@ -33,15 +33,15 @@ if(!empty($_SESSION)){
         </div> -->
         <div class="mb-3">
             <label for="username" class="form-label">*Dirección de envio:</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" required>
+            <input type="text" class="form-control" id="direccion" name="direccion" value="C/Cuarta, 54" required>
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">*Nick de Usuario:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="nick" name="nick" value="PepeCabeza" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">*Contraseña:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" value="@BladeMaster_29" required>
             <p class="d-none" id="error_password"></p>
             <br>
             <!-- Barra de progreso -->
@@ -60,7 +60,7 @@ if(!empty($_SESSION)){
         </div>
         <div class="mb-3">
             <label for="confirm" class="form-label">*Confirmar Contraseña:</label>
-            <input type="password" class="form-control  " id="confirm" name="confirm" required>
+            <input type="password" class="form-control" id="confirm" name="confirm" value="@BladeMaster_29" required>
             <p class="d-none" id="error_confirm"></p>
         </div>
         <button type="submit" id="btn-registro" class="registro boton-perso">Registrarse</button>

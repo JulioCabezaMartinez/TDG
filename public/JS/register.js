@@ -80,16 +80,16 @@ function eventos(){
 
     // Obtener el valor de la contraseña
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
+    const confirmPassword = document.getElementById("confirm").value;
     const email = document.getElementById("email").value;
     const nombre = document.getElementById("nombre").value;
     const apellidos = document.getElementById("apellido").value;
-    const correo = document.getElementById("correo").value;
     const nick= document.getElementById("nick").value;
     const direccion= document.getElementById("direccion").value;
 
-    if(!password || !confirmPassword || !email || !nombre || !apellidos || !correo || !nick || !direccion){
+    if(!password || !confirmPassword || !email || !nombre || !apellidos || !nick || !direccion){
         errores["campos"]="Todos los campos son obligatorios.";
+        console.log(errores["campos"]);
     }
 
     // Expresión regular para validar la contraseña
@@ -101,29 +101,31 @@ function eventos(){
     if (!pattern.test(password)) {
         
         errores["password"]="Contraseña no válida. Debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+        console.log(errores["password"]);
         
-    }else if(expresiones_regulares.get("correo").test(email)){
+    }else if(!expresiones_regulares.get("correo").test(email)){
         errores["correo"]="Correo no válido.";
+        console.log(errores["correo"]);
        
     }else if(password !== confirmPassword){
 
         errores["confirm"]="Las contraseñas no coinciden.";
+        console.log(errores["confirm"]);
 
     }else{
 
+        let formData = new FormData();
+        formData.append("password", password);
+        formData.append("email", email);
+        formData.append("nombre", nombre);
+        formData.append("apellido", apellidos);
+        formData.append("nick", nick);
+        formData.append("direccion", direccion);
+
         fetch("/TDG/registrar-usuario", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                password: password,
-                email: email,
-                nombre: nombre,
-                apellidos: apellidos,
-                nick: nick,
-                direccion: direccion
-            })
+            body: formData,
+
         }).then(response => response.json())
         .then(data => {
             if (data.result && data.result == "ok") {
@@ -134,9 +136,10 @@ function eventos(){
                 });
                 
 
-            }else if(data.result=="error" && data.error=="correo"){
+            }else if(data.result=="error" && data.Error=="correo"){
                
-                errores["correo"]="El correo ya está registrado.";
+                errores["igual"]="El correo ya está registrado.";
+                console.log(errores["igual"]);
                 
             
             }else{

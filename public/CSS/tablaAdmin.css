@@ -8,6 +8,8 @@ body{
     justify-content: start;
 
     padding: 0;
+
+    overflow-x: hidden;
 }
 
 .header-movil{
@@ -55,6 +57,7 @@ body{
 /* Contenedor de contenido */
 .content{
     width: 100%;
+
 }
 
 .enlace-vuelta{

@@ -60,6 +60,7 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     $router->add('/AJAX/eliminarDato', 'ControllerAJAX@eliminarDato');
     $router->add('/AJAX/datosModificarDato', 'ControllerAJAX@datosModificarDato');
     $router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
+    $router->add('/AJAX/addDato', 'ControllerAJAX@addDato');
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

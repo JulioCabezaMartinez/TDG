@@ -44,11 +44,34 @@ function eventos() { // Cambiar data de los fetches.
         }
     });
 
+    // Delegar click para botones Crear
+    document.getElementById("btn_crear_dato").addEventListener("click", () => {
+        const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
+        modal.show();
+
+        // Limpiar campos del modal
+        document.querySelectorAll("[id$='Input']").forEach(input => {
+            input.value = "";
+        });
+
+        document.getElementById("btn_modificar").style.display = "none"; // Ocultar botón de modificar
+        document.getElementById("btn_crear").style.display = "block"; // Mostrar botón de crear
+
+        document.getElementById("creacion-dato-header").style.display = "block"; // Mostrar el header de creación
+        document.getElementById("modificacion-dato-header").style.display = "none"; // Ocultar el header de modificación
+    });
+
     // Delegar click para botones Modificar
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("modificar-dato")) {
         const id = e.target.id.split("@")[1];
         const entidad = document.getElementById("entidad").value;
+
+        document.getElementById("btn_modificar").style.display = "block"; // Ocultar botón de modificar
+        document.getElementById("btn_crear").style.display = "none"; // Mostrar botón de crear
+
+        document.getElementById("creacion-dato-header").style.display = "none"; // Mostrar el header de creación
+        document.getElementById("modificacion-dato-header").style.display = "block"; // Ocultar el header de modificación
 
         const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
         modal.show();
@@ -74,7 +97,64 @@ function eventos() { // Cambiar data de los fetches.
         }
     });
 
-    //onfirmar modificación
+    document.getElementById("btn_crear").addEventListener("click", () => {
+        const entidad = document.getElementById("entidad").value;
+        const datos = {};
+
+        document.querySelectorAll("[id$='Input']").forEach(input => {
+
+            const key = input.id.replace("Input", "");
+            if(key == "Admin"){
+                if(input.checked){
+                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
+                }else{
+                    datos[key] = "0"; // Si no está marcado, asignar "0"
+                }
+            }
+
+            if(key == "Premium"){
+                if(input.checked){
+                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
+                }else{
+                    datos[key] = "0"; // Si no está marcado, asignar "0"
+                }
+            }
+
+            datos[key] = input.value;
+        });
+
+        const formData = new FormData();
+        formData.append("datos", JSON.stringify(datos));
+        formData.append("entidad", entidad);
+
+        fetch("/TDG/AJAX/addDato", {
+        method: "POST",
+        body: formData
+        })
+        .then(res => res.text())
+        .then(() => {
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Dato modificado con éxito",
+            showConfirmButton: false,
+            timer: 1500,
+            backdrop: false
+        });
+        })
+        .catch(() => {
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error en el servidor",
+            showConfirmButton: false,
+            timer: 1500,
+            backdrop: false
+        });
+        });
+    });
+
+    //Confirmar modificación
     document.getElementById("btn_modificar").addEventListener("click", () => {
         const entidad = document.getElementById("entidad").value;
         const datos = {};
@@ -190,7 +270,7 @@ function crearTabla(lista, columnas, entidad) {
         const tdAcciones = document.createElement("td");
         tdAcciones.innerHTML = `
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="boton-perso boton-perso-secundario dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Acciones
                 </button>
                 <div class="dropdown-menu">

@@ -326,6 +326,39 @@ class ControllerAJAX {
         }
     }
 
+    public function addDato(){
+        $entidad=$_POST["entidad"];
+        $datos=json_decode($_POST["datos"], true);
+
+        switch ($entidad) {
+            case "usuarios":
+                $usuarioDB=new Usuario();
+                $item=$usuarioDB->create($datos);
+                break;
+            case "juegos":
+                $juegosDB=new Juego();
+                $item=$juegosDB->create($datos);
+                break;
+            case "reviews":
+                $reviewsDB=new Review();
+                $item=$reviewsDB->create($datos);
+                break;
+            case "productos":
+                $ventaDB=new Venta();
+                $item=$ventaDB->create($datos);
+                break;
+            case "post_vendidos":
+                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
+                // $usuarioDB->delete($id);
+                // echo "Todo Correcto";
+                echo "Error de Entidad, entidad equivocada";
+                break;
+            default:
+                echo "Error de Entidad";
+                break;
+        }
+    }
+
     public function datosModificarDato(){
         $id=$_POST["id"];
         $entidad=$_POST["entidad"];

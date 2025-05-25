@@ -26,8 +26,18 @@ class ControllerVenta {
     public function lista_ventas(){
 
         $plataformaDB=new Plataforma();
+        $ventaBD = new Venta();
+        $juegoBD = new Juego();
 
-        $lista_plataformas=$plataformaDB->getAll();
+        $consolas=$plataformaDB->getAll();
+        $datos = $ventaBD->listaColumnas();
+
+        $columnas = [];
+        foreach ($datos as $dato) {
+            array_push($columnas, $dato["Field"]);
+        }
+        
+        $juegos = $juegoBD->getAllOrderByAlfabet();
 
         include_once __DIR__. "/../Views/lista_ventas.php";
     }

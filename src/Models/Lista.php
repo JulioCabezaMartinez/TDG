@@ -25,9 +25,9 @@ class Lista extends EmptyModel {
         $query = "INSERT INTO listas (id_tipo, nombre) VALUES (:id_tipo, :nombre)";
         $params = [
             [':id_tipo' => 1, ':nombre' => 'Wish-'.$nick_usuario],
-            [':id_tipo' => 2, ':nombre' => 'Backlog-'.$nick_usuario],
-            [':id_tipo' => 3, ':nombre' => 'Completed-'.$nick_usuario],
-            [':id_tipo' => 4, ':nombre' => 'Playing-'.$nick_usuario]
+            [':id_tipo' => 2, ':nombre' => 'Completed-'.$nick_usuario],
+            [':id_tipo' => 3, ':nombre' => 'Playing-'.$nick_usuario],
+            [':id_tipo' => 4, ':nombre' => 'Backlog-'.$nick_usuario]
         ];
 
         foreach ($params as $param) {
@@ -158,11 +158,64 @@ class Lista extends EmptyModel {
         return $return; // Retorna un array con los ids de las listas donde se encuentra el juego.
     }
 
-    public function getListasUsuario($id_usuario): array {
+    public function getListasUsuario($id_usuario): array
+    {
         $query = "SELECT l.id FROM listas l JOIN usuarios_listas ul ON l.id = ul.id_lista WHERE ul.id_usuario = :id_usuario";
         $params = [':id_usuario' => $id_usuario];
         return $this->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getUserLists($id_usuario, $tipo_lista){
+        $list = [];
+
+        $id_tipo_lista = match($tipo_lista){
+            'wishlist' => 1,
+            'completed' => 2,
+            'playing' => 3,
+            'backlog' => 4
+        };
+
+        $sql_listas_usuario = "SELECT id_lista FROM usuarios_listas WHERE id_usuario = :id_usuario";
+        $stmt_listas_usuario = $this->db->prepare($sql_listas_usuario);
+        $stmt_listas_usuario->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt_listas_usuario->execute();
+        $listas_usuario = $stmt_listas_usuario->fetchAll(PDO::FETCH_ASSOC);
+
+
+        $listas_whis = [];
+        foreach ($listas_usuario as $lista) {
+            $sql_listas = "SELECT id FROM listas WHERE id_tipo = {$id_tipo_lista} AND id = :id_lista";
+            $stmt_listas = $this->db->prepare($sql_listas);
+            $stmt_listas->bindParam(':id_lista', $lista['id_lista'], PDO::PARAM_INT);
+            $stmt_listas->execute();
+
+            $listas_whis[] = $stmt_listas->fetch(PDO::FETCH_ASSOC);
+        }
+
+        // Verificar si se encontró la lista de deseos
+        if (empty($listas_whis)) {
+            return $list; // Retornar un array vacío si no hay lista de deseos
+        }
+
+        $posicion_array = match($tipo_lista){
+            'wishlist' => 0,
+            'completed' => 2,
+            'playing' => 3,
+            'backlog' => 1
+        };
+
+        // Obtener los juegos de la lista de deseos
+        $sql_juegos = "SELECT id_Juego FROM juegos_lista WHERE id_lista = :id_lista";
+        $stmt_juegos = $this->db->prepare($sql_juegos);
+        $stmt_juegos->bindParam(':id_lista', $listas_whis[$posicion_array]["id"], PDO::PARAM_INT);
+        $stmt_juegos->execute();
+        $juegos = $stmt_juegos->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($juegos as $juego) {
+            $list[] = $juego['id_Juego'];
+        }
+
+        return $list;
+    }
 }
 ?>

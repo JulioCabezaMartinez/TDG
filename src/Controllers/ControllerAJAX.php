@@ -118,10 +118,74 @@ class ControllerAJAX {
         foreach ($ventas as &$venta) {
             $consola=$plataformaDB->getById($venta["Consola"]);
 
-            $venta["Consola"]=$consola["nombre"];
+            $venta["Consola"]=$consola["Nombre"];
         }
 
         echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function registrarProducto(){
+        $ventaDB=new Venta();
+
+        $datos = json_decode($_POST["datos"], true);
+
+
+        // Validar que los datos no estén vacíos y evitar inyecciones.
+        $titulo=Validators::evitarInyeccion($datos["Titulo"]);
+        $estado=Validators::evitarInyeccion($datos["Estado"]);
+        $consola=Validators::evitarInyeccion($datos["Consola"]);
+        $precio=Validators::evitarInyeccion($datos["Precio"]);
+        $estado_venta=Validators::evitarInyeccion($datos["Estado_Venta"]);
+
+        if($estado_venta === "Sin Stock"){
+            $stock = 0; // Si el estado de venta es "Sin Stock", establecer stock a 0.
+        } else {
+            $stock = Validators::evitarInyeccion($datos["Stock"]); // Si no, obtener el stock proporcionado.
+        }
+
+        $imagen=$_FILES['imagen']['name'] ?? null; // Obtener la imagen si se proporciona
+        $id_vendedor=$_SESSION["usuarioActivo"]; // Obtener el ID del usuario desde la sesión.
+        $id_juego = Validators::evitarInyeccion($datos["id_juego"]); // Obtener el ID del juego si se proporciona
+
+        if(!empty($_FILES['imagen']['name'])) {
+            $ruta_imagen = __DIR__ . "/../../public/img/productos/" . basename($imagen);
+            if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_imagen)) {
+                echo json_encode(["error"=>"Error al subir la imagen."]);
+                exit;
+            }
+        } else {
+            $imagen = 'default-game.jpg'; // Si no se proporciona imagen, establecer como null.
+        }
+        
+        if($estado_venta !== "Sin Stock"){
+            if(empty($titulo) || empty($estado) || empty($consola) || empty($precio) || empty($estado_venta) || empty($stock) || empty($id_vendedor)){
+                echo json_encode(["error"=>"Error: Datos incompletos."]);
+                exit;
+            }
+        }else{
+            if(empty($titulo) || empty($estado) || empty($consola) || empty($precio) || empty($estado_venta) || empty($id_vendedor)){
+            echo json_encode(["error"=>"Error: Datos incompletos."]);
+            exit;
+        }
+        }
+        
+        
+
+        if($ventaDB->create(array(
+            "Titulo" => $titulo,
+            "Estado" => $estado,
+            "Consola" => $consola,
+            "Precio" => $precio,
+            "Estado_Venta" => $estado_venta,
+            "Stock" => $stock,
+            "img_venta" => $imagen,
+            "id_Vendedor" => $id_vendedor,
+            "id_juego" => $id_juego
+        ))){
+            echo json_encode(["result"=>"Producto registrado con exito."]);
+        }else{
+            echo json_encode(["error"=>"Error al registrar el producto."]);
+        }
     }
 
     public function lista_review(){
@@ -176,7 +240,7 @@ class ControllerAJAX {
 
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
-        $id_usuario = 1; //$_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
 
         $nombre_lista = match ($lista) {
             'wish' => 'wishlist',
@@ -333,7 +397,15 @@ class ControllerAJAX {
         switch ($entidad) {
             case "usuarios":
                 $usuarioDB=new Usuario();
+                $listaDB=new Lista();
+                $datos["Password"]=Security::encryptPass($datos["Password"]);
+                
+                if($datos["Imagen_usuario"]==""){
+                    $datos["Imagen_usuario"]="default-user.png"; // Imagen por defecto si no se proporciona una imagen.
+                }
+                
                 $item=$usuarioDB->create($datos);
+                $listaDB->creaListasBasicas($datos, $item); // Crear listas basicas del usuario.
                 break;
             case "juegos":
                 $juegosDB=new Juego();

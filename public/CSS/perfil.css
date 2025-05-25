@@ -1,5 +1,18 @@
-body{
-    background-color: cadetblue;
+
+#perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5%;
+
+    width: 60%;
+}
+
+.perfil_imagen{
+    max-width: 200px;
+    clip-path: circle(100px at 50% 50%);
 }
 
 .juegos, .perfil{
@@ -13,22 +26,36 @@ body{
     display: flex;
     margin-top: 20px;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: white;
+    background-color: var(--color-tarjeta-secundario);
 
     width: 90%;
     border-radius: 20px;
     padding: 20px;
 }
 
+.juegos a{
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.juego img{
+    min-height: 125px;
+}
+
 .juegos > div {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
     justify-content: center;
     gap: 1rem; /* espacio entre juegos, opcional */
-  }
+    width: 100%;
+}
 
-.juego{
+.juegos h3{
+    align-self: flex-start;
+}
+
+.juego a{
     
     display: flex;
     flex-direction: column;
@@ -51,8 +78,11 @@ body{
     border-radius: 20px;
 }
 
+.nombreJuego{
+    text-align: center;
+}
+
 .view_all{
-    align-self: flex-end;
     margin-left: auto;
     align-self: start;
     padding: 20px;
@@ -61,4 +91,16 @@ body{
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
+}
+
+@media screen and (min-width: 1024px) {
+
+    .juegos > div{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .view_all{
+        grid-column: 3;
+    }
+    
 }

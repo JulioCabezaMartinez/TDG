@@ -46,6 +46,7 @@ $router->add('/perfil/ventas', 'ControllerUsuario@ventas');
 $router->add('/registrar-usuario', 'ControllerAJAX@registrarUsuario');
 $router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
 $router->add('/AJAX/lista_ventas', 'ControllerAJAX@lista_ventas');
+$router->add('/AJAX/registrarProducto', 'ControllerAJAX@registrarProducto');
 $router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');

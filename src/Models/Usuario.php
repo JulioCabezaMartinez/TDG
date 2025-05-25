@@ -37,15 +37,6 @@ class Usuario extends EmptyModel {
     }
 
     /**
-     * Cierra la sesión del usuario actual.
-     *
-     * @return void
-     */
-    public function logOut() {
-
-    }
-
-    /**
      * Registra un nuevo usuario en el sistema.
      *
      * @param string $correo Correo electrónico del usuario.

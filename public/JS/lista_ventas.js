@@ -2,9 +2,9 @@
 
 function buscarFiltros() {
     let filtros={};
-    document.querySelectorAll('[id$="Input"]').forEach(function (input) {
+    document.querySelectorAll('[id$="InputFiltro"]').forEach(function (input) {
         let valor = input.value;
-        let clave = input.id.replace('Input', '');
+        let clave = input.id.replace('InputFiltro', '');
 
         if (valor) {
             if (clave == "nombre") {
@@ -35,39 +35,6 @@ function eventos() {
         });
     });
 
-    // Antigua idea de filtros en scroll.
-
-    // document.querySelectorAll(".opcion_filtro").forEach(function (el) {
-    //     el.addEventListener("click", function () {
-    //         const filtrosActivos = document.querySelector(".filtros_activos");
-
-    //         const div = document.createElement("div");
-    //         div.className = "card-item swiper-slide";
-    //         div.innerHTML = `<i class='fa-solid fa-xmark eliminar-filtro'></i> ${this.value}`;
-
-    //         filtrosActivos.appendChild(div);
-
-    //         const numeroDeSlides = filtrosActivos.children.length;
-
-    //         if (window.swiper) {
-    //             swiper.update();
-    //         }
-    //     });
-    // });
-
-    // document.addEventListener("click", function (e) {
-    //     if (e.target && e.target.classList.contains("eliminar-filtro")) {
-    //         const slide = e.target.closest(".swiper-slide");
-    //         if (slide) {
-    //             slide.remove();
-    //         }
-
-    //         if (window.swiper) {
-    //             swiper.update();
-    //         }
-    //     }
-    // });
-
     // Aplicar Filtros
     document.getElementById("aplicarFiltros").addEventListener("click", function(){
         let filtros=buscarFiltros();
@@ -82,6 +49,60 @@ function eventos() {
         })
 
         paginacion();
+    });
+
+    document.getElementById("btn_crear_producto").addEventListener("click", function () {
+        const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
+        modal.show();
+
+        // Limpiar campos del modal
+        // document.querySelectorAll("[id$='Input']").forEach(input => {
+        //     input.value = "";
+        // });
+        
+    });
+
+    document.getElementById("btn_crear").addEventListener("click", () => {
+        const datos = {};
+
+        document.querySelectorAll("[id$='Input']").forEach(input => {
+
+            const key = input.id.replace("Input", "");
+
+            datos[key] = input.value;
+        });
+
+        const formData = new FormData();
+        formData.append("datos", JSON.stringify(datos));
+
+        console.log(datos);
+
+        fetch("/TDG/AJAX/registrarProducto", {
+        method: "POST",
+        body: formData
+        })
+        .then(res => res.text())
+        .then((data) => {
+            console.log(data);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto registrado con éxito",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false
+            });
+        })
+        .catch(() => {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error en el servidor",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false
+            });
+        });
     });
 }
 
@@ -110,9 +131,15 @@ function crearTabla(ventas) {
         infoJuegoDiv.classList.add('info_juego');
 
         // Crear el título
-        const tituloH1 = document.createElement('h1');
+        const tituloH1 = document.createElement('h2');
         tituloH1.classList.add('titulo');
-        tituloH1.textContent = venta.Titulo;
+        if( venta.Titulo.length > 10) {
+            tituloH1.textContent = venta.Titulo.slice(0, 10) + '...';
+            tituloH1.title = venta.Titulo; // Añadir el título completo como atributo title
+        }else{
+            tituloH1.textContent = venta.Titulo;
+        }    
+        
 
         // Crear el precio
         const precioP = document.createElement('p');

@@ -30,6 +30,8 @@ function eventos() { // Cambiar data de los fetches.
                 timer: 1500,
                 backdrop: false
             });
+            paginacion(); // Recargar la tabla después de eliminar
+
             } else {
             Swal.fire({
                 position: "top-end",
@@ -90,8 +92,14 @@ function eventos() { // Cambiar data de los fetches.
             const datos = json["dato"];
 
             for (let key in datos) {
-            const input = document.getElementById(key + "Input");
-            if (input) input.value = datos[key];
+                const input = document.getElementById(key + "Input");
+                if (input) input.value = datos[key];
+                if (key === "Admin" || key === "Premium") {
+                    const checkbox = document.getElementById(key + "Input");
+                    if (datos[key] === "1") {
+                        checkbox.checked=true; // Marcar el checkbox si el valor es "1"
+                    }
+                }
             }
         });
         }
@@ -123,6 +131,8 @@ function eventos() { // Cambiar data de los fetches.
             datos[key] = input.value;
         });
 
+        console.log(datos);
+
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
@@ -141,6 +151,7 @@ function eventos() { // Cambiar data de los fetches.
             timer: 1500,
             backdrop: false
         });
+        paginacion(); // Recargar la tabla después de crear
         })
         .catch(() => {
         Swal.fire({
@@ -160,8 +171,24 @@ function eventos() { // Cambiar data de los fetches.
         const datos = {};
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
-        const key = input.id.replace("Input", "");
-        datos[key] = input.value;
+            const key = input.id.replace("Input", "");
+            datos[key] = input.value;
+
+            if(key == "Admin"){
+                if(input.checked){
+                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
+                }else{
+                    datos[key] = "0"; // Si no está marcado, asignar "0"
+                }
+            }
+
+            if(key == "Premium"){
+                if(input.checked){
+                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
+                }else{
+                    datos[key] = "0"; // Si no está marcado, asignar "0"
+                }
+            }
         });
 
         const formData = new FormData();
@@ -182,6 +209,7 @@ function eventos() { // Cambiar data de los fetches.
             timer: 1500,
             backdrop: false
         });
+        paginacion(); // Recargar la tabla después de modificar
         })
         .catch(() => {
         Swal.fire({
@@ -479,7 +507,6 @@ function paginacion(nPagina=null, filtros={}) {
 
     }).then(response => response.json())
     .then(data => {
-        console.log(data.columnas);
         let mapRespuesta=new Map();
         mapRespuesta.set("Datos", data.datos);
         mapRespuesta.set("Pagina", data.pagina);

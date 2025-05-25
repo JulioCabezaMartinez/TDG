@@ -223,7 +223,9 @@ function crearTabla(lista, columnas, entidad) {
     columnas.forEach(columna => {
         if (columna === "id"){
             
-        }else{
+        }else if (columna === "Password") {
+
+        }else {
             const th = document.createElement("th");
             th.textContent = columna;
             trHead.appendChild(th);
@@ -245,6 +247,7 @@ function crearTabla(lista, columnas, entidad) {
 
         for (const key in item) {
             if (key === "id") continue; // omitir id en las columnas si no se desea mostrarlo directamente
+            if (key === "Password") continue; // omitir Password en las columnas si no se desea mostrarlo directamente
             let campo = item[key];
             if (campo.length >= 20) {
                 campo = campo.substring(0, 20) + "...";

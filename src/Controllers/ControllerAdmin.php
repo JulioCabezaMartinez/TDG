@@ -6,6 +6,7 @@ use App\Models\Juego;
 use App\Models\Usuario;
 use App\Models\Review;
 use App\Models\Venta;
+use App\Models\Plataforma;
 
 class ControllerAdmin{
 
@@ -43,22 +44,32 @@ class ControllerAdmin{
                     $lista=$juegoDB->getAll();
                     break;
                 case "reviews":
+                    $usuarioDB=new Usuario();
                     $reviewDB=new Review();
+                    $juegoDB=new Juego();
                     $datos=$reviewDB->listaColumnas();
                     $columnas=[];
                     foreach($datos as $dato){
                         array_push($columnas, $dato["Field"]);
                     }
                     $lista=$reviewDB->getAll();
+                    $usuarios=$usuarioDB->getAll();
+                    $juegos=$juegoDB->getAllOrderByAlfabet();
                     break;
                 case "productos":
                     $ventaDB=new Venta();
+                    $usuarioDB=new Usuario();
+                    $juegoDB=new Juego();
+                    $plataformaDB=new Plataforma();
                     $datos=$ventaDB->listaColumnas();
                     $columnas=[];
                     foreach($datos as $dato){
                         array_push($columnas, $dato["Field"]);
                     }
                     $lista=$ventaDB->getAll();
+                    $usuarios=$usuarioDB->getAll();
+                    $juegos=$juegoDB->getAllOrderByAlfabet();
+                    $consolas=$plataformaDB->getAllOrderByAlfabet();
                     break;
                 case "post_vendidos":
                     $ventaDB=new Venta();

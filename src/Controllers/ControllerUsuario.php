@@ -23,46 +23,9 @@ class ControllerUsuario {
     }
 
     public function perfil_listas(): void {
-        $usuarioDB=new Usuario();
-        $listaDB=new Lista();
-        $juegoDB=new Juego();
+        $usuarioDB = new Usuario();
+
         $perfil = $usuarioDB->getById($_SESSION['usuarioActivo']);
-
-        // LLamada a la Base de datos para Wishlist
-        $perfil['wishlist'] = $listaDB->getUserLists($perfil['id'], "wishlist");
-
-        $whislist=[];
-        foreach($perfil["wishlist"] as $id){
-            $whislist[$id]=$juegoDB->getById($id);
-        }
-        $perfil["wishlist"]=$whislist;
-
-        // LLamada a la Base de datos para Completed
-        $perfil['completed'] = $listaDB->getUserLists($perfil['id'], "completed");
-
-        $completed=[];
-        foreach($perfil["completed"] as $id){
-            $completed[$id]=$juegoDB->getById($id);
-        }
-        $perfil["completed"]=$completed;
-
-        // LLamada a la Base de datos para Playing
-        $perfil['playing'] = $listaDB->getUserLists($perfil['id'], "playing");
-
-        $playing=[];
-        foreach($perfil["playing"] as $id){
-            $playing[$id]=$juegoDB->getById($id);
-        }
-        $perfil["playing"]=$playing;
-
-        // LLamada a la Base de datos para Backlog
-        $perfil['backlog'] = $listaDB->getUserLists($perfil['id'], "backlog");
-
-        $backlog=[];
-        foreach($perfil["backlog"] as $id){
-            $backlog[$id]=$juegoDB->getById($id);
-        }
-        $perfil["backlog"]=$backlog;
 
         include_once __DIR__.'/../Views/perfil.php';
     }
@@ -70,5 +33,13 @@ class ControllerUsuario {
     public function lista(): void {
         $perfil = ["nick" => "Keyxion", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "wishlist"=>[32, 39, 750, 4639, 9767]];
         include_once __DIR__.'/../Views/listas_perfil.php';
+    }
+
+    public function ventas_perfil(): void {
+        $usuarioDB = new Usuario();
+        $perfil = $usuarioDB->getById($_SESSION['usuarioActivo']);
+        // $ventas = $usuarioDB->getVentasByUserId($perfil['id']);
+        $perfil['Imagen_usuario'] = $perfil['Imagen_usuario'] ?? 'default.png'; // Aseguramos que haya una imagen por defecto
+        include_once __DIR__.'/../Views/ventas_perfil.php';
     }
 }

@@ -24,12 +24,12 @@ require_once __DIR__ . '\Templates\header.php';
             <div class="precios">
                 <input type="hidden" id="id_producto" value="<?php echo $venta["id"] ?>">
                 <p>Coste de Gestion:</p>
-                <p>€</p> <!-- Coste de gestión -->
+                <p> <?php echo $precio_gestion ?> €</p> <!-- Coste de gestión -->
                 <p>Precio del producto:</p>
                 <p> <?php echo $venta["Precio"] ?> €</p>
 
                 <p>Total:</p>
-                <p id="precio"> <?php echo $venta["Precio"] //echo $venta["Precio"] + $precio_gestion ?> €</p>
+                <p id="precio"> <?php echo $venta["Precio"] + $precio_gestion ?> €</p>
 
                 <div id="paypal-buttons"></div> <!-- Botones de Paypal -->
             </div>

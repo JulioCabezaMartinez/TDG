@@ -165,7 +165,8 @@ class Lista extends EmptyModel {
         return $this->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getUserLists($id_usuario, $tipo_lista){
+    public function getUserLists($id_usuario, $tipo_lista, $inicio, $limite){
+        $juegoDB= new Usuario();
         $list = [];
 
         $id_tipo_lista = match($tipo_lista){
@@ -192,30 +193,70 @@ class Lista extends EmptyModel {
             $listas_whis[] = $stmt_listas->fetch(PDO::FETCH_ASSOC);
         }
 
-        // Verificar si se encontró la lista de deseos
-        if (empty($listas_whis)) {
-            return $list; // Retornar un array vacío si no hay lista de deseos
+        $posicion_array = match($tipo_lista){
+            'wishlist' => 0,
+            'backlog' => 1,
+            'completed' => 2,
+            'playing' => 3
+        };
+
+        // Obtener los juegos de la lista de deseos
+        $sql_juegos = "SELECT id_Juego FROM juegos_lista WHERE id_lista = :id_lista LIMIT :inicio, :limite";
+        $stmt_juegos = $this->db->prepare($sql_juegos);
+        $stmt_juegos->bindParam(':id_lista', $listas_whis[$posicion_array]["id"], PDO::PARAM_INT);
+        $stmt_juegos->bindParam(':inicio', $inicio, PDO::PARAM_INT);
+        $stmt_juegos->bindParam(':limite', $limite, PDO::PARAM_INT);
+        $stmt_juegos->execute();
+        $juegos = $stmt_juegos->fetchAll(PDO::FETCH_ASSOC);
+
+        // foreach ($juegos as $juego) {
+            
+        //     $list[] = $juegoDB->getById($juego['id_Juego']);
+        // }
+
+        return $juegos[0]['id_Juego'];
+    }
+
+    public function getCountListasUsuario($id_usuario, $tipo_lista): int{
+
+        $id_tipo_lista = match($tipo_lista){
+            'wishlist' => 1,
+            'completed' => 2,
+            'playing' => 3,
+            'backlog' => 4
+        };
+
+        $sql_listas_usuario = "SELECT id_lista FROM usuarios_listas WHERE id_usuario = :id_usuario";
+        $stmt_listas_usuario = $this->db->prepare($sql_listas_usuario);
+        $stmt_listas_usuario->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt_listas_usuario->execute();
+        $listas_usuario = $stmt_listas_usuario->fetchAll(PDO::FETCH_ASSOC);
+
+
+        $listas_whis = [];
+        foreach ($listas_usuario as $lista) {
+            $sql_listas = "SELECT id FROM listas WHERE id_tipo = {$id_tipo_lista} AND id = :id_lista";
+            $stmt_listas = $this->db->prepare($sql_listas);
+            $stmt_listas->bindParam(':id_lista', $lista['id_lista'], PDO::PARAM_INT);
+            $stmt_listas->execute();
+
+            $listas_whis[] = $stmt_listas->fetch(PDO::FETCH_ASSOC);
         }
 
         $posicion_array = match($tipo_lista){
             'wishlist' => 0,
+            'backlog' => 1,
             'completed' => 2,
-            'playing' => 3,
-            'backlog' => 1
+            'playing' => 3
         };
 
         // Obtener los juegos de la lista de deseos
-        $sql_juegos = "SELECT id_Juego FROM juegos_lista WHERE id_lista = :id_lista";
+        $sql_juegos = "SELECT COUNT(*) as total FROM juegos_lista WHERE id_lista = :id_lista";
         $stmt_juegos = $this->db->prepare($sql_juegos);
         $stmt_juegos->bindParam(':id_lista', $listas_whis[$posicion_array]["id"], PDO::PARAM_INT);
         $stmt_juegos->execute();
-        $juegos = $stmt_juegos->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($juegos as $juego) {
-            $list[] = $juego['id_Juego'];
-        }
-
-        return $list;
+        return $stmt_juegos->fetch(PDO::FETCH_ASSOC)["total"];
     }
 }
 ?>

@@ -1,4 +1,3 @@
-
 #perfil {
     display: flex;
     flex-direction: column;
@@ -15,7 +14,11 @@
     clip-path: circle(100px at 50% 50%);
 }
 
-.juegos{
+.paginacionVentas, .paginacionCompras{
+    align-self: center;
+}
+
+.ventas_compras{
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -27,19 +30,32 @@
     padding: 20px;
 
     border: 2px solid black;
+    /* box-shadow: 0 0 20px var(--color-borde-neon); */
 }
 
-.juegos a{
+.ventas_compra a{
     display: block;
     text-decoration: none;
     color: inherit;
 }
 
-.juego img{
-    min-height: 125px;
+.venta img, .compra img{
+    max-height: 125px;
 }
 
-.juegos > div {
+.venta a, .compra a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    margin: 20px;
+
+    cursor: pointer;
+}
+
+.ventas_compra > div {
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
@@ -47,11 +63,18 @@
     width: 100%;
 }
 
-.juegos h3{
+#lista_compras, #lista_ventas{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    width: 100%;
+}
+
+.ventas_compra h3{
     align-self: flex-start;
 }
 
-.juego a{
+.venta_compra a{
     
     display: flex;
     flex-direction: column;
@@ -67,28 +90,20 @@
     border-radius: 20px;
 }
 
-.juego img{
+.venta_compra img{
     max-width: 200px;
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
 }
 
-.nombreJuego{
+.nombreVenta_compra{
     text-align: center;
-}
-
-.view_all{
-    margin-left: auto;
-    align-self: start;
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
 }
 
 @media screen and (min-width: 1024px) {
 
-    .juegos > div{
+    .ventas_compra > div{
         grid-template-columns: repeat(3, 1fr);
     }
 

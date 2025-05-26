@@ -124,6 +124,58 @@ class ControllerAJAX {
         echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
+    public function lista_compras_perfil(){
+        $ventaDB=new Venta();
+        $plataformaDB=new Plataforma();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+
+        $total_compras = $ventaDB->getCountComprasUsuario($id_usuario);
+        
+
+        $total_paginas = ceil($total_compras / $limite);
+        
+        $compras = $ventaDB->getListComprasUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
+
+        foreach ($compras as &$compra) {
+            $compraID=$ventaDB->getById($compra["id_Post"]);
+
+            $compra["Producto"]=["Titulo"=>$compraID["Titulo"], "Imagen"=>$compraID["img_venta"]];
+        }
+
+        echo json_encode(["compras"=>$compras, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_ventas_perfil(){
+        $ventaDB=new Venta();
+        $plataformaDB=new Plataforma();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+
+        $total_ventas = $ventaDB->getCountProductosUsuario($id_usuario);
+        
+
+        $total_paginas = ceil($total_ventas / $limite);
+        
+        $ventas = $ventaDB->getListProductosUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
+
+        foreach ($ventas as &$venta) {
+            $consola=$plataformaDB->getById($venta["Consola"]);
+
+            $venta["Consola"]=$consola["Nombre"];
+        }
+
+        echo json_encode(["ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
     public function registrarProducto(){
         $ventaDB=new Venta();
 
@@ -530,5 +582,73 @@ class ControllerAJAX {
         }
 
         echo json_encode(["columnas"=>$columnas ,"datos"=>$datos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_whislist(){
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_wish = $listaDB->getCountListasUsuario($id_usuario, "wishlist");
+
+        $total_paginas = ceil($total_wish / $limite);
+
+        $whislist = $listaDB->getUserLists($id_usuario, "wishlist", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["whislist"=>$whislist, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_playing(){
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_play = $listaDB->getCountListasUsuario($id_usuario, "playing");
+
+        $total_paginas = ceil($total_play / $limite);
+
+        $playing = $listaDB->getUserLists((int)$id_usuario, "playing", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["playing"=>$playing, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_completed(){
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_comp = $listaDB->getCountListasUsuario($id_usuario, "completed");
+
+        $total_paginas = ceil($total_comp / $limite);
+
+        $completed = $listaDB->getUserLists((int)$id_usuario, "completed", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["completed"=>$completed, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_backlog(){
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_back = $listaDB->getCountListasUsuario($id_usuario, "backlog");
+
+        $total_paginas = ceil($total_back / $limite);
+
+        $backlog = $listaDB->getUserLists((int)$id_usuario, "backlog", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["backlog"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 }

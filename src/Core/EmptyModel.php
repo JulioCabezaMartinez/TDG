@@ -111,8 +111,12 @@ abstract class EmptyModel {
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     }
-        public function getCount(): int {
+    public function getCount(): int {
         return (int) $this->query("SELECT COUNT(*) FROM {$this->table}")->fetchColumn();
+    }
+
+    public function getNew(): array {
+        return $this->query("SELECT * FROM {$this->table} ORDER BY id  DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
 ?>

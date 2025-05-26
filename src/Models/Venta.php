@@ -26,11 +26,6 @@ class Venta extends EmptyModel {
         return parent::query("Select * from post_vendidos;")->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Posiblemente moverlo a EmptyModel.
-    public function getNew(): array {
-        return parent::query("SELECT * FROM {$this->table} ORDER BY id  DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
     public function getListSells(int $inicio, int $limit, array $filtros=[]){
 
         $sql = "SELECT * FROM {$this->table}";
@@ -136,6 +131,58 @@ class Venta extends EmptyModel {
 
     public function agregarVendido($id_producto, $id_usuario, $fecha_compra){
         return $this->query("INSERT INTO post_vendidos (id_Post, id_Comprador, Fecha) VALUES ({$id_producto}, {$id_usuario}, '{$fecha_compra}');");
+    }
+
+    public function getProductosUsuario($id_usuario) {
+        $sql = "SELECT * FROM {$this->table} WHERE id_usuario = :id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCountProductosUsuario($id_usuario) {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE id_Vendedor = :id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function getListProductosUsuario($id_usuario, $inicio, $limit) {
+        $sql = "SELECT * FROM {$this->table} WHERE id_Vendedor = :id_usuario LIMIT :inicio, :limit";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->bindParam(':inicio', $inicio, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getComprasUsuario($id_usuario) {
+        $sql = "SELECT * FROM post_vendidos WHERE id_Comprador = :id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCountComprasUsuario($id_usuario) {
+        $sql = "SELECT COUNT(*) FROM post_vendidos WHERE id_Comprador = :id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function getListComprasUsuario($id_usuario, $inicio, $limit) {
+        $sql = "SELECT * FROM post_vendidos WHERE id_Comprador = :id_usuario LIMIT :inicio, :limit";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->bindParam(':inicio', $inicio, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

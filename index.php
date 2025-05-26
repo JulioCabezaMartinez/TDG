@@ -40,7 +40,7 @@ $router->add('/ventas/view/finalizacionCompra', 'ControllerVenta@finalizacion_co
 // Rutas de Perfil
 $router->add('/perfil', 'ControllerUsuario@perfil_listas');
 $router->add('/perfil/lista', 'ControllerUsuario@lista');
-$router->add('/perfil/ventas', 'ControllerUsuario@ventas');
+$router->add('/perfil/ventas', 'ControllerUsuario@ventas_perfil');
 
 //Rutas AJAX
 $router->add('/registrar-usuario', 'ControllerAJAX@registrarUsuario');
@@ -62,6 +62,17 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     $router->add('/AJAX/datosModificarDato', 'ControllerAJAX@datosModificarDato');
     $router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
     $router->add('/AJAX/addDato', 'ControllerAJAX@addDato');
+
+    //AJAX de Perfil
+    $router->add('/AJAX/lista_whislist', 'ControllerAJAX@lista_whislist');
+    $router->add('/AJAX/lista_playing', 'ControllerAJAX@lista_playing');
+    $router->add('/AJAX/lista_completed', 'ControllerAJAX@lista_completed');
+    $router->add('/AJAX/lista_backlog', 'ControllerAJAX@lista_backlog');
+
+    //AJAX de Ventas del Perfil
+    $router->add('/AJAX/lista_ventas_perfil', 'ControllerAJAX@lista_ventas_perfil');
+    $router->add('/AJAX/lista_compras_perfil', 'ControllerAJAX@lista_compras_perfil');
+
 
 // Procesar la solicitud
 $router->dispatch($_SERVER['REQUEST_URI']); // Despachar la ruta correspondiente

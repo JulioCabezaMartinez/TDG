@@ -85,7 +85,7 @@ class ControllerVenta {
             unset($_SESSION["id_venta"]);
             header("Location: /TDG/ventas");
         }else{
-
+            $precio_gestion = 2.99; // Coste de gestión
             include_once __DIR__. "/../Views/checkout.php";
         }
     }

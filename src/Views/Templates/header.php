@@ -46,6 +46,12 @@
         <?php
         if (!empty($_SESSION)) {
         ?>
+        <a href="/TDG/perfil">
+            <div class="link-hamburguesa">
+                <i class="fa-solid fa-user"></i>
+                <h2 class="enlace">Perfil</h2>
+            </div>
+        </a>
             <a href="/TDG/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
         <?php
         } else {

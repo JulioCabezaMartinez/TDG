@@ -1,5 +1,10 @@
 <?php
 
+if(empty($_SESSION)) {
+    header("Location: /TDG/login");
+    exit();
+}
+
 use App\Models\Juego;
 
 

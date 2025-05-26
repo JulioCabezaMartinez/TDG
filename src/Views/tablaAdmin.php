@@ -1,4 +1,10 @@
 <?php
+
+if(empty($_SESSION) || !$_SESSION["Admin"]) {
+    header("Location: /TDG/");
+    exit();
+}
+
 $css = 'tablaAdmin';
 require_once __DIR__ . '\Templates\inicio.php';
 

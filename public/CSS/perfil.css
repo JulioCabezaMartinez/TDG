@@ -85,12 +85,9 @@
 .view_all{
     margin-left: auto;
     align-self: start;
-    padding: 20px;
-    border-radius: 50px;
-    background-color:deepskyblue;
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: white;
+
 }
 
 @media screen and (min-width: 1024px) {

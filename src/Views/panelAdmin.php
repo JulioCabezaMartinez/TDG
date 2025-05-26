@@ -2,6 +2,7 @@
 
 if (empty($_SESSION) || !$_SESSION["Admin"]) {
     header("Location: /TDG/");
+    exit();
 }
 
 $css = 'panelAdmin';

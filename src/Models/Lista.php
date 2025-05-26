@@ -166,7 +166,7 @@ class Lista extends EmptyModel {
     }
 
     public function getUserLists($id_usuario, $tipo_lista, $inicio, $limite){
-        $juegoDB= new Usuario();
+        $juegoDB= new Juego();
         $list = [];
 
         $id_tipo_lista = match($tipo_lista){
@@ -209,12 +209,11 @@ class Lista extends EmptyModel {
         $stmt_juegos->execute();
         $juegos = $stmt_juegos->fetchAll(PDO::FETCH_ASSOC);
 
-        // foreach ($juegos as $juego) {
-            
-        //     $list[] = $juegoDB->getById($juego['id_Juego']);
-        // }
+        foreach ($juegos as $juego) {
+            $list[] = $juegoDB->getById($juego['id_Juego']);
+        }
 
-        return $juegos[0]['id_Juego'];
+        return $list;
     }
 
     public function getCountListasUsuario($id_usuario, $tipo_lista): int{

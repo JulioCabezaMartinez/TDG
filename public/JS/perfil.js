@@ -276,16 +276,15 @@ function paginacionWishlist(nPagina=null) {
         method: "POST",
         body: formData
 
-    }).then(response => response.text())
+    }).then(response => response.json())
     .then(data => {
-        console.log(data);
-        // let mapRespuesta=new Map();
-        // mapRespuesta.set("Juegos", data.juegos);
-        // mapRespuesta.set("Pagina", data.pagina);
-        // mapRespuesta.set("Total_paginas", data.total_paginas);
+        let mapRespuesta=new Map();
+        mapRespuesta.set("Juegos", data.juegos);
+        mapRespuesta.set("Pagina", data.pagina);
+        mapRespuesta.set("Total_paginas", data.total_paginas);
 
-        // crearTablaLista(mapRespuesta.get("Juegos"), 'wishlist');
-        // paginasWishlist(mapRespuesta.get("Pagina"), mapRespuesta.get("Total_paginas"));
+        crearTablaLista(mapRespuesta.get("Juegos"), 'wishlist');
+        paginasWishlist(mapRespuesta.get("Pagina"), mapRespuesta.get("Total_paginas"));
 
     }).catch(err => console.log(err));
 }

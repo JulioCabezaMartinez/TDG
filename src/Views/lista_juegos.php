@@ -38,7 +38,7 @@ require_once __DIR__ . '\Templates\header.php';
             if(!empty($juegoBusqueda)){
             ?>
             <input type="hidden" id="hiddenBusqueda" value="<?php echo $juegoBusqueda ?>">
-            <input class="form-control w-50" id="nombreInput" type="text" value="<?php echo $juegoBusqueda ?>">
+            <input class="form-control" id="nombreInput" type="text" value="<?php echo $juegoBusqueda ?>">
             <?php
             }else{
             ?>

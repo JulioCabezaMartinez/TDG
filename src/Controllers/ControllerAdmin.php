@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Security;
 use App\Models\Juego;
 use App\Models\Usuario;
 use App\Models\Review;
@@ -12,7 +13,21 @@ class ControllerAdmin{
 
     private $entidades=["usuarios", "juegos", "reviews", "productos", "post_vendidos"];
 
+    public function admin(){
+
+        if(empty($_SESSION) || !$_SESSION["Admin"]) {
+            Security::closeSession();
+        }
+
+        include_once __DIR__. '/../Views/panelAdmin.php';
+    }
+
     public function tabla(){
+
+        if(empty($_SESSION) || !$_SESSION["Admin"]) {
+            Security::closeSession();
+        }
+
         $entidad=$_GET["tabla"];
         $tablaCorrecta=false;
 

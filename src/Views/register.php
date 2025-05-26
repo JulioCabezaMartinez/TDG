@@ -2,10 +2,6 @@
 $css = "login_register";
 require_once 'Templates/inicio.php';
 
-if(!empty($_SESSION)){
-    header("Location: /TDG/");
-}
-
 ?>
 
 <div class="tarjeta-login">

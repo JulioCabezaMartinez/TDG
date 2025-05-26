@@ -1,10 +1,5 @@
 <?php
 
-if(empty($_SESSION)) {
-    header("Location: /TDG/login");
-    exit();
-}
-
 $css = 'perfil';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -19,25 +14,25 @@ require_once __DIR__ . '\Templates\header.php';
 
 <div class="juegos">
     <h3>Deseados</h3>
-    <div id="paginacionWislist"></div>
+    <div class="paginacionWishlist"></div>
     <div id="wishlist"></div>
 </div>
 
 <div class="juegos">
     <h3>Jugando</h3>
-    <div id="paginacionPlaying"></div>
+    <div class="paginacionPlaying"></div>
     <div id="playing"></div>
 </div>
 
 <div class="juegos">
     <h3>Completados</h3>
-    <div id="paginacionCompleted"></div>
+    <div class="paginacionCompleted"></div>
     <div id="completed"></div>
 </div>
 
 <div class="juegos">
     <h3>Pendientes</h3>
-    <div id="paginacionBacklog"></div>
+    <div class="paginacionBacklog"></div>
     <div id="backlog"></div>
 </div>
 

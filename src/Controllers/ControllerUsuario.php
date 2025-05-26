@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Security;
 use App\Models\Usuario;
 use App\Models\Juego;
 use App\Models\Lista;
@@ -23,6 +24,11 @@ class ControllerUsuario {
     }
 
     public function perfil_listas(): void {
+
+        if (empty($_SESSION)) {
+            Security::closeSession();
+        }
+
         $usuarioDB = new Usuario();
 
         $perfil = $usuarioDB->getById($_SESSION['usuarioActivo']);
@@ -30,12 +36,12 @@ class ControllerUsuario {
         include_once __DIR__.'/../Views/perfil.php';
     }
 
-    public function lista(): void {
-        $perfil = ["nick" => "Keyxion", "background_image" => "https://media.rawg.io/media/games/21a/21ad672cedee9b4378abb6c2d2e626ee.jpg", "wishlist"=>[32, 39, 750, 4639, 9767]];
-        include_once __DIR__.'/../Views/listas_perfil.php';
-    }
-
     public function ventas_perfil(): void {
+
+        if (empty($_SESSION)) {
+            Security::closeSession();
+        }
+
         $usuarioDB = new Usuario();
         $perfil = $usuarioDB->getById($_SESSION['usuarioActivo']);
         // $ventas = $usuarioDB->getVentasByUserId($perfil['id']);

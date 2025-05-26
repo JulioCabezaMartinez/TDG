@@ -12,16 +12,6 @@ class Security
     private function __construct() {}
 
     /**
-     * Método que comprueba si el usuario está logeado
-     *
-     * @return bool Si el usuario está logeado
-     */
-    public static function isUserLogged(): bool
-    {
-        return isset($_SESSION['userId']);
-    }
-
-    /**
      * Método que cierra la sesión y redirige al login
      *
      * @return void

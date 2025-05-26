@@ -29,6 +29,10 @@
     border: 2px solid black;
 }
 
+.paginacionWishlist, .paginacionCompleted, .paginacionBacklog, .paginacionPlaying{
+    align-self: center;
+}
+
 .juegos a{
     display: block;
     text-decoration: none;
@@ -39,7 +43,7 @@
     min-height: 125px;
 }
 
-.juegos > div {
+#wishlist, #backlog, #playing, #completed{
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
@@ -78,22 +82,10 @@
     text-align: center;
 }
 
-.view_all{
-    margin-left: auto;
-    align-self: start;
-
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-}
-
 @media screen and (min-width: 1024px) {
 
-    .juegos > div{
+    #wishlist, #backlog, #playing, #completed{
         grid-template-columns: repeat(3, 1fr);
-    }
-
-    .view_all{
-        grid-column: 3;
     }
     
 }

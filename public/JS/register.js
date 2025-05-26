@@ -122,7 +122,7 @@ function eventos(){
         formData.append("nick", nick);
         formData.append("direccion", direccion);
 
-        fetch("/TDG/registrar-usuario", {
+        fetch("/TDG/AJAX/registrar-usuario", {
             method: "POST",
             body: formData,
 

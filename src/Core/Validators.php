@@ -9,17 +9,6 @@ class Validators{
         "password_completa" => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/',
     ];
 
-    public static function notEmpty($lista_valores){
-        $vacio=false;
-
-        foreach($lista_valores as $valor){
-            if(!empty($valor)){
-                $vacio=true;
-            }
-        }
-        return $vacio;
-    }
-
     public static function validarCamposExp($correo, $password){
         $correoValido=false;
         $passwordValida=false;

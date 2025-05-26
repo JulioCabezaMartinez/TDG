@@ -4,7 +4,6 @@ $css = 'main';
 require_once __DIR__ . '\Templates\inicio.php';
 
 require_once __DIR__ . '\Templates\header.php';
-
 ?>
 
 <div class="landing">
@@ -27,7 +26,7 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
+                <a href="/TDG/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
                     if(strlen($recien_añadido['Nombre'])>20){
@@ -50,7 +49,7 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="/TDG/juegos/view?id=<?php echo $recien_añadido["id"] ?>">
+                <a href="/TDG/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
                     if(strlen($recien_añadido['Nombre'])>20){
@@ -87,15 +86,28 @@ require_once __DIR__ . '\Templates\header.php';
                 foreach ($mas_vendidos as $venta) {
                 ?>
 
-                    <a href=""></a> <!-- Se llena este enlace va a ser todo el div con el id del juego enviado con $_GET -->
+                    
                     <div class="card-item swiper-slide">
-                        <img src="/TDG/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
-                        <div class="card-content">
-                            <h3><?php echo $venta['Titulo'] ?></h3>
-                            <br>
-                            <h5><?php echo $venta['Precio'] ?> €</h5>
-                        </div>
+                        <a href="/TDG/ventas/view?id=<?php echo $venta["id"] ?>">
+                            <img src="/TDG/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
+                            <div class="card-content">
+                                <?php
+                                if (strlen($venta['Titulo']) > 20) {
+                                ?>
+                                    <h4 class="titulo_venta" ><?php echo substr($venta['Titulo'], 0, 20) . "..." ?></h4>
+                                <?php
+                                } else {
+                                ?>
+                                    <h4 class="titulo_venta"><?php echo $venta['Titulo'] ?></h4>
+                                <?php
+                                }
+                                ?>
+                                <br>
+                                <h5><?php echo $venta['Precio'] ?> €</h5>
+                            </div>
+                        </a>
                     </div>
+                    
 
                 <?php
                 }

@@ -1,10 +1,5 @@
 <?php
 
-if(empty($_SESSION) || !$_SESSION["Admin"]) {
-    header("Location: /TDG/");
-    exit();
-}
-
 $css = 'tablaAdmin';
 require_once __DIR__ . '\Templates\inicio.php';
 
@@ -316,6 +311,16 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
     <br><br>
 
     <div class="paginacion"></div>
+    <div class="buscador">
+        <label for="buscador"><strong>Buscador (Nombre / Titulo):</strong></label>
+        <br>
+        <div class="input-group">
+            <input id="busqueda" class="form-control" type="text">
+            <button id="btnBusqueda" class="btn btn-outline-secondary bg-white" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
     <table id="tabla-datos" class="table table-striped table-dark tabla-datos"></table>
 
     <div id="tabla-movil" class="tabla-movil"></div> 

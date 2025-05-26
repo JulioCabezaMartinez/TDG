@@ -1,23 +1,23 @@
 
 /* Paginación de listas */
 function crearTablaLista(juegos, tipo) {
-   
+   let tipo_lista;
     switch (tipo) {
         case 'wishlist':
-            $tipo_lista = document.querySelector("#wishlist");
+            tipo_lista = document.querySelector("#wishlist");
             break;
         case 'completed':
-            $tipo_lista = document.querySelector("#completed");
+            tipo_lista = document.querySelector("#completed");
             break;
         case 'playing':
-            $tipo_lista = document.querySelector("#playing");
+            tipo_lista = document.querySelector("#playing");
             break;
         case 'backlog':
-            $tipo_lista = document.querySelector("#backlog");
+            tipo_lista = document.querySelector("#backlog");
             break;
     }
 
-    $tipo_lista.innerHTML = ''; // Limpiar la lista antes de añadir nuevas ventas
+    tipo_lista.innerHTML = ''; // Limpiar la lista antes de añadir nuevas ventas
 
     juegos.forEach(juego => {
         // Si no hay imagen, asignar una por defecto
@@ -90,7 +90,7 @@ function paginasWishlist(pagina, total_paginas){
 
             a.addEventListener('click', function (e) {
                 e.preventDefault();
-                paginacionCompras(i); // Llamada a la función
+                paginacionWishlist(i); // Llamada a la función
             });
 
             li.appendChild(a);
@@ -407,6 +407,6 @@ let busquedaHeader=document.getElementById("hiddenBusqueda");
 
 
 paginacionWishlist();
-// paginacionCompleted();
-// paginacionPlaying();
-// paginacionBacklog();
+paginacionCompleted();
+paginacionPlaying();
+paginacionBacklog();

@@ -234,6 +234,13 @@ function eventos() { // Cambiar data de los fetches.
     });
 
     });
+
+    document.getElementById("busqueda").addEventListener("keyup", () => {
+
+        let busqueda = document.getElementById("busqueda").value;
+
+        paginacion(undefined, busqueda);
+    });
 }
 
 /* Paginación de listas */
@@ -276,6 +283,7 @@ function crearTabla(lista, columnas, entidad) {
         for (const key in item) {
             if (key === "id") continue; // omitir id en las columnas si no se desea mostrarlo directamente
             if (key === "Password") continue; // omitir Password en las columnas si no se desea mostrarlo directamente
+            
             let campo = item[key];
             if (campo.length >= 20) {
                 campo = campo.substring(0, 20) + "...";
@@ -293,6 +301,7 @@ function crearTabla(lista, columnas, entidad) {
             }else{
                 const td = document.createElement("td");
                 td.textContent = campo;
+                td.title = item[key];
                 tr.appendChild(td);
             }
         }
@@ -479,7 +488,7 @@ function paginas(pagina, total_paginas){
     }
 }
 
-function paginacion(nPagina=null, filtros={}) {
+function paginacion(nPagina=null, busqueda=null) {
 
     let entidad = document.getElementById("entidad").value; // Obtener la entidad desde el input oculto. 
 
@@ -500,6 +509,10 @@ function paginacion(nPagina=null, filtros={}) {
     formData.append("pagina", pagina);
     formData.append("inicio", inicio);
     formData.append("limite", limite);
+    if (busqueda) {
+        formData.append("busqueda", busqueda);
+    }
+    
 
     fetch("/TDG/AJAX/lista_Admin", {
         method: "POST",

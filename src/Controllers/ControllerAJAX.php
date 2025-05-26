@@ -13,6 +13,7 @@ use App\Core\Security;
 use App\Models\Venta;
 
 use DateTime;
+use Seld\JsonLint\Undefined;
 
 class ControllerAJAX {
 
@@ -26,7 +27,7 @@ class ControllerAJAX {
         $inicio = $_POST["inicio"];
         $filtros=json_decode($_POST["filtros"], true);
 
-        $id_usuario = $_SESSION['usuarioActivo']; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
         $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
         if(empty($filtros)){
@@ -357,11 +358,11 @@ class ControllerAJAX {
             }else{
                 $_SESSION["Admin"]=false;
             }
-            
+            echo json_encode(["result"=>"ok", "ultimo_lugar"=>$_COOKIE["ultimoLugar"]]);
+            setcookie("ultimoLugar", "", time()-1, "/"); // Guardar la cookie del ultimo lugar visitado.
 
-            echo json_encode(["Success"=>"Todo Correcto."]);
         }else{
-            echo json_encode(["Error"=>"Datos incorrectos."]);
+            echo json_encode(["result"=>"error", "error"=>"Datos incorrectos"]);
         }
     }
 
@@ -543,6 +544,10 @@ class ControllerAJAX {
         $limite = Validators::evitarInyeccion($_POST["limite"]);
         $inicio = Validators::evitarInyeccion($_POST["inicio"]);
         $entidad=Validators::evitarInyeccion($_POST["entidad"]);
+        if(isset($_POST["busqueda"])){
+            $busqueda=Validators::evitarInyeccion($_POST["busqueda"]);
+        }
+        
 
         switch ($entidad) {
             case "usuarios":
@@ -569,11 +574,17 @@ class ControllerAJAX {
         }
 
 
-        $total_datos = $entidadDB->getCount();
+        if(isset($busqueda) && !empty($busqueda)){
+            $busqueda = "%{$busqueda}%"; // Preparar la búsqueda para LIKE
+            $total_datos = $entidadDB->buscarAdminCount($busqueda);
+            $datos = $entidadDB->buscarAdmin($busqueda, (int)$inicio, (int)$limite); // Obtener 10 juegos
+        }else{
+            $total_datos = $entidadDB->getCount();
+            $datos = $entidadDB->getAllLimit((int)$inicio, (int)$limite); // Obtener 10 juegos
+        }
 
         $total_paginas = ceil($total_datos / $limite);
-        
-        $datos = $entidadDB->getAllLimit((int)$inicio, (int)$limite); // Obtener 10 juegos
+
 
         $columnasDB = $entidadDB->listaColumnas();
         $columnas = [];
@@ -598,7 +609,7 @@ class ControllerAJAX {
 
         $whislist = $listaDB->getUserLists($id_usuario, "wishlist", (int)$inicio, (int)$limite); 
 
-        echo json_encode(["whislist"=>$whislist, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["juegos"=>$whislist, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_playing(){
@@ -615,7 +626,7 @@ class ControllerAJAX {
 
         $playing = $listaDB->getUserLists((int)$id_usuario, "playing", (int)$inicio, (int)$limite); 
 
-        echo json_encode(["playing"=>$playing, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["juegos"=>$playing, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_completed(){
@@ -632,7 +643,7 @@ class ControllerAJAX {
 
         $completed = $listaDB->getUserLists((int)$id_usuario, "completed", (int)$inicio, (int)$limite); 
 
-        echo json_encode(["completed"=>$completed, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["juegos"=>$completed, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
     public function lista_backlog(){
@@ -649,6 +660,6 @@ class ControllerAJAX {
 
         $backlog = $listaDB->getUserLists((int)$id_usuario, "backlog", (int)$inicio, (int)$limite); 
 
-        echo json_encode(["backlog"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+        echo json_encode(["juegos"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 }

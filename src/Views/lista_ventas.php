@@ -6,7 +6,7 @@ require_once __DIR__ . '\Templates\header.php';
 
 if(!empty($_SESSION)) { 
 ?>
-    <!-- Modal de creación de Review -->
+    <!-- Modal de creación de Venta -->
     <div class="modal fade" id="creacion_modificar_dato" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -128,7 +128,7 @@ if(!empty($_SESSION)) {
             </div>
         </div>
     </div>
-    <!-- Modal de creación de Review -->
+    <!-- Modal de creación de Venta -->
 <?php
 }
 ?>

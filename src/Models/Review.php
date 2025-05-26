@@ -26,5 +26,24 @@ class Review extends EmptyModel {
     public function ultimasReviews(){
         return $this->query("SELECT * from review ORDER BY id DESC LIMIT 3")->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function buscarAdmin($textoBusqueda, $inicio, $limit){
+
+        $sql = "SELECT * FROM {$this->table} WHERE id_juego IN (SELECT id from juegos where Nombre LIKE :textoBusqueda)  LIMIT {$inicio}, {$limit}";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    }
+
+    public function buscarAdminCount($textoBusqueda){
+
+        $sql = "SELECT * FROM {$this->table} WHERE id_juego IN (SELECT id from juegos where Nombre LIKE :textoBusqueda)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
 }
 ?>

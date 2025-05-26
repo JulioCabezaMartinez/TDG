@@ -56,6 +56,8 @@ body{
 
 /* Contenedor de contenido */
 .content{
+    display: flex;
+    flex-direction: column;
     width: 100%;
 
 }
@@ -65,12 +67,37 @@ body{
 }
 
 .h2-entidad{
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#btn_crear_dato{
+    width: fit-content;
+}
+
+.buscador{
+    align-self: flex-end;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 2%;
+}
+
+.buscador label{
+    color: var(--color-texto);
+    margin-right: 10px;
+    width: 86%;
+}
+
+.input-group{
+    width: 100% !important;
 }
 
 .paginacion{
-    padding-left: 30%;
+    align-self: center;
+    margin: 0;
 }
 
 .icono{

@@ -1,10 +1,5 @@
 <?php
 
-if (empty($_SESSION) || !$_SESSION["Admin"]) {
-    header("Location: /TDG/");
-    exit();
-}
-
 $css = 'panelAdmin';
 require_once __DIR__ . '\Templates\inicio.php';
 include_once __DIR__. '\Templates\barra-lateral.admin.php';

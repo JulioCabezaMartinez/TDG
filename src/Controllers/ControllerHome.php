@@ -13,10 +13,22 @@ use Dotenv\Validator;
 class ControllerHome{
     
     public function login(){
+
+        if(!empty($_SESSION)){
+            header("Location: /TDG/");
+            exit;
+        }
+        
         include_once __DIR__. '/../Views/login.php';
     }
 
     public function register(){
+        
+        if(!empty($_SESSION)){
+            header("Location: /TDG/");
+            exit;
+        }
+
         include_once __DIR__. '/../Views/register.php';
     }
     public function index(){
@@ -39,9 +51,4 @@ class ControllerHome{
         
         include_once __DIR__. '/../Views/main.php'; // Cargar la vista principal.
     }
-
-    public function admin(){
-        include_once __DIR__. '/../Views/panelAdmin.php';
-    }
-
 }

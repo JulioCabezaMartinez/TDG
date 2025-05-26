@@ -8,9 +8,22 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="principal_venta">
     <h1 class="nombre_venta"><?php echo $venta['Titulo'] ?></h1>
 
+    <?php
+        if(!empty($_SESSION) && $venta["id_Vendedor"]==$_SESSION['usuarioActivo']) {
+    ?>
+        <div class="botones_Producto">
+            <button id="btn-quitar-venta" class="boton-perso">Quitar de la tienda</button>
+            <button id="btn-modificar-venta" class="boton-perso boton-perso-secundario">Modificar Producto</button>
+        </div>
+        <br>
+    <?php  
+        }
+    ?>
+
     <img class="img_venta" src="/TDG/public/IMG/<?php echo $venta["img_venta"] ?>" alt="">
 
     <h2 class="precio_venta"><?php echo $venta["Precio"] . " €" ?></h2>
+
 </div>
 
 
@@ -53,6 +66,8 @@ require_once __DIR__ . '\Templates\header.php';
         <i class='fa-solid fa-cart-shopping'></i>
     </button>
 </a>
+
+<script src="/TDG/public/JS/venta.js"></script>
 
 <?php
 include_once __DIR__ . "./Templates/footer.php";

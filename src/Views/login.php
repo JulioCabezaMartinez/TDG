@@ -2,10 +2,6 @@
 $css = "login_register";
 require_once 'Templates/inicio.php';
 
-if(!empty($_SESSION)){
-    header("Location: /TDG/");
-}
-
 ?>
 
 <div class="tarjeta-login">
@@ -46,7 +42,9 @@ if(!empty($_SESSION)){
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    window.location.href="/TDG/";
+                    json = JSON.parse(response);
+                
+                    window.location.href = json.ultimo_lugar;
                 },
                 error: function(error){
                     // Agregar p de error.

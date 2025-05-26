@@ -12,13 +12,23 @@ $dotenv->load();
 // Crear una instancia del enrutador
 $router = new Router();
 
+if(empty($_SESSION) && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/AJAX')) {
+    if(!str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/login') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/register')) {
+        
+        // Que no se guarde ni AJAX ni Login o Register
+        $uri = urldecode($_SERVER['REQUEST_URI']);
+        setcookie("ultimoLugar", $uri, time() + 86400, "/"); //Un dia de cookie
+
+    }
+}
+
 // Rutas Principales
 $router->add('/', 'ControllerHome@index');
 $router->add('/login', 'ControllerHome@login');
 $router->add('/register', 'ControllerHome@register');
 
 //Rutas de Administrador
-$router->add('/panelAdmin', 'ControllerHome@admin');
+$router->add('/panelAdmin', 'ControllerAdmin@admin');
 $router->add('/panelAdmin/tabla', 'ControllerAdmin@tabla');
 
 // Rutas de Juegos
@@ -43,7 +53,7 @@ $router->add('/perfil/lista', 'ControllerUsuario@lista');
 $router->add('/perfil/ventas', 'ControllerUsuario@ventas_perfil');
 
 //Rutas AJAX
-$router->add('/registrar-usuario', 'ControllerAJAX@registrarUsuario');
+$router->add('/AJAX/registrar-usuario', 'ControllerAJAX@registrarUsuario');
 $router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
 $router->add('/AJAX/lista_ventas', 'ControllerAJAX@lista_ventas');
 $router->add('/AJAX/registrarProducto', 'ControllerAJAX@registrarProducto');

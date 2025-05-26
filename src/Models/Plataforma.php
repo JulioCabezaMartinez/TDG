@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Core\EmptyModel;
+use App\Traits\BusquedaAlfa;
 use PDO;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de plataformas.
  */
 class Plataforma extends EmptyModel {
+
+    use BusquedaAlfa;
+
     /**
      * Constructor de la clase Plataforma.
      * Configura la tabla asociada al modelo.

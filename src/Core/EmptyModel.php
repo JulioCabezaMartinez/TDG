@@ -47,12 +47,6 @@ abstract class EmptyModel {
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Meterlo en un Trait
-    public function getAllOrderByAlfabet() {
-        $sql = "SELECT * FROM {$this->table} ORDER BY Nombre ASC;";
-        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function getAllLimit($inicio ,$limit) {
         $sql = "SELECT * FROM {$this->table} LIMIT {$inicio}, {$limit};";
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);

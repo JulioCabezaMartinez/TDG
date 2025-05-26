@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use App\Core\EmptyModel;
+use App\Traits\BusquedaAlfa;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de juegos.
  */
 class Juego extends EmptyModel {
+
+
+    use BusquedaAlfa;
+
     /**
      * Constructor de la clase Juego.
      * Configura la tabla y la clave primaria asociadas al modelo.

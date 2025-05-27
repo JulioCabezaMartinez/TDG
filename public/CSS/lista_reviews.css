@@ -1,4 +1,15 @@
 /* Página CSS de la lista de Reviews */
+
+/* Modal */
+
+#btn_modificar_review{
+    display: none;
+}
+
+#header-modificacion-review{
+    display: none;
+}
+
 .reviews-h2{
     display: flex;
     align-self: start;
@@ -13,6 +24,13 @@
     padding: 8%;
     background-color: var(--color-secundario);
     border-radius: 20px;
+
+    color: var(--color-texto);
+    cursor: pointer;
+}
+
+.paginacion{
+    margin: 0;
 }
 
 .lista_reviews{
@@ -23,16 +41,56 @@
 }
 
 .review{
-    width: 90vw;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
     background-color: var(--color-tarjeta);
+
+    border-radius: 20px;
+    border: 2px solid grey;
 
     padding: 2%;
     margin: 3%;
 }
 
+.review:hover{
+    border: 2px solid var(--color-borde-neon);
+    box-shadow: 0 0 20px var(--color-borde-neon);
+}
+
+.cabecera_review{
+    display: flex;
+}
+
+.review_botones{
+    display: flex;
+
+    margin-left: auto;
+}
+
+.review_botones *{
+    height: fit-content;
+}
+
+.btn-eliminar-review{
+    margin-left: 10%;
+}
+
 .cabecera_review img{
-    width: 15%;
+    width: 16%;
     clip-path: circle(50% at 50% 50%);
+}
+
+.cabecera_review h3{
+   margin-left: 2%;
+   margin-bottom: 0;
+}
+
+.review_texto{
+    width: fit-content;
+    margin: 2%;
 }
 
 .review_footer{
@@ -52,8 +110,26 @@
     padding: 2%;
 
     border-radius: 20px;
+
+    cursor: pointer;
+}
+
+.review_ver_mas_container *{
+    color: var(--color-texto);
+}
+
+.review_ver_mas_container i{
+    margin-right: 5px;
 }
 
 .review_ver_mas{
     margin: 0;
+}
+
+
+@media screen and (min-width: 1024px) {
+    .cabecera_review img{
+    width: 5%;
+    clip-path: circle(50% at 50% 50%);
+}
 }

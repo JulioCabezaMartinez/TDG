@@ -22,7 +22,14 @@ if($productoId != $_SESSION["id_venta"]){
 
 $ventaBD=new Venta();
 
-$precio = $ventaBD->getById($productoId)["Precio"];
+$precio_producto = $ventaBD->getById($productoId)["Precio"];
+
+
+if($_SESSION["Premium"]==true){
+    $precio=$precio_producto;
+}else{
+    $precio=$precio_producto + 2.99;
+}
 
 // SANDBOX: Obtener token
 $ch = curl_init();

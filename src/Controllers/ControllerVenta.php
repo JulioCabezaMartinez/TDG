@@ -29,7 +29,7 @@ class ControllerVenta {
         $ventaBD = new Venta();
         $juegoBD = new Juego();
 
-        $consolas=$plataformaDB->getAll();
+        $consolas=$plataformaDB->getAllOrderByAlfabet();
         $datos = $ventaBD->listaColumnas();
 
         $columnas = [];
@@ -48,10 +48,20 @@ class ControllerVenta {
         $ventaBD= new Venta();
         $juegoBD = new Juego();
         $generoBD = new Genero();
+        $plataformaDB = new Plataforma();
 
         $venta=$ventaBD->getById($id_venta);
         $juego=$juegoBD->getById($venta["id_juego"]);
         $generos=$generoBD->getGenerosJuegoById($juego["id"]);
+
+        $consolas=$plataformaDB->getAllOrderByAlfabet();
+        $juegos = $juegoBD->getAllOrderByAlfabet();
+        // Datos para las columnas de la tabla de ventas
+        $datos = $ventaBD->listaColumnas();
+        $columnas = [];
+        foreach ($datos as $dato) {
+            array_push($columnas, $dato["Field"]);
+        }
 
         include_once __DIR__. "/../Views/venta.php";
     }

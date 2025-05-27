@@ -210,6 +210,18 @@
     color: var(--color-texto);
 }
 
+.btns-Sesiones{
+    display: flex;
+    flex-wrap: wrap;
+
+    width: fit-content;
+}
+
+.btns-Sesiones a{
+    width: fit-content;
+    /* margin-bottom: 10%; */
+}
+
 .logo-TDG{
     max-width: 80px;
 }

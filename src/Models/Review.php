@@ -3,24 +3,38 @@
 namespace App\Models;
 
 use App\Core\EmptyModel;
+use App\Interfaces\BusquedaAdmin;
+
 use PDO;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de reviews.
  */
-class Review extends EmptyModel {
+class Review extends EmptyModel implements BusquedaAdmin {
     /**
      * Constructor de la clase Review.
      * Configura la tabla asociada al modelo.
      */
     public function __construct() {
-        parent::__construct('review', 'id_Review');
+        parent::__construct('review', 'id');
     }
 
-    public function getAllReviewsJuego($id_juego){
-        $sql="Select * from review where id_Juego=:id_juego";
-        $params=[":id_juego"=>$id_juego];
-        return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+    public function getAllReviewsJuego($id_juego, $inicio, $limit) {
+        $sql="Select * from review where id_Juego=:id_juego LIMIT :inicio, :limit";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_juego', $id_juego, PDO::PARAM_INT);
+        $stmt->bindParam(':inicio', $inicio, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countAllReviewsJuego($id_juego){
+        $sql="Select count(*) from review where id_Juego=:id_juego";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_juego', $id_juego, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     public function ultimasReviews(){

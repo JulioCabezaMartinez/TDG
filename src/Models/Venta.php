@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Core\EmptyModel;
+use App\Interfaces\BusquedaAdmin;
 
 use PDO;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de ventas.
  */
-class Venta extends EmptyModel {
+class Venta extends EmptyModel implements BusquedaAdmin {
     /**
      * Constructor de la clase Venta.
      * Configura la tabla asociada al modelo.
@@ -39,8 +40,8 @@ class Venta extends EmptyModel {
             }
            
             if (!empty($filtros['Stock'])) {
-                if($filtros['Stock']=="Si"){
-                    $conditions[] = "Stock > 1";
+                if($filtros['Stock']=="si"){
+                    $conditions[] = "Stock >= 1";
                 }else{
                     $conditions[] = "Stock <= 0";
                 }
@@ -65,18 +66,28 @@ class Venta extends EmptyModel {
             // Si hay condiciones, las unimos con AND y las añadimos a la consulta
             if (!empty($conditions)) {
                 $sql .= " WHERE " . implode(" AND ", $conditions);
+            }else{
+                $sql .= " WHERE Estado_venta != 'Sin Stock'"; //Si no hay filtros, mostramos todos los que no esten en 'Sin Stock'
             }
+        }else{
+            $sql .= " WHERE Estado_venta != 'Sin Stock'"; //Si no hay filtros, mostramos todos los que no esten en 'Sin Stock'
         }
         // Añadimos el LIMIT (esto siempre se añade al final)
         $sql .= " LIMIT {$inicio}, {$limit}";
 
+        // Para depurar la consulta SQL, puedes descomentar la siguiente línea:
         // return $sql;
 
         return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC); //Se puede poner $param pero no en el Limit, execute(sql, param) no admite parametros como Integers.
     }
 
+    public function getCount(): int{
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE Estado_venta != 'Sin Stock'";
+        return parent::query($sql)->fetchColumn();
+    }
+
     public function getCountFiltros($filtros){
-         $sql = "SELECT COUNT(*) FROM {$this->table}";
+        $sql = "SELECT COUNT(*) FROM {$this->table}";
 
         if (!empty($filtros)) {
             $conditions = []; 
@@ -87,7 +98,7 @@ class Venta extends EmptyModel {
             }
            
             if (!empty($filtros['Stock'])) {
-                if($filtros['Stock']=="Si"){
+                if($filtros['Stock']=="si"){
                     $conditions[] = "Stock > 1";
                 }else{
                     $conditions[] = "Stock <= 0";
@@ -113,8 +124,13 @@ class Venta extends EmptyModel {
             // Si hay condiciones, las unimos con AND y las añadimos a la consulta
             if (!empty($conditions)) {
                 $sql .= " WHERE " . implode(" AND ", $conditions);
+            }else{
+                $sql .= " WHERE Estado_venta != 'Sin Stock'";
             }
         }
+
+        // Para depurar la consulta SQL, puedes descomentar la siguiente línea:
+        // return $sql;
 
         return parent::query($sql)->fetchColumn();
     }
@@ -127,6 +143,17 @@ class Venta extends EmptyModel {
         }else{
             return $this->update(["Stock"=>$producto["Stock"]-1], $id_producto);
         }
+    }
+
+    public function vaciarProducto($id_producto){
+        $stmt = $this->update(["Stock"=>0, "Estado_venta"=>"Sin Stock"], $id_producto);
+        // if($stmt && $stmt->rowCount() > 0){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+
+        return $stmt;
     }
 
     public function agregarVendido($id_producto, $id_usuario, $fecha_compra){

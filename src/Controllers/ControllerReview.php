@@ -27,12 +27,9 @@ class ControllerReview {
 
     public function lista_reviews_juego(){
         $juegoBD=new Juego();
-        $reviewBD=new Review();
-        $usuarioBD=new Usuario();
+
         $id=Validators::evitarInyeccion($_GET["id"]);
         $juego=$juegoBD->getById($id);
-
-        $lista_reviews=$reviewBD->getAllReviewsJuego($juego["id"]); // Aqui va el $_GET["id"].
 
         include_once 'src/Views/lista_reviews.php';
     }

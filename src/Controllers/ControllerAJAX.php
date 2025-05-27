@@ -13,9 +13,49 @@ use App\Core\Security;
 use App\Models\Venta;
 
 use DateTime;
-use Seld\JsonLint\Undefined;
+use PDO;
 
 class ControllerAJAX {
+
+    public function botones_juego(){
+        $juegoDB=new Juego();
+        $listaDB=new Lista();
+
+        $id_juego=Validators::evitarInyeccion($_POST["id_juego"]);
+
+        $id_usuario = $_SESSION['usuarioActivo']; // Obtener el ID del usuario desde la sesión.
+
+        $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.  
+
+        $listas_juego = $listaDB->compruebaJuegoLista($id_juego, $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+
+        $wishlist = false;
+        $backlog = false;
+        $completed = false;
+        $playing = false;
+
+        foreach ($listas_juego as $lista_usuario) {
+
+            switch ($listaDB->getTipoLista($lista_usuario)) {
+                case 1:
+                    $wishlist = true;
+                    break;
+                case 2:
+                    $completed = true;
+                    break;
+                case 3:
+                    $playing = true;
+                    break;
+                case 4:
+                    $backlog = true;
+                    break;
+            }
+        }
+
+        $estados=[$wishlist, $backlog, $completed, $playing];
+
+        echo json_encode(["estados"=> $estados]);
+    }
 
     public function lista_juegos(){
         
@@ -27,7 +67,7 @@ class ControllerAJAX {
         $inicio = $_POST["inicio"];
         $filtros=json_decode($_POST["filtros"], true);
 
-        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $id_usuario = $_SESSION['usuarioActivo']; // Obtener el ID del usuario desde la sesión.
         $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
         if(empty($filtros)){
@@ -123,6 +163,46 @@ class ControllerAJAX {
         }
 
         echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function lista_reviews(){
+        $reviewDB=new Review();
+        $usuarioDB=new Usuario();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_juego = $_POST["id_juego"];
+        $sesion_activa = $_SESSION["usuarioActivo"] ?? null; // Obtener el ID del usuario desde la sesión.
+        $admin = $_SESSION["Admin"] ?? null; // Comprobar si el usuario es admin.
+        // $filtros=json_decode($_POST["filtros"], true);
+
+
+        $total_reviews = $reviewDB->countAllReviewsJuego($id_juego);
+
+        $total_paginas = ceil($total_reviews / $limite);
+
+        $reviews= $reviewDB->getAllReviewsJuego($id_juego, (int)$inicio, (int)$limite);
+
+        foreach($reviews as &$review){
+            $usuario = $usuarioDB->getbyId($review["id_Escritor"]);
+            $review["Nick_Usuario"] = $usuario["Nick"]; // Añadir el Nick del usuario a la review.
+            $review["Imagen_Usuario"] = $usuario["Imagen_usuario"]; // Añadir la imagen del usuario a la review.
+
+            if(($sesion_activa != null && $admin != null) && ($review["id_Escritor"] == $sesion_activa || $admin==true)){ // Comprobar si el usuario es el autor de la review o si es admin.
+                $review["editable"] = true; // Añadir un campo editable a la review.
+            }else{
+                $review["editable"] = false; // Añadir un campo editable a la review.
+            }
+
+            if(strlen($review["Contenido"]) > 10){ 
+                $contenido_reducido = str_split($review['Contenido'], 10)[0];
+                $contenido_reducido .= " ...";
+                $review["contenidoReducido"] = $contenido_reducido; // Reducir el contenido de la review.
+            }
+        }
+
+        echo json_encode(["reviews"=>$reviews, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);  
     }
 
     public function lista_compras_perfil(){
@@ -241,10 +321,10 @@ class ControllerAJAX {
         }
     }
 
-    public function lista_review(){
+    public function add_review(){
         $id_juego = $_POST["id_juego"];
         $review = $_POST["review"];
-        $id_usuario = 1; //$_SESSION["id_usuario"];
+        $id_usuario = $_SESSION["usuarioActivo"]; // Obtener el ID del usuario desde la sesión.
 
         $reviewDB = new Review();
 
@@ -353,10 +433,22 @@ class ControllerAJAX {
         if(!is_bool($usuario)){
             $_SESSION["usuarioActivo"]=$usuario["id"];
             $_SESSION["Nick"]=$usuario["Nick"];
+
+            // Datos de Sesion para comprobar el tiempo máximo de la Sesión.
+            $_SESSION['admin_session_started'] = time();
+
+            // Comprobacion Admin
             if($usuario["Admin"]==1){
                 $_SESSION["Admin"]=true;
             }else{
                 $_SESSION["Admin"]=false;
+            }
+
+            // Comprobacion Premium
+            if($usuario["Premium"]==1){
+                $_SESSION["Premium"]=true;
+            }else{
+                $_SESSION["Premium"]=false;
             }
             echo json_encode(["result"=>"ok", "ultimo_lugar"=>$_COOKIE["ultimoLugar"]]);
             setcookie("ultimoLugar", "", time()-1, "/"); // Guardar la cookie del ultimo lugar visitado.
@@ -371,6 +463,12 @@ class ControllerAJAX {
     }
 
     public function eliminarDato(){
+
+        if($_SESSION["Admin"]!=true){
+            Security::closeSession();
+            exit;
+        }
+
         $id=$_POST["id"];
         $entidad=$_POST["entidad"];
 
@@ -407,6 +505,51 @@ class ControllerAJAX {
         }
     }
 
+    public function eliminarReview(){
+        $reviewDB=new Review();
+
+        $id=Validators::evitarInyeccion($_POST["id"]);
+
+        $reviewDB->delete($id);
+    }
+
+   public function datosModificarDato(){
+        $id=$_POST["id"];
+        $entidad=$_POST["entidad"];
+
+        switch ($entidad) {
+            case "usuarios":
+                $usuarioDB=new Usuario();
+                $item=$usuarioDB->getById($id);
+                echo json_encode(["dato" => $item, "id"=>$id]);
+                break;
+            case "juegos":
+                $juegosDB=new Juego();
+                $item=$juegosDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "reviews":
+                $reviewsDB=new Review();
+                $item=$reviewsDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "productos":
+                $ventaDB=new Venta();
+                $item=$ventaDB->getById($id);
+                echo json_encode(["dato" => $item]);
+                break;
+            case "post_vendidos":
+                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
+                // $usuarioDB->delete($id);
+                // echo "Todo Correcto";
+                echo "Error de Entidad, entidad equivocada";
+                break;
+            default:
+                echo "Error de Entidad";
+                break;
+        }
+    }
+
     public function modificarDato(){
 
         $entidad=$_POST["entidad"];
@@ -429,6 +572,9 @@ class ControllerAJAX {
                 break;
             case "productos":
                 $ventaDB=new Venta();
+                if($datos["img_venta"]==""){
+                    $datos["img_venta"]="default-game.jpg"; // Imagen por defecto si no se proporciona una imagen.
+                }
                 $item=$ventaDB->update($datos, $id);
                 break;
             case "post_vendidos":
@@ -471,43 +617,6 @@ class ControllerAJAX {
             case "productos":
                 $ventaDB=new Venta();
                 $item=$ventaDB->create($datos);
-                break;
-            case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
-                echo "Error de Entidad, entidad equivocada";
-                break;
-            default:
-                echo "Error de Entidad";
-                break;
-        }
-    }
-
-    public function datosModificarDato(){
-        $id=$_POST["id"];
-        $entidad=$_POST["entidad"];
-
-        switch ($entidad) {
-            case "usuarios":
-                $usuarioDB=new Usuario();
-                $item=$usuarioDB->getById($id);
-                echo json_encode(["dato" => $item, "id"=>$id]);
-                break;
-            case "juegos":
-                $juegosDB=new Juego();
-                $item=$juegosDB->getById($id);
-                echo json_encode(["dato" => $item]);
-                break;
-            case "reviews":
-                $reviewsDB=new Review();
-                $item=$reviewsDB->getById($id);
-                echo json_encode(["dato" => $item]);
-                break;
-            case "productos":
-                $ventaDB=new Venta();
-                $item=$ventaDB->getById($id);
-                echo json_encode(["dato" => $item]);
                 break;
             case "post_vendidos":
                 // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
@@ -661,5 +770,96 @@ class ControllerAJAX {
         $backlog = $listaDB->getUserLists((int)$id_usuario, "backlog", (int)$inicio, (int)$limite); 
 
         echo json_encode(["juegos"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    public function vaciarProducto(){
+        $ventaDB = new Venta();
+        
+        $datos =  json_decode(file_get_contents('php://input'), true);
+
+        $id_producto = Validators::evitarInyeccion($datos["id_producto"]);
+        if (empty($id_producto)) {
+            echo json_encode(["result" => "error", "mensaje" => "ID del producto no proporcionado."]);
+            exit;
+        }
+
+        if ($ventaDB->vaciarProducto($id_producto)) {
+            echo json_encode(["result" => "ok", "mensaje" => "Producto vaciado correctamente."]);
+        } else {
+            echo json_encode(["result" => "error", "mensaje" => "Error al vaciar el producto."]);
+        }
+    }
+
+    public function AJAXPaypal(){
+        $clientId = $_ENV['PAYPAL_CLIENT_ID'];
+        $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
+        $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
+        $productoId = $body['productoId'] ?? null;
+
+        if($productoId != $_SESSION["id_venta"]){
+            echo json_encode(["error" => "La Id del producto ha sido modificada"]);
+            exit;
+        }
+
+        $ventaBD=new Venta();
+
+        $precio_producto = $ventaBD->getById($productoId)["Precio"];
+
+        $precio=$precio_producto + 2.99;
+
+        if($_SESSION["Premium"]==true){
+            $precio=$precio_producto;
+        }
+
+        // SANDBOX: Obtener token
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v1/oauth2/token");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, "$clientId:$clientSecret");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Accept: application/json",
+            "Accept-Language: en_US" //Se obtiene el token en inglés para evitar problemas de codificación. 
+        ]);
+        $tokenResponse = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+
+        if (!isset($tokenResponse['access_token'])) {
+            http_response_code(500);
+            echo json_encode(['error' => 'No se pudo obtener el token de PayPal']);
+            exit;
+        }
+
+        $accessToken = $tokenResponse['access_token'];
+
+        // Crear orden en SANDBOX
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v2/checkout/orders");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            "intent" => "CAPTURE",
+            "purchase_units" => [[
+                "amount" => [
+                    "currency_code" => "EUR",
+                    "value" => $precio
+                ]
+            ]]
+        ]));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json",
+            "Authorization: Bearer $accessToken"
+        ]);
+        $orderResponse = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+
+        // Devuelve el orderID al frontend
+        if (isset($orderResponse['id'])) {
+            echo json_encode(['orderID' => $orderResponse['id']]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'No se pudo crear la orden']);
+        }
     }
 }

@@ -55,15 +55,13 @@ require_once __DIR__ . '\Templates\header.php';
 
         // Función para crear la orden
         createOrder: function(data, actions) {
-            let texto_precio=$("#precio").text().trim();
-            let precio=texto_precio.split("€")[0].trim();
 
             let id_producto=$("#id_producto").val();
             // Hacer la solicitud al backend para crear la orden
-            return fetch('/TDG/src/AJAX/AJAX.paypal.php', {
+            return fetch('/TDG/AJAX/AJAXPaypal', {
                     method: 'POST',
                     body: JSON.stringify({
-                        productoId: id_producto,
+                        productoId: id_producto
                     }),
                     headers: {
                         'Content-Type': 'application/json'

@@ -1,18 +1,21 @@
 "use strict";
 
-export function verMas(){
+export function verMas() {
+    const contenedor = document.getElementById("lista_reviews");
 
-    // Alternar visibilidad del texto de review para verlo completo.
-    document.querySelectorAll(".review_ver_mas_container").forEach(function (el) {
-        el.addEventListener("click", function () {
-            const review = this.closest(".review");
-            if (review) {
-                const reviews_texto = review.getElementsByClassName("review_texto");
+    if (!contenedor) return;
 
-                for (let texto of reviews_texto) {
-                    texto.classList.toggle("d-none");
-                }
+    contenedor.addEventListener("click", function (event) {
+        const toggleBtn = event.target.closest(".review_ver_mas_container");
+        if (!toggleBtn) return;
+
+        const review = toggleBtn.closest(".review");
+        if (review) {
+            const reviews_texto = review.getElementsByClassName("review_texto");
+
+            for (let texto of reviews_texto) {
+                texto.classList.toggle("d-none");
             }
-        });
+        }
     });
 }

@@ -5,6 +5,7 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\header.php';
 ?>
 <div class="top_juego">
+    <input type="hidden" id="hidden_id_juego" value="<?php echo $juego["id"] ?>">
     <h1><?php echo $juego['Nombre'] ?></h1>
 
     <img class="imagen_juego" src="<?php echo $juego['Imagen'] ?>" alt="">
@@ -12,34 +13,7 @@ require_once __DIR__ . '\Templates\header.php';
     <?php
     if(!empty($_SESSION)){
     ?>
-
-    <div class='btn_listas'>
-        <div class="boton btn_redondo wishlist">
-            <p>Añadir a la lista de Deseados</p>
-            <i class='fa-regular fa-heart btn_wishlist icono_ajustable'></i>
-        </div>
-        
-        <div>
-
-            <div class="boton btn_redondo backlog">
-                <!-- <p>Añadir a la lista de Pendientes</p> -->
-                <i class='fa-regular fa-clock icono_ajustable'></i>
-            </div>
-
-            <div class="boton btn_redondo completed">
-                <!-- <p>Añadir a la lista de Completados</p> -->
-                <i class='fa-regular fa-circle-check icono_ajustable'></i>
-            </div>
-
-            <div class="boton btn_redondo playing">
-                <!-- <p>Añadir a la lista de Jugando</p> -->
-                <i class='fa-regular fa-circle-play icono_ajustable'></i>
-            </div>
-            
-        </div>
-
-    </div>
-
+        <div id='btn_listas'></div>
     <?php
     }
     ?>
@@ -187,6 +161,95 @@ require_once __DIR__ . '\Templates\header.php';
 
 <!-- Script de inicio del Swiper -->
 <script src="/TDG/public/JS/carrusel.js"></script>
+
+<script>
+    // JQuery de Añadir a listas.
+    $(document).ready(function() {
+
+        $(document).on("click", ".btn-lista", function(){
+
+            let icono=$(this).find("i");
+
+            if(icono.hasClass("fa-solid")){ // En caso de que el boton esté coloreado, es decir que el juego esté en la lista, se elimina de esta.
+
+                let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
+                let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
+
+                let formData = new FormData();
+                formData.append("id_juego", id_juego);
+                formData.append("lista", lista);
+
+                $.ajax({
+                    url: "/TDG/AJAX/eliminarJuegoLista",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        let respuesta=JSON.parse(response).result;
+
+                        Swal.fire({
+                            position: "top",
+                            icon: "error",
+                            text: respuesta,
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: "50%",
+                            backdrop: false,
+                            background: "#2C2C2E",
+                            color: "#FFFFFF"
+                        });
+
+                        icono.toggleClass("fa-solid");
+                        icono.toggleClass("fa-regular");
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+
+            }else if(icono.hasClass("fa-regular")){ // En caso de que el boton NO esté coloreado, es decir que el juego NO esté en la lista, se añade a esta.
+
+                let boton = this; // Guardamos el icono en una variable para poder cambiar su color.
+
+                let id_juego = $(this).attr("id").split("@")[1]; // Obtener el ID del juego desde el atributo id del icono.
+                let lista = $(this).attr("id").split("@")[0]; // Obtener la lista desde el atributo id del icono. 
+
+                let formData = new FormData();
+                formData.append("id_juego", id_juego);
+                formData.append("lista", lista);
+
+                $.ajax({
+                    url: "/TDG/AJAX/addJuegoLista",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        let respuesta=JSON.parse(response).result;
+
+                        Swal.fire({
+                            position: "top",
+                            icon: "success",
+                            text: respuesta,
+                            showConfirmButton: false,
+                            timer: 1500,
+                            width: "50%",
+                            backdrop: false,
+                            background: "#2C2C2E",
+                            color: "#FFFFFF"
+                        });
+
+                        icono.toggleClass("fa-solid");
+                        icono.toggleClass("fa-regular");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script src="/TDG/public/JS/juego.js"></script>
 
 <?php
 require_once __DIR__ . '\Templates\final.php';

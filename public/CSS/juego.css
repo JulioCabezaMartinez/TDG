@@ -32,13 +32,18 @@ body{
     margin-bottom: 5%;
 }
 
+.top_juego h1{
+    margin: 3%;
+    text-align: center;
+}
+
 .imagen_juego{
     width: 90vw;
 }
 
 /* Botones de añadir a las listas */
 
-.btn_listas{
+#btn_listas{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -61,17 +66,17 @@ body{
     padding: 0;
 }
 
-.btn_listas > div:nth-child(1) i{
+#btn_listas > div:nth-child(1) i{
     padding-left: 5%;
 }
 
-.btn_listas > div:nth-child(1) p{
+#btn_listas > div:nth-child(1) p{
     padding: 1.5%;
     margin: 0;
 }
 
 /* Botones de Backlog, Completed y Playing */
-.btn_listas > div:nth-child(2){
+#btn_listas > div:nth-child(2){
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -93,7 +98,7 @@ body{
 }
 
 /* Los 3 botones de añadir a las listas */
-.btn_listas > div:nth-child(2) > div{
+#btn_listas > div:nth-child(2) > div{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,7 +108,7 @@ body{
 }
 
 
-.btn_listas > div:nth-child(2) > div:nth-child(2){
+#btn_listas > div:nth-child(2) > div:nth-child(2){
     margin: 0 5%; /* Separación de los botones */
 }
 

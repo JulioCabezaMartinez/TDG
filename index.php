@@ -4,6 +4,13 @@ session_start();
 require_once 'vendor\autoload.php'; // Esto debe estar al principio del archivo para cargar las dependencias de Composer
 use Dotenv\Dotenv;
 use App\Core\Router;
+use App\Core\Security;
+
+// Comprobacion para el cierre de sesión.
+$lifetime = 5400; // 1 hora y media en segundos
+if (!empty($_SESSION) && (time() - $_SESSION['admin_session_started'] > $lifetime)) {
+    Security::closeSession();
+}
 
 // Cargar el archivo .env
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -54,10 +61,13 @@ $router->add('/perfil/ventas', 'ControllerUsuario@ventas_perfil');
 
 //Rutas AJAX
 $router->add('/AJAX/registrar-usuario', 'ControllerAJAX@registrarUsuario');
+$router->add('/AJAX/botones_juego', 'ControllerAJAX@botones_juego');
 $router->add('/AJAX/lista_juegos', 'ControllerAJAX@lista_juegos');
 $router->add('/AJAX/lista_ventas', 'ControllerAJAX@lista_ventas');
+$router->add('/AJAX/lista_reviews', 'ControllerAJAX@lista_reviews');
 $router->add('/AJAX/registrarProducto', 'ControllerAJAX@registrarProducto');
-$router->add('/AJAX/lista_review', 'ControllerAJAX@lista_review');
+$router->add('/AJAX/add_review', 'ControllerAJAX@add_review');
+$router->add('/AJAX/eliminarReview', 'ControllerAJAX@eliminarReview');
 $router->add('/AJAX/addJuegoLista', 'ControllerAJAX@addJuegoLista');
 $router->add('/AJAX/eliminarJuegoLista', 'ControllerAJAX@eliminarJuegoLista');
 $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
@@ -82,6 +92,9 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     //AJAX de Ventas del Perfil
     $router->add('/AJAX/lista_ventas_perfil', 'ControllerAJAX@lista_ventas_perfil');
     $router->add('/AJAX/lista_compras_perfil', 'ControllerAJAX@lista_compras_perfil');
+    $router->add('/AJAX/vaciarProducto', 'ControllerAJAX@vaciarProducto');
+
+    $router->add('/AJAX/AJAXPaypal', 'ControllerAJAX@AJAXPaypal');
 
 
 // Procesar la solicitud

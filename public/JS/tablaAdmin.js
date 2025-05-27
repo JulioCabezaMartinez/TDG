@@ -87,7 +87,6 @@ function eventos() { // Cambiar data de los fetches.
         })
         .then(res => res.text())
         .then(data => {
-            console.log(data);
             const json = JSON.parse(data);
             const datos = json["dato"];
 

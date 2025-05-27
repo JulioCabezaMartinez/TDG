@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Core\EmptyModel;
 use App\Core\Security;
+use App\Interfaces\BusquedaAdmin;
 
 use PDO;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de usuarios.
  */
-class Usuario extends EmptyModel {
+class Usuario extends EmptyModel implements BusquedaAdmin {
     /**
      * Constructor de la clase Usuario.
      * Configura la tabla asociada al modelo.
@@ -28,6 +29,10 @@ class Usuario extends EmptyModel {
      */
     public function logIn($correo, $pass) {
         $usuario=$this->query("Select * from usuarios where correo='{$correo}';")->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($usuario)){
+            return false; // Usuario no encontrado
+        }
 
         if(password_verify($pass, $usuario[0]["Password"])){
             return $usuario[0];

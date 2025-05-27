@@ -121,7 +121,6 @@ require_once __DIR__ . '\Templates\header.php';
                         showConfirmButton: false,
                         timer: 1500,
                         backdrop: false,
-                        width: "15%",
                         background: "#2C2C2E",
                         color: "#FFFFFF"
                     });
@@ -159,7 +158,6 @@ require_once __DIR__ . '\Templates\header.php';
                             showConfirmButton: false,
                             timer: 1500,
                             backdrop: false,
-                            width: "15%",
                             background: "#2C2C2E",
                             color: "#FFFFFF"
                         });

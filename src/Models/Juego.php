@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Core\EmptyModel;
 use App\Traits\BusquedaAlfa;
+use App\Interfaces\BusquedaAdmin;
+
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de juegos.
  */
-class Juego extends EmptyModel {
+class Juego extends EmptyModel implements BusquedaAdmin {
 
 
     use BusquedaAlfa;

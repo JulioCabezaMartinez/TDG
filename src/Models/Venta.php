@@ -27,58 +27,56 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         return parent::query("Select * from post_vendidos;")->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getListSells(int $inicio, int $limit, array $filtros=[]){
+    public function getListSells(int $inicio, int $limit, array $filtros = []){
+        $sql = "SELECT v.* FROM {$this->table} v JOIN usuarios u ON v.id_Vendedor = u.id";
 
-        $sql = "SELECT * FROM {$this->table}";
+        $conditions = [];
 
         if (!empty($filtros)) {
-            $conditions = []; 
-
-            //Si hay filtro para 'Nombre', agregamos la condición correspondiente
             if (!empty($filtros['nombre'])) {
-                $conditions[] = "id_juego IN (SELECT id from juegos where nombre LIKE '{$filtros['nombre']}')";
+                $conditions[] = "v.id_juego IN (SELECT id FROM juegos WHERE nombre LIKE '{$filtros['nombre']}')";
             }
-           
+
             if (!empty($filtros['Stock'])) {
-                if($filtros['Stock']=="si"){
-                    $conditions[] = "Stock >= 1";
-                }else{
-                    $conditions[] = "Stock <= 0";
+                if ($filtros['Stock'] == "si") {
+                    $conditions[] = "v.Stock >= 1";
+                } else {
+                    $conditions[] = "v.Stock <= 0";
                 }
             }
 
             if (!empty($filtros['precioMin'])) {
-                $conditions[] = "Precio >= {$filtros['precioMin']}";
+                $conditions[] = "v.Precio >= {$filtros['precioMin']}";
             }
 
             if (!empty($filtros['precioMax'])) {
-                $conditions[] = "Precio <= {$filtros['precioMax']}";
+                $conditions[] = "v.Precio <= {$filtros['precioMax']}";
             }
 
             if (!empty($filtros['Consola'])) {
-                $conditions[] = "Consola = {$filtros['Consola']}";
+                $conditions[] = "v.Consola = {$filtros['Consola']}";
             }
 
             if (!empty($filtros['Estado'])) {
-                $conditions[] = "Estado = '{$filtros['Estado']}'";
+                $conditions[] = "v.Estado = '{$filtros['Estado']}'";
             }
-
-            // Si hay condiciones, las unimos con AND y las añadimos a la consulta
-            if (!empty($conditions)) {
-                $sql .= " WHERE " . implode(" AND ", $conditions);
-            }else{
-                $sql .= " WHERE Estado_venta != 'Sin Stock'"; //Si no hay filtros, mostramos todos los que no esten en 'Sin Stock'
-            }
-        }else{
-            $sql .= " WHERE Estado_venta != 'Sin Stock'"; //Si no hay filtros, mostramos todos los que no esten en 'Sin Stock'
         }
-        // Añadimos el LIMIT (esto siempre se añade al final)
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        } else {
+            $sql .= " WHERE v.Estado_venta != 'Sin Stock'";
+        }
+
+        // Ordenar primero por usuarios premium
+        $sql .= " ORDER BY u.Premium DESC";
+
+        // Limitar resultados
         $sql .= " LIMIT {$inicio}, {$limit}";
 
-        // Para depurar la consulta SQL, puedes descomentar la siguiente línea:
         // return $sql;
 
-        return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC); //Se puede poner $param pero no en el Limit, execute(sql, param) no admite parametros como Integers.
+        return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function getCount(): int{

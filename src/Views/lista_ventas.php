@@ -239,7 +239,7 @@ if(!empty($_SESSION)) {
 <div class="paginacion"></div>
 
 <?php
-include_once __DIR__ . "./Templates/footer.php";
+include_once __DIR__ . "/Templates/footer.php";
 ?>
 
 <script src="/TDG/public/JS/lista_ventas.js"></script>

@@ -165,6 +165,10 @@ body{
     align-self: self-start;
 }
 
+.reseñas_juego a{
+    text-decoration: underline !important;
+}
+
 @media screen and (max-width: 425px){
     .info_juego{
         flex-direction: column;

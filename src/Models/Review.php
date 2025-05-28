@@ -20,7 +20,7 @@ class Review extends EmptyModel implements BusquedaAdmin {
     }
 
     public function getAllReviewsJuego($id_juego, $inicio, $limit) {
-        $sql="Select * from review where id_Juego=:id_juego LIMIT :inicio, :limit";
+        $sql="Select * from review where id_Juego=:id_juego order by id desc LIMIT :inicio, :limit";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id_juego', $id_juego, PDO::PARAM_INT);
         $stmt->bindParam(':inicio', $inicio, PDO::PARAM_INT);
@@ -39,6 +39,14 @@ class Review extends EmptyModel implements BusquedaAdmin {
 
     public function ultimasReviews(){
         return $this->query("SELECT * from review ORDER BY id DESC LIMIT 3")->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function ultimasReviewsJuego($id_juego){
+        $sql="Select * from review where id_Juego=:id_juego ORDER BY id DESC LIMIT 3";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_juego', $id_juego, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function buscarAdmin($textoBusqueda, $inicio, $limit){

@@ -83,6 +83,7 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     $router->add('/AJAX/datosModificarDato', 'ControllerAJAX@datosModificarDato');
     $router->add('/AJAX/modificarDato', 'ControllerAJAX@modificarDato');
     $router->add('/AJAX/addDato', 'ControllerAJAX@addDato');
+    $router->add('/AJAX/cambiarPass', 'ControllerAJAX@cambiarPass');
 
     //AJAX de Perfil
     $router->add('/AJAX/lista_whislist', 'ControllerAJAX@lista_whislist');

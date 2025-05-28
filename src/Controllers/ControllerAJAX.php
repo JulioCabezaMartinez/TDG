@@ -18,6 +18,11 @@ use PDO;
 class ControllerAJAX {
 
     public function botones_juego(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $juegoDB=new Juego();
         $listaDB=new Lista();
 
@@ -67,9 +72,6 @@ class ControllerAJAX {
         $inicio = $_POST["inicio"];
         $filtros=json_decode($_POST["filtros"], true);
 
-        $id_usuario = $_SESSION['usuarioActivo']; // Obtener el ID del usuario desde la sesión.
-        $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
-
         if(empty($filtros)){
             $total_juegos = $juegoDB->getCount();
         }else{
@@ -90,34 +92,40 @@ class ControllerAJAX {
         
         $juegos = $juegoDB->getListGames((int)$inicio, (int)$limite, $filtros); // Obtener 10 juegos
 
-        foreach ($juegos as &$juego) {
+        if(!empty($_SESSION)){
+             $id_usuario = $_SESSION['usuarioActivo']; // Obtener el ID del usuario desde la sesión.
+            $listas_usuario = $listaDB->getListasUsuario($id_usuario); // Obtener las listas del usuario.
 
-            // Booleanos para comprobar si el juego está en las listas del usuario.
-            $wishlist = false;
-            $backlog = false;
-            $completed = false;
-            $playing = false;
-        
-            $listas_juego = $listaDB->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
-            foreach ($listas_juego as $lista_usuario) {
+            foreach ($juegos as &$juego) {
 
-                switch ($listaDB->getTipoLista($lista_usuario)) {
-                    case 1:
-                        $wishlist = true;
-                        break;
-                    case 2:
-                        $completed = true;
-                        break;
-                    case 3:
-                        $playing = true;
-                        break;
-                    case 4:
-                        $backlog = true;
-                        break;
+                // Booleanos para comprobar si el juego está en las listas del usuario.
+                $wishlist = false;
+                $backlog = false;
+                $completed = false;
+                $playing = false;
+            
+                $listas_juego = $listaDB->compruebaJuegoLista($juego['id'], $listas_usuario); // Comprobar si el juego está en las listas del usuario.
+                foreach ($listas_juego as $lista_usuario) {
+
+                    switch ($listaDB->getTipoLista($lista_usuario)) {
+                        case 1:
+                            $wishlist = true;
+                            break;
+                        case 2:
+                            $completed = true;
+                            break;
+                        case 3:
+                            $playing = true;
+                            break;
+                        case 4:
+                            $backlog = true;
+                            break;
+                    }
                 }
+                $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
             }
-            $juego["estados"]=[$wishlist, $backlog, $completed, $playing];
         }
+       
 
         if(!empty($_SESSION)){
             echo json_encode(["filtros"=>$filtros, "juegos"=>$juegos, "pagina"=>$pagina, "total_paginas"=>$total_paginas, "sesion"=>$_SESSION["usuarioActivo"]]);
@@ -189,7 +197,13 @@ class ControllerAJAX {
             $review["Nick_Usuario"] = $usuario["Nick"]; // Añadir el Nick del usuario a la review.
             $review["Imagen_Usuario"] = $usuario["Imagen_usuario"]; // Añadir la imagen del usuario a la review.
 
-            if(($sesion_activa != null && $admin != null) && ($review["id_Escritor"] == $sesion_activa || $admin==true)){ // Comprobar si el usuario es el autor de la review o si es admin.
+            if(($sesion_activa != null && $admin != null) && ($admin==true)){ // Comprobar si el usuario es el autor de la review o si es admin.
+                $review["editable"] = true; // Añadir un campo editable a la review.
+            }else{
+                $review["editable"] = false; // Añadir un campo editable a la review.
+            }
+
+            if($sesion_activa != null && $review["id_Escritor"] == $sesion_activa){ // Comprobar si el usuario es el autor de la review o si es admin.
                 $review["editable"] = true; // Añadir un campo editable a la review.
             }else{
                 $review["editable"] = false; // Añadir un campo editable a la review.
@@ -206,6 +220,11 @@ class ControllerAJAX {
     }
 
     public function lista_compras_perfil(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $ventaDB=new Venta();
         $plataformaDB=new Plataforma();
 
@@ -232,6 +251,11 @@ class ControllerAJAX {
     }
 
     public function lista_ventas_perfil(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $ventaDB=new Venta();
         $plataformaDB=new Plataforma();
 
@@ -258,6 +282,11 @@ class ControllerAJAX {
     }
 
     public function registrarProducto(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $ventaDB=new Venta();
 
         $datos = json_decode($_POST["datos"], true);
@@ -322,6 +351,11 @@ class ControllerAJAX {
     }
 
     public function add_review(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $id_juego = $_POST["id_juego"];
         $review = $_POST["review"];
         $id_usuario = $_SESSION["usuarioActivo"]; // Obtener el ID del usuario desde la sesión.
@@ -342,6 +376,11 @@ class ControllerAJAX {
     }
 
     public function addJuegoLista(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
         $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
@@ -370,6 +409,10 @@ class ControllerAJAX {
     }
 
     public function eliminarJuegoLista(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
 
         $id_juego = $_POST['id_juego'] ?? null;
         $lista = $_POST['lista'] ?? null;
@@ -464,9 +507,12 @@ class ControllerAJAX {
 
     public function eliminarDato(){
 
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         if($_SESSION["Admin"]!=true){
             Security::closeSession();
-            exit;
         }
 
         $id=$_POST["id"];
@@ -506,6 +552,11 @@ class ControllerAJAX {
     }
 
     public function eliminarReview(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $reviewDB=new Review();
 
         $id=Validators::evitarInyeccion($_POST["id"]);
@@ -514,6 +565,11 @@ class ControllerAJAX {
     }
 
    public function datosModificarDato(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $id=$_POST["id"];
         $entidad=$_POST["entidad"];
 
@@ -551,6 +607,10 @@ class ControllerAJAX {
     }
 
     public function modificarDato(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
 
         $entidad=$_POST["entidad"];
         $datos=json_decode($_POST["datos"], true);
@@ -590,6 +650,11 @@ class ControllerAJAX {
     }
 
     public function addDato(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $entidad=$_POST["entidad"];
         $datos=json_decode($_POST["datos"], true);
 
@@ -631,6 +696,11 @@ class ControllerAJAX {
     }
     
     public function gestionarCompra(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $ventaDB=new Venta();
         $usuarioDB=new Usuario();
 
@@ -655,6 +725,10 @@ class ControllerAJAX {
     }
 
     public function listaAdmin(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
         
         $pagina = Validators::evitarInyeccion($_POST["pagina"]);
         $limite = Validators::evitarInyeccion($_POST["limite"]);
@@ -691,6 +765,7 @@ class ControllerAJAX {
             $busqueda = "%{$busqueda}%"; // Preparar la búsqueda para LIKE
             $total_datos = $entidadDB->buscarAdminCount($busqueda);
             $datos = $entidadDB->buscarAdmin($busqueda, (int)$inicio, (int)$limite);
+            $columnasDB = $entidadDB->listaColumnas();
         }else{
             if($entidad == "post_vendidos"){
                 $total_datos=$entidadDB->cuentaVentas();
@@ -716,6 +791,11 @@ class ControllerAJAX {
     }
 
     public function lista_whislist(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $listaDB=new Lista();
 
         $pagina = $_POST["pagina"];
@@ -733,6 +813,11 @@ class ControllerAJAX {
     }
 
     public function lista_playing(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $listaDB=new Lista();
 
         $pagina = $_POST["pagina"];
@@ -750,6 +835,11 @@ class ControllerAJAX {
     }
 
     public function lista_completed(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $listaDB=new Lista();
 
         $pagina = $_POST["pagina"];
@@ -767,6 +857,11 @@ class ControllerAJAX {
     }
 
     public function lista_backlog(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $listaDB=new Lista();
 
         $pagina = $_POST["pagina"];
@@ -784,6 +879,11 @@ class ControllerAJAX {
     }
 
     public function vaciarProducto(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $ventaDB = new Venta();
         
         $datos =  json_decode(file_get_contents('php://input'), true);
@@ -802,6 +902,11 @@ class ControllerAJAX {
     }
 
     public function AJAXPaypal(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
         $clientId = $_ENV['PAYPAL_CLIENT_ID'];
         $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
         $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
@@ -873,6 +978,39 @@ class ControllerAJAX {
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'No se pudo crear la orden']);
+        }
+    }
+
+    public function cambiarPass(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $usuarioDB=new Usuario();
+
+        $id_usuario=Validators::evitarInyeccion($_POST["id_usuario"]);
+        $pass=Validators::evitarInyeccion($_POST["Pass"]);
+
+        if(!$_SESSION["Admin"]){
+            $passAntigua=Validators::evitarInyeccion($_POST["Pass"]);
+            $usuario=$usuarioDB->getById($id_usuario);
+
+            if(password_verify($passAntigua, $usuario["Password"])){
+                $result=$usuarioDB->cambiarPass($id_usuario, $pass);
+                echo json_encode(["result"=>"ok"]);
+            }else{
+                echo json_encode(["result"=>"fail", "error"=>"La contraseña no es correcta"]);
+            }
+        }else{
+        
+            $result=$usuarioDB->cambiarPass($id_usuario, $pass);
+
+            if($result==1){
+                echo json_encode(["result"=>"ok"]);
+            }else{
+                echo json_encode(["result"=>"fail", "Columnas afectadas"=>$result]);
+            }
         }
     }
 }

@@ -301,6 +301,38 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 </div>
 <!-- Modal de creación de Review -->
 
+<?php
+if($entidad=="usuarios"){
+?>
+<!-- Modal de cambio de Contraseña -->
+<div class="modal fade" id="modificacionPass" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificacion-dato-header">Cambio de Contraseña</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id_usuario_pass">
+                <div>
+                    <label class="form-label" for="password">Contraseña Nueva: </label>
+                    <input class="form-control" type="password" id="contraseña_cambio">
+                    <br>
+                    <label class="form-label" for="confirm">Confirmar Contraseña: </label>
+                    <input class="form-control" type="password" id="confirm_cambio">
+                    <p id="error_pass"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_cerrar_modal_pass" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancelar</button>
+                <button id="btn_cambiarPass" type="button" class="boton-perso">Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de cambio de Contraseña -->
+<?php
+}
+?>
 <div class="content">
     <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
     <h2 class="h2-entidad ms-3">Tabla <?php echo $entidad ?></h2>
@@ -311,16 +343,23 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
     <br><br>
 
     <div class="paginacion"></div>
-    <div class="buscador">
-        <label for="buscador"><strong>Buscador (Nombre / Titulo):</strong></label>
-        <br>
-        <div class="input-group">
-            <input id="busqueda" class="form-control" type="text">
-            <button id="btnBusqueda" class="btn btn-outline-secondary bg-white" type="button">
-                <i class="fas fa-search"></i>
-            </button>
+    <?php
+    if($entidad!="post_vendidos"){
+    ?>
+        <div class="buscador">
+            <label for="buscador"><strong>Buscador (Nombre / Titulo):</strong></label>
+            <br>
+            <div class="input-group">
+                <input id="busqueda" class="form-control" type="text">
+                <button id="btnBusqueda" class="btn btn-outline-secondary bg-white" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
-    </div>
+    <?php
+    }
+    ?>
+    
     <table id="tabla-datos" class="table table-striped table-dark tabla-datos"></table>
 
     <div id="tabla-movil" class="tabla-movil"></div> 

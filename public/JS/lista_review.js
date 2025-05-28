@@ -235,7 +235,8 @@ function crearTabla(reviews) {
             btnEditar.className = "btn-modificar-review boton-perso";
             
             const iconoEditar = document.createElement("i");
-            iconoEditar.className = "fa-solid fa-pen";
+            iconoEditar.className = "fa-solid fa-pen btn-modificar-review";
+            iconoEditar.id=review.id+"@icono_modificar";
 
             btnEditar.appendChild(iconoEditar);
 
@@ -244,7 +245,9 @@ function crearTabla(reviews) {
             btnEliminar.className = "btn-eliminar-review boton-perso boton-perso-secundario";
 
             const iconoEliminar = document.createElement("i");
-            iconoEliminar.className = "fa-solid fa-trash";
+            iconoEliminar.className = "fa-solid fa-trash btn-eliminar-review";
+            iconoEliminar.id=review.id+"@icono_eliminar"
+
             btnEliminar.appendChild(iconoEliminar);
 
             divBotones.appendChild(btnEditar);

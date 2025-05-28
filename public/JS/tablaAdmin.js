@@ -3,6 +3,8 @@
 /* Eventos click de Click de la Página */
 
 function eventos() { // Cambiar data de los fetches.
+    const modalCreacionModificacion = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
+    const modalPass = new bootstrap.Modal(document.getElementById("modificacionPass"));
 
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -28,7 +30,9 @@ function eventos() { // Cambiar data de los fetches.
                 title: "Dato eliminado con éxito",
                 showConfirmButton: false,
                 timer: 1500,
-                backdrop: false
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
             });
             paginacion(); // Recargar la tabla después de eliminar
 
@@ -39,7 +43,9 @@ function eventos() { // Cambiar data de los fetches.
                 title: "Error en el servidor",
                 showConfirmButton: false,
                 timer: 1500,
-                backdrop: false
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
             });
             }
         });
@@ -48,8 +54,7 @@ function eventos() { // Cambiar data de los fetches.
 
     // Delegar click para botones Crear
     document.getElementById("btn_crear_dato").addEventListener("click", () => {
-        const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
-        modal.show();
+        modalCreacionModificacion.show();
 
         // Limpiar campos del modal
         document.querySelectorAll("[id$='Input']").forEach(input => {
@@ -66,41 +71,40 @@ function eventos() { // Cambiar data de los fetches.
     // Delegar click para botones Modificar
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("modificar-dato")) {
-        const id = e.target.id.split("@")[1];
-        const entidad = document.getElementById("entidad").value;
+            const id = e.target.id.split("@")[1];
+            const entidad = document.getElementById("entidad").value;
 
-        document.getElementById("btn_modificar").style.display = "block"; // Ocultar botón de modificar
-        document.getElementById("btn_crear").style.display = "none"; // Mostrar botón de crear
+            document.getElementById("btn_modificar").style.display = "block"; // Ocultar botón de modificar
+            document.getElementById("btn_crear").style.display = "none"; // Mostrar botón de crear
 
-        document.getElementById("creacion-dato-header").style.display = "none"; // Mostrar el header de creación
-        document.getElementById("modificacion-dato-header").style.display = "block"; // Ocultar el header de modificación
+            document.getElementById("creacion-dato-header").style.display = "none"; // Mostrar el header de creación
+            document.getElementById("modificacion-dato-header").style.display = "block"; // Ocultar el header de modificación
 
-        const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
-        modal.show();
+            modalCreacionModificacion.show();
 
-        fetch("/TDG/AJAX/datosModificarDato", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({ id, entidad })
-        })
-        .then(res => res.text())
-        .then(data => {
-            const json = JSON.parse(data);
-            const datos = json["dato"];
+            fetch("/TDG/AJAX/datosModificarDato", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: new URLSearchParams({ id, entidad })
+            })
+            .then(res => res.text())
+            .then(data => {
+                const json = JSON.parse(data);
+                const datos = json["dato"];
 
-            for (let key in datos) {
-                const input = document.getElementById(key + "Input");
-                if (input) input.value = datos[key];
-                if (key === "Admin" || key === "Premium") {
-                    const checkbox = document.getElementById(key + "Input");
-                    if (datos[key] === "1") {
-                        checkbox.checked=true; // Marcar el checkbox si el valor es "1"
+                for (let key in datos) {
+                    const input = document.getElementById(key + "Input");
+                    if (input) input.value = datos[key];
+                    if (key === "Admin" || key === "Premium") {
+                        const checkbox = document.getElementById(key + "Input");
+                        if (datos[key] === "1") {
+                            checkbox.checked=true; // Marcar el checkbox si el valor es "1"
+                        }
                     }
                 }
-            }
-        });
+            });
         }
     });
 
@@ -148,7 +152,9 @@ function eventos() { // Cambiar data de los fetches.
             title: "Dato modificado con éxito",
             showConfirmButton: false,
             timer: 1500,
-            backdrop: false
+            backdrop: false,
+            background: "#2C2C2E",
+            color: "#FFFFFF"
         });
         paginacion(); // Recargar la tabla después de crear
         })
@@ -159,7 +165,9 @@ function eventos() { // Cambiar data de los fetches.
             title: "Error en el servidor",
             showConfirmButton: false,
             timer: 1500,
-            backdrop: false
+            backdrop: false,
+            background: "#2C2C2E",
+            color: "#FFFFFF"
         });
         });
     });
@@ -206,7 +214,9 @@ function eventos() { // Cambiar data de los fetches.
             title: "Dato modificado con éxito",
             showConfirmButton: false,
             timer: 1500,
-            backdrop: false
+            backdrop: false,
+            background: "#2C2C2E",
+            color: "#FFFFFF"
         });
         paginacion(); // Recargar la tabla después de modificar
         })
@@ -217,7 +227,9 @@ function eventos() { // Cambiar data de los fetches.
             title: "Error en el servidor",
             showConfirmButton: false,
             timer: 1500,
-            backdrop: false
+            backdrop: false,
+            background: "#2C2C2E",
+            color: "#FFFFFF"
         });
         });
     });
@@ -228,8 +240,7 @@ function eventos() { // Cambiar data de los fetches.
         input.value = "";
         });
 
-        const modal = bootstrap.Modal.getInstance(document.getElementById("creacion_modificar_dato"));
-        if (modal) modal.hide();
+        if (modalCreacionModificacion) modalCreacionModificacion.hide();
     });
 
     });
@@ -239,6 +250,93 @@ function eventos() { // Cambiar data de los fetches.
         let busqueda = document.getElementById("busqueda").value;
 
         paginacion(undefined, busqueda);
+    });
+
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("cambiarPassword")) {
+            let id = e.target.id.split("@")[1];
+            let id_usuarioinput=document.getElementById("id_usuario_pass");
+            id_usuarioinput.value=id;
+
+            let passInput=document.getElementById("contraseña_cambio");
+            let confirmInput=document.getElementById("confirm_cambio");
+            let error=document.getElementById("error_pass");
+
+            error.textContent="";
+            passInput.value="";
+            confirmInput.value="";
+
+            
+            modalPass.show();
+        }
+    });
+
+    document.getElementById("btn_cerrar_modal_pass").addEventListener("click", () => {
+        let passInput=document.getElementById("contraseña_cambio");
+        let confirmInput=document.getElementById("confirm_cambio");
+        let error=document.getElementById("error_pass");
+
+        error.textContent="";
+        passInput.value="";
+        confirmInput.value="";
+
+        modalPass.hide();
+    });
+
+    document.getElementById("btn_cambiarPass").addEventListener("click", ()=>{
+        let id_usuarioinput=document.getElementById("id_usuario_pass");
+        let passInput=document.getElementById("contraseña_cambio");
+        let confirmInput=document.getElementById("confirm_cambio");
+        let error=document.getElementById("error_pass");
+
+        let pass=passInput.value;
+        let confirm=confirmInput.value;
+        let id_usuario=id_usuarioinput.value;
+
+        if(pass=="" || confirm==""){
+            error.textContent="Se deben de completar todos los campos";
+        }else if(pass!==confirm){
+            error.textContent="Las contraseñas no coinciden";
+        } else {
+            let formData = new FormData();
+            formData.append("Pass", pass);
+            formData.append("id_usuario", id_usuario);
+
+            fetch("/TDG/AJAX/cambiarPassAdmin", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    modalPass.hide();
+
+                    if (data.result == "ok") {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Contraseña modificada con éxito",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false,
+                            background: "#2C2C2E",
+                            color: "#FFFFFF"
+                        });
+                        paginacion(); // Recargar la tabla después de crear
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "error",
+                            title: "Error en el servidor",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false,
+                            background: "#2C2C2E",
+                            color: "#FFFFFF"
+                        });
+                    }
+                });
+        }
     });
 }
 
@@ -313,10 +411,9 @@ function crearTabla(lista, columnas, entidad) {
                 Acciones
                 </button>
                 <div class="dropdown-menu">
-                <button id="btn@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                <button id="btn@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
-                ${entidad === "usuarios" ? '<button class="dropdown-item btn btn-primary">Ver Listas</button>' : ''}
-                ${entidad === "usuarios" ? '<button class="dropdown-item btn btn-primary">Cambiar Contraseña</button>' : ''}
+                <button id="btn_modificar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
+                <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
+                ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Cambiar Contraseña</button>` : ''}
                 </div>
             </div>
             `;
@@ -419,10 +516,11 @@ function crearTabla(lista, columnas, entidad) {
     dropdownMenu.appendChild(btnModificar);
 
     if (entidad === "usuarios") {
-      const btnListas = document.createElement("button");
-      btnListas.className = "dropdown-item btn btn-primary";
-      btnListas.textContent = "Ver Listas";
-      dropdownMenu.appendChild(btnListas);
+      const btnPass = document.createElement("button");
+      btnPass.className = "dropdown-item btn btn-primary cambiarPassword";
+      btnPass.textContent = "Cambiar Contraseña";
+      btnPass.id=`btn_cambPass@${item.id}`;
+      dropdownMenu.appendChild(btnPass);
     }
 
     dropdown.appendChild(btnToggle);

@@ -72,16 +72,14 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         return $this->create($nuevoUsuario);
     }
 
-    /**
-     * Cambia la contraseña de un usuario.
-     *
-     * @param string $correo Correo electrónico del usuario.
-     * @param string $AntiguaPass Contraseña actual del usuario.
-     * @param string $nuevaPass Nueva contraseña del usuario.
-     * @return mixed Resultado de la operación de cambio de contraseña.
-     */
-    public function cambiarPass($correo, $AntiguaPass, $nuevaPass) {
-        
+    public function cambiarPass($id_usuario, $pass) {
+        $passHash=password_hash($pass, PASSWORD_DEFAULT);
+        $sql="UPDATE usuarios SET Password=:pass WHERE id=:id_usuario";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':pass', $passHash, PDO::PARAM_STR);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     public function buscarAdmin($textoBusqueda, $inicio, $limit){

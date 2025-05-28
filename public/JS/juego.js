@@ -1,7 +1,3 @@
-function creaBotones(){
-
-}
-
 function compruebaLista(){
     let id_juego=document.getElementById("hidden_id_juego").value;
 

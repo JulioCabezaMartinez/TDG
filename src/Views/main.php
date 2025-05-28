@@ -31,11 +31,11 @@ require_once __DIR__ . '\Templates\header.php';
                     <?php
                     if(strlen($recien_añadido['Nombre'])>20){
                     ?>
-                        <h3 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 20) . "..." ?></h3>
+                        <h4 class="titulo_juego" data-prueba="adios"><?php echo substr($recien_añadido['Nombre'], 0, 20) . "..." ?></h4>
                     <?php
                     }else{
                     ?>
-                        <h3 class="titulo_juego" data-prueba="hola"><?php echo $recien_añadido['Nombre'] ?></h3>
+                        <h4 class="titulo_juego" data-prueba="hola"><?php echo $recien_añadido['Nombre'] ?></h4>
                     <?php
                     }
                     ?>
@@ -136,7 +136,7 @@ require_once __DIR__ . '\Templates\header.php';
         <div class="review">
             <div class="cabecera_review">
                 <img src="/TDG/public/IMG/Users-img/<?php echo $usuario["Imagen"] ?>" alt=""> <!-- Imagen de usuario del Usuario asociado a la review -->
-                <h3><?php echo $review["juego"] ?></h3> <!-- Nombre del Usuario que ha escrito la reseña -->
+                <a href="/TDG/juegos/view/review?id=<?php echo $review["id_Juego"] ?>"><h3><?php echo $review["juego"] ?></h3></a>
             </div>
 
             <?php

@@ -68,104 +68,20 @@ require_once __DIR__ . '\Templates\header.php';
 
 </div>
 
-<?php
-    if(!empty($_SESSION)){
-?>
-
-<!-- Carrusel de ventas del Juego -->
-
-<div class="ventas_juego">
-    
-    <a href="#"><h2 class="enlace">Ventas</h2></a> Me falta implementar el AJAX de los filtros.
-
-    <div class="swiper">
-        <div class="card-wrapper">
-            <div class="card-list swiper-wrapper">
-
-                <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                    <div class="card-content">
-                        <h3><?php echo $juego['Nombre'] ?></h3>
-                        <p><strong><?php echo 30 ?> €</strong></p>
-                    </div>
-                </div>
-
-                <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                    <div class="card-content">
-                        <h3><?php echo $juego['Nombre'] ?></h3>
-                        <p><strong><?php echo 20 ?> €</strong></p>
-                    </div>
-                </div>
-
-                <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                    <div class="card-content">
-                        <h3><?php echo $juego['Nombre'] ?></h3>
-                        <p><strong><?php echo 12 ?> €</strong></p>
-                    </div>
-                </div>
-
-                <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                    <div class="card-content">
-                        <h3><?php echo $juego['Nombre'] ?></h3>
-                        <p><strong><?php echo 43 ?> €</strong></p>
-                    </div>
-                </div>
-
-                <div class="card-item swiper-slide">
-                    <img src="<?php echo $juego['Imagen']; ?>" alt="">
-                    <div class="card-content">
-                        <h3><?php echo $juego['Nombre'] ?></h3>
-                        <p><strong><?php echo 54 ?> €</strong></p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Paginación del Carrusel -->
-            <div class="swiper-pagination"></div>
-
-            <!-- Botones de navegación del Carrusel -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-
-        </div>
-    </div>
-    
-
-</div>
-
-<?php
-    }
-?>
-
 
 <!-- Reseñas del Juego -->
 
-<div class="reseñas_juego">
-    <a href="/TDG/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas</h2></a>
-
-    <div>
-        
-    </div>
+<div class="reseñas_juego m-4">
+    <a href="/TDG/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas de <?php echo $juego["Nombre"] ?></h2></a>
 </div>
 
 <?php
     include_once __DIR__. "/Templates/footer.php";
 ?>
 
-<!-- JS del Swiper (Carrusel) -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<!-- Script de inicio del Swiper -->
-<script src="/TDG/public/JS/carrusel.js"></script>
-
 <script>
     // JQuery de Añadir a listas.
     $(document).ready(function() {
-
         $(document).on("click", ".btn-lista", function(){
 
             let icono=$(this).find("i");
@@ -249,7 +165,14 @@ require_once __DIR__ . '\Templates\header.php';
     });
 </script>
 
-<script src="/TDG/public/JS/juego.js"></script>
+<?php 
+if(!empty($_SESSION)){
+?>
+    <script src="/TDG/public/JS/juego.js"></script>
+<?php
+}
+?>
+
 
 <?php
 require_once __DIR__ . '\Templates\final.php';

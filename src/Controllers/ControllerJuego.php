@@ -6,6 +6,7 @@ use App\Models\Juego;
 use App\Models\Lista;
 use App\Models\Genero;
 use App\Models\Plataforma;
+use App\Models\Review;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con el modelo Juego.
@@ -32,12 +33,15 @@ class ControllerJuego {
     }
 
     public function view_juego(): void {
-        $id_juego = $_GET['juego'] ?? 2093; // Obtener el ID del juego desde la URL.
+        $id_juego = $_GET['juego']; // Obtener el ID del juego desde la URL.
         $juego = new Juego();
         $genero = new Genero();
         $plataforma = new Plataforma();
-        
+        $reviewDB=new Review();
+
         $juego = $juego->getById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
+
+        $lista_reviews=$reviewDB->ultimasReviewsJuego($id_juego);
 
         $generos = $genero->getGenerosJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar
         $plataformas = $plataforma->getPlataformasJuegoById($id_juego); // Cambiar el ID por el del juego que quieras mostrar

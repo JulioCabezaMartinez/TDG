@@ -66,7 +66,7 @@ require_once 'Templates/inicio.php';
 </div>
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+    include_once __DIR__. "/Templates/footer.php";
 ?>
 
 <script src="/TDG/public/JS/register.js"></script>

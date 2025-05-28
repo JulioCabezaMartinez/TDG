@@ -214,7 +214,7 @@ if (!empty($_SESSION) && $venta["Stock"] > 0 && $venta["id_Vendedor"] != $_SESSI
 <script src="/TDG/public/JS/venta.js"></script>
 
 <?php
-include_once __DIR__ . "./Templates/footer.php";
+include_once __DIR__ . "/Templates/footer.php";
 ?>
 
 <?php

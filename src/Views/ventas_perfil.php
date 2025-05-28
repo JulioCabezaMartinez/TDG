@@ -29,7 +29,7 @@ require_once __DIR__ . '\Templates\header.php';
 <script src="/TDG/public/JS/venta_perfil.js"></script>
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+    include_once __DIR__. "/Templates/footer.php";
 ?>
 
 <?php

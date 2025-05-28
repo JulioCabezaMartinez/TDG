@@ -679,10 +679,7 @@ class ControllerAJAX {
                 $entidadDB=new Venta();
                 break;
             case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
-                echo "Error de Entidad, entidad equivocada";
+                $entidadDB=new Venta();
                 break;
             default:
                 echo "Error de Entidad";
@@ -693,16 +690,23 @@ class ControllerAJAX {
         if(isset($busqueda) && !empty($busqueda)){
             $busqueda = "%{$busqueda}%"; // Preparar la búsqueda para LIKE
             $total_datos = $entidadDB->buscarAdminCount($busqueda);
-            $datos = $entidadDB->buscarAdmin($busqueda, (int)$inicio, (int)$limite); // Obtener 10 juegos
+            $datos = $entidadDB->buscarAdmin($busqueda, (int)$inicio, (int)$limite);
         }else{
-            $total_datos = $entidadDB->getCount();
-            $datos = $entidadDB->getAllLimit((int)$inicio, (int)$limite); // Obtener 10 juegos
+            if($entidad == "post_vendidos"){
+                $total_datos=$entidadDB->cuentaVentas();
+                $datos=$entidadDB->muestraAllVentasLimit((int)$inicio, (int)$limite);
+                $columnasDB = $entidadDB->muestraColumnasVentas();
+            }else{
+                $total_datos = $entidadDB->getCount();
+                $datos = $entidadDB->getAllLimit((int)$inicio, (int)$limite);
+                $columnasDB = $entidadDB->listaColumnas();
+            }   
         }
 
         $total_paginas = ceil($total_datos / $limite);
 
 
-        $columnasDB = $entidadDB->listaColumnas();
+        
         $columnas = [];
         foreach ($columnasDB as $columnaDB) {
             array_push($columnas, $columnaDB["Field"]);

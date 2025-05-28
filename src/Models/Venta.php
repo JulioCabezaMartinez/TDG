@@ -27,6 +27,15 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         return parent::query("Select * from post_vendidos;")->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function muestraAllVentasLimit($inicio, $limit){
+        $sql = "SELECT * FROM post_vendidos LIMIT {$inicio}, {$limit};";
+        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function cuentaVentas(){
+        return (int) $this->query("SELECT COUNT(*) FROM post_vendidos;")->fetchColumn();
+    }
+
     public function getListSells(int $inicio, int $limit, array $filtros = []){
         $sql = "SELECT v.* FROM {$this->table} v JOIN usuarios u ON v.id_Vendedor = u.id";
 

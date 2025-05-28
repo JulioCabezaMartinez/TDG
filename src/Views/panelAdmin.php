@@ -54,7 +54,7 @@ include_once __DIR__. '\Templates\barra-lateral.admin.php';
             <div class="icono">
                 <i class="fa-solid fa-boxes-stacked"></i>
             </div>
-            <h4>Ver Ventas</h4>
+            <h4>Administrar Ventas</h4>
         </div>
     </a>
     

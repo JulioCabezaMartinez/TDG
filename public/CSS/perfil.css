@@ -10,9 +10,8 @@
     width: 60%;
 }
 
-.perfil_imagen{
-    max-width: 200px;
-    clip-path: circle(100px at 50% 50%);
+#perfil .fa-crown{
+    color: var(--color-texto);
 }
 
 .juegos{
@@ -37,10 +36,6 @@
     display: block;
     text-decoration: none;
     color: inherit;
-}
-
-.juego img{
-    min-height: 125px;
 }
 
 #wishlist, #backlog, #playing, #completed{
@@ -73,6 +68,9 @@
 
 .juego img{
     max-width: 200px;
+    width: 200px;
+    min-height: 125px;
+    max-height: 125px;
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 20px;

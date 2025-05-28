@@ -48,4 +48,17 @@ class ControllerUsuario {
         $perfil['Imagen_usuario'] = $perfil['Imagen_usuario'] ?? 'default.png'; // Aseguramos que haya una imagen por defecto
         include_once __DIR__.'/../Views/ventas_perfil.php';
     }
+
+    public function conseguirPremium(){
+        $usuarioBD=new Usuario();
+
+        $usuario=$usuarioBD->getById($_SESSION["usuarioActivo"]);
+
+        if($usuario["Premium"]==1){
+            header("Location:/TDG/perfil");
+        }
+
+        include __DIR__. "/../Views/conseguirPremium.php";
+        
+    }
 }

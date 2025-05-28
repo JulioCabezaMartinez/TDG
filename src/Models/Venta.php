@@ -136,6 +136,10 @@ class Venta extends EmptyModel implements BusquedaAdmin {
     public function bajarStock($id_producto){
         $producto=$this->getById($id_producto);
 
+        if($producto["id"]==-1){
+            return true;
+        }
+
         if($producto["Stock"]<=1){
             return $this->update(["Stock"=>0, "Estado_venta"=>"Sin Stock"], $id_producto);
         }else{

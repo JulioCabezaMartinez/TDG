@@ -16,7 +16,9 @@ function crearTablaVentas(ventas) {
         div.className = "venta";
 
         const link = document.createElement("a");
-        link.href = `/TDG/ventas/view?id=${venta.id}`;
+        if(venta.id != -1){
+            link.href = `/TDG/ventas/view?id=${venta.id}`;
+        }
 
         const img = document.createElement("img");
         img.src = venta.Imagen;
@@ -51,7 +53,9 @@ function crearTablaCompras(compras) {
         div.className = "compra";
 
         const link = document.createElement("a");
-        link.href = `/TDG/compras/view?id=${compra.id}`;
+        if(compra.Producto.id != -1){
+            link.href = `/TDG/ventas/view?id=${compra.Producto.id}`;
+        }
 
         const img = document.createElement("img");
         img.src = compra.Imagen;

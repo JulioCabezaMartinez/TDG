@@ -102,5 +102,9 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         $stmt->execute();
         return $stmt->fetchColumn();
     }
+
+    public function conseguirPremium($id_usuario){
+        return $this->query("UPDATE usuarios SET Premium=1 WHERE id={$id_usuario};");
+    }
 }
 ?>

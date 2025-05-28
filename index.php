@@ -56,6 +56,7 @@ $router->add('/ventas/view/finalizacionCompra', 'ControllerVenta@finalizacion_co
 
 // Rutas de Perfil
 $router->add('/perfil', 'ControllerUsuario@perfil_listas');
+$router->add('/perfil/Premium', 'ControllerUsuario@conseguirPremium');
 $router->add('/perfil/lista', 'ControllerUsuario@lista');
 $router->add('/perfil/ventas', 'ControllerUsuario@ventas_perfil');
 

@@ -91,7 +91,10 @@ class ControllerVenta {
         $venta=$this->venta->getById($id_venta);
 
         
-        if($venta["Estado_Venta"]!="Disponible"){
+        if($venta["id"]==-1){
+            $precio_gestion = 0; // Coste de gestión
+            include_once __DIR__. "/../Views/checkout.php";
+        }else if($venta["Estado_Venta"]!="Disponible"){
             unset($_SESSION["id_venta"]);
             header("Location: /TDG/ventas");
         }else{

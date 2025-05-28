@@ -1,0 +1,9 @@
+ul{
+    list-style: none;
+}
+
+li{
+    font-size: 200%;
+    color: var(--color-texto);
+    text-align: center;
+}

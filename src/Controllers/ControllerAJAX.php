@@ -225,7 +225,7 @@ class ControllerAJAX {
         foreach ($compras as &$compra) {
             $compraID=$ventaDB->getById($compra["id_Post"]);
 
-            $compra["Producto"]=["Titulo"=>$compraID["Titulo"], "Imagen"=>$compraID["img_venta"]];
+            $compra["Producto"]=["id"=>$compraID["id"], "Titulo"=>$compraID["Titulo"], "Imagen"=>$compraID["img_venta"]];
         }
 
         echo json_encode(["compras"=>$compras, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
@@ -632,15 +632,22 @@ class ControllerAJAX {
     
     public function gestionarCompra(){
         $ventaDB=new Venta();
+        $usuarioDB=new Usuario();
 
         $id_producto=Validators::evitarInyeccion($_POST["id_producto"]);
         $id_usuario=$_SESSION["usuarioActivo"];
         $fecha_compra=date("Y-m-d H:i:s");
 
-        $baja_stock=$ventaDB->bajarStock($id_producto);
+        if($id_producto==-1){
+            $premium=$usuarioDB->conseguirPremium($id_usuario);
+        }else{
+            $baja_stock=$ventaDB->bajarStock($id_producto);
+        }
+
+        
         $agregar_vendido=$ventaDB->agregarVendido($id_producto, $id_usuario, $fecha_compra);
 
-        if($baja_stock && $agregar_vendido){
+        if( ($baja_stock || $premium) && $agregar_vendido){
             echo json_encode(["result"=> "Producto Vendido con exito."]);
         }else{
             echo json_encode(["error"=>"Error de Base de datos."]);
@@ -796,7 +803,9 @@ class ControllerAJAX {
         $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
         $productoId = $body['productoId'] ?? null;
 
-        if($productoId != $_SESSION["id_venta"]){
+        if($productoId==-1){
+
+        }else if($productoId != $_SESSION["id_venta"]){
             echo json_encode(["error" => "La Id del producto ha sido modificada"]);
             exit;
         }
@@ -807,7 +816,7 @@ class ControllerAJAX {
 
         $precio=$precio_producto + 2.99;
 
-        if($_SESSION["Premium"]==true){
+        if($_SESSION["Premium"]==true || $productoId==-1){
             $precio=$precio_producto;
         }
 

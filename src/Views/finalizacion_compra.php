@@ -10,13 +10,26 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <div class="detalles_compra">
+
     <h3>✅ Compra Finalizada</h3>
 
-    <img class="imagen_venta" src="/TDG/public/IMG/<?php echo $producto["img_venta"] ?>" alt="">
+    <img class="imagen_venta" src="/TDG/public/IMG/productos<?php echo $producto["img_venta"] ?>" alt="">
 
     <h4><?php echo $producto["Titulo"] ?></h4>
 
-    <p>Su producto será enviado a su domicilio.</p>
+    <?php
+
+    if($producto["id"]==-1){
+    ?>
+        <p>¡Disfrute de las ventajas de las ventajas de TDG PREMIUM!</p>
+    <?php
+    }else{
+    ?>
+        <p>Su producto será enviado a su domicilio.</p>
+    <?php
+    }
+    ?>
+    
 </div>
 
 <?php

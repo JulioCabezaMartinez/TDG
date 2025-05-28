@@ -8,9 +8,29 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <div id="perfil">
-    <img src="/TDG/public/IMG/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen">
+    <?php
+        if($perfil["Premium"]==1){
+    ?>
+        <i class="fa-solid fa-crown"></i>
+    <?php
+        } 
+    ?>
     <h2><?php echo $perfil['Nick'] ?></h2>
+
+    <?php
+        if($perfil["Premium"]==0){
+    ?>
+        <a href="/TDG/perfil/Premium">
+        <button class="getPremium boton-perso">Conseguir Premium <i class="fa-solid fa-crown"></i></button>
+        </a>
+    <?php
+        } 
+    ?>
 </div>
+
+<a href="/TDG/perfil/ventas">
+    <button class="boton-perso">Ver Ventas y Compras</button>
+</a>
 
 <div class="juegos">
     <h3>Deseados</h3>

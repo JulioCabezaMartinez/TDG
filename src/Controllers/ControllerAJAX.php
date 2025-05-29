@@ -454,14 +454,13 @@ class ControllerAJAX {
         $direccion = Validators::evitarInyeccion($_POST['direccion']);
         $imagen = $_FILES['imagen_perfil'] ?? null; // Obtener la imagen si se proporciona
 
-        // Lógica para registrar al usuario
-        $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion);
+        if ($imagen != null) {
+            $Nombreimagen=uniqid();
 
-        if (!empty($imagen["name"])) {
-            $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
+            $extension = strtolower(pathinfo($imagen["name"], PATHINFO_EXTENSION));
             $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
 
-            if ($_FILES['imagen_perfil']['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
+            if ($imagen['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
 
                 return "Imagen demasiado pesada";
             } elseif (!in_array($extension, $extensionesPermitidas)) {
@@ -469,7 +468,7 @@ class ControllerAJAX {
                 return "El archivo tiene un tipo no permitido";
             } else {
 
-                $filename = $resultado . ".jpg";
+                $filename = $Nombreimagen . ".jpg";
                 $tempName = $imagen['tmp_name'];
                 if (isset($filename)) {
                     if (!empty('$filename')) {
@@ -478,6 +477,15 @@ class ControllerAJAX {
                     }
                 }
             }
+        }
+
+        
+
+        if(!empty($imagen)){
+            // Lógica para registrar al usuario
+            $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion, $filename);
+        }else{
+            $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion);
         }
 
         if ($resultado === "Correo") {
@@ -545,7 +553,9 @@ class ControllerAJAX {
         switch ($entidad) {
             case "usuarios":
                 $usuarioDB=new Usuario();
+                $rutaImagen= __DIR__. "/../../public/IMG/Users-img/".$usuarioDB->getById($id)["Imagen_usuario"];
                 $usuarioDB->delete($id);
+                $usuarioDB->eliminarImagen($rutaImagen);
                 echo "Todo Correcto";
                 break;
             case "juegos":

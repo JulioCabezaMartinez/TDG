@@ -50,7 +50,7 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
      * @param string|null $imagen Ruta o URL de la imagen del usuario (opcional).
      * @return mixed Resultado de la operación de registro.
      */
-    public function register($nombre, $apellido, $correo, $pass, $nick, $direccion) {
+    public function register($nombre, $apellido, $correo, $pass, $nick, $direccion, $imagen="default-user.png") {
 
         // Comprobar si el correo ya está registrado
         $usuarioExistente = $this->compruebaCampo('correo', $correo);
@@ -66,7 +66,7 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
             'password' => Security::encryptPass($pass),
             'nick' => $nick,
             'direccion' => $direccion,
-            'imagen_usuario' => "default-user.png", // Ruta de la imagen por defecto
+            'imagen_usuario' => $imagen
         ];
 
         return $this->create($nuevoUsuario);
@@ -103,6 +103,10 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
 
     public function conseguirPremium($id_usuario){
         return $this->query("UPDATE usuarios SET Premium=1 WHERE id={$id_usuario};");
+    }
+
+    public function eliminarImagen($rutaImagen){
+        unlink($rutaImagen);
     }
 }
 ?>

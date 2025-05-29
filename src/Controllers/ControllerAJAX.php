@@ -14,6 +14,7 @@ use App\Models\Venta;
 
 use DateTime;
 use PDO;
+use PDOStatement;
 
 class ControllerAJAX {
 
@@ -451,10 +452,33 @@ class ControllerAJAX {
         $pass = Validators::evitarInyeccion($_POST['password']);
         $nick = Validators::evitarInyeccion($_POST['nick']);
         $direccion = Validators::evitarInyeccion($_POST['direccion']);
-        // $imagen = $_FILES['imagen_perfil']['name'] ?? null; // Obtener la imagen si se proporciona
+        $imagen = $_FILES['imagen_perfil'] ?? null; // Obtener la imagen si se proporciona
 
         // Lógica para registrar al usuario
         $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion);
+
+        if (!empty($imagen["name"])) {
+            $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
+            $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+
+            if ($_FILES['imagen_perfil']['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
+
+                return "Imagen demasiado pesada";
+            } elseif (!in_array($extension, $extensionesPermitidas)) {
+
+                return "El archivo tiene un tipo no permitido";
+            } else {
+
+                $filename = $resultado . ".jpg";
+                $tempName = $imagen['tmp_name'];
+                if (isset($filename)) {
+                    if (!empty('$filename')) {
+                        $location = __DIR__. "/../../public/IMG/Users-img/" . $filename;
+                        move_uploaded_file($tempName, $location);
+                    }
+                }
+            }
+        }
 
         if ($resultado === "Correo") {
             // Manejar el error de registro
@@ -612,10 +636,20 @@ class ControllerAJAX {
             Security::closeSession();
         }
 
-        $entidad=$_POST["entidad"];
-        $datos=json_decode($_POST["datos"], true);
+        $entidad=Validators::evitarInyeccion($_POST["entidad"]);
+        $datosPost=json_decode($_POST["datos"], true);
+
+        $datos=[];
+
+        foreach($datosPost as $key => $dato){
+            $datos[$key]=Validators::evitarInyeccion($dato);
+        }
+
 
         $id=$datos["id"];
+
+        // Declaro PDOStatement aqui para que el ID reconozca que es lo que devuelve update() siempre es un PDOStatement
+        $item=new PDOStatement();
 
         switch ($entidad) {
             case "usuarios":
@@ -646,6 +680,12 @@ class ControllerAJAX {
             default:
                 echo "Error de Entidad";
                 break;
+        }
+
+        if($item->rowCount()==1){
+            echo json_encode(["result"=>"ok"]);
+        }else{
+            echo json_encode(["result"=>"fail"]);
         }
     }
 
@@ -983,34 +1023,41 @@ class ControllerAJAX {
 
     public function cambiarPass(){
 
+        if (empty($_SESSION)) {
+            Security::closeSession();
+        }
+
+        $usuarioDB = new Usuario();
+
+        $id_usuario = Validators::evitarInyeccion($_POST["id_usuario"]);
+        $pass = Validators::evitarInyeccion($_POST["Pass"]);
+
+        $result = $usuarioDB->cambiarPass($id_usuario, $pass);
+
+        if ($result == 1) {
+            echo json_encode(["result" => "ok"]);
+        } else {
+            echo json_encode(["result" => "fail", "Columnas afectadas" => $result]);
+        }
+    }
+
+    public function compruebaPass(){
+
         if(empty($_SESSION)){
             Security::closeSession();
         }
 
         $usuarioDB=new Usuario();
 
-        $id_usuario=Validators::evitarInyeccion($_POST["id_usuario"]);
-        $pass=Validators::evitarInyeccion($_POST["Pass"]);
+        $passActual=Validators::evitarInyeccion($_POST["passActual"]);
+        $id_usuario=$_SESSION["usuarioActivo"];
 
-        if(!$_SESSION["Admin"]){
-            $passAntigua=Validators::evitarInyeccion($_POST["Pass"]);
-            $usuario=$usuarioDB->getById($id_usuario);
+        $usuario=$usuarioDB->getById($id_usuario);
 
-            if(password_verify($passAntigua, $usuario["Password"])){
-                $result=$usuarioDB->cambiarPass($id_usuario, $pass);
-                echo json_encode(["result"=>"ok"]);
-            }else{
-                echo json_encode(["result"=>"fail", "error"=>"La contraseña no es correcta"]);
-            }
+        if(password_verify($passActual, $usuario["Password"])){
+            echo json_encode(["result"=>"ok"]);
         }else{
-        
-            $result=$usuarioDB->cambiarPass($id_usuario, $pass);
-
-            if($result==1){
-                echo json_encode(["result"=>"ok"]);
-            }else{
-                echo json_encode(["result"=>"fail", "Columnas afectadas"=>$result]);
-            }
+            echo json_encode(["result"=>"fail", "mensaje"=>"Contraseña incorrecta"]);
         }
     }
 }

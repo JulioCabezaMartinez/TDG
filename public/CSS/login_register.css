@@ -58,10 +58,6 @@ form{
     align-self: center;
 }
 
-.imagen_form{
-    color: var(--color-texto);
-}
-
 .enlace{
     color: var(--color-texto);
 }

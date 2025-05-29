@@ -8,7 +8,7 @@ require_once 'Templates/inicio.php';
     <h2 class="nombreApp">To Do Games</h2>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
     <h2 id="texto-registro" class="text-center">Registro</h2>
-    <form action="#" method="POST" class="mt-4" id="register-form">
+    <form action="#" method="POST" class="mt-4" id="register-form" enctype="multipart/form-data">
         <p class="d-none" id="error-campos"></p>
         <div class="mb-3">
             <label for="nombre" class="form-label">*Nombre:</label>
@@ -23,10 +23,10 @@ require_once 'Templates/inicio.php';
             <input type="text" class="form-control" id="email" name="email" value="pepe@cabeza.es" required>
             <p class="d-none" id="error_correo"></p>
         </div>
-        <!-- <div class="mb-3">
-            <label for="imagen" class="form-label">Imagen (Opcional):</label>
+        <div class="mb-3">
+            <label for="imagen_perfil" class="form-label">Imagen (Opcional):</label>
             <input class="imagen_form form-control" type="file" name="imagen_perfil" id="imagen_perfil">
-        </div> -->
+        </div>
         <div class="mb-3">
             <label for="username" class="form-label">*Dirección de envio:</label>
             <input type="text" class="form-control" id="direccion" name="direccion" value="C/Cuarta, 54" required>

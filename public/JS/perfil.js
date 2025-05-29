@@ -1,3 +1,294 @@
+const expresiones_regulares=new Map();
+expresiones_regulares.set("correo", /^[\w.-]+@[\w.-]+\.\w+$/);
+expresiones_regulares.set("password_completa", /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/);
+expresiones_regulares.set("password_mayusculas", /[A-Z]/);
+expresiones_regulares.set("password_minusculas", /[a-z]/);
+expresiones_regulares.set("password_numero", /\d/);
+expresiones_regulares.set("password_especial", /[!@#$%^&*(),.?":{}|<>]/);
+
+function actualizarEstado(id, esValido, mensaje) {
+    const elemento = document.getElementById(id);
+    elemento.textContent = mensaje;
+    elemento.classList.remove("text-success", "text-danger");
+    elemento.classList.add(esValido ? "text-success" : "text-danger");
+}
+
+function eventos(){
+
+    const modalCreacionModificacion = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
+    const modalPass = new bootstrap.Modal(document.getElementById("modificacionPass"));
+
+    //Abrir Modal de Cambio de Contraseña
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("cambiarPassword")) {
+            let id = e.target.id.split("@")[1];
+            let id_usuarioinput=document.getElementById("id_usuario_pass");
+            id_usuarioinput.value=id;
+
+            let passInput=document.getElementById("contraseña_cambio");
+            let confirmInput=document.getElementById("confirm_cambio");
+            let error=document.getElementById("error_pass");
+
+            error.textContent="";
+            passInput.value="";
+            confirmInput.value="";
+
+            
+            modalPass.show();
+        }
+    });
+    //Abrir Modal de Modificación de Datos
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("modificar-dato")) {
+            let id = e.target.id.split("@")[1];
+            let entidad = "usuarios";
+
+            modalCreacionModificacion.show();
+
+            formData = new FormData();
+            formData.append("id", id);
+            formData.append("entidad", entidad);
+
+            fetch("/TDG/AJAX/datosModificarDato", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.text())
+            .then(data => {
+                const json = JSON.parse(data);
+                const datos = json["dato"];
+
+                for (let key in datos) {
+                    const input = document.getElementById(key + "Input");
+                    if (input) input.value = datos[key];
+                }
+            });
+        }
+    });
+
+    // Enviar Datos de Modificacion de Usuario
+    document.getElementById("btn_modificar").addEventListener("click", () => {
+        const entidad = "usuarios";
+        const datos = {};
+
+        document.querySelectorAll("[id$='Input']").forEach(input => {
+            const key = input.id.replace("Input", "");
+            datos[key] = input.value;
+        });
+
+        const formData = new FormData();
+        formData.append("datos", JSON.stringify(datos));
+        formData.append("entidad", entidad);
+
+        fetch("/TDG/AJAX/modificarDato", {
+        method: "POST",
+        body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.result=="ok"){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Usuario modificado con éxito",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+                modalCreacionModificacion.hide();
+            }else{
+                Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Perfil no modificado",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
+            });
+            }
+            
+        })
+        .catch(() => {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error en el servidor",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
+            });
+        });
+    });
+
+    // Cerrar y limpiar Modal de Modificación de Datos
+    document.getElementById("btn_cerrar_modal").addEventListener("click", () => {
+        document.querySelectorAll("[id$='Input']").forEach(input => {
+        input.value = "";
+        });
+
+        if (modalCreacionModificacion) modalCreacionModificacion.hide();
+    });
+
+    // Enviar Datos de Cambio de Pass
+    document.getElementById("btn_cambiarPass").addEventListener("click", ()=>{
+        let id_usuarioinput=document.getElementById("id_usuario_pass");
+        let passActualInput=document.getElementById("contraseña_actual");
+        let passInput=document.getElementById("contraseña_cambio");
+        let confirmInput=document.getElementById("confirm_cambio");
+        let error=document.getElementById("error_pass");
+
+        let passActual=passActualInput.value;
+        let pass=passInput.value;
+        let confirm=confirmInput.value;
+        let id_usuario=id_usuarioinput.value;
+
+        let validacionPass=/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/;
+
+        if(passActual=="" || pass=="" || confirm==""){
+            error.textContent="Se deben de completar todos los campos";
+        }else if(!validacionPass.test(pass)){
+            error.textContent="La contraseña no es valida";
+        }else if(pass!==confirm){
+            error.textContent="Las contraseñas no coinciden";
+        } else {
+            let formDataPassActual=new FormData();
+            formDataPassActual.append("passActual", passActual);
+
+            // Comprobacion de contraseña Actual
+            fetch("/TDG/AJAX/compruebaPass", {
+                    method: "POST",
+                    body: formDataPassActual
+                })
+                .then(res=>res.json())
+                .then(data=>{
+
+                    if (data.result == "ok") {
+                        let formData = new FormData();
+                        formData.append("Pass", pass);
+                        formData.append("id_usuario", id_usuario);
+
+                        fetch("/TDG/AJAX/cambiarPassAdmin", {
+                            method: "POST",
+                            body: formData
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                modalPass.hide();
+
+                                if (data.result == "ok") {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Contraseña modificada con éxito",
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        backdrop: false,
+                                        background: "#2C2C2E",
+                                        color: "#FFFFFF"
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "error",
+                                        title: "Error en el servidor",
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        backdrop: false,
+                                        background: "#2C2C2E",
+                                        color: "#FFFFFF"
+                                    });
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                    } else {
+                        error.textContent = data.mensaje;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    });
+
+    //Validaciones de la contraseña
+    document.getElementById("contraseña_cambio").addEventListener("input", function () {
+        const password = this.value;
+        let strength = 0;
+
+        // Validaciones
+        if (password.length >= 8) {
+            actualizarEstado("length", true, "✅ Mínimo 8 caracteres");
+            strength++;
+        } else {
+            actualizarEstado("length", false, "❌ Mínimo 8 caracteres");
+        }
+
+        if (expresiones_regulares.get("password_mayusculas").test(password)) {
+            actualizarEstado("uppercase", true, "✅ Al menos una mayúscula");
+            strength++;
+        } else {
+            actualizarEstado("uppercase", false, "❌ Al menos una mayúscula");
+        }
+
+        if (expresiones_regulares.get("password_minusculas").test(password)) {
+            actualizarEstado("lowercase", true, "✅ Al menos una minúscula");
+            strength++;
+        } else {
+            actualizarEstado("lowercase", false, "❌ Al menos una minúscula");
+        }
+
+        if (expresiones_regulares.get("password_numero").test(password)) {
+            actualizarEstado("number", true, "✅ Al menos un número");
+            strength++;
+        } else {
+            actualizarEstado("number", false, "❌ Al menos un número");
+        }
+
+        if (expresiones_regulares.get("password_especial").test(password)) {
+            actualizarEstado("special", true, "✅ Al menos un carácter especial");
+            strength++;
+        } else {
+            actualizarEstado("special", false, "❌ Al menos un carácter especial");
+        }
+
+        // Actualizar barra de progreso
+        const percentage = (strength / 5) * 100;
+        const bar = document.getElementById("password-strength-bar");
+        bar.style.width = percentage + "%";
+
+        // Colores según la seguridad
+        bar.className = "progress-bar"; // Resetear clases base
+        if (strength === 5) {
+            bar.classList.add("bg-success");
+        } else if (strength >= 3) {
+            bar.classList.add("bg-warning");
+        } else {
+            bar.classList.add("bg-danger");
+        }
+    });
+
+    // Cerrar y limpiar Modal de Cambio de Contraseña
+    document.getElementById("btn_cerrar_modal_pass").addEventListener("click", () => {
+        let passActualInput=document.getElementById("contraseña_actual");
+        let passInput=document.getElementById("contraseña_cambio");
+        let confirmInput=document.getElementById("confirm_cambio");
+        let error=document.getElementById("error_pass");
+
+        passActualInput.value="";
+        error.textContent="";
+        passInput.value="";
+        confirmInput.value="";
+
+        modalPass.hide();
+    });
+}
 
 /* Paginación de listas */
 function crearTablaLista(juegos, tipo) {
@@ -31,7 +322,7 @@ function crearTablaLista(juegos, tipo) {
 
         // Crear el enlace
         const enlace = document.createElement("a");
-        enlace.href = `/TDG/juegos/view?id=${juego.id}`;
+        enlace.href = `/TDG/juegos/view?juego=${juego.id}`;
 
         // Crear la imagen
         const imagen = document.createElement("img");
@@ -410,3 +701,5 @@ paginacionWishlist();
 paginacionCompleted();
 paginacionPlaying();
 paginacionBacklog();
+
+eventos();

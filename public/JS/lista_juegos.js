@@ -39,39 +39,6 @@ function eventos() {
         });
     });
 
-    // Antigua idea de filtros en scroll.
-
-    // document.querySelectorAll(".opcion_filtro").forEach(function (el) {
-    //     el.addEventListener("click", function () {
-    //         const filtrosActivos = document.querySelector(".filtros_activos");
-
-    //         const div = document.createElement("div");
-    //         div.className = "card-item swiper-slide";
-    //         div.innerHTML = `<i class='fa-solid fa-xmark eliminar-filtro'></i> ${this.value}`;
-
-    //         filtrosActivos.appendChild(div);
-
-    //         const numeroDeSlides = filtrosActivos.children.length;
-
-    //         if (window.swiper) {
-    //             swiper.update();
-    //         }
-    //     });
-    // });
-
-    // document.addEventListener("click", function (e) {
-    //     if (e.target && e.target.classList.contains("eliminar-filtro")) {
-    //         const slide = e.target.closest(".swiper-slide");
-    //         if (slide) {
-    //             slide.remove();
-    //         }
-
-    //         if (window.swiper) {
-    //             swiper.update();
-    //         }
-    //     }
-    // });
-
     // Aplicar Filtros
     document.getElementById("aplicarFiltros").addEventListener("click", function(){
         let filtros=buscarFiltros();

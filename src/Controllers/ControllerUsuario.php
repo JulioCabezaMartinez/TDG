@@ -32,6 +32,12 @@ class ControllerUsuario {
         $usuarioDB = new Usuario();
 
         $perfil = $usuarioDB->getById($_SESSION['usuarioActivo']);
+        
+        $datos=$usuarioDB->listaColumnas();
+        $columnas=[];
+        foreach($datos as $dato){
+            array_push($columnas, $dato["Field"]);
+        }
 
         include_once __DIR__.'/../Views/perfil.php';
     }

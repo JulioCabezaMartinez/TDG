@@ -6,7 +6,7 @@ require_once __DIR__ . '\Templates\inicio.php';
 require_once __DIR__ . '\Templates\barra-lateral.admin.php';
 ?>
 
-<!-- Modal de creación de Review -->
+<!-- Modal de creación y modificación de Datos -->
 <div class="modal fade" id="creacion_modificar_dato" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -299,7 +299,7 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
         </div>
     </div>
 </div>
-<!-- Modal de creación de Review -->
+<!-- Modal de creación y modificación de Datos -->
 
 <?php
 if($entidad=="usuarios"){

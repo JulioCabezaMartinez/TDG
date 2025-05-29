@@ -82,6 +82,7 @@ function eventos(){
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm").value;
     const email = document.getElementById("email").value;
+    const imagen = document.getElementById('imagen_perfil');
     const nombre = document.getElementById("nombre").value;
     const apellidos = document.getElementById("apellido").value;
     const nick= document.getElementById("nick").value;
@@ -122,33 +123,39 @@ function eventos(){
         formData.append("nick", nick);
         formData.append("direccion", direccion);
 
+        if (imagen.files.length > 0) {
+            // Añadir el archivo al FormData (nombre del campo como en el HTML: "imagen_perfil")
+            formData.append('imagen_perfil', imagen.files[0]);
+        }
+
         fetch("/TDG/AJAX/registrar-usuario", {
             method: "POST",
             body: formData,
 
-        }).then(response => response.json())
+        }).then(response => response.text())
         .then(data => {
-            if (data.result && data.result == "ok") {
-                Swal.fire({
-                    icon: "success",
-                    title: "Registro completado",
-                    text: "Registro exitoso. Bienvenido, " + nick + "!",
-                });
+            console.log(data);
+            // if (data.result && data.result == "ok") {
+            //     Swal.fire({
+            //         icon: "success",
+            //         title: "Registro completado",
+            //         text: "Registro exitoso. Bienvenido, " + nick + "!",
+            //     });
                 
 
-            }else if(data.result=="error" && data.Error=="correo"){
+            // }else if(data.result=="error" && data.Error=="correo"){
                
-                errores["igual"]="El correo ya está registrado.";
-                console.log(errores["igual"]);
+            //     errores["igual"]="El correo ya está registrado.";
+            //     console.log(errores["igual"]);
                 
             
-            }else{
-                Swal.fire({
-                    icon: "error",
-                    title: "Algo salió mal",
-                    text: "Ha fallado el registro, intentelo más tarde.",
-                });
-            }
+            // }else{
+            //     Swal.fire({
+            //         icon: "error",
+            //         title: "Algo salió mal",
+            //         text: "Ha fallado el registro, intentelo más tarde.",
+            //     });
+            // }
                 
         }).catch(error => {
             console.error("Error:", error);

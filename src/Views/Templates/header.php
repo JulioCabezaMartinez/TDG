@@ -124,6 +124,19 @@
 
         </div>
         <br>
+        <?php
+        if (!empty($_SESSION)) {
+        ?>
+            <a href="/TDG/perfil">
+                <div class="link-hamburguesa">
+                    <i class="fa-solid fa-user"></i>
+                    <h2 class="enlace">Perfil</h2>
+                </div>
+            </a>
+        <?php
+        }
+        ?>
+        <br>
         <a href="/TDG/">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-house"></i>

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Juego;
 use App\Models\Lista;
 use App\Models\Plataforma;
+use App\Models\Genero;
 use App\Models\Review;
 use App\Models\Usuario;
 
@@ -1069,5 +1070,26 @@ class ControllerAJAX {
         }else{
             echo json_encode(["result"=>"fail", "mensaje"=>"Contraseña incorrecta"]);
         }
+    }
+
+    public function getGenPlatJuegoAdmin(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        if(!$_SESSION["Admin"]){
+            Security::closeSession();
+        }
+
+        $generoDB=new Genero();
+        $plataformaDB=new Plataforma();
+
+        $id_juego = Validators::evitarInyeccion($_POST["id_juego"]);
+
+        $generos = $generoDB->getGenerosIDJuegoById($id_juego);
+        $plataformas = $plataformaDB->getPlataformasIDJuegoById($id_juego);
+
+        echo json_encode(["generos"=>$generos, "plataformas"=>$plataformas]);
     }
 }

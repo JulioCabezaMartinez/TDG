@@ -4,12 +4,16 @@ namespace App\Models;
 
 use App\Core\EmptyModel;
 
+use App\Traits\BusquedaAlfa;
 use PDO;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de géneros.
  */
 class Genero extends EmptyModel {
+
+    use BusquedaAlfa;
+
     /**
      * Constructor de la clase Genero.
      * Configura la tabla y la clave primaria asociadas al modelo.
@@ -36,6 +40,13 @@ class Genero extends EmptyModel {
 
     public function getGenerosJuegoById($id_juego) {
         $sql = "SELECT g.Nombre FROM generos g
+                JOIN generos_juego gj ON g.id = gj.id_genero
+                WHERE gj.id_juego = ?";
+        return $this->query($sql, [$id_juego])->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getGenerosIDJuegoById($id_juego) {
+        $sql = "SELECT g.id FROM generos g
                 JOIN generos_juego gj ON g.id = gj.id_genero
                 WHERE gj.id_juego = ?";
         return $this->query($sql, [$id_juego])->fetchAll(PDO::FETCH_ASSOC);

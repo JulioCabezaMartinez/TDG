@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use App\Models\Review;
 use App\Models\Venta;
 use App\Models\Plataforma;
+use App\Models\Genero;
 
 class ControllerAdmin{
 
@@ -51,11 +52,15 @@ class ControllerAdmin{
                     break;
                 case "juegos":
                     $juegoDB=new Juego();
+                    $plataformaDB=new Plataforma();
+                    $generoDB=new Genero();
                     $datos=$juegoDB->listaColumnas();
                     $columnas=[];
                     foreach($datos as $dato){
                         array_push($columnas, $dato["Field"]);
                     }
+                    $plataformas=$plataformaDB->getAllOrderByAlfabet();
+                    $generos=$generoDB->getAllOrderByAlfabet();
                     $lista=$juegoDB->getAll();
                     break;
                 case "reviews":

@@ -3,8 +3,9 @@
 /* Eventos click de Click de la Página */
 
 function eventos() { // Cambiar data de los fetches.
+    const entidad = document.getElementById("entidad").value;
+
     const modalCreacionModificacion = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
-    const modalPass = new bootstrap.Modal(document.getElementById("modificacionPass"));
 
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -12,7 +13,7 @@ function eventos() { // Cambiar data de los fetches.
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("eliminar-dato")) {
         const id = e.target.id.split("@")[1];
-        const entidad = document.getElementById("entidad").value;
+        
 
         fetch("/TDG/AJAX/eliminarDato", {
             method: "POST",
@@ -72,7 +73,6 @@ function eventos() { // Cambiar data de los fetches.
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("modificar-dato")) {
             const id = e.target.id.split("@")[1];
-            const entidad = document.getElementById("entidad").value;
 
             document.getElementById("btn_modificar").style.display = "block"; // Ocultar botón de modificar
             document.getElementById("btn_crear").style.display = "none"; // Mostrar botón de crear
@@ -109,7 +109,6 @@ function eventos() { // Cambiar data de los fetches.
     });
 
     document.getElementById("btn_crear").addEventListener("click", () => {
-        const entidad = document.getElementById("entidad").value;
         const datos = {};
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
@@ -174,7 +173,6 @@ function eventos() { // Cambiar data de los fetches.
 
     //Confirmar modificación
     document.getElementById("btn_modificar").addEventListener("click", () => {
-        const entidad = document.getElementById("entidad").value;
         const datos = {};
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
@@ -252,7 +250,10 @@ function eventos() { // Cambiar data de los fetches.
         paginacion(undefined, busqueda);
     });
 
-    document.addEventListener("click", function (e) {
+    if(entidad=="usuarios"){
+        const modalPass = new bootstrap.Modal(document.getElementById("modificacionPass"));
+        document.addEventListener("click", function (e) {
+
         if (e.target.classList.contains("cambiarPassword")) {
             let id = e.target.id.split("@")[1];
             let id_usuarioinput=document.getElementById("id_usuario_pass");
@@ -269,75 +270,134 @@ function eventos() { // Cambiar data de los fetches.
             
             modalPass.show();
         }
-    });
+        });
 
-    document.getElementById("btn_cerrar_modal_pass").addEventListener("click", () => {
-        let passInput=document.getElementById("contraseña_cambio");
-        let confirmInput=document.getElementById("confirm_cambio");
-        let error=document.getElementById("error_pass");
+        document.getElementById("btn_cerrar_modal_pass").addEventListener("click", () => {
 
-        error.textContent="";
-        passInput.value="";
-        confirmInput.value="";
+            let passInput=document.getElementById("contraseña_cambio");
+            let confirmInput=document.getElementById("confirm_cambio");
+            let error=document.getElementById("error_pass");
 
-        modalPass.hide();
-    });
+            error.textContent="";
+            passInput.value="";
+            confirmInput.value="";
 
-    document.getElementById("btn_cambiarPass").addEventListener("click", ()=>{
-        let id_usuarioinput=document.getElementById("id_usuario_pass");
-        let passInput=document.getElementById("contraseña_cambio");
-        let confirmInput=document.getElementById("confirm_cambio");
-        let error=document.getElementById("error_pass");
+            modalPass.hide();
+        });
 
-        let pass=passInput.value;
-        let confirm=confirmInput.value;
-        let id_usuario=id_usuarioinput.value;
+        document.getElementById("btn_cambiarPass").addEventListener("click", ()=>{
 
-        if(pass=="" || confirm==""){
-            error.textContent="Se deben de completar todos los campos";
-        }else if(pass!==confirm){
-            error.textContent="Las contraseñas no coinciden";
-        } else {
-            let formData = new FormData();
-            formData.append("Pass", pass);
-            formData.append("id_usuario", id_usuario);
+            let id_usuarioinput=document.getElementById("id_usuario_pass");
+            let passInput=document.getElementById("contraseña_cambio");
+            let confirmInput=document.getElementById("confirm_cambio");
+            let error=document.getElementById("error_pass");
 
-            fetch("/TDG/AJAX/cambiarPassAdmin", {
+            let pass=passInput.value;
+            let confirm=confirmInput.value;
+            let id_usuario=id_usuarioinput.value;
+
+            if(pass=="" || confirm==""){
+                error.textContent="Se deben de completar todos los campos";
+            }else if(pass!==confirm){
+                error.textContent="Las contraseñas no coinciden";
+            } else {
+                let formData = new FormData();
+                formData.append("Pass", pass);
+                formData.append("id_usuario", id_usuario);
+
+                fetch("/TDG/AJAX/cambiarPassAdmin", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        modalPass.hide();
+
+                        if (data.result == "ok") {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Contraseña modificada con éxito",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                backdrop: false,
+                                background: "#2C2C2E",
+                                color: "#FFFFFF"
+                            });
+                            paginacion(); // Recargar la tabla después de crear
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "Error en el servidor",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                backdrop: false,
+                                background: "#2C2C2E",
+                                color: "#FFFFFF"
+                            });
+                        }
+                    });
+            }
+        });
+    }
+
+    if(entidad=="juegos"){
+        const modalGenPlat = new bootstrap.Modal(document.getElementById("modificacionGeneroPlat"));
+        document.addEventListener("click", function (e) {
+
+        if (e.target.classList.contains("addGenPlat")) {
+            let id = e.target.id.split("@")[1];
+            let id_juegoinput=document.getElementById("id_usuario_GenPlat");
+            id_juegoinput.value=id;
+            
+            let inputGeneros=document.getElementById("generos");
+            let inputPlataformas=document.getElementById("plataformas");
+
+            let formData= new FormData();
+            formData.append("id_juego", id)
+
+            fetch("/TDG/AJAX/getGenPlatJuegoAdmin",{
                 method: "POST",
-                body: formData
+                body:formData
             })
-                .then(res => res.json())
-                .then(data => {
+            .then(res=>res.json())
+            .then(data=>{
+                let generosSeleccionados=data.generos;
+                let plataformasSeleccionadas=data.plataformas;
 
-                    modalPass.hide();
+                for(let genero of inputGeneros.options){
 
-                    if (data.result == "ok") {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Contraseña modificada con éxito",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            backdrop: false,
-                            background: "#2C2C2E",
-                            color: "#FFFFFF"
-                        });
-                        paginacion(); // Recargar la tabla después de crear
-                    } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "Error en el servidor",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            backdrop: false,
-                            background: "#2C2C2E",
-                            color: "#FFFFFF"
-                        });
-                    }
-                });
+                    generosSeleccionados.forEach(id=>{
+                        if(genero.value==id.id){
+                            genero.selected=true;
+                        }
+                    });
+                    
+                }
+
+                for(let plataforma of inputPlataformas.options){
+
+                    plataformasSeleccionadas.forEach(id=>{
+                        if(plataforma.value==id.id){
+                            plataforma.selected=true;
+                        }
+                    });
+                    
+                }
+
+                modalGenPlat.show();
+            }).catch(error=>{
+                console.log(JSON.stringify(error));
+            })
+
+           
         }
-    });
+        });
+    }
+
+    
 }
 
 /* Paginación de listas */
@@ -414,6 +474,7 @@ function crearTabla(lista, columnas, entidad) {
                 <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
                 <button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
                 ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Cambiar Contraseña</button>` : ''}
+                ${entidad === "juegos" ? `<button id="add_genPlat@${item.id}" class="dropdown-item btn btn-primary addGenPlat">Añadir/Modificar Generos y Plataformas</button>` : ''}
                 </div>
             </div>
             `;
@@ -521,6 +582,14 @@ function crearTabla(lista, columnas, entidad) {
       btnPass.textContent = "Cambiar Contraseña";
       btnPass.id=`btn_cambPass@${item.id}`;
       dropdownMenu.appendChild(btnPass);
+    }
+
+    if (entidad === "juegos") {
+      const btnGenPlat = document.createElement("button");
+      btnGenPlat.className = "dropdown-item btn btn-primary addGenPlat";
+      btnGenPlat.textContent = "Añadir/Modificar Generos y Plataformas";
+      btnGenPlat.id=`add_genPlat@${item.id}`;
+      dropdownMenu.appendChild(btnGenPlat);
     }
 
     dropdown.appendChild(btnToggle);

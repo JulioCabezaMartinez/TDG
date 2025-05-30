@@ -38,5 +38,12 @@ class Plataforma extends EmptyModel {
                 WHERE pj.id_juego = ?";
         return $this->query($sql, [$id_juego])->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getPlataformasIDJuegobyId($id_juego) {
+        $sql = "SELECT p.id FROM plataformas p
+                JOIN plataformas_juego pj ON p.id = pj.id_plataforma
+                WHERE pj.id_juego = ?";
+        return $this->query($sql, [$id_juego])->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

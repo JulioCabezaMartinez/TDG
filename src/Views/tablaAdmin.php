@@ -290,6 +290,8 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                         
                 }
                 ?>
+
+
             </div>
             <div class="modal-footer">
                 <button id="btn_cerrar_modal" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancelar</button>
@@ -331,8 +333,56 @@ if($entidad=="usuarios"){
 </div>
 <!-- Modal de cambio de Contraseña -->
 <?php
+}else if($entidad=="juegos"){
+?>
+<!-- Modal de Añadir/Modificar Generos y Plataformas  -->
+<div class="modal fade" id="modificacionGeneroPlat" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificacion-dato-header">Modificacion de Generos y Plataformas</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id_usuario_GenPlat">
+                <div>
+                    <label for="Generos">Generos: </label>
+                    <select class="form-select" name="generos" id="generos" multiple>
+                    <?php
+                    foreach($generos as $genero){
+                    ?>
+                    <option value="<?php echo $genero["id"]?>"><?php echo $genero["Nombre"]?></option>
+                    <?php
+                    }
+                    ?>
+                    </select>
+                    <br>
+                    <label for="Plataformas">Plataformas: </label>
+                    <select class="form-select" name="plataformas" id="plataformas" multiple>
+                    <?php
+                    foreach($plataformas as $plataforma){
+                    ?>
+                    <option value="<?php echo $plataforma["id"]?>"><?php echo $plataforma["Nombre"]?></option>
+                    <?php
+                    }
+                    ?>
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_cerrar_modal_GenPlat" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancelar</button>
+                <button id="btn_addGenPlat" type="button" class="boton-perso">Añadir/Modificar Generos y Plataformas</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de cambio de Contraseña -->
+<?php
 }
 ?>
+
+
+
 <div class="content">
     <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
     <h2 class="h2-entidad ms-3">Tabla <?php echo $entidad ?></h2>

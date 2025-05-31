@@ -10,9 +10,14 @@ expresiones_regulares.set("password_especial", /[!@#$%^&*(),.?":{}|<>]/);
 // Función auxiliar para actualizar los textos y clases de validación
 function actualizarEstado(id, esValido, mensaje) {
     const elemento = document.getElementById(id);
-    elemento.textContent = mensaje;
     elemento.classList.remove("text-success", "text-danger");
-    elemento.classList.add(esValido ? "text-success" : "text-danger");
+    if(esValido){
+        elemento.innerHTML = `<i class="fa-regular fa-square-check"></i> ${mensaje}`;
+        elemento.classList.add("text-success", "check");
+    }else{
+        elemento.innerHTML = `<i class="fa-solid fa-square-xmark"></i> ${mensaje}`;
+        elemento.classList.add("text-danger", "error");
+    }
 }
 
 function eventos(){
@@ -22,38 +27,38 @@ function eventos(){
 
         // Validaciones
         if (password.length >= 8) {
-            actualizarEstado("length", true, "✅ Mínimo 8 caracteres");
+            actualizarEstado("length", true, "Mínimo 8 caracteres");
             strength++;
         } else {
-            actualizarEstado("length", false, "❌ Mínimo 8 caracteres");
+            actualizarEstado("length", false, "Mínimo 8 caracteres");
         }
 
         if (expresiones_regulares.get("password_mayusculas").test(password)) {
-            actualizarEstado("uppercase", true, "✅ Al menos una mayúscula");
+            actualizarEstado("uppercase", true, "Al menos una mayúscula");
             strength++;
         } else {
-            actualizarEstado("uppercase", false, "❌ Al menos una mayúscula");
+            actualizarEstado("uppercase", false, "Al menos una mayúscula");
         }
 
         if (expresiones_regulares.get("password_minusculas").test(password)) {
-            actualizarEstado("lowercase", true, "✅ Al menos una minúscula");
+            actualizarEstado("lowercase", true, "Al menos una minúscula");
             strength++;
         } else {
-            actualizarEstado("lowercase", false, "❌ Al menos una minúscula");
+            actualizarEstado("lowercase", false, "Al menos una minúscula");
         }
 
         if (expresiones_regulares.get("password_numero").test(password)) {
-            actualizarEstado("number", true, "✅ Al menos un número");
+            actualizarEstado("number", true, "Al menos un número");
             strength++;
         } else {
-            actualizarEstado("number", false, "❌ Al menos un número");
+            actualizarEstado("number", false, "Al menos un número");
         }
 
         if (expresiones_regulares.get("password_especial").test(password)) {
-            actualizarEstado("special", true, "✅ Al menos un carácter especial");
+            actualizarEstado("special", true, "Al menos un carácter especial");
             strength++;
         } else {
-            actualizarEstado("special", false, "❌ Al menos un carácter especial");
+            actualizarEstado("special", false, "Al menos un carácter especial");
         }
 
         // Actualizar barra de progreso
@@ -76,7 +81,7 @@ function eventos(){
     document.getElementById("register-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    let errores=[];
+    let errores={};
 
     // Obtener el valor de la contraseña
     const password = document.getElementById("password").value;
@@ -88,9 +93,14 @@ function eventos(){
     const nick= document.getElementById("nick").value;
     const direccion= document.getElementById("direccion").value;
 
+    const errorGlobal=document.getElementById("error_global");
+    const errorCorreo=document.getElementById("error_correo");
+    const errorPassword=document.getElementById("error_password");
+    const errorConfirm=document.getElementById("error_confirm");
+
+
     if(!password || !confirmPassword || !email || !nombre || !apellidos || !nick || !direccion){
-        errores["campos"]="Todos los campos son obligatorios.";
-        console.log(errores["campos"]);
+        errores["campos"]="*Todos los campos son obligatorios.";
     }
 
     // Expresión regular para validar la contraseña
@@ -101,19 +111,23 @@ function eventos(){
     // Verificar si la contraseña cumple con el patrón
     if (!pattern.test(password)) {
         
-        errores["password"]="Contraseña no válida. Debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
-        console.log(errores["password"]);
+        errores["password"]="*Contraseña no válida. Debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
         
-    }else if(!expresiones_regulares.get("correo").test(email)){
-        errores["correo"]="Correo no válido.";
-        console.log(errores["correo"]);
+    }
+
+    if(!expresiones_regulares.get("correo").test(email)){
+
+        errores["correo"]="*Correo no válido.";
        
-    }else if(password !== confirmPassword){
+    }
 
-        errores["confirm"]="Las contraseñas no coinciden.";
-        console.log(errores["confirm"]);
+    if(password !== confirmPassword){
 
-    }else{
+        errores["confirm"]="*Las contraseñas no coinciden.";
+
+    }
+
+    if(Object.keys(errores).length<=0){
 
         let formData = new FormData();
         formData.append("password", password);
@@ -124,7 +138,6 @@ function eventos(){
         formData.append("direccion", direccion);
 
         if (imagen.files.length > 0) {
-            // Añadir el archivo al FormData (nombre del campo como en el HTML: "imagen_perfil")
             formData.append('imagen_perfil', imagen.files[0]);
         }
 
@@ -132,35 +145,58 @@ function eventos(){
             method: "POST",
             body: formData,
 
-        }).then(response => response.text())
+        }).then(response => response.json())
         .then(data => {
-            console.log(data);
-            // if (data.result && data.result == "ok") {
-            //     Swal.fire({
-            //         icon: "success",
-            //         title: "Registro completado",
-            //         text: "Registro exitoso. Bienvenido, " + nick + "!",
-            //     });
+
+            if (data.result && data.result == "ok") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Registro completado",
+                    text: "Registro exitoso. Bienvenido, " + nick + "!",
+                });
                 
 
-            // }else if(data.result=="error" && data.Error=="correo"){
+            }else if(data.result=="error" && data.Error=="correo"){
                
-            //     errores["igual"]="El correo ya está registrado.";
-            //     console.log(errores["igual"]);
-                
+                errores["igual"]="El correo ya está registrado.";
+                errorCorreo.textContent="*  El correo ya está registrado.";
             
-            // }else{
-            //     Swal.fire({
-            //         icon: "error",
-            //         title: "Algo salió mal",
-            //         text: "Ha fallado el registro, intentelo más tarde.",
-            //     });
-            // }
+            }else{
+                console.log("Result: " + data);
+                Swal.fire({
+                    icon: "error",
+                    title: "Algo salió mal",
+                    text: "Ha fallado el registro, intentelo más tarde.",
+                });
+            }
                 
         }).catch(error => {
             console.error("Error:", error);
         });
+    }else{
+        for(let [error, mensaje] of Object.entries(errores)){
+            if(error=="campos"){
+
+                errorGlobal.textContent=mensaje;
+
+            }else if(error=="password"){
+
+                errorPassword.textContent=mensaje;
+
+            }else if(error=="correo"){
+
+                errorCorreo.textContent=mensaje;
+
+            }else if(error=="confirm"){
+
+                errorConfirm.textContent=mensaje;
+
+            }else if(error=="igual"){
+                errorCorreo.textContent=mensaje;
+            }
+        } 
     }
+
 });
 
 }

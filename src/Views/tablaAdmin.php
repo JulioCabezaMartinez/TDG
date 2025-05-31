@@ -345,27 +345,36 @@ if($entidad=="usuarios"){
             <div class="modal-body">
                 <input type="hidden" id="id_usuario_GenPlat">
                 <div>
-                    <label for="Generos">Generos: </label>
-                    <select class="form-select" name="generos" id="generos" multiple>
+                    <h3 for="Generos">Generos: </h3>
+                    <br><br>
+                    <div class="generosChecks">
                     <?php
                     foreach($generos as $genero){
                     ?>
-                    <option value="<?php echo $genero["id"]?>"><?php echo $genero["Nombre"]?></option>
+                    <div class="form-check">
+                        <input class="generoCheck form-check-input" type="checkbox" value="<?php echo $genero["id"] ?>">
+                        <label class="form-check-label"><?php echo $genero["Nombre"] ?></label>
+                    </div>
                     <?php
                     }
                     ?>
-                    </select>
+                    </div>
                     <br>
-                    <label for="Plataformas">Plataformas: </label>
-                    <select class="form-select" name="plataformas" id="plataformas" multiple>
+                    <br>
+                    <h3 for="Plataformas">Plataformas: </h3>
+                    <br><br>
+                    <div class="plataformasChecks">
                     <?php
                     foreach($plataformas as $plataforma){
                     ?>
-                    <option value="<?php echo $plataforma["id"]?>"><?php echo $plataforma["Nombre"]?></option>
+                    <div class="form-check">
+                        <input class="plataformaCheck form-check-input" type="checkbox" value="<?php echo $plataforma["id"] ?>">
+                        <label class="form-check-label"><?php echo $plataforma["Nombre"] ?></label>
+                    </div>
                     <?php
                     }
                     ?>
-                    </select>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -376,7 +385,7 @@ if($entidad=="usuarios"){
         </div>
     </div>
 </div>
-<!-- Modal de cambio de Contraseña -->
+<!-- Modal de Añadir/Modificar Generos y Plataformas -->
 <?php
 }
 ?>

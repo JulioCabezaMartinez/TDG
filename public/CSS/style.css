@@ -95,3 +95,13 @@ a{
 .boton-perso-secundario{
     background-color: grey;
 }
+
+.error{
+    color: rgb(206, 36, 36);
+    text-shadow: /* No me deja poner la variable */
+
+    -1px -1px 0 #2C2C2E, /*-1px -1px 0 #2C2C2E: sombra arriba a la izquierda*/ 
+     1px -1px 0 #2C2C2E, /*1px -1px 0 #2C2C2E: sombra arriba a la derecha*/
+    -1px  1px 0 #2C2C2E, /*-1px 1px 0 #2C2C2E: sombra abajo a la izquierda*/
+     1px  1px 0 #2C2C2E; /*1px 1px 0 #2C2C2E: sombra abajo a la derecha*/
+}

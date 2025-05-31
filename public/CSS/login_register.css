@@ -58,8 +58,16 @@ form{
     align-self: center;
 }
 
-.enlace{
-    color: var(--color-texto);
+.check{
+    .error{
+    color: rgb(8, 184, 2);
+    text-shadow: /* No me deja poner la variable */
+
+    -1px -1px 0 #2C2C2E, /*-1px -1px 0 #2C2C2E: sombra arriba a la izquierda*/ 
+     1px -1px 0 #2C2C2E, /*1px -1px 0 #2C2C2E: sombra arriba a la derecha*/
+    -1px  1px 0 #2C2C2E, /*-1px 1px 0 #2C2C2E: sombra abajo a la izquierda*/
+     1px  1px 0 #2C2C2E; /*1px 1px 0 #2C2C2E: sombra abajo a la derecha*/
+}
 }
 
 @media screen and (min-width: 768px) {

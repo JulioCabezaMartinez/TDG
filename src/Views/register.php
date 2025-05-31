@@ -21,7 +21,7 @@ require_once 'Templates/inicio.php';
         <div class="mb-3">
             <label for="correo" class="form-label">*Correo:</label>
             <input type="text" class="form-control" id="email" name="email" value="pepe@cabeza.es" required>
-            <p class="d-none" id="error_correo"></p>
+            <p class="error" id="error_correo"></p>
         </div>
         <div class="mb-3">
             <label for="imagen_perfil" class="form-label">Imagen (Opcional):</label>
@@ -38,7 +38,7 @@ require_once 'Templates/inicio.php';
         <div class="mb-3">
             <label for="password" class="form-label">*Contraseña:</label>
             <input type="password" class="form-control" id="password" name="password" value="@BladeMaster_29" required>
-            <p class="d-none" id="error_password"></p>
+            <p class="error" id="error_password"></p>
             <br>
             <!-- Barra de progreso -->
             <div class="progress mt-2">
@@ -47,18 +47,20 @@ require_once 'Templates/inicio.php';
 
             <!-- Mensajes de validación -->
             <ul class="list-unstyled mt-2">
-                <li id="length" class="text-danger">❌ Mínimo 8 caracteres</li>
-                <li id="uppercase" class="text-danger">❌ Al menos una mayúscula</li>
-                <li id="lowercase" class="text-danger">❌ Al menos una minúscula</li>
-                <li id="number" class="text-danger">❌ Al menos un número</li>
-                <li id="special" class="text-danger">❌ Al menos un carácter especial (@, #, $, etc.)</li>
+                <li id="length" class="error"> <i class="fa-solid fa-square-xmark"></i> Mínimo 8 caracteres</li>
+                <li id="uppercase" class="error"> <i class="fa-solid fa-square-xmark"></i> Al menos una mayúscula</li>
+                <li id="lowercase" class="error"> <i class="fa-solid fa-square-xmark"></i> Al menos una minúscula</li>
+                <li id="number" class="error"> <i class="fa-solid fa-square-xmark"></i> Al menos un número</li>
+                <li id="special" class="error"> <i class="fa-solid fa-square-xmark"></i> Al menos un carácter especial (@, #, $, etc.)</li>
             </ul>
         </div>
         <div class="mb-3">
             <label for="confirm" class="form-label">*Confirmar Contraseña:</label>
             <input type="password" class="form-control" id="confirm" name="confirm" value="@BladeMaster_29" required>
-            <p class="d-none" id="error_confirm"></p>
+            <p class="error" id="error_confirm"></p>
         </div>
+        <br><br>
+        <p class="error" id="error_global"></p>
         <button type="submit" id="btn-registro" class="registro boton-perso">Registrarse</button>
         <br><br>
         <a class="enlace" href="/TDG/">< Volver al Inicio</a>

@@ -133,8 +133,6 @@ function eventos() { // Cambiar data de los fetches.
             datos[key] = input.value;
         });
 
-        console.log(datos);
-
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
@@ -161,9 +159,9 @@ function eventos() { // Cambiar data de los fetches.
         Swal.fire({
             position: "top-end",
             icon: "error",
-            title: "Error en el servidor",
+            title: "Error en el servidor.",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 3000,
             backdrop: false,
             background: "#2C2C2E",
             color: "#FFFFFF"
@@ -352,8 +350,8 @@ function eventos() { // Cambiar data de los fetches.
             let id_juegoinput=document.getElementById("id_usuario_GenPlat");
             id_juegoinput.value=id;
             
-            let inputGeneros=document.getElementById("generos");
-            let inputPlataformas=document.getElementById("plataformas");
+            let checksGeneros=document.getElementsByClassName("generoCheck");
+            let checksPlataformas=document.getElementsByClassName("plataformaCheck");
 
             let formData= new FormData();
             formData.append("id_juego", id)
@@ -367,21 +365,21 @@ function eventos() { // Cambiar data de los fetches.
                 let generosSeleccionados=data.generos;
                 let plataformasSeleccionadas=data.plataformas;
 
-                for(let genero of inputGeneros.options){
+                for(let genero of checksGeneros){
 
                     generosSeleccionados.forEach(id=>{
                         if(genero.value==id.id){
-                            genero.selected=true;
+                            genero.checked=true;
                         }
                     });
                     
                 }
 
-                for(let plataforma of inputPlataformas.options){
+                for(let plataforma of checksPlataformas){
 
                     plataformasSeleccionadas.forEach(id=>{
                         if(plataforma.value==id.id){
-                            plataforma.selected=true;
+                            plataforma.checked=true;
                         }
                     });
                     
@@ -389,7 +387,7 @@ function eventos() { // Cambiar data de los fetches.
 
                 modalGenPlat.show();
             }).catch(error=>{
-                console.log(JSON.stringify(error));
+                console.log(error);
             })
 
            

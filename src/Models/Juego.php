@@ -24,90 +24,95 @@ class Juego extends EmptyModel implements BusquedaAdmin {
     }
 
     public function getCountFiltros($filtros){
-        $sql = "SELECT COUNT(*) FROM {$this->table}";
+        try {
+            $sql = "SELECT COUNT(*) FROM {$this->table}";
+            $conditions = [];
 
-        if (!empty($filtros)) {
-            $conditions = []; 
+            if (!empty($filtros)) {
+                if (!empty($filtros['nombre'])) {
+                    $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+                }
 
-            // Si hay filtro para 'Nombre', agregamos la condición correspondiente
-            if (!empty($filtros['nombre'])) {
-                $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+                if (!empty($filtros['fechaSalida'])) {
+                    $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
+                }
+
+                if (!empty($filtros['calificacion'])) {
+                    $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
+                }
+
+                if (!empty($conditions)) {
+                    $sql .= " WHERE " . implode(" AND ", $conditions);
+                }
             }
 
-            // Si hay filtro para 'fechaSalida', agregamos la condición correspondiente
-            if (!empty($filtros['fechaSalida'])) {
-                $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
-            }
-
-            // Si hay filtro para 'Calificacion', agregamos la condición correspondiente
-            if (!empty($filtros['calificacion'])) {
-                $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
-            }
-
-            // Si hay condiciones, las unimos con AND y las añadimos a la consulta
-            if (!empty($conditions)) {
-                $sql .= " WHERE " . implode(" AND ", $conditions);
-            }
+            return parent::query($sql)->fetchColumn();
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al contar juegos con filtros: " . $e->getMessage());
         }
-
-        return parent::query($sql)->fetchColumn();
     }
+
 
     public function getNew(): array {
         return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getListGames(int $inicio, int $limit, $filtros=[]){
+    public function getListGames(int $inicio, int $limit, $filtros = []){
+        try {
+            $sql = "SELECT * FROM {$this->table}";
+            $conditions = [];
 
-        $sql = "SELECT * FROM {$this->table}";
+            if (!empty($filtros)) {
+                if (!empty($filtros['nombre'])) {
+                    $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+                }
 
-        if (!empty($filtros)) {
-            $conditions = []; 
+                if (!empty($filtros['fechaSalida'])) {
+                    $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
+                }
 
-            // Si hay filtro para 'Nombre', agregamos la condición correspondiente
-            if (!empty($filtros['nombre'])) {
-                $conditions[] = "Nombre LIKE '{$filtros['nombre']}'";
+                if (!empty($filtros['calificacion'])) {
+                    $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
+                }
+
+                if (!empty($conditions)) {
+                    $sql .= " WHERE " . implode(" AND ", $conditions);
+                }
             }
 
-            // Si hay filtro para 'fechaSalida', agregamos la condición correspondiente
-            if (!empty($filtros['fechaSalida'])) {
-                $conditions[] = "Anyo_salida > '{$filtros['fechaSalida']}' AND Anyo_salida < '{$filtros['fechaNextMonth']}'";
-            }
+            $sql .= " LIMIT {$inicio}, {$limit}";
 
-            // Si hay filtro para 'Calificacion', agregamos la condición correspondiente
-            if (!empty($filtros['calificacion'])) {
-                $conditions[] = "calificacion > {$filtros['calificacion']} AND calificacion < {$filtros['calificacion']}+1";
-            }
-
-            // Si hay condiciones, las unimos con AND y las añadimos a la consulta
-            if (!empty($conditions)) {
-                $sql .= " WHERE " . implode(" AND ", $conditions);
-            }
+            return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al obtener la lista de juegos: " . $e->getMessage());
         }
-        // Añadimos el LIMIT (esto siempre se añade al final)
-        $sql .= " LIMIT {$inicio}, {$limit}";
-
-        return parent::query($sql)->fetchAll(\PDO::FETCH_ASSOC); //Se puede poner $param pero no en el Limit, execute(sql, param) no admite parametros como Integers.
     }
 
+
     public function buscarAdmin($textoBusqueda, $inicio, $limit){
-
-        $sql = "SELECT * FROM {$this->table} WHERE Nombre LIKE :textoBusqueda LIMIT {$inicio}, {$limit}";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
+        try {
+            $sql = "SELECT * FROM {$this->table} WHERE Nombre LIKE :textoBusqueda LIMIT {$inicio}, {$limit}";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \Exception("Error en búsqueda admin: " . $e->getMessage());
+        }
     }
 
     public function buscarAdminCount($textoBusqueda){
-
-        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE Nombre LIKE :textoBusqueda";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchColumn();
+        try {
+            $sql = "SELECT COUNT(*) FROM {$this->table} WHERE Nombre LIKE :textoBusqueda";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':textoBusqueda', $textoBusqueda, \PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al contar resultados admin: " . $e->getMessage());
+        }
     }
+
 
     public function rellenarBD($countAPI){
 

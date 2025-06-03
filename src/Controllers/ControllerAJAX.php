@@ -530,7 +530,7 @@ class ControllerAJAX {
             setcookie("ultimoLugar", "", time()-1, "/"); // Guardar la cookie del ultimo lugar visitado.
 
         }else{
-            echo json_encode(["result"=>"error", "error"=>"Datos incorrectos"]);
+            echo json_encode(["result"=>"error", "mensaje"=>"Datos incorrectos"]);
         }
     }
 
@@ -974,10 +974,12 @@ class ControllerAJAX {
 
         $precio_producto = $ventaBD->getById($productoId)["Precio"];
 
-        $precio=$precio_producto + 2.99;
+        
 
         if($_SESSION["Premium"]==true || $productoId==-1){
             $precio=$precio_producto;
+        }else{
+            $precio=number_format($precio_producto + 2.99, 2, '.');
         }
 
         // SANDBOX: Obtener token

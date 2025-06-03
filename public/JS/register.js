@@ -7,7 +7,14 @@ expresiones_regulares.set("password_minusculas", /[a-z]/);
 expresiones_regulares.set("password_numero", /\d/);
 expresiones_regulares.set("password_especial", /[!@#$%^&*(),.?":{}|<>]/);
 
-// Función auxiliar para actualizar los textos y clases de validación
+/**
+ * Actualiza el contenido y las clases CSS de un elemento para mostrar un estado de validación.
+ *
+ * @param {string} id - El ID del elemento HTML a actualizar.
+ * @param {boolean} esValido - Indica si el estado es válido (true) o inválido (false).
+ * @param {string} mensaje - Mensaje a mostrar junto al ícono de estado.
+ *
+ */
 function actualizarEstado(id, esValido, mensaje) {
     const elemento = document.getElementById(id);
     elemento.classList.remove("text-success", "text-danger");
@@ -20,6 +27,13 @@ function actualizarEstado(id, esValido, mensaje) {
     }
 }
 
+/**
+ * Función que asigna los eventos principales para la validación y envío del formulario de registro.
+ * 
+ * Eventos principales:
+ * - Input en campo contraseña: valida la fortaleza de la contraseña y actualiza la barra de progreso y mensajes.
+ * - Submit del formulario: valida los campos, muestra errores, y envía datos mediante fetch si todo es correcto.
+ */
 function eventos(){
     document.getElementById("password").addEventListener("input", function () {
         const password = this.value;
@@ -153,6 +167,8 @@ function eventos(){
                     icon: "success",
                     title: "Registro completado",
                     text: "Registro exitoso. Bienvenido, " + nick + "!",
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
                 });
                 
 
@@ -167,6 +183,8 @@ function eventos(){
                     icon: "error",
                     title: "Algo salió mal",
                     text: "Ha fallado el registro, intentelo más tarde.",
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
                 });
             }
                 

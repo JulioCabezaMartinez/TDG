@@ -1,3 +1,12 @@
+/**
+ * Asigna eventos a botones relacionados con la gestión de productos en la página de ventas.
+ *
+ * Eventos incluidos:
+ * - Click en `#btn-quitar-venta` para confirmar y eliminar un producto temporalmente.
+ * - Click en `#btn-quitarBD-venta` para confirmar y eliminar un producto definitivamente de la base de datos.
+ * - Click en `#btn-modificar-venta` para mostrar un modal con el formulario de modificación del producto.
+ * - Click en `#btn_modificar` para enviar los datos modificados y actualizar el producto en la base de datos.
+ */
 function eventos(){
     let color_neon=getComputedStyle(document.documentElement).getPropertyValue('--color-borde-neon').trim();
 

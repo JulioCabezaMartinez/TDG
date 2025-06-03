@@ -2,6 +2,19 @@
 
 import { verMas } from "./Modules/utils.js";
 
+/**
+ * Asigna todos los eventos relacionados con la gestión de reviews,
+ * incluyendo creación, modificación, eliminación y control del modal.
+ *
+ * Eventos incluidos:
+ * - Click en `#add-review`: Muestra el modal de creación de review.
+ * - Click en `#btn_cerrar_creacion_review`: Cierra el modal y limpia el contenido.
+ * - Click en `#btn_agregar_review`: Envía una nueva review mediante `fetch`.
+ * - Click en `.btn-eliminar-review`: Muestra confirmación y elimina una review si se acepta.
+ * - Click en `.btn-modificar-review`: Muestra el modal con datos cargados para modificar una review.
+ * - Click en `#btn_modificar_review`: Envía la review modificada al servidor.
+ * 
+ */
 function eventos() {
     let color_neon=getComputedStyle(document.documentElement).getPropertyValue('--color-borde-neon').trim();
 
@@ -203,7 +216,12 @@ function eventos() {
     verMas();
 }
 
-/* Paginación de listas */
+/**
+ * Crea y muestra la tabla de reviews dentro del contenedor `#lista_reviews`.
+ * 
+ * @param {Array<Object>} reviews - Array de objetos review con datos para mostrar.
+ * Cada review debe tener propiedades como `Imagen_Usuario`, `Nick_Usuario`, `editable`, `id`, `Contenido` y `contenidoReducido`.
+ */
 function crearTabla(reviews) {
     let lista_reviews=document.getElementById("lista_reviews");
     lista_reviews.innerHTML='';
@@ -305,7 +323,12 @@ function crearTabla(reviews) {
     });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+/**
+ * Crea la paginación para la lista de reviews en todos los contenedores `.paginacion`.
+ * 
+ * @param {number} pagina - Página actual.
+ * @param {number} total_paginas - Número total de páginas.
+ */
 function paginas(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacion");
@@ -356,6 +379,12 @@ function paginas(pagina, total_paginas){
     }
 }
 
+/**
+ * Realiza una petición AJAX para obtener y mostrar la lista de reviews con paginación.
+ * 
+ * @param {number|null} [nPagina=null] - Número de página a cargar, si es null carga la página 1.
+ * @param {Object} [filtros={}] - Opcional, filtros para la petición (no implementado en la función actual).
+ */
 function paginacion(nPagina=null, filtros={}) {
     let idJuego = document.getElementById("id_juego_hidden");
 

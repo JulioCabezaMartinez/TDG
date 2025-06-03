@@ -1,5 +1,9 @@
 
-/* Paginación de listas */
+/**
+ * Crea y muestra una lista de ventas en el DOM.
+ *
+ * @param {Array<Object>} ventas - Array con objetos de ventas a mostrar.
+ */
 function crearTablaVentas(ventas) {
    
     $lista_ventas = document.querySelector("#lista_ventas");
@@ -37,6 +41,11 @@ function crearTablaVentas(ventas) {
     });
 }
 
+/**
+ * Crea y muestra una lista de compras en el DOM.
+ *
+ * @param {Array<Object>} compras - Array con objetos de compras a mostrar.
+ */
 function crearTablaCompras(compras) {
 
     $lista_compras = document.querySelector("#lista_compras");
@@ -74,7 +83,12 @@ function crearTablaCompras(compras) {
     });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+/**
+ * Muestra una barra de paginación para las compras con números de página.
+ *
+ * @param {number} pagina - Página actual activa.
+ * @param {number} total_paginas - Total de páginas disponibles.
+ */
 function paginasCompras(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionCompras");
@@ -125,6 +139,12 @@ function paginasCompras(pagina, total_paginas){
     }
 }
 
+/**
+ * Muestra una barra de paginación para las ventas con números de página.
+ *
+ * @param {number} pagina - Página actual activa.
+ * @param {number} total_paginas - Total de páginas disponibles.
+ */
 function paginasVentas(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionVentas");
@@ -175,6 +195,11 @@ function paginasVentas(pagina, total_paginas){
     }
 }
 
+/**
+ * Maneja la paginación de ventas, realiza petición AJAX para obtener datos y actualiza la lista y paginación.
+ *
+ * @param {number|null} [nPagina=null] - Página a mostrar (por defecto la 1).
+ */
 function paginacionVentas(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
@@ -212,6 +237,11 @@ function paginacionVentas(nPagina=null) {
     }).catch(err => console.log(err));
 }
 
+/**
+ * Maneja la paginación de compras, realiza petición AJAX para obtener datos y actualiza la lista y paginación.
+ *
+ * @param {number|null} [nPagina=null] - Página a mostrar (por defecto la 1).
+ */
 function paginacionCompras(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.

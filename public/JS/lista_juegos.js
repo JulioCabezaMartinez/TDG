@@ -1,7 +1,14 @@
 "use strict";
 
+/**
+ * Obtiene los filtros desde inputs del DOM y los devuelve en un objeto.
+ * Valida valores para ciertos campos como `calificacion`.
+ * 
+ * @returns {Object} Objeto con los filtros aplicados.
+ */
 function buscarFiltros() {
     let filtros={};
+
     document.querySelectorAll('[id$="Input"]').forEach(function (input) {
         let valor = input.value;
         let clave = input.id.replace('Input', '');
@@ -30,7 +37,14 @@ function buscarFiltros() {
     return filtros;
 }
 
-/* Eventos click de Click de la Página */
+/**
+ * Asigna eventos a botones relacionados con filtros y paginación.
+ *
+ * Eventos incluidos:
+ * - Click en `#boton_filtro` para mostrar u ocultar el menú de filtros desplegables.
+ * - Click en `#aplicarFiltros` para obtener los filtros aplicados y ejecutar la paginación con ellos.
+ * - Click en `#resetFiltros` para limpiar todos los filtros y recargar la lista sin filtrado.
+ */
 function eventos() {
     document.getElementById("boton_filtro").addEventListener("click", function () {
 
@@ -58,7 +72,12 @@ function eventos() {
     });
 }
 
-/* Paginación de listas */
+/**
+ * Crea la tabla de juegos en el DOM a partir de los datos recibidos.
+ * 
+ * @param {Array<Object>} juegos - Lista de juegos.
+ * @param {boolean} [sesion] - Indica si el usuario tiene sesión iniciada.
+ */
 function crearTabla(juegos, sesion=undefined) {
     console.log(sesion);
     let list_juegos=document.getElementById("list_juegos");
@@ -143,7 +162,12 @@ function crearTabla(juegos, sesion=undefined) {
     });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+/**
+ * Genera la paginación de resultados.
+ * 
+ * @param {number} pagina - Página actual.
+ * @param {number} total_paginas - Total de páginas disponibles.
+ */
 function paginas(pagina, total_paginas){
 
     let filtros=buscarFiltros();
@@ -196,6 +220,12 @@ function paginas(pagina, total_paginas){
     }
 }
 
+/**
+ * Realiza una solicitud AJAX para obtener los juegos paginados y renderizarlos.
+ * 
+ * @param {number|null} [nPagina=null] - Página a mostrar. Si no se indica, se usará la 1.
+ * @param {Object} [filtros={}] - Filtros aplicados para la consulta.
+ */
 function paginacion(nPagina=null, filtros={}) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.

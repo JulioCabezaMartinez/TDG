@@ -1,3 +1,13 @@
+/**
+ * Obtiene el estado de las listas del juego (Wishlist, Backlog, Completed, Playing)
+ * desde el servidor mediante una solicitud AJAX y genera dinámicamente los botones
+ * correspondientes en el DOM.
+ *
+ * Utiliza el ID del juego almacenado en un campo oculto del HTML.
+ * 
+ * Las listas se representan con íconos de FontAwesome, y su estado (activo o no)
+ * se determina a partir de los datos devueltos por el servidor.
+ */
 function compruebaLista(){
     let id_juego=document.getElementById("hidden_id_juego").value;
 

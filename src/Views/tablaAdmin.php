@@ -154,6 +154,10 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                                 <br><br>
                             <?php
                                     break;
+                                
+                                // No quiero que se modifique la contraseña por texto.
+                                case "Password": 
+                                break;
 
                                 default:
                             ?>

@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+ * Recoge los valores de los filtros en la interfaz y devuelve un objeto con esos filtros.
+ * - Para el filtro "nombre", añade % para búsqueda tipo LIKE.
+ * - Recoge el valor seleccionado de los radio buttons con nombre "stock".
+ * @returns {Object} filtros - Objeto con los filtros activos.
+ */
 function buscarFiltros() {
     let filtros={};
     document.querySelectorAll('[id$="InputFiltro"]').forEach(function (input) {
@@ -26,8 +32,18 @@ function buscarFiltros() {
     return filtros;
 }
 
-/* Eventos click de Click de la Página */
+/**
+ * Añade los event listeners para la interacción con la página:
+ * - Mostrar/ocultar filtros desplegables.
+ * - Aplicar filtros.
+ * - Resetear filtros.
+ * - Abrir modal para crear un producto.
+ * - Registrar un nuevo producto mediante AJAX.
+ */
 function eventos() {
+
+    const modal_creacion=new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
+
     document.getElementById("boton_filtro").addEventListener("click", function () {
 
         document.querySelectorAll(".filtros_desplegable").forEach(function (el) {
@@ -72,41 +88,75 @@ function eventos() {
             datos[key] = input.value;
         });
 
-        const formData = new FormData();
-        formData.append("datos", JSON.stringify(datos));
+        let vacio=false;
+
+        for( let [key, dato] of Object.entries(datos) ){
+            if(key=="img_venta"){
+
+            }else{
+                if(dato.trim() == ""){
+                    vacio=true;
+                }
+            }
+        }
 
         console.log(datos);
 
-        fetch("/TDG/AJAX/registrarProducto", {
-        method: "POST",
-        body: formData
-        })
-        .then(res => res.text())
-        .then((data) => {
-            console.log(data);
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Producto registrado con éxito",
-                showConfirmButton: false,
-                timer: 1500,
-                backdrop: false
+        if(vacio){
+
+            let error_global=document.getElementById("error_global");
+            error_global.textContent="Se deben de completar los datos obligatorios";
+
+        }else{
+            const formData = new FormData();
+            formData.append("datos", JSON.stringify(datos));
+
+            console.log(datos);
+
+            fetch("/TDG/AJAX/registrarProducto", {
+            method: "POST",
+            body: formData
+            })
+            .then(res => res.text())
+            .then((data) => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto registrado con éxito",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+
+                modal_creacion.hide();
+                paginacion();
+            })
+            .catch(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Error en el servidor",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+                modal_creacion.hide();
             });
-        })
-        .catch(() => {
-            Swal.fire({
-                position: "top-end",
-                icon: "error",
-                title: "Error en el servidor",
-                showConfirmButton: false,
-                timer: 1500,
-                backdrop: false
-            });
-        });
+        }
+
+        
     });
 }
 
-/* Paginación de listas */
+/**
+ * Genera la tabla/lista de ventas que se muestran en la página.
+ * Cada venta se muestra como un enlace que lleva a la vista detallada.
+ * @param {Array} ventas - Lista de objetos con la información de cada venta.
+ */
 function crearTabla(ventas) {
     let lista_ventas=document.getElementById("lista_ventas");
     lista_ventas.innerHTML='';
@@ -172,7 +222,12 @@ function crearTabla(ventas) {
     });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+/**
+ * Crea la paginación en base a la página actual y el total de páginas.
+ * Muestra un rango limitado de páginas para facilitar la navegación.
+ * @param {number} pagina - Página actual.
+ * @param {number} total_paginas - Total de páginas disponibles.
+ */
 function paginas(pagina, total_paginas){
 
     let filtros=buscarFiltros();
@@ -225,6 +280,13 @@ function paginas(pagina, total_paginas){
     }
 }
 
+/**
+ * Controla la lógica de paginación.
+ * Realiza la petición AJAX para obtener la lista de ventas según página y filtros.
+ * Actualiza la tabla y la paginación en la página.
+ * @param {number|null} nPagina - Número de página a mostrar (por defecto 1).
+ * @param {Object} filtros - Filtros a aplicar a la consulta (por defecto vacío).
+ */
 function paginacion(nPagina=null, filtros={}) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.

@@ -43,11 +43,18 @@
     max-height: 125px;
 }
 
+.venta, .compra{
+    display: flex;
+    justify-content: center;
+}
+
 .venta a, .compra a{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    width: fit-content;
 
     border-radius: 10px;
     margin: 20px;

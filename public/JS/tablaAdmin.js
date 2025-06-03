@@ -1,7 +1,23 @@
 "use strict";
 
-/* Eventos click de Click de la Página */
-
+/**
+ * Asigna eventos para la gestión de datos CRUD y modales según la entidad seleccionada.
+ *
+ * Eventos incluidos:
+ * - Click en elementos con clase "eliminar-dato" para eliminar un dato y recargar la tabla.
+ * - Click en #btn_crear_dato para abrir modal de creación, limpiar campos y ajustar visibilidad.
+ * - Click en elementos con clase "modificar-dato" para abrir modal de modificación y cargar datos.
+ * - Click en #btn_crear para enviar datos nuevos al servidor y recargar tabla.
+ * - Click en #btn_modificar para enviar datos modificados al servidor y recargar tabla.
+ * - Click en #btn_cerrar_modal para cerrar y limpiar el modal de creación/modificación.
+ * - Keyup en #busqueda para filtrar la tabla según texto ingresado.
+ * - Para entidad "usuarios":
+ *    - Click en elementos con clase "cambiarPassword" para abrir modal de cambio de contraseña.
+ *    - Click en #btn_cambiarPass para validar y enviar cambio de contraseña.
+ *    - Click en #btn_cerrar_modal_pass para cerrar y limpiar modal de cambio de contraseña.
+ * - Para entidad "juegos":
+ *    - Click en elementos con clase "addGenPlat" para abrir modal de selección de géneros y plataformas.
+ */
 function eventos() { // Cambiar data de los fetches.
     const entidad = document.getElementById("entidad").value;
 
@@ -398,7 +414,13 @@ function eventos() { // Cambiar data de los fetches.
     
 }
 
-/* Paginación de listas */
+/**
+ * Crea y muestra una tabla con paginación para escritorio y móvil a partir de una lista de datos.
+ *
+ * @param {Array<Object>} lista - Lista de objetos con los datos a mostrar.
+ * @param {Array<string>} columnas - Array con los nombres de las columnas a mostrar.
+ * @param {string} entidad - Nombre de la entidad actual ("usuarios", "juegos", etc.) para personalizar acciones.
+ */
 function crearTabla(lista, columnas, entidad) {
 
     let list_juegos=document.getElementById("tabla-datos");
@@ -453,7 +475,28 @@ function crearTabla(lista, columnas, entidad) {
                 enlace.textContent = campo;
                 td.appendChild(enlace);
                 tr.appendChild(td);
-            }else{
+            }else if(key=="Admin" || key =="Premium"){
+                if(campo==1){
+                    const td = document.createElement("td");
+                    const i= document.createElement("i");
+
+                    i.classList.add("fa-regular", "fa-square-check", "text-success");
+                    td.append(i);
+
+                    td.title = item[key];
+                    tr.appendChild(td);
+                }else{
+                    const td = document.createElement("td");
+                    const i= document.createElement("i");
+
+                    i.classList.add("fa-solid", "fa-square-xmark", "text-danger");
+                    td.append(i);
+
+                    td.title = item[key];
+                    tr.appendChild(td);
+                }
+            }
+            else{
                 const td = document.createElement("td");
                 td.textContent = campo;
                 td.title = item[key];
@@ -601,7 +644,13 @@ function crearTabla(lista, columnas, entidad) {
   });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+
+/**
+ * Muestra una barra de paginación con botones para navegar entre páginas.
+ * 
+ * @param {number} pagina - Página actual activa.
+ * @param {number} total_paginas - Número total de páginas disponibles.
+ */
 function paginas(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacion");
@@ -652,6 +701,12 @@ function paginas(pagina, total_paginas){
     }
 }
 
+/**
+ * Maneja la paginación y búsqueda de datos, realiza petición AJAX para obtener datos y actualiza la tabla y paginación.
+ *
+ * @param {number|null} [nPagina=null] - Número de página a mostrar (por defecto la 1).
+ * @param {string|null} [busqueda=null] - Texto para filtrar los datos (opcional).
+ */
 function paginacion(nPagina=null, busqueda=null) {
 
     let entidad = document.getElementById("entidad").value; // Obtener la entidad desde el input oculto. 

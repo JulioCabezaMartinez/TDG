@@ -26,7 +26,7 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "Estado":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*<?php echo $columna ?>:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
                                         <option value="" selected disabled>Seleccione un estado</option>
                                         <option value="Nuevo">Nuevo</option>
@@ -38,7 +38,7 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "Consola":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>Consola:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Consola:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
                                         <option value="" selected disabled>Seleccione una consola</option>
                                         <?php
@@ -54,14 +54,14 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "Precio":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*<?php echo $columna ?>:</strong></label>
                                     <input type="number" class="form-control" id="<?php echo $columna ?>Input" min="0" step="10">
                                     <br>
                                 <?php
                                     break;
                                 case "Estado_Venta":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>Estado de Venta:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Estado de Venta:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
                                         <option value="" selected disabled>Seleccione un estado de venta</option>
                                         <option value="Disponible">Disponible</option>
@@ -73,7 +73,7 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "Stock":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>Stock:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Stock:</strong></label>
                                     <input type="number" class="form-control" id="<?php echo $columna ?>Input" min="0">
                                     <br>
                                 <?php
@@ -87,7 +87,7 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "id_juego":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>Juego:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Juego:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
                                         <option value="" selected disabled>Seleccione un juego</option>
                                         <?php
@@ -109,7 +109,7 @@ if(!empty($_SESSION)) {
                                     break;
                                 default:
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong><?php echo $columna ?>:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*<?php echo $columna ?>:</strong></label>
                                     <input type="text" class="form-control" id="<?php echo $columna ?>Input">
                                     <br>
                             <?php
@@ -120,10 +120,11 @@ if(!empty($_SESSION)) {
                     <?php
                     }
                     ?>
+                    <p class="error" id="error_global"></p>
                 </div>
                 <div class="modal-footer">
                     <button id="btn_cerrar_modal" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancelar</button>
-                    <button id="btn_crear" type="button" class="boton-perso" data-dismiss="modal">Crear Producto</button>
+                    <button id="btn_crear" type="button" class="boton-perso">Crear Producto</button>
                 </div>
             </div>
         </div>

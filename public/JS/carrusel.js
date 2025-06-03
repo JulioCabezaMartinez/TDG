@@ -1,3 +1,7 @@
+/**
+ * Inicializa una nueva instancia de Swiper en el contenedor con clase '.card-wrapper'.
+ * Swiper es una biblioteca de carrusel/slider moderna para la web.
+ */
 window.swiper = new Swiper('.card-wrapper', {
     // Optional parameters
     slidesPerView: 3,

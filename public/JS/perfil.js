@@ -6,6 +6,14 @@ expresiones_regulares.set("password_minusculas", /[a-z]/);
 expresiones_regulares.set("password_numero", /\d/);
 expresiones_regulares.set("password_especial", /[!@#$%^&*(),.?":{}|<>]/);
 
+/**
+ * Actualiza el contenido y la clase CSS de un elemento para reflejar un estado de validación.
+ *
+ * @param {string} id - El ID del elemento HTML a actualizar.
+ * @param {boolean} esValido - Indica si el estado es válido (true) o inválido (false).
+ * @param {string} mensaje - El mensaje de texto que se mostrará dentro del elemento.
+ *
+ */
 function actualizarEstado(id, esValido, mensaje) {
     const elemento = document.getElementById(id);
     elemento.textContent = mensaje;
@@ -13,6 +21,18 @@ function actualizarEstado(id, esValido, mensaje) {
     elemento.classList.add(esValido ? "text-success" : "text-danger");
 }
 
+/**
+ * Asigna eventos a botones relacionados con filtros y paginación.
+ *
+ * Eventos incluidos:
+ * - Click en elementos con clase "cambiarPassword" para abrir el modal de cambio de contraseña y limpiar campos.
+ * - Click en elementos con clase "modificar-dato" para abrir el modal de modificación de datos y cargar datos del usuario.
+ * - Click en #btn_modificar para enviar datos modificados del usuario al servidor.
+ * - Click en #btn_cerrar_modal para cerrar y limpiar el modal de modificación de datos.
+ * - Click en #btn_cambiarPass para validar y enviar cambio de contraseña al servidor.
+ * - Input en #contraseña_cambio para validar la fortaleza de la contraseña y actualizar barra de progreso.
+ * - Click en #btn_cerrar_modal_pass para cerrar y limpiar el modal de cambio de contraseña.
+ */
 function eventos(){
 
     const modalCreacionModificacion = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
@@ -290,7 +310,12 @@ function eventos(){
     });
 }
 
-/* Paginación de listas */
+/**
+ * Crea y muestra la tabla de juegos para una lista específica.
+ *
+ * @param {Array<Object>} juegos - Array de objetos con los datos de los juegos.
+ * @param {string} tipo - Tipo de lista (wishlist, completed, playing, backlog).
+ */
 function crearTablaLista(juegos, tipo) {
    let tipo_lista;
     switch (tipo) {
@@ -343,7 +368,12 @@ function crearTablaLista(juegos, tipo) {
     });
 }
 
-/* Permite ver una paginación con todas las páginas que va a tener la página */
+/**
+ * Genera la paginación para la lista de deseos (wishlist).
+ *
+ * @param {number} pagina - Página actual seleccionada.
+ * @param {number} total_paginas - Número total de páginas disponibles.
+ */
 function paginasWishlist(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionWishlist");
@@ -394,6 +424,13 @@ function paginasWishlist(pagina, total_paginas){
     }
 }
 
+/**
+ * Genera la paginación para la lista de juegos completados.
+ * Crea enlaces numerados que permiten navegar entre páginas.
+ *
+ * @param {number} pagina - Página actual seleccionada.
+ * @param {number} total_paginas - Número total de páginas disponibles.
+ */
 function paginasCompleted(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionCompleted");
@@ -444,6 +481,13 @@ function paginasCompleted(pagina, total_paginas){
     }
 }
 
+/**
+ * Genera la paginación para la lista de juegos en curso (playing).
+ * Crea enlaces numerados que permiten navegar entre páginas.
+ *
+ * @param {number} pagina - Página actual seleccionada.
+ * @param {number} total_paginas - Número total de páginas disponibles.
+ */
 function paginasPlaying(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionPlaying");
@@ -494,6 +538,13 @@ function paginasPlaying(pagina, total_paginas){
     }
 }
 
+/**
+ * Genera la paginación para la lista backlog.
+ * Crea enlaces numerados que permiten navegar entre páginas.
+ *
+ * @param {number} pagina - Página actual seleccionada.
+ * @param {number} total_paginas - Número total de páginas disponibles.
+ */
 function paginasBacklog(pagina, total_paginas){
 
     const paginas= document.getElementsByClassName("paginacionBacklog");
@@ -544,6 +595,13 @@ function paginasBacklog(pagina, total_paginas){
     }
 }
 
+/**
+ * Realiza una petición AJAX para obtener y mostrar la lista de juegos
+ * en la wishlist correspondiente a la página especificada.
+ * También actualiza la paginación de la lista.
+ *
+ * @param {number|null} [nPagina=null] - Número de página a mostrar (1 por defecto).
+ */
 function paginacionWishlist(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
@@ -580,6 +638,12 @@ function paginacionWishlist(nPagina=null) {
     }).catch(err => console.log(err));
 }
 
+/**
+ * Realiza una petición AJAX para obtener y mostrar la lista de juegos completados
+ * correspondiente a la página especificada. Actualiza la tabla y la paginación.
+ *
+ * @param {number|null} [nPagina=null] - Número de página a mostrar (1 por defecto).
+ */
 function paginacionCompleted(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
@@ -618,6 +682,12 @@ function paginacionCompleted(nPagina=null) {
     }).catch(err => console.log(err));
 }
 
+/**
+ * Realiza una petición AJAX para obtener y mostrar la lista de juegos en curso (playing)
+ * correspondiente a la página especificada. Actualiza la tabla y la paginación.
+ *
+ * @param {number|null} [nPagina=null] - Número de página a mostrar (1 por defecto).
+ */
 function paginacionPlaying(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.
@@ -654,6 +724,12 @@ function paginacionPlaying(nPagina=null) {
     }).catch(err => console.log(err));
 }
 
+/**
+ * Realiza una petición AJAX para obtener y mostrar la lista backlog
+ * correspondiente a la página especificada. Actualiza la tabla y la paginación.
+ *
+ * @param {number|null} [nPagina=null] - Número de página a mostrar (1 por defecto).
+ */
 function paginacionBacklog(nPagina=null) {
 
     let pagina = nPagina ?? 1; // Obtener la página actual desde parametro.

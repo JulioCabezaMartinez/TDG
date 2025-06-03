@@ -17,6 +17,8 @@ require_once 'Templates/inicio.php';
             <label for="password" class="form-label">Contraseña:</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
+        <p class="error" id="error_datos"></p>
+
         <button id="submit-login" type="submit" class="boton-perso">Iniciar Sesión</button>
         <br><br>
         <a class="enlace" href="/TDG/">< Volver al Inicio</a>    
@@ -42,13 +44,26 @@ require_once 'Templates/inicio.php';
                 processData: false,
                 contentType: false,
                 success: function(response) {
+
                     json = JSON.parse(response);
-                
-                    window.location.href = json.ultimo_lugar;
+
+                    if(json.result=="ok"){
+                        window.location.href = json.ultimo_lugar;
+                    }else{
+                        let error=$("#error_datos").text(json.mensaje);
+                    }
                 },
                 error: function(error){
-                    // Agregar p de error.
-                    console.log(error)
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Error en el servidor",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    });
                 }
 
             });

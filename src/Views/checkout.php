@@ -69,7 +69,6 @@ require_once __DIR__ . '\Templates\header.php';
                 })
                 .then(response => response.json()) // Respuesta del backend que debe incluir 'orderID'
                 .then(orderData => {
-                    console.log('Respuesta de la API de PayPal:', orderData);
                     // Verifica si el orderID está presente
                     if (!orderData.orderID) {
                         throw new Error("Se esperaba un orderID en la respuesta.");

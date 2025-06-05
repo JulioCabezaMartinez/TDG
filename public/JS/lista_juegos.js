@@ -110,7 +110,7 @@ function crearTabla(juegos, sesion=undefined) {
         // Enlace y título
         const enlace = document.createElement('a');
         enlace.className = 'enlace_juego';
-        enlace.href = '/TDG/juegos/view?juego=' + juego.id;
+        enlace.href = '/juegos/view?juego=' + juego.id;
 
         const h1 = document.createElement('h1');
         h1.textContent = juego.Nombre;
@@ -248,7 +248,7 @@ function paginacion(nPagina=null, filtros={}) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_juegos", {
+    fetch("/AJAX/lista_juegos", {
         method: "POST",
         body: formData
 

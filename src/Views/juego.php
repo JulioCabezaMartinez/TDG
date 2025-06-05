@@ -1,8 +1,8 @@
 <?php
 $css = 'juego';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 <div class="top_juego">
     <input type="hidden" id="hidden_id_juego" value="<?php echo $juego["id"] ?>">
@@ -72,7 +72,7 @@ require_once __DIR__ . '\Templates\header.php';
 <!-- Reseñas del Juego -->
 
 <div class="reseñas_juego m-4">
-    <a href="/TDG/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas de <?php echo $juego["Nombre"] ?></h2></a>
+    <a href="/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas de <?php echo $juego["Nombre"] ?></h2></a>
 </div>
 
 <?php
@@ -96,7 +96,7 @@ require_once __DIR__ . '\Templates\header.php';
                 formData.append("lista", lista);
 
                 $.ajax({
-                    url: "/TDG/AJAX/eliminarJuegoLista",
+                    url: "/AJAX/eliminarJuegoLista",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -136,7 +136,7 @@ require_once __DIR__ . '\Templates\header.php';
                 formData.append("lista", lista);
 
                 $.ajax({
-                    url: "/TDG/AJAX/addJuegoLista",
+                    url: "/AJAX/addJuegoLista",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -168,12 +168,12 @@ require_once __DIR__ . '\Templates\header.php';
 <?php 
 if(!empty($_SESSION)){
 ?>
-    <script src="/TDG/public/JS/juego.js"></script>
+    <script src="/public/JS/juego.js"></script>
 <?php
 }
 ?>
 
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

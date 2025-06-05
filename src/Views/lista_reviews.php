@@ -59,7 +59,7 @@ require_once 'Templates/header.php';
     include_once __DIR__. "/Templates/footer.php";
 ?>
 
-<script type="module" src="/TDG/public/JS/lista_review.js"></script> <!-- Se necesita que el HTML trate al script como un modulo para que se puedan importar clases usando import y export -->
+<script type="module" src="/public/JS/lista_review.js"></script> <!-- Se necesita que el HTML trate al script como un modulo para que se puedan importar clases usando import y export -->
 
 <?php
 require_once 'Templates/final.php';

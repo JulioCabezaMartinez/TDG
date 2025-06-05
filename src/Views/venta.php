@@ -1,8 +1,8 @@
 <?php
 $css = 'venta';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <!-- Modal de modificación de Producto -->
@@ -154,7 +154,7 @@ require_once __DIR__ . '\Templates\header.php';
     }
     ?>
 
-    <img class="img_venta" src="/TDG/public/IMG/<?php echo $venta["img_venta"] ?>" alt="">
+    <img class="img_venta" src="/public/IMG/<?php echo $venta["img_venta"] ?>" alt="">
 
     <h2 class="precio_venta"><?php echo $venta["Precio"] . " €" ?></h2>
 
@@ -199,7 +199,7 @@ if (!empty($_SESSION) && $venta["Stock"] > 0 && $venta["id_Vendedor"] != $_SESSI
     // Mostrar botón de compra
 ?>
     <!-- Botón de compra -->
-    <a href="/TDG/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
+    <a href="/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
         <button id="btn_comprar" class="boton-perso">
             <p>Comprar</p>
             <i class='fa-solid fa-cart-shopping'></i>
@@ -211,12 +211,12 @@ if (!empty($_SESSION) && $venta["Stock"] > 0 && $venta["id_Vendedor"] != $_SESSI
 ?>
 
 
-<script src="/TDG/public/JS/venta.js"></script>
+<script src="/public/JS/venta.js"></script>
 
 <?php
 include_once __DIR__ . "/Templates/footer.php";
 ?>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

@@ -21,7 +21,7 @@ require_once 'Templates/inicio.php';
 
         <button id="submit-login" type="submit" class="boton-perso">Iniciar Sesión</button>
         <br><br>
-        <a class="enlace" href="/TDG/">< Volver al Inicio</a>    
+        <a class="enlace" href="/">< Volver al Inicio</a>    
     </form>
 </div>
 
@@ -38,7 +38,7 @@ require_once 'Templates/inicio.php';
             formData.append("password", password);
 
             $.ajax({
-                url: '/TDG/AJAX/CompruebaLogin',
+                url: '/AJAX/CompruebaLogin',
                 type: "POST",
                 data: formData,
                 processData: false,

@@ -70,7 +70,7 @@ class ControllerVenta {
         unset($_SESSION["id_venta"]);
 
         if(empty($_SESSION["usuarioActivo"])){
-            header("Location:/TDG/login");
+            header("Location:/login");
             exit;
         }
 
@@ -83,7 +83,7 @@ class ControllerVenta {
 
     public function checkout(){
         if(empty($_SESSION["usuarioActivo"])){
-            header("Location:/TDG/login");
+            header("Location:/login");
             exit;
         }
         $id_venta=$_GET["id"] ?? null;
@@ -96,7 +96,7 @@ class ControllerVenta {
             include_once __DIR__. "/../Views/checkout.php";
         }else if($venta["Estado_Venta"]!="Disponible"){
             unset($_SESSION["id_venta"]);
-            header("Location: /TDG/ventas");
+            header("Location: /ventas");
         }else{
             $precio_gestion = 2.99; // Coste de gestión
             include_once __DIR__. "/../Views/checkout.php";

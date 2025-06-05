@@ -1,9 +1,9 @@
 <?php
 
 $css = 'main';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <div class="landing">
@@ -11,13 +11,13 @@ require_once __DIR__ . '\Templates\header.php';
         <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
         <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
 
-        <a href="/TDG/juegos">
+        <a href="/juegos">
             <p class="boton-perso">Ver Juegos</p>
         </a>
 </div>
 <div class="recien_añadidos">
 
-    <a class="enlace-main" href="/TDG/juegos">
+    <a class="enlace-main" href="/juegos">
         <i class="fa-solid fa-gamepad"></i>
         <h2 class="enlace">Recién añadidos</h2>
     </a>
@@ -26,7 +26,7 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="/TDG/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
+                <a href="/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
                     if(strlen($recien_añadido['Nombre'])>20){
@@ -49,7 +49,7 @@ require_once __DIR__ . '\Templates\header.php';
         foreach ($ultimos_juegos as $recien_añadido) {
         ?>
             <div class="recien_añadidos__item">
-                <a href="/TDG/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
+                <a href="/juegos/view?juego=<?php echo $recien_añadido["id"] ?>">
                     <img src="<?= $recien_añadido['Imagen'] ?>" alt="<?= $recien_añadido['Nombre'] ?>">
                     <?php
                     if(strlen($recien_añadido['Nombre'])>20){
@@ -73,7 +73,7 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 <div class="ultimos_productos">
-    <a class="enlace-main" href="/TDG/ventas">
+    <a class="enlace-main" href="/ventas">
         <i class="fa-solid fa-store"></i>
         <h2>Últimos Productos</h2>
     </a>
@@ -88,8 +88,8 @@ require_once __DIR__ . '\Templates\header.php';
 
                     
                     <div class="card-item swiper-slide">
-                        <a href="/TDG/ventas/view?id=<?php echo $venta["id"] ?>">
-                            <img src="/TDG/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
+                        <a href="/ventas/view?id=<?php echo $venta["id"] ?>">
+                            <img src="/public/IMG/<?php echo $venta['img_venta']; ?>" alt="">
                             <div class="card-content">
                                 <?php
                                 if (strlen($venta['Titulo']) > 20) {
@@ -135,8 +135,8 @@ require_once __DIR__ . '\Templates\header.php';
 
         <div class="review">
             <div class="cabecera_review">
-                <img src="/TDG/public/IMG/Users-img/<?php echo $usuario["Imagen"] ?>" alt=""> <!-- Imagen de usuario del Usuario asociado a la review -->
-                <a href="/TDG/juegos/view/review?id=<?php echo $review["id_Juego"] ?>"><h3><?php echo $review["juego"] ?></h3></a>
+                <img src="/public/IMG/Users-img/<?php echo $usuario["Imagen"] ?>" alt=""> <!-- Imagen de usuario del Usuario asociado a la review -->
+                <a href="/juegos/view/review?id=<?php echo $review["id_Juego"] ?>"><h3><?php echo $review["juego"] ?></h3></a>
             </div>
 
             <?php
@@ -173,10 +173,10 @@ include_once __DIR__ . "/Templates/footer.php";
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Script de inicio del Swiper -->
-<script src="/TDG/public/JS/carrusel.js"></script>
+<script src="/public/JS/carrusel.js"></script>
 
 <!-- Archivo JS de Main -->
-<script type="module" src="/TDG/public/JS/main.js"></script>
+<script type="module" src="/public/JS/main.js"></script>
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

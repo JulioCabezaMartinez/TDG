@@ -1,9 +1,9 @@
 <?php
 
 $css = 'lista_juegos';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <h3 class="text-center mt-4">Juegos</h3>
@@ -75,16 +75,16 @@ require_once __DIR__ . '\Templates\header.php';
 <div class="paginacion"></div>
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+    include_once __DIR__. "/Templates/footer.php";
 ?>
 
 <!-- JS del Swiper (Carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Script de inicio del Swiper -->
-<script src="/TDG/public/JS/carrusel.js"></script>
+<script src="/public/JS/carrusel.js"></script>
 
-<script src="/TDG/public/JS/lista_juegos.js" ></script>
+<script src="/public/JS/lista_juegos.js" ></script>
 
 <script>
     // JQuery de Añadir a listas.
@@ -106,7 +106,7 @@ require_once __DIR__ . '\Templates\header.php';
                 formData.append("lista", lista);
 
                 $.ajax({
-                    url: "/TDG/AJAX/eliminarJuegoLista",
+                    url: "/AJAX/eliminarJuegoLista",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -143,7 +143,7 @@ require_once __DIR__ . '\Templates\header.php';
                 formData.append("lista", lista);
 
                 $.ajax({
-                    url: "/TDG/AJAX/addJuegoLista",
+                    url: "/AJAX/addJuegoLista",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -172,5 +172,5 @@ require_once __DIR__ . '\Templates\header.php';
 </script>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

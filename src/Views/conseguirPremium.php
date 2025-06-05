@@ -1,8 +1,8 @@
 <?php
 $css = 'conseguirPremium';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <h1>Premium</h1>
@@ -19,7 +19,7 @@ require_once __DIR__ . '\Templates\header.php';
     <li>Por solo 15 € al mes</li>
 </ul>
 
-<a href="/TDG/ventas/view/checkout?id=<?php echo -1 ?>">
+<a href="/ventas/view/checkout?id=<?php echo -1 ?>">
     <button class="boton-perso">Conseguir Premium <i class="fa-solid fa-crown"></i></button>
 </a>
 
@@ -29,5 +29,5 @@ require_once __DIR__ . '\Templates\header.php';
 ?>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

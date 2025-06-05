@@ -113,7 +113,7 @@ function eventos() {
 
             console.log(datos);
 
-            fetch("/TDG/AJAX/registrarProducto", {
+            fetch("/AJAX/registrarProducto", {
             method: "POST",
             body: formData
             })
@@ -165,7 +165,7 @@ function crearTabla(ventas) {
     ventas.forEach(venta => {
         // Crear el enlace
         const link = document.createElement('a');
-        link.href = `/TDG/ventas/view?id=${venta.id}`;
+        link.href = `/ventas/view?id=${venta.id}`;
 
         // Crear el div de la venta
         const ventaDiv = document.createElement('div');
@@ -174,7 +174,7 @@ function crearTabla(ventas) {
 
         // Crear la imagen
         const img = document.createElement('img');
-        img.src = `/TDG/public/IMG/${venta.img_venta}`;
+        img.src = `/public/IMG/${venta.img_venta}`;
 
         // Crear la sección de información del juego
         const infoJuegoDiv = document.createElement('div');
@@ -309,7 +309,7 @@ function paginacion(nPagina=null, filtros={}) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_ventas", {
+    fetch("/AJAX/lista_ventas", {
         method: "POST",
         body: formData
 

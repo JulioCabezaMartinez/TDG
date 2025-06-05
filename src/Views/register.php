@@ -63,7 +63,7 @@ require_once 'Templates/inicio.php';
         <p class="error" id="error_global"></p>
         <button type="submit" id="btn-registro" class="registro boton-perso">Registrarse</button>
         <br><br>
-        <a class="enlace" href="/TDG/">< Volver al Inicio</a>
+        <a class="enlace" href="/">< Volver al Inicio</a>
     </form>
 </div>
 
@@ -71,7 +71,7 @@ require_once 'Templates/inicio.php';
     include_once __DIR__. "/Templates/footer.php";
 ?>
 
-<script src="/TDG/public/JS/register.js"></script>
+<script src="/public/JS/register.js"></script>
 
 <?php
 require_once 'Templates/final.php';

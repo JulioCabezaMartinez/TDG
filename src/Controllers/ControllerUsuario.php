@@ -61,7 +61,7 @@ class ControllerUsuario {
         $usuario=$usuarioBD->getById($_SESSION["usuarioActivo"]);
 
         if($usuario["Premium"]==1){
-            header("Location:/TDG/perfil");
+            header("Location:/perfil");
         }
 
         include __DIR__. "/../Views/conseguirPremium.php";

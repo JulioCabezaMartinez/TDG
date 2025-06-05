@@ -22,7 +22,7 @@ class Router {
     public function dispatch(string $requestUri): void {
         $path = parse_url($requestUri, PHP_URL_PATH);
 
-        $path = explode("/TDG", $path)[1]; // Eliminar la parte de la URL que no es necesaria
+        //$path = explode("/TDG", $path)[1]; // Eliminar la parte de la URL que no es necesaria
 
         if (isset($this->routes[$path])) {
             $controllerAction = $this->routes[$path];

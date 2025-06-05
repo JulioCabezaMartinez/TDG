@@ -12,7 +12,7 @@ function crearTablaVentas(ventas) {
     ventas.forEach(venta => {
         // Asignar imagen por defecto si no hay
         if (!venta.Imagen) {
-            venta.Imagen = "/TDG/public/IMG/default-game.jpg";
+            venta.Imagen = "/public/IMG/default-game.jpg";
         }
 
         // Crear elementos
@@ -21,7 +21,7 @@ function crearTablaVentas(ventas) {
 
         const link = document.createElement("a");
         if(venta.id != -1){
-            link.href = `/TDG/ventas/view?id=${venta.id}`;
+            link.href = `/ventas/view?id=${venta.id}`;
         }
 
         const img = document.createElement("img");
@@ -54,7 +54,7 @@ function crearTablaCompras(compras) {
     compras.forEach(compra => {
         // Asignar imagen por defecto si no hay
         if (!compra.Imagen) {
-            compra.Imagen = "/TDG/public/IMG/default-game.jpg";
+            compra.Imagen = "/public/IMG/default-game.jpg";
         }
 
         // Crear elementos
@@ -63,7 +63,7 @@ function crearTablaCompras(compras) {
 
         const link = document.createElement("a");
         if(compra.Producto.id != -1){
-            link.href = `/TDG/ventas/view?id=${compra.Producto.id}`;
+            link.href = `/ventas/view?id=${compra.Producto.id}`;
         }
 
         const img = document.createElement("img");
@@ -219,7 +219,7 @@ function paginacionVentas(nPagina=null) {
     formData.append("inicio", inicio);
     formData.append("limite", limite);
 
-    fetch("/TDG/AJAX/lista_ventas_perfil", {
+    fetch("/AJAX/lista_ventas_perfil", {
         method: "POST",
         body: formData
 
@@ -263,7 +263,7 @@ function paginacionCompras(nPagina=null) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_compras_perfil", {
+    fetch("/AJAX/lista_compras_perfil", {
         method: "POST",
         body: formData
 

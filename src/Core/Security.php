@@ -20,7 +20,7 @@ class Security
     {
         session_unset();
         session_destroy();
-        header("Location: /TDG/");
+        header("Location: /");
         exit;
     }
 

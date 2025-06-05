@@ -1,8 +1,8 @@
 <?php
 $css = 'lista_ventas';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 
 if(!empty($_SESSION)) { 
 ?>
@@ -243,8 +243,8 @@ if(!empty($_SESSION)) {
 include_once __DIR__ . "/Templates/footer.php";
 ?>
 
-<script src="/TDG/public/JS/lista_ventas.js"></script>
+<script src="/public/JS/lista_ventas.js"></script>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

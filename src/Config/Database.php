@@ -10,10 +10,10 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = '127.0.0.1';
-        $dbName = 'tdg';
-        $user = 'root';
-        $password = '';
+        $host = 'mysql.cifpceuta.es';
+        $dbName = 'jcabeza';
+        $user = 'jcabeza';
+        $password = 'jcabeza2025';
 
         try {
             $this->pdo = new PDO(

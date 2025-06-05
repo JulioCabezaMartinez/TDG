@@ -1,12 +1,12 @@
 <?php
 $css = 'ventas_perfil';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <div id="perfil">
-    <img src="/TDG/public/IMG/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen">
+    <img src="/public/IMG/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen">
     <h2><?php echo $perfil['Nick'] ?></h2>
 </div>
 
@@ -26,12 +26,12 @@ require_once __DIR__ . '\Templates\header.php';
     </div>
 </div>
 
-<script src="/TDG/public/JS/venta_perfil.js"></script>
+<script src="/public/JS/venta_perfil.js"></script>
 
 <?php
     include_once __DIR__. "/Templates/footer.php";
 ?>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

@@ -14,7 +14,7 @@ function compruebaLista(){
     let formData=new FormData();
     formData.append("id_juego", id_juego);
 
-    fetch("/TDG/AJAX/botones_juego", {
+    fetch("/AJAX/botones_juego", {
         method: "POST",
         body: formData
     })

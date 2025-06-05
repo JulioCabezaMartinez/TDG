@@ -1,7 +1,12 @@
 <?php
+// Importantisimo para detectar errores de error 500 en producción.
+
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 session_start();
 
-require_once 'vendor\autoload.php'; // Esto debe estar al principio del archivo para cargar las dependencias de Composer
+require_once __DIR__.'/vendor/autoload.php'; // Esto debe estar al principio del archivo para cargar las dependencias de Composer
 use Dotenv\Dotenv;
 use App\Core\Router;
 use App\Core\Security;

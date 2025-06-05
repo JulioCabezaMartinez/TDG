@@ -9,29 +9,29 @@
     <div class="header-movil">
         <p></p>
 
-        <a class="text-header-movil" href="/TDG/">
+        <a class="text-header-movil" href="/">
             <h3>To Do Games</h3>
         </a>
 
         <div class="izq">
             <!-- Logo de la app -->
-            <a href="/TDG/">
-                <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
+            <a href="/">
+                <img class="logo-TDG" src="/public/IMG/TDG-Logo.png" alt="">
             </a>
         </div>
     </div>
     <div class="header-escritorio">
-        <a href="/TDG/">
-            <img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt="">
+        <a href="/">
+            <img class="logo-TDG" src="/public/IMG/TDG-Logo.png" alt="">
         </a>
 
-        <a href="/TDG/juegos">
+        <a href="/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>
                 <h2 class="enlace">JUEGOS</h2>
             </div>
         </a>
-        <a href="/TDG/ventas">
+        <a href="/ventas">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-store"></i>
                 <h2 class="enlace">VENTAS</h2>
@@ -46,26 +46,26 @@
         <?php
         if (!empty($_SESSION)) {
         ?>
-        <a href="/TDG/perfil">
+        <a href="/perfil">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-user"></i>
                 <h2 class="enlace">Perfil</h2>
             </div>
         </a>
-            <a href="/TDG/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
+            <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
         <?php
         } else {
         ?>
             <div>
-                <a class="boton-perso" href="/TDG/login" class="login">Iniciar Sesión</a>
+                <a class="boton-perso" href="/login" class="login">Iniciar Sesión</a>
                 o
-                <a class="enlace" href="/TDG/register" class="register">Registrarse</a>
+                <a class="enlace" href="/register" class="register">Registrarse</a>
             </div>
         <?php
         }
         if (!empty($_SESSION) && $_SESSION["Admin"]) {
         ?>
-            <a class="boton-perso boton-perso-secundario" href="/TDG/panelAdmin">Panel de Administrador</a>
+            <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Panel de Administrador</a>
         <?php
         }
         ?>
@@ -81,7 +81,7 @@
 <div class="menu-hamburguesa">
     <div>
         <i class='fa-solid fa-xmark cerrar-hamburguesa'></i>
-        <a href="/TDG/"><img class="logo-TDG" src="/TDG/public/IMG/TDG-Logo.png" alt=""></a>
+        <a href="/"><img class="logo-TDG" src="/public/IMG/TDG-Logo.png" alt=""></a>
     </div>
 
     <?php
@@ -90,21 +90,21 @@
 
         <h4>Bienvenido, <?php echo $_SESSION["Nick"] ?></h4>
         <br><br>
-        <a href="/TDG/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
+        <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
 
     <?php
     } else {
     ?>
         <div>
-            <a class="boton-perso" href="/TDG/login" class="login">Iniciar Sesión</a>
+            <a class="boton-perso" href="/login" class="login">Iniciar Sesión</a>
             o
-            <a class="enlace" href="/TDG/register" class="register">Registrarse</a>
+            <a class="enlace" href="/register" class="register">Registrarse</a>
         </div>
     <?php
     }
     if (!empty($_SESSION) && $_SESSION["Admin"]) {
     ?>
-        <a class="boton-perso boton-perso-secundario" href="/TDG/panelAdmin">Panel de Administrador</a>
+        <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Panel de Administrador</a>
     <?php
     }
     ?>
@@ -127,7 +127,7 @@
         <?php
         if (!empty($_SESSION)) {
         ?>
-            <a href="/TDG/perfil">
+            <a href="/perfil">
                 <div class="link-hamburguesa">
                     <i class="fa-solid fa-user"></i>
                     <h2 class="enlace">Perfil</h2>
@@ -137,21 +137,21 @@
         }
         ?>
         <br>
-        <a href="/TDG/">
+        <a href="/">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-house"></i>
                 <h2>HOME</h2>
             </div>
         </a>
         <br>
-        <a href="/TDG/juegos">
+        <a href="/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>
                 <h2>JUEGOS</h2>
             </div>
         </a>
         <br>
-        <a href="/TDG/ventas">
+        <a href="/ventas">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-store"></i>
                 <h2>VENTAS</h2>

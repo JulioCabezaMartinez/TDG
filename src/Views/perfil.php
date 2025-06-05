@@ -1,9 +1,9 @@
 <?php
 
 $css = 'perfil';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 
 ?>
 
@@ -140,7 +140,7 @@ require_once __DIR__ . '\Templates\header.php';
     <?php
     if ($perfil["Premium"] == 0) {
     ?>
-        <a href="/TDG/perfil/Premium">
+        <a href="/perfil/Premium">
             <button class="getPremium boton-perso">Conseguir Premium <i class="fa-solid fa-crown"></i></button>
         </a>
     <?php
@@ -149,7 +149,7 @@ require_once __DIR__ . '\Templates\header.php';
 </div>
 
 
-<a href="/TDG/perfil/ventas">
+<a href="/perfil/ventas">
     <button class="boton-perso">Ver Ventas y Compras</button>
 </a>
 
@@ -179,12 +179,12 @@ require_once __DIR__ . '\Templates\header.php';
     <div id="backlog"></div>
 </div>
 
-<script src="/TDG/public/JS/perfil.js"></script>
+<script src="/public/JS/perfil.js"></script>
 
 <?php
 include_once __DIR__ . "/Templates/footer.php";
 ?>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

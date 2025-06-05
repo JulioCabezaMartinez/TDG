@@ -28,7 +28,7 @@ function eventos(){
             if (result.isConfirmed) {
                 let id_producto = document.getElementById("id_producto").value;
 
-                fetch("/TDG/AJAX/vaciarProducto",{
+                fetch("/AJAX/vaciarProducto",{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -45,7 +45,7 @@ function eventos(){
                             background: "#2C2C2E",
                             color: "#FFFFFF"
                         }).then(() => {
-                            window.location.href = "/TDG/ventas";
+                            window.location.href = "/ventas";
                         });
                     } else {
                         Swal.fire({
@@ -82,7 +82,7 @@ function eventos(){
                 let id_producto = document.getElementById("id_producto").value;
                 let entidad = "productos";
 
-                fetch("/TDG/AJAX/eliminarDato",{
+                fetch("/AJAX/eliminarDato",{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function eventos(){
                             background: "#2C2C2E",
                             color: "#FFFFFF"
                         }).then(() => {
-                            window.location.href = "/TDG/ventas";
+                            window.location.href = "/ventas";
                         });
                     } else {
                         Swal.fire({
@@ -124,7 +124,7 @@ function eventos(){
         const modal = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
         modal.show();
 
-        fetch("/TDG/AJAX/datosModificarDato", {
+        fetch("/AJAX/datosModificarDato", {
             method: "POST",
             headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -159,7 +159,7 @@ function eventos(){
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
 
-        fetch("/TDG/AJAX/modificarDato", {
+        fetch("/AJAX/modificarDato", {
             method: "POST",
             body: formData
         })
@@ -172,7 +172,7 @@ function eventos(){
                     background: "#2C2C2E",
                     color: "#FFFFFF"
                 }).then(() => {
-                    window.location.href = "/TDG/ventas/view?id=" + datos["id"];
+                    window.location.href = "/ventas/view?id=" + datos["id"];
                 })
             })
             .catch(() => {

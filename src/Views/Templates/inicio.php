@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDG</title>
-    <link rel="stylesheet" href="/TDG/public/CSS/style.css">
-    <link rel="stylesheet" href="/TDG/public/CSS/header.css">
-    <link rel="stylesheet" href="/TDG/public/CSS/footer.css">
-    <link rel="stylesheet" href="/TDG/public/CSS/paginacion.css">
+    <link rel="stylesheet" href="/public/CSS/style.css">
+    <link rel="stylesheet" href="/public/CSS/header.css">
+    <link rel="stylesheet" href="/public/CSS/footer.css">
+    <link rel="stylesheet" href="/public/CSS/paginacion.css">
     
     <!-- Paypal -->
     <script src="<?php echo $_ENV["PAYPAL_SRC"] ?>"></script>
@@ -20,13 +20,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
     <!-- CSS propio del Carrusel -->
-    <link rel="stylesheet" href="/TDG/public/CSS/carrusel.css">
+    <link rel="stylesheet" href="/public/CSS/carrusel.css">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- CSS propio de cada vista -->
-    <link rel="stylesheet" href="<?php echo "/TDG/public/CSS/{$css}.css" ?>">
+    <link rel="stylesheet" href="<?php echo "/public/CSS/{$css}.css" ?>">
 
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6af6746610.js" crossorigin="anonymous"></script>

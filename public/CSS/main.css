@@ -10,7 +10,7 @@ body{
     align-items: start;
     justify-content: space-evenly;
 
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/TDG/public/IMG/main-landing-ordered-games.webp");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/public/IMG/main-landing-ordered-games.webp");
     background-size: cover;
     background-position: center;
 

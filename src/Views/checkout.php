@@ -1,8 +1,8 @@
 <?php
 $css = 'checkout';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\header.php';
+require_once __DIR__ . '/Templates/header.php';
 ?>
 <input type="hidden" id="id_producto" value="<?php echo $_SESSION["id_venta"]?>">
 <div class="cuerpo">
@@ -58,7 +58,7 @@ require_once __DIR__ . '\Templates\header.php';
 
             let id_producto=$("#id_producto").val();
             // Hacer la solicitud al backend para crear la orden
-            return fetch('/TDG/AJAX/AJAXPaypal', {
+            return fetch('/AJAX/AJAXPaypal', {
                     method: 'POST',
                     body: JSON.stringify({
                         productoId: id_producto
@@ -85,13 +85,13 @@ require_once __DIR__ . '\Templates\header.php';
                     throw new Error("El pago no se completó correctamente.");
                 } else {
                     $.ajax({
-                        url: "/TDG/AJAX/gestionarCompra",
+                        url: "/AJAX/gestionarCompra",
                         type: "POST",
                         data: {
                             id_producto: id_producto
                         },
                         success: function(data){
-                            window.location.href="/TDG/ventas/view/finalizacionCompra?producto="+id_producto;
+                            window.location.href="/ventas/view/finalizacionCompra?producto="+id_producto;
                         }
                     })
                 }
@@ -113,5 +113,5 @@ require_once __DIR__ . '\Templates\header.php';
 </script>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

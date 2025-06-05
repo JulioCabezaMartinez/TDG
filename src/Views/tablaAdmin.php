@@ -1,9 +1,9 @@
 <?php
 
 $css = 'tablaAdmin';
-require_once __DIR__ . '\Templates\inicio.php';
+require_once __DIR__ . '/Templates/inicio.php';
 
-require_once __DIR__ . '\Templates\barra-lateral.admin.php';
+require_once __DIR__ . '/Templates/barra-lateral.admin.php';
 ?>
 
 <!-- Modal de creación y modificación de Datos -->
@@ -453,7 +453,7 @@ if($entidad=="usuarios"){
     <input type="hidden" id="entidad" name="entidad" value="<?php echo $entidad ?>">
     <h2 class="h2-entidad ms-3">Tabla <?php echo $entidad ?></h2>
     <br><br>
-    <a class="enlace-vuelta enlace" href="/TDG/panelAdmin">< Volver a Panel de Administrador</a>
+    <a class="enlace-vuelta enlace" href="/panelAdmin">< Volver a Panel de Administrador</a>
     
     <button id="btn_crear_dato" class="boton-perso ms-3">Crear <?php echo $entidad ?></button>
     <br><br>
@@ -481,8 +481,8 @@ if($entidad=="usuarios"){
     <div id="tabla-movil" class="tabla-movil"></div> 
 </div>
 
-<script src="/TDG/public/JS/tablaAdmin.js"></script>
+<script src="/public/JS/tablaAdmin.js"></script>
 
 <?php
-require_once __DIR__ . '\Templates\final.php';
+require_once __DIR__ . '/Templates/final.php';
 ?>

@@ -1,9 +1,9 @@
     
     <!-- Script del Header -->
-    <script src="/TDG/public/JS/header.js"></script>
+    <script src="/public/JS/header.js"></script>
     
     <!-- Script cookies -->
-    <script src="/TDG/public/JS/cookies.js"></script>
+    <script src="/public/JS/cookies.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

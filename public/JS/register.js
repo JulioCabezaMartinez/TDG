@@ -155,7 +155,7 @@ function eventos(){
             formData.append('imagen_perfil', imagen.files[0]);
         }
 
-        fetch("/TDG/AJAX/registrar-usuario", {
+        fetch("/AJAX/registrar-usuario", {
             method: "POST",
             body: formData,
 

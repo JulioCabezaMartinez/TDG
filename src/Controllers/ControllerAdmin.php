@@ -107,7 +107,7 @@ class ControllerAdmin{
 
             include __DIR__. '/../Views/tablaAdmin.php';
         }else{
-            header("Location: /TDG/");
+            header("Location: /");
         }
 
         

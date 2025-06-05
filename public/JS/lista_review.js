@@ -57,7 +57,7 @@ function eventos() {
         formData.append("id_juego", id_juego);
         formData.append("review", review);
 
-        fetch("/TDG/AJAX/add_review", {
+        fetch("/AJAX/add_review", {
             method: "POST",
             body: formData
         })
@@ -110,7 +110,7 @@ function eventos() {
                 let formData=new FormData();
                 formData.append("id", id);
 
-                fetch("/TDG/AJAX/eliminarReview", {
+                fetch("/AJAX/eliminarReview", {
                     method: "POST",
                     body: formData
                 }).then(response => response.text())
@@ -155,7 +155,7 @@ function eventos() {
 
             let id=e.target.id.split("@")[0];
 
-            fetch("/TDG/AJAX/datosModificarDato", {
+            fetch("/AJAX/datosModificarDato", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -187,7 +187,7 @@ function eventos() {
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", "reviews")
 
-        fetch("/TDG/AJAX/modificarDato", {
+        fetch("/AJAX/modificarDato", {
         method: "POST",
         body: formData
         })
@@ -236,7 +236,7 @@ function crearTabla(reviews) {
         cabecera.className = "cabecera_review";
 
         const img = document.createElement("img");
-        img.src = `/TDG/public/IMG/Users-img/${review.Imagen_Usuario}`;
+        img.src = `/public/IMG/Users-img/${review.Imagen_Usuario}`;
 
         const h3 = document.createElement("h3");
         h3.textContent = review.Nick_Usuario;
@@ -409,7 +409,7 @@ function paginacion(nPagina=null, filtros={}) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_reviews", {
+    fetch("/AJAX/lista_reviews", {
         method: "POST",
         body: formData
 

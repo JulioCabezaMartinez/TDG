@@ -15,7 +15,7 @@ class ControllerHome{
     public function login(){
 
         if(!empty($_SESSION)){
-            header("Location: /TDG/");
+            header("Location: /");
             exit;
         }
         
@@ -25,7 +25,7 @@ class ControllerHome{
     public function register(){
         
         if(!empty($_SESSION)){
-            header("Location: /TDG/");
+            header("Location: /");
             exit;
         }
 

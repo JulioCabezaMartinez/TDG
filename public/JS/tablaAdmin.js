@@ -31,7 +31,7 @@ function eventos() { // Cambiar data de los fetches.
         const id = e.target.id.split("@")[1];
         
 
-        fetch("/TDG/AJAX/eliminarDato", {
+        fetch("/AJAX/eliminarDato", {
             method: "POST",
             headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -120,7 +120,7 @@ function eventos() { // Cambiar data de los fetches.
             }
 
 
-            fetch("/TDG/AJAX/datosModificarDato", {
+            fetch("/AJAX/datosModificarDato", {
                 method: "POST",
                 body: formData
             })
@@ -176,7 +176,7 @@ function eventos() { // Cambiar data de los fetches.
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
 
-        fetch("/TDG/AJAX/addDato", {
+        fetch("/AJAX/addDato", {
         method: "POST",
         body: formData
         })
@@ -241,7 +241,7 @@ function eventos() { // Cambiar data de los fetches.
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
 
-        fetch("/TDG/AJAX/modificarDato", {
+        fetch("/AJAX/modificarDato", {
         method: "POST",
         body: formData
         })
@@ -346,7 +346,7 @@ function eventos() { // Cambiar data de los fetches.
                 formData.append("Pass", pass);
                 formData.append("id_usuario", id_usuario);
 
-                fetch("/TDG/AJAX/cambiarPassAdmin", {
+                fetch("/AJAX/cambiarPassAdmin", {
                     method: "POST",
                     body: formData
                 })
@@ -399,7 +399,7 @@ function eventos() { // Cambiar data de los fetches.
             let formData= new FormData();
             formData.append("id_juego", id)
 
-            fetch("/TDG/AJAX/getGenPlatJuegoAdmin",{
+            fetch("/AJAX/getGenPlatJuegoAdmin",{
                 method: "POST",
                 body:formData
             })
@@ -764,7 +764,7 @@ function paginacion(nPagina=null, busqueda=null) {
     }
     
 
-    fetch("/TDG/AJAX/lista_Admin", {
+    fetch("/AJAX/lista_Admin", {
         method: "POST",
         body: formData
 

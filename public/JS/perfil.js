@@ -69,7 +69,7 @@ function eventos(){
             formData.append("id", id);
             formData.append("entidad", entidad);
 
-            fetch("/TDG/AJAX/datosModificarDato", {
+            fetch("/AJAX/datosModificarDato", {
                 method: "POST",
                 body: formData
             })
@@ -100,7 +100,7 @@ function eventos(){
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
 
-        fetch("/TDG/AJAX/modificarDato", {
+        fetch("/AJAX/modificarDato", {
         method: "POST",
         body: formData
         })
@@ -181,7 +181,7 @@ function eventos(){
             formDataPassActual.append("passActual", passActual);
 
             // Comprobacion de contraseña Actual
-            fetch("/TDG/AJAX/compruebaPass", {
+            fetch("/AJAX/compruebaPass", {
                     method: "POST",
                     body: formDataPassActual
                 })
@@ -193,7 +193,7 @@ function eventos(){
                         formData.append("Pass", pass);
                         formData.append("id_usuario", id_usuario);
 
-                        fetch("/TDG/AJAX/cambiarPassAdmin", {
+                        fetch("/AJAX/cambiarPassAdmin", {
                             method: "POST",
                             body: formData
                         })
@@ -338,7 +338,7 @@ function crearTablaLista(juegos, tipo) {
     juegos.forEach(juego => {
         // Si no hay imagen, asignar una por defecto
         if (!juego.Imagen) {
-            juego.Imagen = "/TDG/public/IMG/default-game.jpg";
+            juego.Imagen = "/public/IMG/default-game.jpg";
         }
 
         // Crear el contenedor principal
@@ -347,7 +347,7 @@ function crearTablaLista(juegos, tipo) {
 
         // Crear el enlace
         const enlace = document.createElement("a");
-        enlace.href = `/TDG/juegos/view?juego=${juego.id}`;
+        enlace.href = `/juegos/view?juego=${juego.id}`;
 
         // Crear la imagen
         const imagen = document.createElement("img");
@@ -621,7 +621,7 @@ function paginacionWishlist(nPagina=null) {
     formData.append("inicio", inicio);
     formData.append("limite", limite);
 
-    fetch("/TDG/AJAX/lista_whislist", {
+    fetch("/AJAX/lista_whislist", {
         method: "POST",
         body: formData
 
@@ -665,7 +665,7 @@ function paginacionCompleted(nPagina=null) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_completed", {
+    fetch("/AJAX/lista_completed", {
         method: "POST",
         body: formData
 
@@ -707,7 +707,7 @@ function paginacionPlaying(nPagina=null) {
     formData.append("inicio", inicio);
     formData.append("limite", limite);
 
-    fetch("/TDG/AJAX/lista_playing", {
+    fetch("/AJAX/lista_playing", {
         method: "POST",
         body: formData
 
@@ -751,7 +751,7 @@ function paginacionBacklog(nPagina=null) {
 
     // console.log(formData.get("filtros"));
 
-    fetch("/TDG/AJAX/lista_backlog", {
+    fetch("/AJAX/lista_backlog", {
         method: "POST",
         body: formData
 

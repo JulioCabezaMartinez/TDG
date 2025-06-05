@@ -6,6 +6,7 @@ use App\Core\EmptyModel;
 use App\Traits\BusquedaAlfa;
 use PDO;
 use PDOException;
+use Exception;
 
 /**
  * Modelo para gestionar las operaciones relacionadas con la tabla de plataformas.
@@ -20,6 +21,29 @@ class Plataforma extends EmptyModel {
      */
     public function __construct() {
         parent::__construct('plataformas', 'id');
+    }
+
+    public function borrarPlataformasJuego($id_juego){
+        try {
+            $sql = "DELETE FROM plataformas_juego WHERE id_juego=:id_juego";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("id_juego", $id_juego, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error al borrar plataformas_juego: " . $e->getMessage());
+        }
+    }
+
+    public function insertarPlataformasJuego($id_juego, $id_plataforma){
+        try {
+            $sql = "INSERT INTO generos_juego (id_plataforma, id_juego) VALUES (:id_plataforma, :id_juego);";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("id_juego", $id_juego, PDO::PARAM_INT);
+            $stmt->bindParam("id_plataforma", $id_plataforma, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error al insertar plataformas_juego: " . $e->getMessage());
+        }
     }
 
     public function rellenarBDJuegosPlataforma($id_juego, $id_plataforma): void {

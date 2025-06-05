@@ -165,6 +165,59 @@ require_once __DIR__ . '\Templates\barra-lateral.admin.php';
                                 <input type="text" class="form-control" id="<?php echo $columna ?>Input">
                                 <br>
                             <?php
+                                break;
+                            }
+                            ?>
+                        </div>
+                <?php
+                        }
+                        break;
+                    case "post_vendidos":
+                        foreach ($columnas as $columna) {
+                ?>
+                        <div>
+
+                            <?php
+                            switch ($columna) {
+                                case "id_Post":
+                            ?>
+                                <label for="<?php echo $columna ?>Label"><strong>Producto Comprado:</strong></label>
+                                <select class="form-select" id="<?php echo $columna ?>Input">
+                                    <option value="" selected disabled>Seleccione un juego</option>
+                                    <?php
+                                    
+                                    foreach ($productos as $producto) {
+                                    ?>
+                                        <option value="<?php echo $producto['id'] ?>"><?php echo $producto['Titulo'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <br>
+                            <?php
+                                    break;
+                                case "id_Comprador":
+                            ?>
+                                <label for="<?php echo $columna ?>Label"><strong>Comprador:</strong></label>
+                                <select class="form-select" id="<?php echo $columna ?>Input">
+                                    <option value="" selected disabled>Seleccione un usuario</option>
+                                    <?php
+                                    foreach ($usuarios as $usuario) {
+                                    ?>
+                                        <option value="<?php echo $usuario['id'] ?>"><?php echo $usuario['Nombre'] . ' ' . $usuario['Apellido'] . ' | ' . $usuario['Correo']?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <br>
+                            <?php
+                                    break;
+                                case "Fecha":
+                            ?>
+                                <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>
+                                <input type="datetime-local" class="form-control" id="<?php echo $columna ?>Input">
+                                <br>
+                            <?php
                                     break;
                             }
                             ?>

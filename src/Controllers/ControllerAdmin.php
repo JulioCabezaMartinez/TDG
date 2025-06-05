@@ -93,12 +93,15 @@ class ControllerAdmin{
                     break;
                 case "post_vendidos":
                     $ventaDB=new Venta();
-                    $datos=$ventaDB->listaColumnas();
+                    $usuarioDB=new Usuario();
+                    $datos=$ventaDB->muestraColumnasVentas();
                     $columnas=[];
                     foreach($datos as $dato){
                         array_push($columnas, $dato["Field"]);
                     }
                     $lista=$ventaDB->muestraAllVentas();
+                    $usuarios=$usuarioDB->getAll();
+                    $productos=$ventaDB->getAll();
                     break;
             }
 

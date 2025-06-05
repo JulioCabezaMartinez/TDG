@@ -88,7 +88,17 @@ function eventos() { // Cambiar data de los fetches.
     // Delegar click para botones Modificar
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("modificar-dato")) {
-            const id = e.target.id.split("@")[1];
+            let id, producto, comprador, fecha;
+
+            if(entidad=="post_vendidos"){
+                let lista_id = e.target.id.split("@")[1];
+                producto=lista_id.split("_")[0];
+                comprador=lista_id.split("_")[1];
+                fecha=lista_id.split("_")[2];
+            }else{
+                id = e.target.id.split("@")[1];
+            }
+            
 
             document.getElementById("btn_modificar").style.display = "block"; // Ocultar botón de modificar
             document.getElementById("btn_crear").style.display = "none"; // Mostrar botón de crear
@@ -98,12 +108,21 @@ function eventos() { // Cambiar data de los fetches.
 
             modalCreacionModificacion.show();
 
+            let formData= new FormData();
+            if(entidad=="post_vendidos"){
+                formData.append("producto", producto);
+                formData.append("comprador", comprador);
+                formData.append("fecha", fecha);
+                formData.append("entidad", entidad);
+            }else{
+                formData.append("id", id);
+                formData.append("entidad", entidad);
+            }
+
+
             fetch("/TDG/AJAX/datosModificarDato", {
                 method: "POST",
-                headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams({ id, entidad })
+                body: formData
             })
             .then(res => res.text())
             .then(data => {
@@ -144,6 +163,10 @@ function eventos() { // Cambiar data de los fetches.
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
+            }
+
+            if(key == "Fecha"){
+                datos[key]=input.value+":00";
             }
 
             datos[key] = input.value;
@@ -207,6 +230,10 @@ function eventos() { // Cambiar data de los fetches.
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
+            }
+
+            if(key == "Fecha"){
+                datos[key]=input.value+":00";
             }
         });
 
@@ -513,7 +540,7 @@ function crearTabla(lista, columnas, entidad) {
                 </button>
                 <div class="dropdown-menu">
                 <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                <button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>
+                ${entidad === "post_vendidos" ? `<button id="btn_modificar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>` : `<button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>`}
                 ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Cambiar Contraseña</button>` : ''}
                 ${entidad === "juegos" ? `<button id="add_genPlat@${item.id}" class="dropdown-item btn btn-primary addGenPlat">Añadir/Modificar Generos y Plataformas</button>` : ''}
                 </div>
@@ -610,7 +637,11 @@ function crearTabla(lista, columnas, entidad) {
     btnEliminar.textContent = "Eliminar";
 
     const btnModificar = document.createElement("button");
-    btnModificar.id = `btnModificar@${item.id}`;
+    if(entidad==="post_vendidos"){
+        btnModificar.id = `btn_modificar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}`;
+    }else{
+        btnModificar.id = `btnModificar@${item.id}`;
+    }
     btnModificar.className = "dropdown-item btn btn-primary modificar-dato";
     btnModificar.textContent = "Modificar";
 

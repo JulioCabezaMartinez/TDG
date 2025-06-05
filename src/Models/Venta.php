@@ -57,6 +57,29 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    public function getCompra($id_producto, $id_usuario, $fecha){
+        $sql="SELECT * FROM post_vendidos WHERE id_Post=:id_producto AND id_Comprador=:id_usuario AND Fecha=:fecha";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam("id_producto", $id_producto, PDO::PARAM_INT);
+        $stmt->bindParam("id_usuario", $id_usuario, PDO::PARAM_INT);
+        $stmt->bindParam("fecha", $fecha, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    public function crearCompra($data){
+        $fields = implode(', ', array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $sql = "INSERT INTO post_vendidos ({$fields}) VALUES ({$placeholders})";
+        $this->query($sql, array_values($data));
+        return $this->db->lastInsertId();
+    }
+
+    public function updateCompra($data){
+        $sql = "UPDATE post_vendidos SET id_Post=:id_post, id_Comprador=:id_comprador, Fecha=:fecha WHERE id_Post=:id_postAntiguo AND id_Comprador=:id_compradorAntiguo AND Fecha=:fechaAntigua";
+        $stmt=$this->db->prepare($sql);
+    }
+
     public function getListSells(int $inicio, int $limit, array $filtros = []){
         try {
             $sql = "SELECT v.* FROM {$this->table} v JOIN usuarios u ON v.id_Vendedor = u.id";

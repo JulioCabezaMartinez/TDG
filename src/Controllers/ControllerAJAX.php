@@ -605,8 +605,16 @@ class ControllerAJAX {
             Security::closeSession();
         }
 
-        $id=$_POST["id"];
+        
         $entidad=$_POST["entidad"];
+
+        if($entidad == "post_vendidos"){
+            $id_Post=$_POST["producto"];
+            $id_comprador=$_POST["comprador"];
+            $fecha=$_POST["fecha"];
+        }else{
+            $id=$_POST["id"];
+        }
 
         switch ($entidad) {
             case "usuarios":
@@ -630,13 +638,12 @@ class ControllerAJAX {
                 echo json_encode(["dato" => $item]);
                 break;
             case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
-                echo "Error de Entidad, entidad equivocada";
+                $ventaDB=new Venta();
+                $item=$ventaDB->getCompra($id_Post, $id_comprador, $fecha);
+                echo json_encode(["dato" => $item]);
                 break;
             default:
-                echo "Error de Entidad";
+            echo json_encode(["error" => "Error de Entidad"]);
                 break;
         }
     }
@@ -683,9 +690,8 @@ class ControllerAJAX {
                 $item=$ventaDB->update($datos, $id);
                 break;
             case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
+                $ventaDB=new Venta();
+                $item=$ventaDB->updateCompra($datos, $id);
                 echo "Error de Entidad, entidad equivocada";
                 break;
             default:
@@ -735,10 +741,8 @@ class ControllerAJAX {
                 $item=$ventaDB->create($datos);
                 break;
             case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
-                echo "Error de Entidad, entidad equivocada";
+                $ventaDB=new Venta();
+                // $item=$ventaDB->create($datos);
                 break;
             default:
                 echo "Error de Entidad";

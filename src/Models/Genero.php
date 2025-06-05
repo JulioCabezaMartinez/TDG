@@ -20,13 +20,26 @@ class Genero extends EmptyModel {
         parent::__construct('generos', 'id');
     }
 
-    public function createGenero($nombre) {
+    public function borrarGenerosJuego($id_juego){
         try {
-            $sql = "INSERT INTO generos (Nombre) VALUES (?)";
-            $this->query($sql, [$nombre]);
+            $sql = "DELETE FROM generos_juego WHERE id_juego=:id_juego";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("id_juego", $id_juego, PDO::PARAM_INT);
+            return $stmt->execute();
         } catch (PDOException $e) {
-            // Manejo del error, puedes loguearlo o lanzarlo
-            throw new Exception("Error al crear género: " . $e->getMessage());
+            throw new Exception("Error al borrar generos_juego: " . $e->getMessage());
+        }
+    }
+
+    public function insertarGenerosJuego($id_juego, $id_genero){
+        try {
+            $sql = "INSERT INTO generos_juego (id_genero, id_juego) VALUES (:id_genero, :id_juego);";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("id_juego", $id_juego, PDO::PARAM_INT);
+            $stmt->bindParam("id_genero", $id_genero, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error al insertar generos_juego: " . $e->getMessage());
         }
     }
 

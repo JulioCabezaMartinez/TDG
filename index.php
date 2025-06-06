@@ -90,6 +90,7 @@ $router->add('/AJAX/gestionarCompra', 'ControllerAJAX@gestionarCompra');
     $router->add('/AJAX/addDato', 'ControllerAJAX@addDato');
     $router->add('/AJAX/cambiarPassAdmin', 'ControllerAJAX@cambiarPass');
     $router->add('/AJAX/getGenPlatJuegoAdmin', 'ControllerAJAX@getGenPlatJuegoAdmin');
+    $router->add('/AJAX/addGenerosPlataformas', 'ControllerAJAX@addGenerosPlataformas');
 
     //AJAX de Perfil
     $router->add('/AJAX/compruebaPass', 'ControllerAJAX@compruebaPass');

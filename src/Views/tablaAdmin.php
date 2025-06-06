@@ -183,7 +183,7 @@ require_once __DIR__ . '/Templates/barra-lateral.admin.php';
                             ?>
                                 <label for="<?php echo $columna ?>Label"><strong>Producto Comprado:</strong></label>
                                 <select class="form-select" id="<?php echo $columna ?>Input">
-                                    <option value="" selected disabled>Seleccione un juego</option>
+                                    <option value="" selected disabled>Seleccione un producto</option>
                                     <?php
                                     
                                     foreach ($productos as $producto) {

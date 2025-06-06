@@ -36,7 +36,7 @@ class Plataforma extends EmptyModel {
 
     public function insertarPlataformasJuego($id_juego, $id_plataforma){
         try {
-            $sql = "INSERT INTO generos_juego (id_plataforma, id_juego) VALUES (:id_plataforma, :id_juego);";
+            $sql = "INSERT INTO plataformas_juego (id_plataforma, id_juego) VALUES (:id_plataforma, :id_juego);";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam("id_juego", $id_juego, PDO::PARAM_INT);
             $stmt->bindParam("id_plataforma", $id_plataforma, PDO::PARAM_INT);

@@ -14,6 +14,7 @@ use App\Core\Security;
 use App\Models\Venta;
 
 use DateTime;
+use Dotenv\Validator;
 use PDO;
 use PDOStatement;
 
@@ -1097,5 +1098,64 @@ class ControllerAJAX {
         $plataformas = $plataformaDB->getPlataformasIDJuegoById($id_juego);
 
         echo json_encode(["generos"=>$generos, "plataformas"=>$plataformas]);
+    }
+
+    public function addGenerosPlataformas(){
+        $generoDB=new Genero();
+        $plataformaDB=new Plataforma();
+        $id_juego=Validators::evitarInyeccion($_POST["id_juego"]);
+
+        $generosAntiguos=$generoDB->getGenerosIDJuegoById($id_juego);
+        $plataformasAntiguas=$plataformaDB->getPlataformasIDJuegobyId($id_juego);
+
+        if(!$generoDB->borrarGenerosJuego($id_juego)){
+            echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al reiniciar Generos"]);
+            exit();
+        }
+
+        if(!$plataformaDB->borrarPlataformasJuego($id_juego)){
+            echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al reiniciar Plataformas"]);
+            exit();
+        }
+        
+        
+
+        $generos=[];
+        foreach($_POST["generos"] as $genero){
+            $generoComprobado=Validators::evitarInyeccion($genero);
+
+            if(!$generoDB->insertarGenerosJuego($id_juego, $generoComprobado)){
+
+                $generoDB->borrarGenerosJuego($id_juego);
+
+                foreach($generosAntiguos as $generoAntiguo){
+                    $generoDB->insertarGenerosJuego($id_juego, $generoAntiguo);
+                }
+                
+                echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al insertar nuevos Generos. Generos reiniciados"]);
+                exit();
+            }
+            
+        }
+
+        $plataformas=[];
+        foreach($_POST["plataformas"] as $plataforma){
+            $plataformaComprobada=Validators::evitarInyeccion($plataforma);
+
+            if(!$plataformaDB->insertarPlataformasJuego($id_juego, $plataformaComprobada)){
+
+                $plataformaDB->borrarPlataformasJuego($id_juego);
+
+                foreach($plataformasAntiguas as $plataformaAntigua){
+                    $plataformaDB->insertarPlataformasJuego($id_juego, $plataformaAntigua);
+                }
+
+                echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al insertar nuevas Plataformas. Plataformas reiniciadas"]);
+                exit();
+            }
+            
+        }
+
+        echo json_encode(["result"=>"ok"]);
     }
 }

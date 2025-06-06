@@ -386,10 +386,11 @@ function eventos() { // Cambiar data de los fetches.
 
     if(entidad=="juegos"){
         const modalGenPlat = new bootstrap.Modal(document.getElementById("modificacionGeneroPlat"));
+        let id;
         document.addEventListener("click", function (e) {
 
         if (e.target.classList.contains("addGenPlat")) {
-            let id = e.target.id.split("@")[1];
+            id = e.target.id.split("@")[1];
             let id_juegoinput=document.getElementById("id_usuario_GenPlat");
             id_juegoinput.value=id;
             
@@ -435,6 +436,87 @@ function eventos() { // Cambiar data de los fetches.
 
            
         }
+        });
+
+        document.getElementById("btn_addGenPlat").addEventListener("click", ()=>{
+            let generos=[];
+            document.querySelectorAll("input.generoCheck:checked").forEach(input => {
+                generos.push(input.value)
+
+            });
+
+            let plataformas=[];
+            document.querySelectorAll("input.plataformaCheck:checked").forEach(input => {
+                plataformas.push(input.value);
+            });
+
+            let formData=new FormData();
+            generos.forEach(genero=>{
+                formData.append("generos[]", genero);
+            })
+            plataformas.forEach(plataforma => {
+                formData.append("plataformas[]", plataforma);
+            });
+            formData.append("id_juego", id);
+
+            fetch("/AJAX/addGenerosPlataformas", {
+                method: "POST",
+                body:formData
+            })
+            .then(res=>res.json())
+            .then(data => {
+                if(data.result=="ok"){
+                   Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Generos y Plataformas modificadas con éxito",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    }); 
+                    modalGenPlat.hide();
+                    id="";
+                }else{
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: data.mensaje,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    });
+                }
+            })
+            .catch(()=>{
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Error en el servidor",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+            });
+
+        });
+
+        document.getElementById("btn_cerrar_modal_GenPlat").addEventListener("click", ()=>{
+            id="";
+            document.querySelectorAll("input.generoCheck:checked").forEach(input => {
+                input.checked=false;
+            });
+
+            document.querySelectorAll("input.plataformaCheck:checked").forEach(input => {
+                input.checked=false;
+            });
+
+            modalGenPlat.hide();
         });
     }
 

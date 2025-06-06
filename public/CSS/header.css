@@ -20,6 +20,10 @@
     z-index: 10;
 }
 
+.hamBtn.active{
+    position: fixed;
+}
+
 /* Reference all the lines in the default icon */
 .hamBtn span{
     position: absolute;
@@ -159,6 +163,7 @@
 }
 
 .menu-hamburguesa.active{
+    position: fixed;
     left: 0;
     top: 0;
 

@@ -76,8 +76,8 @@ class Venta extends EmptyModel implements BusquedaAdmin {
     }
 
     public function updateCompra($data){
-        $sql = "UPDATE post_vendidos SET id_Post=:id_post, id_Comprador=:id_comprador, Fecha=:fecha WHERE id_Post=:id_postAntiguo AND id_Comprador=:id_compradorAntiguo AND Fecha=:fechaAntigua";
-        $stmt=$this->db->prepare($sql);
+        $sql = "UPDATE post_vendidos SET id_Post={$data["id_Post"]}, id_Comprador={$data["id_Comprador"]}, Fecha='{$data["Fecha"]}' WHERE id_Post={$data["id_PostAntiguo"]} AND id_Comprador={$data["id_CompradorAntiguo"]} AND Fecha='{$data["FechaAntigua"]}'";
+        return $this->query($sql);
     }
 
     public function getListSells(int $inicio, int $limit, array $filtros = []){

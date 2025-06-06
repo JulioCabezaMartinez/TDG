@@ -2,6 +2,10 @@
 
 namespace App\Controllers;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 use App\Models\Juego;
 use App\Models\Lista;
 use App\Models\Plataforma;
@@ -664,8 +668,11 @@ class ControllerAJAX {
             $datos[$key]=Validators::evitarInyeccion($dato);
         }
 
+        if($entidad=="post_vendidos"){
 
-        $id=$datos["id"];
+        }else{
+            $id=$datos["id"];
+        }
 
         // Declaro PDOStatement aqui para que el ID reconozca que es lo que devuelve update() siempre es un PDOStatement
         $item=new PDOStatement();
@@ -692,8 +699,7 @@ class ControllerAJAX {
                 break;
             case "post_vendidos":
                 $ventaDB=new Venta();
-                $item=$ventaDB->updateCompra($datos, $id);
-                echo "Error de Entidad, entidad equivocada";
+                $item=$ventaDB->updateCompra($datos);
                 break;
             default:
                 echo "Error de Entidad";

@@ -215,7 +215,7 @@ require_once __DIR__ . '/Templates/barra-lateral.admin.php';
                                 case "Fecha":
                             ?>
                                 <label for="<?php echo $columna ?>Label"><strong>Año de Salida:</strong></label>
-                                <input type="datetime-local" class="form-control" id="<?php echo $columna ?>Input">
+                                <input type="datetime-local" step="1" class="form-control" id="<?php echo $columna ?>Input">
                                 <br>
                             <?php
                                     break;
@@ -344,7 +344,14 @@ require_once __DIR__ . '/Templates/barra-lateral.admin.php';
                         }
                         break;
                     default:
-                        
+                        break;
+                }
+                if($entidad=="post_vendidos"){
+                ?>
+                <input type="hidden" id="id_PostAntiguoInput" value="">
+                <input type="hidden" id="id_CompradorAntiguoInput" value="">
+                <input type="hidden" id="FechaAntiguaInput" value="">
+                <?php
                 }
                 ?>
 

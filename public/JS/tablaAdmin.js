@@ -138,6 +138,25 @@ function eventos() { // Cambiar data de los fetches.
                             checkbox.checked=true; // Marcar el checkbox si el valor es "1"
                         }
                     }
+
+                    if(key === "id_Post"){
+                        let postAntiguo=document.getElementById("id_PostAntiguoInput");
+                        postAntiguo.value=datos[key];
+
+                        input.value = datos[key];
+                    }
+                    if(key === "id_Comprador"){
+                        let compradorAntiguo=document.getElementById("id_CompradorAntiguoInput");
+                        compradorAntiguo.value=datos[key];
+
+                        input.value = datos[key];
+                    }
+                    if(key === "Fecha"){
+                        let fechaAntiguo=document.getElementById("FechaAntiguaInput");
+                        fechaAntiguo.value=datos[key];
+
+                        input.value = datos[key];
+                    }
                 }
             });
         }
@@ -163,10 +182,6 @@ function eventos() { // Cambiar data de los fetches.
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
-            }
-
-            if(key == "Fecha"){
-                datos[key]=input.value+":00";
             }
 
             datos[key] = input.value;
@@ -231,45 +246,58 @@ function eventos() { // Cambiar data de los fetches.
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
             }
-
-            if(key == "Fecha"){
-                datos[key]=input.value+":00";
-            }
         });
 
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
+        console.log(JSON.stringify(datos));
         formData.append("entidad", entidad);
 
         fetch("/AJAX/modificarDato", {
         method: "POST",
         body: formData
         })
-        .then(res => res.text())
-        .then(() => {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Dato modificado con éxito",
-            showConfirmButton: false,
-            timer: 1500,
-            backdrop: false,
-            background: "#2C2C2E",
-            color: "#FFFFFF"
-        });
-        paginacion(); // Recargar la tabla después de modificar
+        .then(res => res.json())
+        .then(data => {
+            if(data.result == "ok"){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Dato modificado con éxito",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+                paginacion(); // Recargar la tabla después de modificar
+                modalCreacionModificacion.hide();
+            }else{
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Fallo al modificar Dato",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    });
+            }
+            
         })
-        .catch(() => {
-        Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Error en el servidor",
-            showConfirmButton: false,
-            timer: 1500,
-            backdrop: false,
-            background: "#2C2C2E",
-            color: "#FFFFFF"
-        });
+        .catch(error => {
+            console.log(error);
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error en el servidor",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
+            });
         });
     });
 

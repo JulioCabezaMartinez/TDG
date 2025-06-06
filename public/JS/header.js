@@ -30,6 +30,8 @@ function eventos(){
         document.querySelectorAll(".menu-hamburguesa").forEach(function (el) {
             el.classList.toggle("active");
         });
+
+        document.getElementById("hamBtn").classList.toggle("active");
     });
 }
 

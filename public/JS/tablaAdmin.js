@@ -250,7 +250,6 @@ function eventos() { // Cambiar data de los fetches.
 
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
-        console.log(JSON.stringify(datos));
         formData.append("entidad", entidad);
 
         fetch("/AJAX/modificarDato", {

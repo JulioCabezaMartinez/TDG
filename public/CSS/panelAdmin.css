@@ -17,6 +17,10 @@ body{
     border-radius: 8px;
 }
 
+.icono{
+    font-size: 24px;
+}
+
 /* Barra Lateral */
 .barra-lateral{
     display: flex;

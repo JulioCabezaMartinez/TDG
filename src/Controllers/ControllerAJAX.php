@@ -526,8 +526,17 @@ class ControllerAJAX {
             Security::closeSession();
         }
 
-        $id=$_POST["id"];
-        $entidad=$_POST["entidad"];
+        
+        
+        $entidad=Validators::evitarInyeccion($_POST["entidad"]);
+
+        if($entidad=="post_vendidos"){
+            $producto=Validators::evitarInyeccion($_POST["producto"]);
+            $comprador=Validators::evitarInyeccion($_POST["comprador"]);
+            $fecha=Validators::evitarInyeccion($_POST["fecha"]);
+        }else{
+            $id=Validators::evitarInyeccion($_POST["id"]);
+        }
 
         switch ($entidad) {
             case "usuarios":
@@ -559,10 +568,9 @@ class ControllerAJAX {
                 echo "Todo Correcto";
                 break;
             case "post_vendidos":
-                // $usuarioDB=new Venta(); // Cambiar a clase Vendido.
-                // $usuarioDB->delete($id);
-                // echo "Todo Correcto";
-                echo "Error de Entidad, entidad equivocada";
+                $ventaDB=new Venta(); 
+                $ventaDB->deleteCompra($producto, $comprador, $fecha);
+                echo "Todo Correcto";
                 break;
             default:
                 echo "Error de Entidad";
@@ -729,8 +737,14 @@ class ControllerAJAX {
             Security::closeSession();
         }
 
-        $entidad=$_POST["entidad"];
+        $entidad=Validators::evitarInyeccion($_POST["entidad"]);
         $datos=json_decode($_POST["datos"], true);
+        
+        if($entidad=="post_vendidos"){
+            unset($datos["id_PostAntiguo"]);
+            unset($datos["id_CompradorAntiguo"]);
+            unset($datos["FechaAntigua"]);
+        }
 
         switch ($entidad) {
             case "usuarios":
@@ -759,7 +773,7 @@ class ControllerAJAX {
                 break;
             case "post_vendidos":
                 $ventaDB=new Venta();
-                // $item=$ventaDB->create($datos);
+                $result=$ventaDB->crearCompra($datos);
                 break;
             default:
                 echo "Entity Error";

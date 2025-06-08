@@ -1,3 +1,7 @@
+body{
+    justify-content: unset;
+}
+
 ul{
     list-style: none;
 }
@@ -5,5 +9,20 @@ ul{
 li{
     font-size: 200%;
     color: var(--color-texto);
-    text-align: center;
+}
+
+.premiumImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.premiumImg img{
+    width: 8%;
+    border-radius: 20px;
+}
+
+.btn-premium.boton-perso{
+    padding: 15px;
+    font-size: 150%;
 }

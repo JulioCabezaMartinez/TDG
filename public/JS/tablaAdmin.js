@@ -28,15 +28,30 @@ function eventos() { // Cambiar data de los fetches.
         // Delegar click para botones Eliminar
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("eliminar-dato")) {
-            const id = e.target.id.split("@")[1];
-            
+                let id, producto, comprador, fecha;
+                if(entidad=="post_vendidos"){
+                    let lista_id = e.target.id.split("@")[1];
+                    producto=lista_id.split("_")[0];
+                    comprador=lista_id.split("_")[1];
+                    fecha=lista_id.split("_")[2];
+                }else{
+                    id = e.target.id.split("@")[1];
+                }
+
+                let formData=new FormData();
+                if(entidad=="post_vendidos"){
+                    formData.append("producto", producto);
+                    formData.append("comprador", comprador);
+                    formData.append("fecha", fecha);
+                    formData.append("entidad", entidad);
+                }else{
+                    formData.append("id", id);
+                    formData.append("entidad", entidad);
+                }
 
             fetch("/AJAX/eliminarDato", {
                 method: "POST",
-                headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams({ id, entidad })
+                body: formData
             })
             .then(res => res.text())
             .then(data => {
@@ -166,6 +181,8 @@ function eventos() { // Cambiar data de los fetches.
     document.getElementById("btn_crear").addEventListener("click", () => {
         const datos = {};
 
+        
+
         document.querySelectorAll("[id$='Input']").forEach(input => {
 
             const key = input.id.replace("Input", "");
@@ -197,17 +214,17 @@ function eventos() { // Cambiar data de los fetches.
         body: formData
         })
         .then(res => res.text())
-        .then(() => {
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Data modified successfully",
-            showConfirmButton: false,
-            timer: 1500,
-            backdrop: false,
-            background: "#2C2C2E",
-            color: "#FFFFFF"
-        });
+        .then(data => {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Data modified successfully",
+                showConfirmButton: false,
+                timer: 1500,
+                backdrop: false,
+                background: "#2C2C2E",
+                color: "#FFFFFF"
+            });
         paginacion(); // Recargar la tabla después de crear
         })
         .catch(() => {
@@ -686,7 +703,7 @@ function crearTabla(lista, columnas, entidad) {
                 Actions
                 </button>
                 <div class="dropdown-menu">
-                <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Delete</button>
+                ${entidad === "post_vendidos" ? `<button id="btn_eliminar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}" class="dropdown-item btn btn-danger eliminar-dato">Delete</button>` : `<button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Delete</button>`}
                 ${entidad === "post_vendidos" ? `<button id="btn_modificar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>` : `<button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>`}
                 ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Change Password</button>` : ''}
                 ${entidad === "juegos" ? `<button id="add_genPlat@${item.id}" class="dropdown-item btn btn-primary addGenPlat">Add/Modify Genres and Platforms</button>` : ''}
@@ -779,7 +796,11 @@ function crearTabla(lista, columnas, entidad) {
     dropdownMenu.classList.add("dropdown-menu");
 
     const btnEliminar = document.createElement("button");
-    btnEliminar.id = `btnEliminar@${item.id}`;
+    if(entidad==="post_vendidos"){
+        btnEliminar.id = `btnEliminar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}`;
+    }else{
+        btnEliminar.id = `btnEliminar@${item.id}`;
+    }
     btnEliminar.className = "dropdown-item btn btn-danger eliminar-dato";
     btnEliminar.textContent = "Delete";
 

@@ -5,27 +5,30 @@ require_once __DIR__ . '/Templates/inicio.php';
 require_once __DIR__ . '/Templates/header.php';
 ?>
 
-<h1>Premium</h1>
+<div class="premiumImg">
+    <h1>Premium</h1>
+    <img class="ms-4" src="/public/IMG/Productos-img/PremiumTDG.png">
+</div>
 
-<h4>TDG Premium Advantages</h4>
-
-<br><br>
-
-<ul>
-    <li>Premium Users' Products for Sale appear first in the Products for Sale list</li>
+<div class="p-6 rounded-xl shadow-md max-w-md mx-auto">
+  <h4 class="text-xl font-semibold text-gray-800 mb-4">TDG Premium Advantages</h4>
+  <br><br><br>
+  <ul class="space-y-4 text-gray-700 list-disc list-inside">
+    <li><strong>Priority Listings:</strong> Premium Users' Products appear first in the Products Sale list.</li>
     <br><br>
-    <li>FREE Management Fees on Purchases</li>
+    <li><strong>Zero Fees:</strong> FREE Management Fees on all your purchases.</li>
     <br><br>
-    <li>For only €15 a month</li>
-</ul>
+    <li><strong>Affordable Price:</strong> Just €15 a month.</li>
+  </ul>
+</div>
 
 <a href="/ventas/view/checkout?id=<?php echo -1 ?>">
-    <button class="boton-perso">Get Premium <i class="fa-solid fa-crown"></i></button>
+    <button class="btn-premium boton-perso">Get Premium <i class="fa-solid fa-crown"></i></button>
 </a>
 
 
 <?php
-    include_once __DIR__. "./Templates/footer.php";
+    include_once __DIR__. "/./Templates/footer.php";
 ?>
 
 <?php

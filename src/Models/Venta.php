@@ -75,6 +75,15 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         return $this->db->lastInsertId();
     }
 
+    public function deleteCompra($id_producto, $id_usuario, $fecha){
+        $sql= "DELETE FROM post_vendidos WHERE id_Post=:id_producto AND id_Comprador=:id_usuario AND Fecha=:fecha";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam("id_producto", $id_producto, PDO::PARAM_INT);
+        $stmt->bindParam("id_usuario", $id_usuario, PDO::PARAM_INT);
+        $stmt->bindParam("fecha", $fecha, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
     public function updateCompra($data){
         $sql = "UPDATE post_vendidos SET id_Post={$data["id_Post"]}, id_Comprador={$data["id_Comprador"]}, Fecha='{$data["Fecha"]}' WHERE id_Post={$data["id_PostAntiguo"]} AND id_Comprador={$data["id_CompradorAntiguo"]} AND Fecha='{$data["FechaAntigua"]}'";
         return $this->query($sql);

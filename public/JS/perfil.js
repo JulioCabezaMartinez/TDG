@@ -75,7 +75,11 @@ function eventos(){
             })
             .then(res => res.text())
             .then(data => {
-                const json = JSON.parse(data);
+                try{
+                    const json = JSON.parse(data);
+                }catch(error){
+                    console.log(error)
+                }
                 const datos = json["dato"];
 
                 for (let key in datos) {

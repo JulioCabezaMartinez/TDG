@@ -31,9 +31,9 @@ class Lista extends EmptyModel {
             $query = "INSERT INTO listas (id_tipo, nombre) VALUES (:id_tipo, :nombre)";
             $params = [
                 [':id_tipo' => 1, ':nombre' => 'Wish-'.$nick_usuario],
-                [':id_tipo' => 2, ':nombre' => 'Completed-'.$nick_usuario],
-                [':id_tipo' => 3, ':nombre' => 'Playing-'.$nick_usuario],
-                [':id_tipo' => 4, ':nombre' => 'Backlog-'.$nick_usuario]
+                [':id_tipo' => 2, ':nombre' => 'Backlog-'.$nick_usuario],
+                [':id_tipo' => 3, ':nombre' => 'Completed-'.$nick_usuario],
+                [':id_tipo' => 4, ':nombre' => 'Playing-'.$nick_usuario]
             ];
 
             foreach ($params as $param) {
@@ -203,46 +203,45 @@ class Lista extends EmptyModel {
         }
     }
 
-    public function getUserLists($id_usuario, $tipo_lista, $inicio, $limite){
+    public function getUserLists($id_usuario, $tipo_lista, $inicio, $limite) {
         try {
             $juegoDB = new Juego();
             $list = [];
 
-            $id_tipo_lista = match($tipo_lista){
+            $id_tipo_lista = match($tipo_lista) {
                 'wishlist' => 1,
                 'completed' => 2,
-                'playing' => 3,
-                'backlog' => 4
+                'playing'   => 3,
+                'backlog'   => 4
             };
 
-            $sql_listas_usuario = "SELECT id_lista FROM usuarios_listas WHERE id_usuario = :id_usuario";
-            $stmt_listas_usuario = $this->db->prepare($sql_listas_usuario);
-            $stmt_listas_usuario->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-            $stmt_listas_usuario->execute();
-            $listas_usuario = $stmt_listas_usuario->fetchAll(PDO::FETCH_ASSOC);
+            // Obtener la id de la lista del usuario con ese tipo
+            $sql = "
+                SELECT l.id
+                FROM usuarios_listas ul
+                INNER JOIN listas l ON ul.id_lista = l.id
+                WHERE ul.id_usuario = :id_usuario AND l.id_tipo = :id_tipo_lista
+                LIMIT 1
+            ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->bindParam(':id_tipo_lista', $id_tipo_lista, PDO::PARAM_INT);
+            $stmt->execute();
 
-            $listas_whis = [];
-            foreach ($listas_usuario as $lista) {
-                $sql_listas = "SELECT id FROM listas WHERE id_tipo = {$id_tipo_lista} AND id = :id_lista";
-                $stmt_listas = $this->db->prepare($sql_listas);
-                $stmt_listas->bindParam(':id_lista', $lista['id_lista'], PDO::PARAM_INT);
-                $stmt_listas->execute();
-                $listas_whis[] = $stmt_listas->fetch(PDO::FETCH_ASSOC);
+            $lista = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$lista) {
+                return []; // El usuario no tiene lista de ese tipo
             }
 
-            $posicion_array = match($tipo_lista){
-                'wishlist' => 0,
-                'backlog' => 1,
-                'completed' => 2,
-                'playing' => 3
-            };
-
+            // Obtener juegos de esa lista con paginación
             $sql_juegos = "SELECT id_Juego FROM juegos_lista WHERE id_lista = :id_lista LIMIT :inicio, :limite";
             $stmt_juegos = $this->db->prepare($sql_juegos);
-            $stmt_juegos->bindParam(':id_lista', $listas_whis[$posicion_array]["id"], PDO::PARAM_INT);
+            $stmt_juegos->bindParam(':id_lista', $lista["id"], PDO::PARAM_INT);
             $stmt_juegos->bindParam(':inicio', $inicio, PDO::PARAM_INT);
             $stmt_juegos->bindParam(':limite', $limite, PDO::PARAM_INT);
             $stmt_juegos->execute();
+
             $juegos = $stmt_juegos->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($juegos as $juego) {
@@ -250,53 +249,55 @@ class Lista extends EmptyModel {
             }
 
             return $list;
+
         } catch (PDOException $e) {
             error_log("Error al obtener juegos del usuario: " . $e->getMessage());
             return [];
         }
     }
 
-    public function getCountListasUsuario($id_usuario, $tipo_lista): int{
+
+   public function getCountListasUsuario($id_usuario, $tipo_lista): int {
         try {
             $id_tipo_lista = match($tipo_lista){
                 'wishlist' => 1,
                 'completed' => 2,
-                'playing' => 3,
-                'backlog' => 4
+                'playing'   => 3,
+                'backlog'   => 4
             };
 
-            $sql_listas_usuario = "SELECT id_lista FROM usuarios_listas WHERE id_usuario = :id_usuario";
-            $stmt_listas_usuario = $this->db->prepare($sql_listas_usuario);
-            $stmt_listas_usuario->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-            $stmt_listas_usuario->execute();
-            $listas_usuario = $stmt_listas_usuario->fetchAll(PDO::FETCH_ASSOC);
+            // Obtener todas las listas del usuario con su tipo
+            $sql = "
+                SELECT l.id
+                FROM usuarios_listas ul
+                INNER JOIN listas l ON ul.id_lista = l.id
+                WHERE ul.id_usuario = :id_usuario AND l.id_tipo = :id_tipo_lista
+                LIMIT 1
+            ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->bindParam(':id_tipo_lista', $id_tipo_lista, PDO::PARAM_INT);
+            $stmt->execute();
 
-            $listas_whis = [];
-            foreach ($listas_usuario as $lista) {
-                $sql_listas = "SELECT id FROM listas WHERE id_tipo = {$id_tipo_lista} AND id = :id_lista";
-                $stmt_listas = $this->db->prepare($sql_listas);
-                $stmt_listas->bindParam(':id_lista', $lista['id_lista'], PDO::PARAM_INT);
-                $stmt_listas->execute();
-                $listas_whis[] = $stmt_listas->fetch(PDO::FETCH_ASSOC);
+            $lista = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$lista) {
+                return 0; // El usuario no tiene lista de este tipo
             }
 
-            $posicion_array = match($tipo_lista){
-                'wishlist' => 0,
-                'backlog' => 1,
-                'completed' => 2,
-                'playing' => 3
-            };
-
+            // Contar juegos en esa lista
             $sql_juegos = "SELECT COUNT(*) as total FROM juegos_lista WHERE id_lista = :id_lista";
             $stmt_juegos = $this->db->prepare($sql_juegos);
-            $stmt_juegos->bindParam(':id_lista', $listas_whis[$posicion_array]["id"], PDO::PARAM_INT);
+            $stmt_juegos->bindParam(':id_lista', $lista["id"], PDO::PARAM_INT);
             $stmt_juegos->execute();
 
             return $stmt_juegos->fetch(PDO::FETCH_ASSOC)["total"];
+
         } catch (PDOException $e) {
             error_log("Error al contar juegos en la lista del usuario: " . $e->getMessage());
             return 0;
         }
     }
+
 }
 ?>

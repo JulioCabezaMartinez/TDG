@@ -11,7 +11,7 @@ require_once __DIR__ . '/Templates/header.php';
 </div>
 
 <div class="ventas_compras">
-    <h3>Compras</h3>
+    <h3>Purchases</h3>
     <div class="paginacionCompras"></div>
     <div id="lista_compras">
         
@@ -19,7 +19,7 @@ require_once __DIR__ . '/Templates/header.php';
 </div>
 
 <div class="ventas_compras">
-    <h3>Ventas</h3>
+    <h3>Sales</h3>
     <div class="paginacionVentas"></div>
     <div id="lista_ventas">
        

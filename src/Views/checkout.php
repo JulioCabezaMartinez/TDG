@@ -7,14 +7,14 @@ require_once __DIR__ . '/Templates/header.php';
 <input type="hidden" id="id_producto" value="<?php echo $_SESSION["id_venta"]?>">
 <div class="cuerpo">
     <div class="metodo_pago">
-        <h2>Metodo de Pago</h2>
+        <h2>Payment Methods</h2>
         <div>
             <img src="https://www.instant-gaming.com/themes/igv2/images/icons/payments/icon-paypal.svg" alt=""> <!-- Imagen de Paypal -->
             <h3>Paypal</h3>
         </div>
     </div>
     <div class="resumen_compra">
-        <h2>Resumen</h2>
+        <h2>Summary</h2>
         <div>
             <div>
                 <p><strong><?php echo $venta["Titulo"] ?></strong></p>
@@ -23,9 +23,9 @@ require_once __DIR__ . '/Templates/header.php';
 
             <div class="precios">
                 <input type="hidden" id="id_producto" value="<?php echo $venta["id"] ?>">
-                <p>Coste de Gestion:</p>
+                <p>Management Costs:</p>
                 <p> <?php echo $precio_gestion ?> €</p> <!-- Coste de gestión -->
-                <p>Precio del producto:</p>
+                <p>Product price:</p>
                 <p> <?php echo $venta["Precio"] ?> €</p>
 
                 <p>Total:</p>

@@ -6,12 +6,12 @@ require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <div>
-    <a class="enlace" href="/ventas">< Volver a Tienda</a>
+    <a class="enlace" href="/ventas">< Back to Shop</a>
 </div>
 
 <div class="detalles_compra">
 
-    <h3>✅ Compra Finalizada</h3>
+    <h3>✅ Purchase Completed!</h3>
 
     <img class="imagen_venta" src="/public/IMG/productos<?php echo $producto["img_venta"] ?>" alt="">
 
@@ -21,11 +21,11 @@ require_once __DIR__ . '/Templates/header.php';
 
     if($producto["id"]==-1){
     ?>
-        <p>¡Disfrute de las ventajas de las ventajas de TDG PREMIUM!</p>
+        <p>Enjoy the benefits of TDG PREMIUM!</p>
     <?php
     }else{
     ?>
-        <p>Su producto será enviado a su domicilio.</p>
+        <p>Your product will be shipped to your home.</p>
     <?php
     }
     ?>

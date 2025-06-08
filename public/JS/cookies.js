@@ -43,7 +43,6 @@ function setCookie(name, value, days) {
 function cambiarNeon(color) {
   document.documentElement.style.setProperty('--color-borde-neon', color);
   setCookie('colorNeon', color, 1); // Guardar la cookie por 1 día.
-  console.log("Color Guardado");
 }
 
 /**
@@ -52,7 +51,6 @@ function cambiarNeon(color) {
 function setNeon(){
     let color=getCookie("colorNeon");
     document.documentElement.style.setProperty('--color-borde-neon', color);
-    console.log("Color Neon" + color);
 }
 
 /**
@@ -66,7 +64,6 @@ function eventos() {
   guardarNeonMovil.addEventListener("click", function () {
 
     let color = document.getElementById("neon-cookie-movil").value;
-    console.log("Guardando neon");
     let cookie = getCookie("colorNeon");
     cambiarNeon(color);
 
@@ -75,7 +72,6 @@ function eventos() {
   guardarNeonEscritorio.addEventListener("click", function () {
 
     let color = document.getElementById("neon-cookie-escritorio").value;
-    console.log("Guardando neon");
     let cookie = getCookie("colorNeon");
     cambiarNeon(color);
 

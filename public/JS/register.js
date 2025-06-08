@@ -41,38 +41,38 @@ function eventos(){
 
         // Validaciones
         if (password.length >= 8) {
-            actualizarEstado("length", true, "Mínimo 8 caracteres");
+            actualizarEstado("length", true, "Minimum 8 characters");
             strength++;
         } else {
-            actualizarEstado("length", false, "Mínimo 8 caracteres");
+            actualizarEstado("length", false, "Minimum 8 characters");
         }
 
         if (expresiones_regulares.get("password_mayusculas").test(password)) {
-            actualizarEstado("uppercase", true, "Al menos una mayúscula");
+            actualizarEstado("uppercase", true, "At least one capital letter");
             strength++;
         } else {
-            actualizarEstado("uppercase", false, "Al menos una mayúscula");
+            actualizarEstado("uppercase", false, "At least one capital letter");
         }
 
         if (expresiones_regulares.get("password_minusculas").test(password)) {
-            actualizarEstado("lowercase", true, "Al menos una minúscula");
+            actualizarEstado("lowercase", true, "At least one lowercase letter");
             strength++;
         } else {
-            actualizarEstado("lowercase", false, "Al menos una minúscula");
+            actualizarEstado("lowercase", false, "At least one lowercase letter");
         }
 
         if (expresiones_regulares.get("password_numero").test(password)) {
-            actualizarEstado("number", true, "Al menos un número");
+            actualizarEstado("number", true, "At least one number");
             strength++;
         } else {
-            actualizarEstado("number", false, "Al menos un número");
+            actualizarEstado("number", false, "At least one number");
         }
 
         if (expresiones_regulares.get("password_especial").test(password)) {
-            actualizarEstado("special", true, "Al menos un carácter especial");
+            actualizarEstado("special", true, "At least one special character");
             strength++;
         } else {
-            actualizarEstado("special", false, "Al menos un carácter especial");
+            actualizarEstado("special", false, "At least one special character");
         }
 
         // Actualizar barra de progreso
@@ -114,7 +114,7 @@ function eventos(){
 
 
     if(!password || !confirmPassword || !email || !nombre || !apellidos || !nick || !direccion){
-        errores["campos"]="*Todos los campos son obligatorios.";
+        errores["campos"]="*All fields are required.";
     }
 
     // Expresión regular para validar la contraseña
@@ -125,19 +125,19 @@ function eventos(){
     // Verificar si la contraseña cumple con el patrón
     if (!pattern.test(password)) {
         
-        errores["password"]="*Contraseña no válida. Debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+        errores["password"]="*Invalid password. Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.";
         
     }
 
     if(!expresiones_regulares.get("correo").test(email)){
 
-        errores["correo"]="*Correo no válido.";
+        errores["correo"]="*Invalid email.";
        
     }
 
     if(password !== confirmPassword){
 
-        errores["confirm"]="*Las contraseñas no coinciden.";
+        errores["confirm"]="*Passwords do not match.";
 
     }
 
@@ -165,8 +165,8 @@ function eventos(){
             if (data.result && data.result == "ok") {
                 Swal.fire({
                     icon: "success",
-                    title: "Registro completado",
-                    text: "Registro exitoso. Bienvenido, " + nick + "!",
+                    title: "Registration completed",
+                    text: "Registration successful. Welcome, " + nick + "!",
                     background: "#2C2C2E",
                     color: "#FFFFFF"
                 });
@@ -174,22 +174,28 @@ function eventos(){
 
             }else if(data.result=="error" && data.Error=="correo"){
                
-                errores["igual"]="El correo ya está registrado.";
-                errorCorreo.textContent="*  El correo ya está registrado.";
+                errores["igual"]="The email is already registered.";
+                errorCorreo.textContent="*The email is already registered.";
             
             }else{
-                console.log("Result: " + data);
+               
                 Swal.fire({
                     icon: "error",
-                    title: "Algo salió mal",
-                    text: "Ha fallado el registro, intentelo más tarde.",
+                    title: "Something went wrong",
+                    text: "Registration failed, please try again later.",
                     background: "#2C2C2E",
                     color: "#FFFFFF"
                 });
             }
                 
         }).catch(error => {
-            console.error("Error:", error);
+            Swal.fire({
+                    icon: "error",
+                    title: "Something went wrong",
+                    text: "Registration failed, please try again later.",
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
         });
     }else{
         for(let [error, mensaje] of Object.entries(errores)){

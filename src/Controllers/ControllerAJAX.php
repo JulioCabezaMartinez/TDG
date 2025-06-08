@@ -312,34 +312,30 @@ class ControllerAJAX {
             $stock = Validators::evitarInyeccion($datos["Stock"]); // Si no, obtener el stock proporcionado.
         }
 
-        $imagen=$_FILES['imagen']['name'] ?? null; // Obtener la imagen si se proporciona
+        $imagen=$_FILES['img'] ?? null; // Obtener la imagen si se proporciona
         $id_vendedor=$_SESSION["usuarioActivo"]; // Obtener el ID del usuario desde la sesión.
         $id_juego = Validators::evitarInyeccion($datos["id_juego"]); // Obtener el ID del juego si se proporciona
 
-        if(!empty($_FILES['imagen']['name'])) {
-            $ruta_imagen = __DIR__ . "/../../public/img/productos/" . basename($imagen);
-            if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_imagen)) {
-                echo json_encode(["error"=>"Error al subir la imagen."]);
-                exit;
-            }
+        //En caso de que haya una imagen se sube al servidor y se devuelve una id aleatoria como nombre.
+        if(!empty($_FILES['img']['name'])) {
+            $Nombreimagen=$ventaDB->addImagen($imagen);
+
         } else {
-            $imagen = 'default-game.jpg'; // Si no se proporciona imagen, establecer como null.
+            $Nombreimagen = 'default-game'; // Si no se proporciona imagen, establecer como null.
         }
         
         if($estado_venta !== "Sin Stock"){
             if(empty($titulo) || empty($estado) || empty($consola) || empty($precio) || empty($estado_venta) || empty($stock) || empty($id_vendedor)){
-                echo json_encode(["error"=>"Error: Datos incompletos."]);
+                echo json_encode(["error"=>"Error: Incomplete data."]);
                 exit;
             }
         }else{
             if(empty($titulo) || empty($estado) || empty($consola) || empty($precio) || empty($estado_venta) || empty($id_vendedor)){
-            echo json_encode(["error"=>"Error: Datos incompletos."]);
+            echo json_encode(["error"=>"Error: Incomplete data."]);
             exit;
         }
         }
         
-        
-
         if($ventaDB->create(array(
             "Titulo" => $titulo,
             "Estado" => $estado,
@@ -347,13 +343,13 @@ class ControllerAJAX {
             "Precio" => $precio,
             "Estado_Venta" => $estado_venta,
             "Stock" => $stock,
-            "img_venta" => $imagen,
+            "img_venta" => $Nombreimagen.".jpg",
             "id_Vendedor" => $id_vendedor,
             "id_juego" => $id_juego
         ))){
-            echo json_encode(["result"=>"Producto registrado con exito."]);
+            echo json_encode(["result"=>"ok"]);
         }else{
-            echo json_encode(["error"=>"Error al registrar el producto."]);
+            echo json_encode(["result"=>"fail", "mensaje"=>"Error registering the product."]);
         }
     }
 
@@ -375,10 +371,10 @@ class ControllerAJAX {
                 "id_Escritor" => $id_usuario,
                 "id_Juego" => $id_juego
             )))) {
-                echo json_encode(["result" => "Review insertada con exito"]);
+                echo json_encode(["result" => "Review successfully inserted"]);
             }
         } else {
-            echo json_encode(["result" => "Error: Datos incompletos"]);
+            echo json_encode(["result" => "Error: Incomplete data."]);
         }
     }
 
@@ -405,13 +401,13 @@ class ControllerAJAX {
             
             if ($lista_bd->addJuegoToLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
 
-                echo json_encode(["result" =>"Juego añadido a la lista {$nombre_lista} correctamente."]);
+                echo json_encode(["result" =>"Game added to list {$nombre_lista} correctly."]);
             } else {
 
-                echo json_encode(["error" =>"No se ha podido añadir el juego a la lista."]);
+                echo json_encode(["error" =>"The game could not be added to the list."]);
             }
         } else {
-            echo json_encode(["error" =>"Datos incompletos."]);
+            echo json_encode(["error" =>"Incomplete data."]);
         }
     }
 
@@ -438,13 +434,13 @@ class ControllerAJAX {
 
             if ($lista_bd->deleteJuegoOfLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
 
-                echo json_encode(["result" =>"Juego eliminado de la lista {$nombre_lista} correctamente."]);
+                echo json_encode(["result" =>"Game removed from the list {$nombre_lista} correctly."]);
             } else {
 
-                echo json_encode(["result" =>"Error: No se ha podido eliminar el juego a la lista."]);
+                echo json_encode(["result" =>"Error: The game could not be removed from the list."]);
             }
         } else {
-            echo json_encode(["result" =>"Error: Datos incompletos."]);
+            echo json_encode(["result" =>"Error: Incomplete data."]);
         }
     }
 
@@ -461,35 +457,12 @@ class ControllerAJAX {
         $imagen = $_FILES['imagen_perfil'] ?? null; // Obtener la imagen si se proporciona
 
         if ($imagen != null) {
-            $Nombreimagen=uniqid();
-
-            $extension = strtolower(pathinfo($imagen["name"], PATHINFO_EXTENSION));
-            $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
-
-            if ($imagen['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
-
-                return "Imagen demasiado pesada";
-            } elseif (!in_array($extension, $extensionesPermitidas)) {
-
-                return "El archivo tiene un tipo no permitido";
-            } else {
-
-                $filename = $Nombreimagen . ".jpg";
-                $tempName = $imagen['tmp_name'];
-                if (isset($filename)) {
-                    if (!empty('$filename')) {
-                        $location = __DIR__. "/../../public/IMG/Users-img/" . $filename;
-                        move_uploaded_file($tempName, $location);
-                    }
-                }
-            }
+            $Nombreimagen=$usuario->addImagen($imagen);
         }
-
-        
 
         if(!empty($imagen)){
             // Lógica para registrar al usuario
-            $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion, $filename);
+            $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion, $Nombreimagen.".jpg");
         }else{
             $resultado = $usuario->register($nombre, $apellido, $correo, $pass, $nick, $direccion);
         }
@@ -535,7 +508,7 @@ class ControllerAJAX {
             setcookie("ultimoLugar", "", time()-1, "/"); // Guardar la cookie del ultimo lugar visitado.
 
         }else{
-            echo json_encode(["result"=>"error", "mensaje"=>"Datos incorrectos"]);
+            echo json_encode(["result"=>"error", "mensaje"=>"Incorrect data"]);
         }
     }
 
@@ -576,7 +549,13 @@ class ControllerAJAX {
                 break;
             case "productos":
                 $ventaDB=new Venta();
+                if($ventaDB->getById($id)["img_venta"] != "default-game.jpg"){
+                    $rutaImagen= __DIR__. "/../../public/IMG/Productos-img/".$ventaDB->getById($id)["img_venta"];
+                }
                 $ventaDB->delete($id);
+                if(isset($rutaImagen)){
+                    $ventaDB->eliminarImagen($rutaImagen);
+                }
                 echo "Todo Correcto";
                 break;
             case "post_vendidos":
@@ -648,7 +627,7 @@ class ControllerAJAX {
                 echo json_encode(["dato" => $item]);
                 break;
             default:
-            echo json_encode(["error" => "Error de Entidad"]);
+            echo json_encode(["error" => "Entity Error"]);
                 break;
         }
     }
@@ -680,7 +659,23 @@ class ControllerAJAX {
         switch ($entidad) {
             case "usuarios":
                 $usuarioDB=new Usuario();
-                $item=$usuarioDB->update($datos, $id);
+                $imagen=$_FILES['img'] ?? null;
+
+                if($imagen==null){
+                    $datos["Imagen_usuario"]=$usuarioDB->getById($id)["Imagen_usuario"];
+                    $item=$usuarioDB->update($datos, $id);
+                }else{
+                    // Eliminamos primero la imagen antigua. Si no es la imagen por defecto.
+                    if($usuarioDB->getById($id)["Imagen_usuario"] != "default-game.jpg"){
+                        $rutaImagenAntigua= __DIR__. "/../../public/IMG/Users-img/".$usuarioDB->getById($id)["Imagen_usuario"];
+                        $usuarioDB->eliminarImagen($rutaImagenAntigua);
+                    }
+                    
+                    // Agregamos la imagen nueva y guardamos el nombre de la imagen nueva en los datos.
+                    $nombreImagen=$usuarioDB->addImagen($imagen);
+                    $datos["Imagen_usuario"]=$nombreImagen . ".jpg";
+                    $item=$usuarioDB->update($datos, $id);
+                }
                 break;
             case "juegos":
                 $juegosDB=new Juego();
@@ -692,17 +687,32 @@ class ControllerAJAX {
                 break;
             case "productos":
                 $ventaDB=new Venta();
-                if($datos["img_venta"]==""){
-                    $datos["img_venta"]="default-game.jpg"; // Imagen por defecto si no se proporciona una imagen.
+
+                $imagen=$_FILES['img'] ?? null;
+
+                if($imagen==null){
+                    $datos["img_venta"]=$ventaDB->getById($id)["img_venta"];
+                    $item=$ventaDB->update($datos, $id);
+                }else{
+                    // Eliminamos primero la imagen antigua. Si no es la imagen por defecto.
+                    if($ventaDB->getById($id)["img_venta"] != "default-game.jpg"){
+                        $rutaImagenAntigua= __DIR__. "/../../public/IMG/Productos-img/".$ventaDB->getById($id)["img_venta"];
+                        $ventaDB->eliminarImagen($rutaImagenAntigua);
+                    }
+                    
+                    // Agregamos la imagen nueva y guardamos el nombre de la imagen nueva en los datos.
+                    $nombreImagen=$ventaDB->addImagen($imagen);
+                    $datos["img_venta"]=$nombreImagen . ".jpg";
+                    $item=$ventaDB->update($datos, $id);
                 }
-                $item=$ventaDB->update($datos, $id);
+                
                 break;
             case "post_vendidos":
                 $ventaDB=new Venta();
                 $item=$ventaDB->updateCompra($datos);
                 break;
             default:
-                echo "Error de Entidad";
+                echo "Entity Error";
                 break;
         }
 
@@ -752,7 +762,7 @@ class ControllerAJAX {
                 // $item=$ventaDB->create($datos);
                 break;
             default:
-                echo "Error de Entidad";
+                echo "Entity Error";
                 break;
         }
     }
@@ -780,9 +790,9 @@ class ControllerAJAX {
         $agregar_vendido=$ventaDB->agregarVendido($id_producto, $id_usuario, $fecha_compra);
 
         if( ($baja_stock || $premium) && $agregar_vendido){
-            echo json_encode(["result"=> "Producto Vendido con exito."]);
+            echo json_encode(["result"=> "Product Sold Successfully."]);
         }else{
-            echo json_encode(["error"=>"Error de Base de datos."]);
+            echo json_encode(["error"=>"Database Error."]);
         }
     }
 
@@ -952,14 +962,14 @@ class ControllerAJAX {
 
         $id_producto = Validators::evitarInyeccion($datos["id_producto"]);
         if (empty($id_producto)) {
-            echo json_encode(["result" => "error", "mensaje" => "ID del producto no proporcionado."]);
+            echo json_encode(["result" => "error", "mensaje" => "Product ID not provided."]);
             exit;
         }
 
         if ($ventaDB->vaciarProducto($id_producto)) {
-            echo json_encode(["result" => "ok", "mensaje" => "Producto vaciado correctamente."]);
+            echo json_encode(["result" => "ok", "mensaje" => "Product emptied correctly."]);
         } else {
-            echo json_encode(["result" => "error", "mensaje" => "Error al vaciar el producto."]);
+            echo json_encode(["result" => "error", "mensaje" => "Error emptying the product."]);
         }
     }
 
@@ -977,7 +987,7 @@ class ControllerAJAX {
         if($productoId==-1){
 
         }else if($productoId != $_SESSION["id_venta"]){
-            echo json_encode(["error" => "La Id del producto ha sido modificada"]);
+            echo json_encode(["error" => "The product ID has been modified"]);
             exit;
         }
 
@@ -1009,7 +1019,7 @@ class ControllerAJAX {
 
         if (!isset($tokenResponse['access_token'])) {
             http_response_code(500);
-            echo json_encode(['error' => 'No se pudo obtener el token de PayPal']);
+            echo json_encode(['error' => 'Could not get PayPal token']);
             exit;
         }
 
@@ -1041,7 +1051,7 @@ class ControllerAJAX {
             echo json_encode(['orderID' => $orderResponse['id']]);
         } else {
             http_response_code(500);
-            echo json_encode(['error' => 'No se pudo crear la orden']);
+            echo json_encode(['error' => 'The order could not be created']);
         }
     }
 
@@ -1081,7 +1091,7 @@ class ControllerAJAX {
         if(password_verify($passActual, $usuario["Password"])){
             echo json_encode(["result"=>"ok"]);
         }else{
-            echo json_encode(["result"=>"fail", "mensaje"=>"Contraseña incorrecta"]);
+            echo json_encode(["result"=>"fail", "mensaje"=>"Incorrect password."]);
         }
     }
 
@@ -1115,12 +1125,12 @@ class ControllerAJAX {
         $plataformasAntiguas=$plataformaDB->getPlataformasIDJuegobyId($id_juego);
 
         if(!$generoDB->borrarGenerosJuego($id_juego)){
-            echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al reiniciar Generos"]);
+            echo json_encode(["result"=>"fail", "mensaje"=>"Failed to restart Genres"]);
             exit();
         }
 
         if(!$plataformaDB->borrarPlataformasJuego($id_juego)){
-            echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al reiniciar Plataformas"]);
+            echo json_encode(["result"=>"fail", "mensaje"=>"Failure to restart Platforms"]);
             exit();
         }
         
@@ -1138,7 +1148,7 @@ class ControllerAJAX {
                     $generoDB->insertarGenerosJuego($id_juego, $generoAntiguo);
                 }
                 
-                echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al insertar nuevos Generos. Generos reiniciados"]);
+                echo json_encode(["result"=>"fail", "mensaje"=>"Failed to insert new Genres. Genres reset"]);
                 exit();
             }
             
@@ -1156,7 +1166,7 @@ class ControllerAJAX {
                     $plataformaDB->insertarPlataformasJuego($id_juego, $plataformaAntigua);
                 }
 
-                echo json_encode(["result"=>"fail", "mensaje"=>"Fallo al insertar nuevas Plataformas. Plataformas reiniciadas"]);
+                echo json_encode(["result"=>"fail", "mensaje"=>"Error inserting new platforms. Platforms restarted."]);
                 exit();
             }
             

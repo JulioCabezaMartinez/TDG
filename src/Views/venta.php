@@ -142,12 +142,12 @@ require_once __DIR__ . '/Templates/header.php';
             <?php
             if (!empty($_SESSION) && $_SESSION['Admin']) {
             ?>
-                <button id="btn-quitarBD-venta" class="boton-perso">Eliminar de la Base de Datos</button>
+                <button id="btn-quitarBD-venta" class="boton-perso">Delete from the Database</button>
             <?php
             }
             ?>
-            <button id="btn-quitar-venta" class="boton-perso">Quitar de la tienda</button>
-            <button id="btn-modificar-venta" class="boton-perso boton-perso-secundario">Modificar Producto</button>
+            <button id="btn-quitar-venta" class="boton-perso">Remove from store</button>
+            <button id="btn-modificar-venta" class="boton-perso boton-perso-secundario">Modify Product</button>
         </div>
         <br>
     <?php
@@ -165,15 +165,15 @@ require_once __DIR__ . '/Templates/header.php';
 
 <div class="caracteristicas_producto">
     <div class="info_venta">
-        <h3>Caracteristicas del Producto</h3>
+        <h3>Product Features</h3>
         <div>
-            <p><strong>Estado: </strong><?php echo "Nuevo" ?></p>
+            <p><strong>State: </strong><?php echo "Nuevo" ?></p>
         </div>
         <div>
-            <p><strong>Modelo: </strong><?php echo "PS3" ?></p>
+            <p><strong>Model: </strong><?php echo "PS3" ?></p>
         </div>
         <div>
-            <h4>Géneros:</h4>
+            <h4>Genres:</h4>
             <div class="generos_juego">
                 <?php
                 foreach ($generos as $genero) {
@@ -188,7 +188,7 @@ require_once __DIR__ . '/Templates/header.php';
     </div>
     <hr>
     <div class="descripcion_juego">
-        <h2>Descripción del Juego</h2>
+        <h2>Game Description</h2>
         <p><?php echo $juego['Descripcion'] ?></p> <!-- Descripción del juego que se está vendiendo -->
     </div>
 </div>
@@ -201,7 +201,7 @@ if (!empty($_SESSION) && $venta["Stock"] > 0 && $venta["id_Vendedor"] != $_SESSI
     <!-- Botón de compra -->
     <a href="/ventas/view/checkout?id=<?php echo $venta["id"] ?>">
         <button id="btn_comprar" class="boton-perso">
-            <p>Comprar</p>
+            <p>Buy</p>
             <i class='fa-solid fa-cart-shopping'></i>
         </button>
     </a>

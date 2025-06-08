@@ -80,55 +80,70 @@ function eventos() {
 
     document.getElementById("btn_crear").addEventListener("click", () => {
         const datos = {};
+        let img="";
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
 
             const key = input.id.replace("Input", "");
 
-            datos[key] = input.value;
+            if(key=="img_venta"){
+                if(input.files.length > 0){
+                    img = input.files[0];
+                }
+            }else{
+                datos[key] = input.value;
+            }
         });
 
         let vacio=false;
 
         for( let [key, dato] of Object.entries(datos) ){
-            if(key=="img_venta"){
-
-            }else{
                 if(dato.trim() == ""){
                     vacio=true;
                 }
-            }
         }
-
-        console.log(datos);
 
         if(vacio){
 
             let error_global=document.getElementById("error_global");
-            error_global.textContent="Se deben de completar los datos obligatorios";
+            error_global.textContent="Mandatory data must be completed";
 
         }else{
             const formData = new FormData();
             formData.append("datos", JSON.stringify(datos));
-
-            console.log(datos);
+            if(img !== ""){
+                formData.append("img", img);
+            }
 
             fetch("/AJAX/registrarProducto", {
             method: "POST",
             body: formData
             })
-            .then(res => res.text())
+            .then(res => res.json())
             .then((data) => {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Producto registrado con éxito",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    backdrop: false,
-                    background: "#2C2C2E",
-                    color: "#FFFFFF"
-                });
+                if(data.result=="ok"){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Product successfully registered",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    });
+                }else{
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: data.mensaje,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                        background: "#2C2C2E",
+                        color: "#FFFFFF"
+                    });
+                }
 
                 modal_creacion.hide();
                 paginacion();
@@ -137,7 +152,7 @@ function eventos() {
                 Swal.fire({
                     position: "top-end",
                     icon: "error",
-                    title: "Error en el servidor",
+                    title: "Server error",
                     showConfirmButton: false,
                     timer: 1500,
                     backdrop: false,
@@ -174,7 +189,7 @@ function crearTabla(ventas) {
 
         // Crear la imagen
         const img = document.createElement('img');
-        img.src = `/public/IMG/${venta.img_venta}`;
+        img.src = `/public/IMG/Productos-img/${venta.img_venta}`;
 
         // Crear la sección de información del juego
         const infoJuegoDiv = document.createElement('div');
@@ -201,12 +216,12 @@ function crearTabla(ventas) {
         // Crear el Estado
         const estadoP = document.createElement('p');
         estadoP.classList.add('estado_producto');
-        estadoP.innerHTML = `<strong>Estado:</strong> ${venta.Estado}`;
+        estadoP.innerHTML = `<strong>State:</strong> ${venta.Estado}`;
 
         // Crear la consola
         const consolaP = document.createElement('p');
         consolaP.classList.add('consola_producto');
-        consolaP.innerHTML = `<strong>Estado:</strong> ${venta.Consola}`;
+        consolaP.innerHTML = `<strong>Platform:</strong> ${venta.Consola}`;
         
 
         // Añadir todos los elementos a sus respectivos contenedores

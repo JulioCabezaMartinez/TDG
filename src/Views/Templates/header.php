@@ -28,13 +28,13 @@
         <a href="/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>
-                <h2 class="enlace">JUEGOS</h2>
+                <h2 class="enlace">GAMES</h2>
             </div>
         </a>
         <a href="/ventas">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-store"></i>
-                <h2 class="enlace">VENTAS</h2>
+                <h2 class="enlace">SHOP</h2>
             </div>
         </a>
         <div class="input-group">
@@ -49,23 +49,23 @@
         <a href="/perfil">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-user"></i>
-                <h2 class="enlace">Perfil</h2>
+                <h2 class="enlace">Profile</h2>
             </div>
         </a>
-            <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
+            <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Log out</a>
         <?php
         } else {
         ?>
             <div>
-                <a class="boton-perso" href="/login" class="login">Iniciar Sesión</a>
+                <a class="boton-perso" href="/login" class="login">Log in</a>
                 o
-                <a class="enlace" href="/register" class="register">Registrarse</a>
+                <a class="enlace" href="/register" class="register">Register</a>
             </div>
         <?php
         }
         if (!empty($_SESSION) && $_SESSION["Admin"]) {
         ?>
-            <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Panel de Administrador</a>
+            <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Administrator Panel</a>
         <?php
         }
         ?>
@@ -90,21 +90,21 @@
 
         <h4>Bienvenido, <?php echo $_SESSION["Nick"] ?></h4>
         <br><br>
-        <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Cerrar Sesion</a>
+        <a href="/AJAX/logout" id="logout-btn" class="boton-perso">Log out</a>
 
     <?php
     } else {
     ?>
         <div>
-            <a class="boton-perso" href="/login" class="login">Iniciar Sesión</a>
+            <a class="boton-perso" href="/login" class="login">Log in</a>
             o
-            <a class="enlace" href="/register" class="register">Registrarse</a>
+            <a class="enlace" href="/register" class="register">Register</a>
         </div>
     <?php
     }
     if (!empty($_SESSION) && $_SESSION["Admin"]) {
     ?>
-        <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Panel de Administrador</a>
+        <a class="boton-perso boton-perso-secundario" href="/panelAdmin">Administrator Panel</a>
     <?php
     }
     ?>
@@ -130,7 +130,7 @@
             <a href="/perfil">
                 <div class="link-hamburguesa">
                     <i class="fa-solid fa-user"></i>
-                    <h2 class="enlace">Perfil</h2>
+                    <h2 class="enlace">Profile</h2>
                 </div>
             </a>
         <?php
@@ -147,14 +147,14 @@
         <a href="/juegos">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-gamepad"></i>
-                <h2>JUEGOS</h2>
+                <h2>GAMES</h2>
             </div>
         </a>
         <br>
         <a href="/ventas">
             <div class="link-hamburguesa">
                 <i class="fa-solid fa-store"></i>
-                <h2>VENTAS</h2>
+                <h2>SHOP</h2>
             </div>
         </a>
     </div>
@@ -162,11 +162,11 @@
     <div class="neon-cookies d-flex justify-content-start align-items-center">
         <h4 for="neon">NEON: </h4>
         <select name="neon" id="neon-cookie-movil" class="form-select w-25 ms-3">
-            <option value="#9f00c7">Morado</option>
-            <option value="#0099ff">Azul</option>
-            <option value="#ff0000">Rojo</option>
+            <option value="#9f00c7">Purple</option>
+            <option value="#0099ff">Blue</option>
+            <option value="#ff0000">Red</option>
         </select>
-        <button class="boton-perso ms-3" id="btn-neon-movil">Guardar</button>
+        <button class="boton-perso ms-3" id="btn-neon-movil">Save</button>
     </div>
 </div>
 
@@ -175,11 +175,11 @@
     <div class="d-flex justify-content-start align-items-center m-4">
         <h4 for="neon">NEON: </h4>
         <select name="neon" id="neon-cookie-escritorio" class="form-select ms-3">
-            <option value="#9f00c7">Morado</option>
-            <option value="#0099ff">Azul</option>
-            <option value="#ff0000">Rojo</option>
+            <option value="#9f00c7">Purple</option>
+            <option value="#0099ff">Blue</option>
+            <option value="#ff0000">Red</option>
         </select>
-        <button class="boton-perso ms-2" id="btn-neon-escritorio">Guardar</button>
+        <button class="boton-perso ms-2" id="btn-neon-escritorio">Save</button>
     </div>
 
 </div>

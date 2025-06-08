@@ -95,6 +95,8 @@
 /* Lista de Ventas */
 
 .centrar-div{
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,6 +123,7 @@
 
     margin: 5px;
     width: 95%;
+    min-height: 515px;
 
     background-color: var(--color-tarjeta);
 }
@@ -133,6 +136,9 @@
 .venta img{
     padding: 10px;
     width: 100%;
+    max-height: 300px;
+    min-height: 300px;
+    border-radius: 20px;
 }
 
 .info_juego{

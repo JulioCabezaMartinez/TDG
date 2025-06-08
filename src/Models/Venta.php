@@ -109,11 +109,13 @@ class Venta extends EmptyModel implements BusquedaAdmin {
                 if (!empty($filtros['Estado'])) {
                     $conditions[] = "v.Estado = '{$filtros['Estado']}'";
                 }
+                $conditions[]="v.Estado_venta != 'Sin Stock'";
             }
 
             if (!empty($conditions)) {
                 $sql .= " WHERE " . implode(" AND ", $conditions);
-            } else {
+            }
+             else {
                 $sql .= " WHERE v.Estado_venta != 'Sin Stock'";
             }
 
@@ -328,6 +330,48 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         } catch (PDOException $e) {
             error_log("Error en buscarAdminCount: " . $e->getMessage());
             return 0;
+        }
+    }
+
+    public function addImagen($imagen){
+        $Nombreimagen = uniqid();
+
+        $extension = strtolower(pathinfo($imagen["name"], PATHINFO_EXTENSION));
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+
+        if ($imagen['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
+
+            echo json_encode(["error" => "Error: Imagen demasiado pesada."]);
+            exit;
+        } elseif (!in_array($extension, $extensionesPermitidas)) {
+
+            echo json_encode(["error" => "Error: El archivo tiene un tipo no permitido."]);
+            exit;
+        } else {
+
+            $filename = $Nombreimagen . ".jpg";
+            $tempName = $imagen['tmp_name'];
+            if (isset($filename)) {
+                if (!empty('$filename')) {
+                    $location = __DIR__ . "/../../public/IMG/Productos-img/" . $filename;
+                    move_uploaded_file($tempName, $location);
+                }
+            }
+        }
+
+        return $Nombreimagen;
+    }
+
+    public function eliminarImagen($rutaImagen){
+        try {
+            if (file_exists($rutaImagen)) {
+                unlink($rutaImagen);
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            error_log("Error en eliminarImagen: " . $e->getMessage());
+            return false;
         }
     }
 }

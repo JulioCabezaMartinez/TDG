@@ -12,13 +12,13 @@ require_once 'Templates/header.php';
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-background-color">
             <div class="modal-header">
-                <h5 class="modal-title" id="header-creacion-review">Creación Review</h5>
-                <h5 class="modal-title" id="header-modificacion-review">Modificación Review</h5>
+                <h5 class="modal-title" id="header-creacion-review">Review Creation</h5>
+                <h5 class="modal-title" id="header-modificacion-review">Review Modification</h5>
             </div>
             <div class="modal-body">
                 <div>
                     <div>
-                        <label for="">Nombre Juego:</label>
+                        <label for="">Game's Name:</label>
                         <input id="nombre_juego" class="form-control" type="text" value="<?php echo $juego["Nombre"] ?>" readonly>
                     </div>
                     <br>
@@ -31,9 +31,9 @@ require_once 'Templates/header.php';
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btn_cerrar_creacion_review" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancelar</button>
-                <button id="btn_modificar_review" type="button" class="boton-perso" data-dismiss="modal">Modificar Review</button>
-                <button id="btn_agregar_review" type="button" class="boton-perso" data-dismiss="modal">Agregar Review</button>
+                <button id="btn_cerrar_creacion_review" type="button" class="boton-perso boton-perso-secundario" data-dismiss="modal">Cancel</button>
+                <button id="btn_modificar_review" type="button" class="boton-perso" data-dismiss="modal">Modificate Review</button>
+                <button id="btn_agregar_review" type="button" class="boton-perso" data-dismiss="modal">Add Review</button>
             </div>
         </div>
     </div>

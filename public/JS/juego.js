@@ -29,7 +29,7 @@ function compruebaLista(){
         wishlistDiv.className = 'btn-lista boton btn_redondo wishlist';
 
         const wishlistTexto = document.createElement('p');
-        wishlistTexto.textContent = 'Añadir a la lista de Deseados';
+        wishlistTexto.textContent = 'Add to Wishlist';
 
         const wishlistIcono = document.createElement('i');
         wishlistIcono.className = `${arrayListas[0] ? 'fa-solid' : 'fa-regular'} fa-heart btn_wishlist icono_ajustable`;

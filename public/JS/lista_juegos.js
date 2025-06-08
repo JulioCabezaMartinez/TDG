@@ -120,7 +120,7 @@ function crearTabla(juegos, sesion=undefined) {
 
         // Calificación
         const pCal = document.createElement('p');
-        pCal.innerHTML = `<strong>Calificación:</strong> ${juego.calificacion} / 5`;
+        pCal.innerHTML = `<strong>Rate:</strong> ${juego.calificacion} / 5`;
         infoJuego.appendChild(pCal);
 
         /* Intenté hacerlo de esta manera pero el textContent de pCal sobreescribia el strong */
@@ -132,7 +132,7 @@ function crearTabla(juegos, sesion=undefined) {
 
         // Año de salida
         const pFecha = document.createElement('p');
-        pFecha.innerHTML = `<strong>Fecha de salida:</strong> ${juego.Anyo_salida}`;
+        pFecha.innerHTML = `<strong>Release Date:</strong> ${juego.Anyo_salida}`;
         infoJuego.appendChild(pFecha);
 
         const btnListas = document.createElement('div');

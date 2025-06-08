@@ -25,7 +25,7 @@ require_once __DIR__ . '/Templates/header.php';
     <div class="caracteristicas_juego">
 
         <div class="generos_juego">
-            <h3>Géneros</h3>
+            <h3>Genres</h3>
             <div class="distr-wrap">
                 <?php
                     foreach ($generos as $genero) {
@@ -37,7 +37,7 @@ require_once __DIR__ . '/Templates/header.php';
             </div>
         </div>
         <div class="plataformas_juego">
-            <h3>Plataformas</h3>
+            <h3>Platforms</h3>
             <div class="distr-wrap">
                 <?php
                     foreach ($plataformas as $plataforma) {
@@ -49,7 +49,7 @@ require_once __DIR__ . '/Templates/header.php';
             </div>
         </div>
         <div>
-            <h3>Año de Salida</h3>
+            <h3>Release Date</h3>
             <p>
             <?php
                 $fechaOriginal = $juego['Anyo_salida'];
@@ -62,7 +62,7 @@ require_once __DIR__ . '/Templates/header.php';
     </div>
 
     <div class="descripcion_juego">
-        <h2>Descripción (Falta poner boton verMas)</h2>
+        <h2>Description</h2>
         <?php echo $juego['Descripcion'] ?>
     </div>
 
@@ -72,7 +72,7 @@ require_once __DIR__ . '/Templates/header.php';
 <!-- Reseñas del Juego -->
 
 <div class="reseñas_juego m-4">
-    <a href="/juegos/view/review?id=<?php echo $juego["id"] ?>"><h2 class="enlace">Reseñas de <?php echo $juego["Nombre"] ?></h2></a>
+    <a class="enlace" href="/juegos/view/review?id=<?php echo $juego["id"] ?>"><i class="fa-regular fa-comment me-1"></i><h2><?php echo $juego["Nombre"] ?>'s Reviews</h2></a>
 </div>
 
 <?php

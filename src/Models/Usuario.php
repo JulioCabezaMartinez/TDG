@@ -131,6 +131,33 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    public function addImagen($imagen){
+        $Nombreimagen = uniqid();
+
+        $extension = strtolower(pathinfo($imagen["name"], PATHINFO_EXTENSION));
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+
+        if ($imagen['size'] > (12 * 1024 * 1204)) { //Que el tamaño no sea mayor de 12 mb
+
+            return "Imagen demasiado pesada";
+        } elseif (!in_array($extension, $extensionesPermitidas)) {
+
+            return "El archivo tiene un tipo no permitido";
+        } else {
+
+            $filename = $Nombreimagen . ".jpg";
+            $tempName = $imagen['tmp_name'];
+            if (isset($filename)) {
+                if (!empty('$filename')) {
+                    $location = __DIR__ . "/../../public/IMG/Users-img/" . $filename;
+                    move_uploaded_file($tempName, $location);
+                }
+            }
+        }
+
+        return $Nombreimagen;
+    }
+
     public function eliminarImagen($rutaImagen){
         try {
             if (file_exists($rutaImagen)) {

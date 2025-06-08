@@ -6,22 +6,22 @@
         <?php
             if(isset($_GET["tabla"]) && $_GET["tabla"] == "usuarios"){
         ?>
-            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=usuarios">Usuarios</a></li>
+            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=usuarios">Users</a></li>
         <?php
             }else{
         ?>
-            <li><a class="enlace" href="/panelAdmin/tabla?tabla=usuarios">Usuarios</a></li>
+            <li><a class="enlace" href="/panelAdmin/tabla?tabla=usuarios">Users</a></li>
         <?php
             }
         ?>
         <?php
             if(isset($_GET["tabla"]) && $_GET["tabla"] == "juegos"){
         ?>
-            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=juegos">Juegos</a></li>
+            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=juegos">Games</a></li>
         <?php
             }else{
         ?>
-            <li><a class="enlace" href="/panelAdmin/tabla?tabla=juegos">Juegos</a></li>
+            <li><a class="enlace" href="/panelAdmin/tabla?tabla=juegos">Games</a></li>
         <?php
             }
         ?>
@@ -40,22 +40,22 @@
         <?php
             if(isset($_GET["tabla"]) && $_GET["tabla"] == "productos"){
         ?>
-            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=productos">Productos</a></li>
+            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=productos">Products</a></li>
         <?php
             }else{
         ?>
-            <li><a class="enlace" href="/panelAdmin/tabla?tabla=productos">Productos</a></li>
+            <li><a class="enlace" href="/panelAdmin/tabla?tabla=productos">Products</a></li>
         <?php
             }
         ?>
         <?php
             if(isset($_GET["tabla"]) && $_GET["tabla"] == "post_vendidos"){
         ?>
-            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=post_vendidos">Ventas</a></li>
+            <li class="tabla-actual"><a class="enlace" href="/panelAdmin/tabla?tabla=post_vendidos">Sales</a></li>
         <?php
             }else{
         ?>
-            <li><a class="enlace" href="/panelAdmin/tabla?tabla=post_vendidos">Ventas</a></li>
+            <li><a class="enlace" href="/panelAdmin/tabla?tabla=post_vendidos">Sales</a></li>
         <?php
             }
         ?> 

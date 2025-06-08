@@ -66,7 +66,7 @@ function eventos() {
                 console.log(data);
                 Swal.fire({
                         icon: "success",
-                        title: "Review publicada con exito",
+                        title: "Review successfully published",
                         showConfirmButton: false,
                         timer: 1500,
                         background: "#2C2C2E",
@@ -77,13 +77,12 @@ function eventos() {
             .catch(error => {
                 Swal.fire({
                         icon: "error",
-                        title: "Error en el Servidor",
+                        title: "Server Error",
                         showConfirmButton: false,
                         timer: 1500,
                         background: "#2C2C2E",
                         color: "#FFFFFF"
                     });
-                console.error("Error en la petición AJAX:", error);
             });
     });
 
@@ -91,14 +90,14 @@ function eventos() {
         if (e.target.classList.contains("btn-eliminar-review")) {
 
             Swal.fire({
-            title: "¿Seguro que quieres eliminar la Review?",
-            text: "¡No puedes revertir esto!",
+            title: "Are you sure you want to delete the Review?",
+            text: "You can't undo this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: color_neon,
             cancelButtonColor: "#808080",
-            confirmButtonText: "Si, eliminar",
-            cancelButtonText: "Cancelar",
+            confirmButtonText: "Yes, delete",
+            cancelButtonText: "Cancel",
             background: "#2C2C2E",
             color: "#FFFFFF"
             
@@ -116,7 +115,7 @@ function eventos() {
                 }).then(response => response.text())
                     .then(data => {
                         Swal.fire({
-                            title: "Review eliminada",
+                            title: "Review deleted",
                             icon: "success",
                             confirmButtonColor: color_neon,
                             background: "#2C2C2E",
@@ -127,7 +126,7 @@ function eventos() {
                     }).catch(error=>{
                         Swal.fire({
                             title: "Error",
-                            text: "Algo salio mal en el servidor",
+                            text: "Something went wrong on the server",
                             icon: "error",
                             confirmButtonColor: color_neon,
                             background: "#2C2C2E",
@@ -155,12 +154,13 @@ function eventos() {
 
             let id=e.target.id.split("@")[0];
 
+            let formData=new FormData();
+            formData.append("id", id);
+            formData.append("entidad", entidad);
+
             fetch("/AJAX/datosModificarDato", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams({ id, entidad })
+                body: formData
             })
             .then(res => res.json())
             .then(data =>{
@@ -195,7 +195,7 @@ function eventos() {
         .then(data => {
             Swal.fire({
                 icon: "success",
-                title: "Review modificada con éxito",
+                title: "Successfully modified review",
                 confirmButtonColor: color_neon,
                 background: "#2C2C2E",
                 color: "#FFFFFF"
@@ -205,7 +205,7 @@ function eventos() {
         .catch(() => {
             Swal.fire({
                 icon: "error",
-                title: "Error en el servidor",
+                title: "Server error",
                 confirmButtonColor: color_neon,
                 background: "#2C2C2E",
                 color: "#FFFFFF"
@@ -305,7 +305,7 @@ function crearTabla(reviews) {
 
             const textoVerMas = document.createElement("p");
             textoVerMas.className = "review_ver_mas";
-            textoVerMas.textContent = "Ver más";
+            textoVerMas.textContent = "View more";
 
             verMasContainer.appendChild(icono);
             verMasContainer.appendChild(textoVerMas);

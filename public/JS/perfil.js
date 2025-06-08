@@ -110,7 +110,7 @@ function eventos(){
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Usuario modificado con éxito",
+                    title: "Successfully modified user",
                     showConfirmButton: false,
                     timer: 1500,
                     backdrop: false,
@@ -122,7 +122,7 @@ function eventos(){
                 Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Perfil no modificado",
+                title: "Profile not modified",
                 showConfirmButton: false,
                 timer: 1500,
                 backdrop: false,
@@ -136,7 +136,7 @@ function eventos(){
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Error en el servidor",
+                title: "Server error",
                 showConfirmButton: false,
                 timer: 1500,
                 backdrop: false,
@@ -171,11 +171,11 @@ function eventos(){
         let validacionPass=/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,}$/;
 
         if(passActual=="" || pass=="" || confirm==""){
-            error.textContent="Se deben de completar todos los campos";
+            error.textContent="All fields must be completed";
         }else if(!validacionPass.test(pass)){
-            error.textContent="La contraseña no es valida";
+            error.textContent="The password is not valid";
         }else if(pass!==confirm){
-            error.textContent="Las contraseñas no coinciden";
+            error.textContent="Passwords do not match";
         } else {
             let formDataPassActual=new FormData();
             formDataPassActual.append("passActual", passActual);
@@ -205,7 +205,7 @@ function eventos(){
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
-                                        title: "Contraseña modificada con éxito",
+                                        title: "Password changed successfully",
                                         showConfirmButton: false,
                                         timer: 1500,
                                         backdrop: false,
@@ -216,7 +216,7 @@ function eventos(){
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "error",
-                                        title: "Error en el servidor",
+                                        title: "Server error",
                                         showConfirmButton: false,
                                         timer: 1500,
                                         backdrop: false,
@@ -244,38 +244,38 @@ function eventos(){
 
         // Validaciones
         if (password.length >= 8) {
-            actualizarEstado("length", true, "✅ Mínimo 8 caracteres");
+            actualizarEstado("length", true, "✅ Minimum 8 characters");
             strength++;
         } else {
-            actualizarEstado("length", false, "❌ Mínimo 8 caracteres");
+            actualizarEstado("length", false, "❌ Minimum 8 characters");
         }
 
         if (expresiones_regulares.get("password_mayusculas").test(password)) {
-            actualizarEstado("uppercase", true, "✅ Al menos una mayúscula");
+            actualizarEstado("uppercase", true, "✅ At least one capital letter");
             strength++;
         } else {
-            actualizarEstado("uppercase", false, "❌ Al menos una mayúscula");
+            actualizarEstado("uppercase", false, "❌ At least one capital letter");
         }
 
         if (expresiones_regulares.get("password_minusculas").test(password)) {
-            actualizarEstado("lowercase", true, "✅ Al menos una minúscula");
+            actualizarEstado("lowercase", true, "✅ At least one lowercase letter");
             strength++;
         } else {
-            actualizarEstado("lowercase", false, "❌ Al menos una minúscula");
+            actualizarEstado("lowercase", false, "❌ At least one lowercase letter");
         }
 
         if (expresiones_regulares.get("password_numero").test(password)) {
-            actualizarEstado("number", true, "✅ Al menos un número");
+            actualizarEstado("number", true, "✅ At least one number");
             strength++;
         } else {
-            actualizarEstado("number", false, "❌ Al menos un número");
+            actualizarEstado("number", false, "❌ At least one number");
         }
 
         if (expresiones_regulares.get("password_especial").test(password)) {
-            actualizarEstado("special", true, "✅ Al menos un carácter especial");
+            actualizarEstado("special", true, "✅ At least one special character");
             strength++;
         } else {
-            actualizarEstado("special", false, "❌ Al menos un carácter especial");
+            actualizarEstado("special", false, "❌ At least one special character");
         }
 
         // Actualizar barra de progreso

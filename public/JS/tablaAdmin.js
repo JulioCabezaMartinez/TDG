@@ -25,47 +25,47 @@ function eventos() { // Cambiar data de los fetches.
 
     document.addEventListener("DOMContentLoaded", () => {
 
-    // Delegar click para botones Eliminar
-    document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("eliminar-dato")) {
-        const id = e.target.id.split("@")[1];
-        
+        // Delegar click para botones Eliminar
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("eliminar-dato")) {
+            const id = e.target.id.split("@")[1];
+            
 
-        fetch("/AJAX/eliminarDato", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({ id, entidad })
-        })
-        .then(res => res.text())
-        .then(data => {
-            if (data === "Todo Correcto") {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Dato eliminado con éxito",
-                showConfirmButton: false,
-                timer: 1500,
-                backdrop: false,
-                background: "#2C2C2E",
-                color: "#FFFFFF"
-            });
-            paginacion(); // Recargar la tabla después de eliminar
+            fetch("/AJAX/eliminarDato", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: new URLSearchParams({ id, entidad })
+            })
+            .then(res => res.text())
+            .then(data => {
+                if (data === "Todo Correcto") {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Data successfully deleted",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+                paginacion(); // Recargar la tabla después de eliminar
 
-            } else {
-            Swal.fire({
-                position: "top-end",
-                icon: "error",
-                title: "Error en el servidor",
-                showConfirmButton: false,
-                timer: 1500,
-                backdrop: false,
-                background: "#2C2C2E",
-                color: "#FFFFFF"
+                } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Server error",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    backdrop: false,
+                    background: "#2C2C2E",
+                    color: "#FFFFFF"
+                });
+                }
             });
-            }
-        });
         }
     });
 
@@ -131,31 +131,32 @@ function eventos() { // Cambiar data de los fetches.
 
                 for (let key in datos) {
                     const input = document.getElementById(key + "Input");
-                    if (input) input.value = datos[key];
+                    
                     if (key === "Admin" || key === "Premium") {
                         const checkbox = document.getElementById(key + "Input");
-                        if (datos[key] === "1") {
+                        
+                        if (datos[key] === 1) {
                             checkbox.checked=true; // Marcar el checkbox si el valor es "1"
                         }
-                    }
-
-                    if(key === "id_Post"){
+                    }else if(key=="img_venta" || key=="Imagen_usuario"){
+                        
+                    }else if(key === "id_Post"){
                         let postAntiguo=document.getElementById("id_PostAntiguoInput");
                         postAntiguo.value=datos[key];
 
                         input.value = datos[key];
-                    }
-                    if(key === "id_Comprador"){
+                    }else if(key === "id_Comprador"){
                         let compradorAntiguo=document.getElementById("id_CompradorAntiguoInput");
                         compradorAntiguo.value=datos[key];
 
                         input.value = datos[key];
-                    }
-                    if(key === "Fecha"){
+                    }else if(key === "Fecha"){
                         let fechaAntiguo=document.getElementById("FechaAntiguaInput");
                         fechaAntiguo.value=datos[key];
 
                         input.value = datos[key];
+                    }else{
+                        if (input) input.value = datos[key];
                     }
                 }
             });
@@ -200,7 +201,7 @@ function eventos() { // Cambiar data de los fetches.
         Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Dato modificado con éxito",
+            title: "Data modified successfully",
             showConfirmButton: false,
             timer: 1500,
             backdrop: false,
@@ -213,7 +214,7 @@ function eventos() { // Cambiar data de los fetches.
         Swal.fire({
             position: "top-end",
             icon: "error",
-            title: "Error en el servidor.",
+            title: "Server error.",
             showConfirmButton: false,
             timer: 3000,
             backdrop: false,
@@ -226,31 +227,46 @@ function eventos() { // Cambiar data de los fetches.
     //Confirmar modificación
     document.getElementById("btn_modificar").addEventListener("click", () => {
         const datos = {};
+        let img="";
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
             const key = input.id.replace("Input", "");
-            datos[key] = input.value;
+            
 
             if(key == "Admin"){
-                if(input.checked){
-                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
-                }else{
-                    datos[key] = "0"; // Si no está marcado, asignar "0"
-                }
-            }
 
-            if(key == "Premium"){
                 if(input.checked){
                     datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
+
+            }else if(key == "Premium"){
+
+                if(input.checked){
+                    datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
+                }else{
+                    datos[key] = "0"; // Si no está marcado, asignar "0"
+                }
+
+            }else if(key=="img_venta" || key == "Imagen_usuario"){
+
+                if(input.files.length > 0)
+                img = input.files[0];
+
+            }else{
+
+                datos[key] = input.value;
+
             }
         });
 
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
+        if(img !== ""){
+            formData.append("img", img);
+        }
 
         fetch("/AJAX/modificarDato", {
         method: "POST",
@@ -262,7 +278,7 @@ function eventos() { // Cambiar data de los fetches.
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Dato modificado con éxito",
+                    title: "Data modified successfully",
                     showConfirmButton: false,
                     timer: 1500,
                     backdrop: false,
@@ -275,7 +291,7 @@ function eventos() { // Cambiar data de los fetches.
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
-                        title: "Fallo al modificar Dato",
+                        title: "Error when modifying data",
                         showConfirmButton: false,
                         timer: 1500,
                         backdrop: false,
@@ -290,7 +306,7 @@ function eventos() { // Cambiar data de los fetches.
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Error en el servidor",
+                title: "Server error",
                 showConfirmButton: false,
                 timer: 1500,
                 backdrop: false,
@@ -303,7 +319,11 @@ function eventos() { // Cambiar data de los fetches.
     // Cerrar y limpiar modal
     document.getElementById("btn_cerrar_modal").addEventListener("click", () => {
         document.querySelectorAll("[id$='Input']").forEach(input => {
-        input.value = "";
+            input.value = "";
+        });
+
+        document.querySelectorAll("input[type='checkbox'][id$='Input']").forEach(input => {
+            input.checked = false;
         });
 
         if (modalCreacionModificacion) modalCreacionModificacion.hide();
@@ -365,9 +385,9 @@ function eventos() { // Cambiar data de los fetches.
             let id_usuario=id_usuarioinput.value;
 
             if(pass=="" || confirm==""){
-                error.textContent="Se deben de completar todos los campos";
+                error.textContent="All fields must be completed";
             }else if(pass!==confirm){
-                error.textContent="Las contraseñas no coinciden";
+                error.textContent="Passwords do not match";
             } else {
                 let formData = new FormData();
                 formData.append("Pass", pass);
@@ -386,7 +406,7 @@ function eventos() { // Cambiar data de los fetches.
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "Contraseña modificada con éxito",
+                                title: "Password changed successfully",
                                 showConfirmButton: false,
                                 timer: 1500,
                                 backdrop: false,
@@ -398,7 +418,7 @@ function eventos() { // Cambiar data de los fetches.
                             Swal.fire({
                                 position: "top-end",
                                 icon: "error",
-                                title: "Error en el servidor",
+                                title: "Server error",
                                 showConfirmButton: false,
                                 timer: 1500,
                                 backdrop: false,
@@ -496,7 +516,7 @@ function eventos() { // Cambiar data de los fetches.
                    Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Generos y Plataformas modificadas con éxito",
+                        title: "Successfully Modified Genres and Platforms",
                         showConfirmButton: false,
                         timer: 1500,
                         backdrop: false,
@@ -522,7 +542,7 @@ function eventos() { // Cambiar data de los fetches.
                 Swal.fire({
                     position: "top-end",
                     icon: "error",
-                    title: "Error en el servidor",
+                    title: "Server error",
                     showConfirmButton: false,
                     timer: 1500,
                     backdrop: false,
@@ -581,7 +601,7 @@ function crearTabla(lista, columnas, entidad) {
     });
 
     const thAcciones = document.createElement("th");
-    thAcciones.textContent = "Acciones";
+    thAcciones.textContent = "Actions";
     trHead.appendChild(thAcciones);
 
     thead.appendChild(trHead);
@@ -608,6 +628,24 @@ function crearTabla(lista, columnas, entidad) {
                 enlace.className = "sub";
                 enlace.href = item[key];
                 enlace.target = "_blank"; // Abrir en nueva pestaña
+                enlace.textContent = campo;
+                td.appendChild(enlace);
+                tr.appendChild(td);
+            }else if(key=="img_venta"){
+                const td = document.createElement("td");
+                const enlace = document.createElement('a');
+                enlace.className = "sub";
+                enlace.href = "/public/IMG/Productos-img/"+item[key];
+                enlace.target = "_blank"; // Abrir en nueva pestaña
+                enlace.textContent = campo;
+                td.appendChild(enlace);
+                tr.appendChild(td);
+            }else if(key=="Imagen_usuario"){
+                const td = document.createElement("td");
+                const enlace = document.createElement('a');
+                enlace.className = "sub";
+                enlace.href = "/public/IMG/Users-img/"+item[key];
+                enlace.target = "_blank";
                 enlace.textContent = campo;
                 td.appendChild(enlace);
                 tr.appendChild(td);
@@ -645,13 +683,13 @@ function crearTabla(lista, columnas, entidad) {
         tdAcciones.innerHTML = `
             <div class="dropdown">
                 <button class="boton-perso boton-perso-secundario dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Acciones
+                Actions
                 </button>
                 <div class="dropdown-menu">
-                <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Eliminar</button>
-                ${entidad === "post_vendidos" ? `<button id="btn_modificar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>` : `<button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificar</button>`}
-                ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Cambiar Contraseña</button>` : ''}
-                ${entidad === "juegos" ? `<button id="add_genPlat@${item.id}" class="dropdown-item btn btn-primary addGenPlat">Añadir/Modificar Generos y Plataformas</button>` : ''}
+                <button id="btn_eliminar@${item.id}" class="dropdown-item btn btn-danger eliminar-dato">Delete</button>
+                ${entidad === "post_vendidos" ? `<button id="btn_modificar@${item.id_Post}_${item.id_Comprador}_${item.Fecha}" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>` : `<button id="btn_modificar@${item.id}" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>`}
+                ${entidad === "usuarios" ? `<button id="btn_cambPass@${item.id}" class="dropdown-item btn btn-primary cambiarPassword">Change Password</button>` : ''}
+                ${entidad === "juegos" ? `<button id="add_genPlat@${item.id}" class="dropdown-item btn btn-primary addGenPlat">Add/Modify Genres and Platforms</button>` : ''}
                 </div>
             </div>
             `;
@@ -721,7 +759,7 @@ function crearTabla(lista, columnas, entidad) {
 
     const headerAcciones = document.createElement("div");
     headerAcciones.classList.add("header");
-    headerAcciones.textContent = "Acciones";
+    headerAcciones.textContent = "Actions";
 
     const contenidoAcciones = document.createElement("div");
     contenidoAcciones.classList.add("contenido");
@@ -735,7 +773,7 @@ function crearTabla(lista, columnas, entidad) {
     btnToggle.setAttribute("data-toggle", "dropdown");
     btnToggle.setAttribute("aria-haspopup", "true");
     btnToggle.setAttribute("aria-expanded", "false");
-    btnToggle.textContent = "Acciones";
+    btnToggle.textContent = "Actions";
 
     const dropdownMenu = document.createElement("div");
     dropdownMenu.classList.add("dropdown-menu");
@@ -743,7 +781,7 @@ function crearTabla(lista, columnas, entidad) {
     const btnEliminar = document.createElement("button");
     btnEliminar.id = `btnEliminar@${item.id}`;
     btnEliminar.className = "dropdown-item btn btn-danger eliminar-dato";
-    btnEliminar.textContent = "Eliminar";
+    btnEliminar.textContent = "Delete";
 
     const btnModificar = document.createElement("button");
     if(entidad==="post_vendidos"){
@@ -752,7 +790,7 @@ function crearTabla(lista, columnas, entidad) {
         btnModificar.id = `btnModificar@${item.id}`;
     }
     btnModificar.className = "dropdown-item btn btn-primary modificar-dato";
-    btnModificar.textContent = "Modificar";
+    btnModificar.textContent = "Modificate";
 
     dropdownMenu.appendChild(btnEliminar);
     dropdownMenu.appendChild(btnModificar);
@@ -760,7 +798,7 @@ function crearTabla(lista, columnas, entidad) {
     if (entidad === "usuarios") {
       const btnPass = document.createElement("button");
       btnPass.className = "dropdown-item btn btn-primary cambiarPassword";
-      btnPass.textContent = "Cambiar Contraseña";
+      btnPass.textContent = "Change Password";
       btnPass.id=`btn_cambPass@${item.id}`;
       dropdownMenu.appendChild(btnPass);
     }
@@ -768,7 +806,7 @@ function crearTabla(lista, columnas, entidad) {
     if (entidad === "juegos") {
       const btnGenPlat = document.createElement("button");
       btnGenPlat.className = "dropdown-item btn btn-primary addGenPlat";
-      btnGenPlat.textContent = "Añadir/Modificar Generos y Plataformas";
+      btnGenPlat.textContent = "Add/Modify Genres and Platforms";
       btnGenPlat.id=`add_genPlat@${item.id}`;
       dropdownMenu.appendChild(btnGenPlat);
     }

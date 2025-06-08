@@ -31,6 +31,10 @@ body{
     color: var(--color-boton-texto);
 }
 
+.landing p{
+    font-size: 120%;
+}
+
 .enlace-main i{
     font-size: 200%;
 }

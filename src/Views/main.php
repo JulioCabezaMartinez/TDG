@@ -8,18 +8,18 @@ require_once __DIR__ . '/Templates/header.php';
 
 <div class="landing">
         <h4>To Do Games</h>
-        <h1>LA MEJOR MANERA DE ORGANIZAR TUS JUEGOS</h1>
-        <p>Gestiona tus juegos en listas personalizadas, además de comprar y vender los juegos que no usas de forma segura.</p>
+        <h1>THE BEST WAY TO ORGANIZE YOUR GAMES</h1>
+        <p>Manage your games in custom lists, plus securely buy and sell unused games.</p>
 
         <a href="/juegos">
-            <p class="boton-perso">Ver Juegos</p>
+            <p class="boton-perso">View Games</p>
         </a>
 </div>
 <div class="recien_añadidos">
 
     <a class="enlace-main" href="/juegos">
         <i class="fa-solid fa-gamepad"></i>
-        <h2 class="enlace">Recién añadidos</h2>
+        <h2 class="enlace">Just Added</h2>
     </a>
     <div class="recien_añadidos__container">
         <?php
@@ -75,7 +75,7 @@ require_once __DIR__ . '/Templates/header.php';
 <div class="ultimos_productos">
     <a class="enlace-main" href="/ventas">
         <i class="fa-solid fa-store"></i>
-        <h2>Últimos Productos</h2>
+        <h2>New Products</h2>
     </a>
     
     <div class="swiper">
@@ -126,7 +126,7 @@ require_once __DIR__ . '/Templates/header.php';
 </div>
 
 <div id="lista_reviews">
-    <h2>Ultimas Reviews</h2>
+    <h2>Last Reviews</h2>
     <?php
     foreach ($lista_reviews as $review) {
         $contenido_reducido = str_split($review['Contenido'], 10)[0];
@@ -155,7 +155,7 @@ require_once __DIR__ . '/Templates/header.php';
             <div class="review_footer">
                 <div class="review_ver_mas_container boton-perso">
                     <i class="fa-solid fa-arrow-down"></i>
-                    <p class="review_ver_mas">Ver más</p>
+                    <p class="review_ver_mas">View more</p>
                 </div>
             </div>
         </div>

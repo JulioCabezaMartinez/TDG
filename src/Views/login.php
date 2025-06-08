@@ -7,28 +7,27 @@ require_once 'Templates/inicio.php';
 <div class="tarjeta-login">
     <h2 class="nombreApp">To Do Games</h2>
     <img class="logo-TDG" src="public/IMG/TDG-Logo.png" alt="">
-    <h2 class="text-center">Iniciar Sesión</h2>
-    <form action="#" method="POST" class="mt-4">
+    <h2 class="text-center">Log in</h2>
+    <form method="POST" class="mt-4">
         <div class="mb-3">
-            <label for="correo" class="form-label">Correo:</label>
+            <label for="correo" class="form-label">Email:</label>
             <input type="text" class="form-control" id="correo" name="correo" required>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Contraseña:</label>
+            <label for="password" class="form-label">Password:</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <p class="error" id="error_datos"></p>
 
-        <button id="submit-login" type="submit" class="boton-perso">Iniciar Sesión</button>
+        <button id="submit-login" type="button" class="boton-perso">Log in</button>
         <br><br>
-        <a class="enlace" href="/">< Volver al Inicio</a>    
+        <a class="enlace" href="/">< Back to Home</a>    
     </form>
 </div>
 
 <script>
     $(document).ready(function() {
         $("#submit-login").click(function(event) {
-            event.preventDefault();
 
             let correo = $("#correo").val();
             let password = $("#password").val();

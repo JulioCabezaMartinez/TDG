@@ -4,7 +4,7 @@ require_once __DIR__ . '/Templates/inicio.php';
 
 require_once __DIR__ . '/Templates/header.php';
 
-if(!empty($_SESSION)) { 
+if (!empty($_SESSION)) {
 ?>
     <!-- Modal de creación de Venta -->
     <div class="modal fade" id="creacion_modificar_dato" tabindex="-1">
@@ -24,23 +24,30 @@ if(!empty($_SESSION)) {
                                 case "id":
                                     // No mostrar el campo id en el formulario de creación
                                     break;
+                                case "Titulo":
+                            ?>
+                                <label for="<?php echo $columna ?>Label"><strong>*Title:</strong></label>
+                                <input type="text" class="form-control" id="<?php echo $columna ?>Input">
+                                <br>
+                            <?php
+                                    break;
                                 case "Estado":
-                                ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>*<?php echo $columna ?>:</strong></label>
+                            ?>
+                                    <label for="<?php echo $columna ?>Label"><strong>*State:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
-                                        <option value="" selected disabled>Seleccione un estado</option>
-                                        <option value="Nuevo">Nuevo</option>
-                                        <option value="2º Mano">2º Mano</option>
-                                        <option value="Reparado">Reparado</option>
+                                        <option value="" selected disabled>Select an state</option>
+                                        <option value="Nuevo">New</option>
+                                        <option value="2º Mano">2nd Hand</option>
+                                        <option value="Reparado">Repaired</option>
                                     </select>
                                     <br>
                                 <?php
                                     break;
                                 case "Consola":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>*Consola:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Platform:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
-                                        <option value="" selected disabled>Seleccione una consola</option>
+                                        <option value="" selected disabled>Select a platform</option>
                                         <?php
                                         foreach ($consolas as $consola) {
                                         ?>
@@ -54,18 +61,18 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "Precio":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>*<?php echo $columna ?>:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Price:</strong></label>
                                     <input type="number" class="form-control" id="<?php echo $columna ?>Input" min="0" step="10">
                                     <br>
                                 <?php
                                     break;
                                 case "Estado_Venta":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>*Estado de Venta:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Sale state:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
-                                        <option value="" selected disabled>Seleccione un estado de venta</option>
-                                        <option value="Disponible">Disponible</option>
-                                        <option value="Sin Stock">Sin Stock</option>
+                                        <option value="" selected disabled>Select an sale state</option>
+                                        <option value="Disponible">Available</option>
+                                        <option value="Sin Stock">Out of Stock</option>
 
                                     </select>
                                     <br>
@@ -80,14 +87,14 @@ if(!empty($_SESSION)) {
                                     break;
                                 case "img_venta":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>Imagen:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>Image:</strong></label>
                                     <input type="file" class="form-control" name="<?php echo $columna ?>" id="<?php echo $columna ?>Input">
                                     <br>
                                 <?php
                                     break;
                                 case "id_juego":
                                 ?>
-                                    <label for="<?php echo $columna ?>Label"><strong>*Juego:</strong></label>
+                                    <label for="<?php echo $columna ?>Label"><strong>*Game:</strong></label>
                                     <select class="form-select" id="<?php echo $columna ?>Input">
                                         <option value="" selected disabled>Seleccione un juego</option>
                                         <?php
@@ -104,7 +111,7 @@ if(!empty($_SESSION)) {
 
                                 case "id_Vendedor":
                                 ?>
-                                    
+
                                 <?php
                                     break;
                                 default:
@@ -133,21 +140,21 @@ if(!empty($_SESSION)) {
 <?php
 }
 ?>
-<h3 class="mt-4" style="text-align: center;">Catálogo</h3>
+<h3 class="mt-4" style="text-align: center;">SHOP</h3>
 
 <?php
-if(!empty($_SESSION)) { 
+if (!empty($_SESSION)) {
 ?>
-    <button id="btn_crear_producto" class="boton-perso ms-3">Subir Producto</button>
+    <button id="btn_crear_producto" class="boton-perso">Upload Product</button>
     <br><br>
 <?php
-}  
+}
 ?>
 
 <div id="filtros">
     <button id="boton_filtro" class="btn_filtros boton-perso">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
-        <p>Filtros</p>
+        <p>Filters</p>
     </button>
 
     <!-- <hr> Poner una barra en vertical para separar el boton de los filtros -->
@@ -167,38 +174,28 @@ if(!empty($_SESSION)) {
 <div class="filtros_desplegable">
     <div class="filtros_opciones">
         <div>
-            <label for="nombre">Nombre del Juego:</label>
+            <label for="nombre">Game's Name:</label>
             <input class="form-control" id="nombreInputFiltro" type="text">
-        </div>
-        <br>
-        <div>
-            <label for="stock">Stock:</label>
-            <br>
-            <label for="si">Sí</label>
-            <input class="form-check-input" type="radio" id="si" name="stock" value="si">
-
-            <label for="no">No</label>
-            <input class="form-check-input" type="radio" id="no" name="stock" value="no">
         </div>
         <br>
         <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->
         <div>
-            <label for="">Precio Máximo: </label>
+            <label for="">Max Price: </label>
             <br>
             <input class="form-control w-50" id="precioMaxInputFiltro" type="number">
         </div>
         <br>
         <div>
-            <label for="">Precio Mínimo: </label>
+            <label for="">Min Price: </label>
             <br>
             <input class="form-control w-50" id="precioMinInputFiltro" type="number">
         </div>
         <br>
         <div>
-            <label for="">Consola: </label>
+            <label for="">Platform: </label>
             <br>
             <select class="form-select" id="ConsolaInputFiltro">
-                <option value="" selected disabled>Selecciona una consola</option>
+                <option value="" selected>Select a platform</option>
                 <?php
                 foreach ($consolas as $plataforma) {
                 ?>
@@ -210,19 +207,19 @@ if(!empty($_SESSION)) {
         </div>
         <br>
         <div>
-            <label for="">Estado: </label>
+            <label for="">State: </label>
             <br>
             <select class="form-select" id="EstadoInputFiltro">
-                <option value="" selected disabled>Selecciona un estado</option>
+                <option value="" selected>Select a state</option>
                 <option value="Nuevo">Nuevo</option>
-                <option value="Buen Estado">Buen Estado</option>
-                <option value="Usado">Usado</option>
+                <option value="2º Mano">2º Mano</option>
+                <option value="Reparado">Reparado</option>
             </select>
         </div>
         <br>
-        <p id="resetFiltros" class="enlace">Quitar filtros</p>
+        <p id="resetFiltros" class="enlace">Reset filters</p>
         <br>
-        <button id="aplicarFiltros" class="boton-perso w-25">Filtrar</button>
+        <button id="aplicarFiltros" class="boton-perso w-25">Filter</button>
 
     </div>
 </div>

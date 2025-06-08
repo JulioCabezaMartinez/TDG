@@ -6,8 +6,8 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
 ?>
 
 <div class="content">
-    <h1>Panel de Administrador</h1>
-    <a class="enlace-vuelta enlace m-3" href="/ ">< Volver a Inicio</a>
+    <h1>Administrator Panel</h1>
+    <a class="enlace-vuelta enlace m-3" href="/ ">< Back to Home</a>
 
     <a class="boton-tabla" href="/panelAdmin/tabla?tabla=usuarios">
         <div class="contenedor-admin">
@@ -15,7 +15,7 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
                 <i class="fa-solid fa-rectangle-list"></i>
                 <i class="fa-solid fa-user"></i>
             </div>
-            <h4>Administrar Usuarios</h4>
+            <h4>Manage Users</h4>
         </div>
     </a>
 
@@ -25,7 +25,7 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
                 <i class="fa-solid fa-rectangle-list"></i>
                 <i class="fa-solid fa-user"></i>
             </div>
-            <h4>Administrar Juegos</h4>
+            <h4>Manage Games</h4>
         </div>
     </a>
 
@@ -35,7 +35,7 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
                 <i class="fa-solid fa-rectangle-list"></i>
                 <i class="fa-regular fa-comment"></i>
             </div>
-            <h4>Administrar Reviews</h4>
+            <h4>Manage Reviews</h4>
         </div>
     </a>
 
@@ -45,7 +45,7 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
                 <i class="fa-solid fa-rectangle-list"></i>
                 <i class="fa-solid fa-store"></i>
             </div>
-            <h4>Administrar Productos</h4>
+            <h4>Manage Products</h4>
         </div>
     </a>
 
@@ -54,7 +54,7 @@ include_once __DIR__. '/Templates/barra-lateral.admin.php';
             <div class="icono">
                 <i class="fa-solid fa-boxes-stacked"></i>
             </div>
-            <h4>Administrar Ventas</h4>
+            <h4>Manage Sales</h4>
         </div>
     </a>
     

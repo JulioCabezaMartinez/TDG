@@ -6,12 +6,12 @@ require_once __DIR__ . '/Templates/inicio.php';
 require_once __DIR__ . '/Templates/header.php';
 ?>
 
-<h3 class="text-center mt-4">Juegos</h3>
+<h3 class="text-center mt-4">GAMES</h3>
 
 <div id="filtros">
     <button id="boton_filtro" class="btn_filtros boton-perso">
         <i id="filtros_icon" class="fa-solid fa-filter"></i>
-        <p>Filtros</p>
+        <p>Filters</p>
     </button>
 
     <!-- Carrusel de Filtros activos
@@ -31,7 +31,7 @@ require_once __DIR__ . '/Templates/header.php';
 <div class="filtros_desplegable">
     <div class="filtros_opciones">
         <div>
-           <label for="">Nombre del Juego:</label>
+           <label for="">Name:</label>
            <?php
             if(!empty($juegoBusqueda)){
             ?>
@@ -48,20 +48,20 @@ require_once __DIR__ . '/Templates/header.php';
         </div>
         <br>
         <div>
-            <label for="opcion2">Mes de Salida:</label>
+            <label for="opcion2">Release month:</label>
             <input class="form-control" id="fechaSalidaInput" type="date" name="">
         </div>
         <br>
         <!-- Se puede poner año de salida con este SQL: WHERE YEAR(Anyo_salida) = ?; -->
         <div>
-            <label for="">Puntuacion 1/5:</label>
+            <label for="">Calification (1/5):</label>
             <br>
             <input class="form-control w-25" id="calificacionInput" type="number" max="5" min="0" data-decimal="2" step="0.5">
         </div>
         <br>
-        <p id="resetFiltros" class="enlace">Quitar filtros</p>
+        <p id="resetFiltros" class="enlace">Reset filters</p>
         <br>
-        <button id="aplicarFiltros" class="boton-perso w-25">Filtrar</button>
+        <button id="aplicarFiltros" class="boton-perso w-25">Filter</button>
         
     </div>
 </div>

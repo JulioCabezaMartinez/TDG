@@ -13,14 +13,14 @@ function eventos(){
     document.getElementById("btn-quitar-venta").addEventListener("click", () => {
         
         Swal.fire({
-            title: "¿Seguro que quieres eliminar el producto?",
-            text: "¡No puedes revertir esto! Para volver a agregarlo, debes subirlo de nuevo.",
+            title: "Are you sure you want to delete the product?",
+            text: "You can't undo this! To add it again, you must upload it again.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: color_neon,
             cancelButtonColor: "#808080",
-            confirmButtonText: "Si, eliminar",
-            cancelButtonText: "Cancelar",
+            confirmButtonText: "Yes, delete",
+            cancelButtonText: "Cancel",
             background: "#2C2C2E",
             color: "#FFFFFF"
             
@@ -38,7 +38,7 @@ function eventos(){
                 .then(data => {
                     if (data.result === "ok") {
                         Swal.fire({
-                            title: "Producto eliminado",
+                            title: "Product Removed",
                             text: data.mensaje,
                             icon: "success",
                             confirmButtonColor: color_neon,
@@ -66,14 +66,14 @@ function eventos(){
     document.getElementById("btn-quitarBD-venta").addEventListener("click", () => {
         
         Swal.fire({
-            title: "¿Seguro que quieres eliminar el producto de la Base de Datos?",
-            text: "¡No puedes revertir esto!",
+            title: "Are you sure you want to delete the product from the Database?",
+            text: "You can't undo this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: color_neon,
             cancelButtonColor: "#808080",
-            confirmButtonText: "Si, eliminar",
-            cancelButtonText: "Cancelar",
+            confirmButtonText: "Yes, delete",
+            cancelButtonText: "Cancel",
             background: "#2C2C2E",
             color: "#FFFFFF"
             
@@ -92,8 +92,8 @@ function eventos(){
                 .then(data => {
                     if (data.result === "ok") {
                         Swal.fire({
-                            title: "Producto eliminado",
-                            text: "Dato eliminado de la Base de Datos correctamente.",
+                            title: "Product Removed",
+                            text: "Data successfully deleted from the Database.",
                             icon: "success",
                             confirmButtonColor: color_neon,
                             background: "#2C2C2E",
@@ -104,7 +104,7 @@ function eventos(){
                     } else {
                         Swal.fire({
                             title: "Error",
-                            text: "Error al eliminar el producto de la Base de Datos.",
+                            text: "Error deleting product from the Database.",
                             icon: "error",
                             confirmButtonColor: color_neon,
                             background: "#2C2C2E",
@@ -167,7 +167,7 @@ function eventos(){
             .then(() => {
                 Swal.fire({
                     icon: "success",
-                    title: "Dato modificado con éxito",
+                    title: "Data modified successfully",
                     confirmButtonColor: color_neon,
                     background: "#2C2C2E",
                     color: "#FFFFFF"
@@ -178,7 +178,7 @@ function eventos(){
             .catch(() => {
                 Swal.fire({
                     icon: "error",
-                    title: "Error en el servidor",
+                    title: "Server error",
                     confirmButtonColor: color_neon,
                     background: "#2C2C2E",
                     color: "#FFFFFF"

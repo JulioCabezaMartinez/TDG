@@ -24,8 +24,8 @@ $dotenv->load();
 // Crear una instancia del enrutador
 $router = new Router();
 
-if(empty($_SESSION) && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/AJAX')) {
-    if(!str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/login') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/TDG/register')) {
+if(empty($_SESSION) && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/AJAX')) {
+    if(!str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/login') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/register')) {
         
         // Que no se guarde ni AJAX ni Login o Register
         $uri = urldecode($_SERVER['REQUEST_URI']);

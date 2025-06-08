@@ -8,6 +8,7 @@ use App\Models\Genero;
 use App\Models\Plataforma;
 
 use App\Core\Validators;
+use App\Core\Security;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con el modelo Venta.
@@ -69,9 +70,8 @@ class ControllerVenta {
         // Eliminar la seguridad de esa venta una vez hecha.
         unset($_SESSION["id_venta"]);
 
-        if(empty($_SESSION["usuarioActivo"])){
-            header("Location:/login");
-            exit;
+        if(empty($_SESSION)) {
+            Security::closeSession();
         }
 
         $id_producto=Validators::evitarInyeccion($_GET["producto"]);
@@ -82,9 +82,8 @@ class ControllerVenta {
     }
 
     public function checkout(){
-        if(empty($_SESSION["usuarioActivo"])){
-            header("Location:/login");
-            exit;
+        if(empty($_SESSION)) {
+            Security::closeSession();
         }
         $id_venta=$_GET["id"] ?? null;
         $_SESSION["id_venta"]=$id_venta;

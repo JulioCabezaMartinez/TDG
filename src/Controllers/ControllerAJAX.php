@@ -812,7 +812,7 @@ class ControllerAJAX {
 
     public function listaAdmin(){
 
-        if(empty($_SESSION)){
+        if(empty($_SESSION) || !$_SESSION["Admin"]) {
             Security::closeSession();
         }
         
@@ -1131,6 +1131,10 @@ class ControllerAJAX {
     }
 
     public function addGenerosPlataformas(){
+        if(empty($_SESSION) || !$_SESSION["Admin"]) {
+            Security::closeSession();
+        }
+        
         $generoDB=new Genero();
         $plataformaDB=new Plataforma();
         $id_juego=Validators::evitarInyeccion($_POST["id_juego"]);

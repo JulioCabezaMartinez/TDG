@@ -56,6 +56,11 @@ class ControllerUsuario {
     }
 
     public function conseguirPremium(){
+
+        if(empty($_SESSION)) {
+            Security::closeSession();
+        }
+
         $usuarioBD=new Usuario();
 
         $usuario=$usuarioBD->getById($_SESSION["usuarioActivo"]);

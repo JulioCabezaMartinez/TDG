@@ -72,7 +72,7 @@
 
 #lista_compras, #lista_ventas{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
 
     width: 100%;
 }
@@ -117,5 +117,11 @@
     .view_all{
         grid-column: 3;
     }
-    
+
+    #lista_compras, #lista_ventas{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    width: 100%;
+}
 }

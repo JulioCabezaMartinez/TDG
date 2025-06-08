@@ -6,6 +6,7 @@ body{
 }
 
 .cuerpo{
+    width: 100%;
     margin-top: 1%;
     display: flex;
     flex-direction: row;
@@ -27,6 +28,7 @@ body{
 }
 
 .metodo_pago div{
+    width: 85%;
     display: flex;
     align-items: center;
 
@@ -119,5 +121,16 @@ body{
 
     .resumen_compra{
         width: 100%;
+    }
+
+    footer div{
+        width: 50%;
+    }
+
+    .resumen_compra > div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }

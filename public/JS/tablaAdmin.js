@@ -23,66 +23,86 @@ function eventos() { // Cambiar data de los fetches.
 
     const modalCreacionModificacion = new bootstrap.Modal(document.getElementById("creacion_modificar_dato"));
 
+    let color_neon=getComputedStyle(document.documentElement).getPropertyValue('--color-borde-neon').trim();
+
     document.addEventListener("DOMContentLoaded", () => {
 
         // Delegar click para botones Eliminar
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("eliminar-dato")) {
                 let id, producto, comprador, fecha;
-                if(entidad=="post_vendidos"){
+                if (entidad == "post_vendidos") {
                     let lista_id = e.target.id.split("@")[1];
-                    producto=lista_id.split("_")[0];
-                    comprador=lista_id.split("_")[1];
-                    fecha=lista_id.split("_")[2];
-                }else{
+                    producto = lista_id.split("_")[0];
+                    comprador = lista_id.split("_")[1];
+                    fecha = lista_id.split("_")[2];
+                } else {
                     id = e.target.id.split("@")[1];
                 }
 
-                let formData=new FormData();
-                if(entidad=="post_vendidos"){
-                    formData.append("producto", producto);
-                    formData.append("comprador", comprador);
-                    formData.append("fecha", fecha);
-                    formData.append("entidad", entidad);
-                }else{
-                    formData.append("id", id);
-                    formData.append("entidad", entidad);
-                }
 
-            fetch("/AJAX/eliminarDato", {
-                method: "POST",
-                body: formData
-            })
-            .then(res => res.text())
-            .then(data => {
-                if (data === "Todo Correcto") {
                 Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Data successfully deleted",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    backdrop: false,
+                    title: "Are you sure you want to delete the product from the Database?",
+                    text: "You can't undo this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: color_neon,
+                    cancelButtonColor: "#808080",
+                    confirmButtonText: "Yes, delete",
+                    cancelButtonText: "Cancel",
                     background: "#2C2C2E",
                     color: "#FFFFFF"
-                });
-                paginacion(); // Recargar la tabla después de eliminar
 
-                } else {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: "Server error",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    backdrop: false,
-                    background: "#2C2C2E",
-                    color: "#FFFFFF"
-                });
-                }
-            });
-        }
-    });
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let formData = new FormData();
+                        if (entidad == "post_vendidos") {
+                            formData.append("producto", producto);
+                            formData.append("comprador", comprador);
+                            formData.append("fecha", fecha);
+                            formData.append("entidad", entidad);
+                        } else {
+                            formData.append("id", id);
+                            formData.append("entidad", entidad);
+                        }
+
+                        fetch("/AJAX/eliminarDato", {
+                            method: "POST",
+                            body: formData
+                        })
+                            .then(res => res.text())
+                            .then(data => {
+                                if (data === "Todo Correcto") {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Data successfully deleted",
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        backdrop: false,
+                                        background: "#2C2C2E",
+                                        color: "#FFFFFF"
+                                    });
+                                    paginacion(); // Recargar la tabla después de eliminar
+
+                                } else {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "error",
+                                        title: "Server error",
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        backdrop: false,
+                                        background: "#2C2C2E",
+                                        color: "#FFFFFF"
+                                    });
+                                }
+                            });
+                    }
+                })
+
+            }
+        });
 
     // Delegar click para botones Crear
     document.getElementById("btn_crear_dato").addEventListener("click", () => {
@@ -234,6 +254,7 @@ function eventos() { // Cambiar data de los fetches.
                 color: "#FFFFFF"
             });
         paginacion(); // Recargar la tabla después de crear
+        modalCreacionModificacion.hide();
         })
         .catch(() => {
         Swal.fire({
@@ -439,6 +460,7 @@ function eventos() { // Cambiar data de los fetches.
                                 color: "#FFFFFF"
                             });
                             paginacion(); // Recargar la tabla después de crear
+                            modal
                         } else {
                             Swal.fire({
                                 position: "top-end",

@@ -88,7 +88,7 @@ function eventos(){
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: new URLSearchParams({ id, entidad })
+                        body: new URLSearchParams({ id_producto, entidad })
                     }).then(response => response.json())
                     .then(data => {
                         if (data.result === "ok") {

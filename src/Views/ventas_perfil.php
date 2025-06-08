@@ -10,6 +10,10 @@ require_once __DIR__ . '/Templates/header.php';
     <h2><?php echo $perfil['Nick'] ?></h2>
 </div>
 
+<a href="/perfil">
+    <button class="boton-perso">View Profile Lists</button>
+</a>
+
 <div class="ventas_compras">
     <h3>Purchases</h3>
     <div class="paginacionCompras"></div>

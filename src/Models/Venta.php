@@ -138,7 +138,7 @@ class Venta extends EmptyModel implements BusquedaAdmin {
         }
     }
 
-    public function getCount(): int{
+    public function getCountListaVentas(): int{
         try {
             $sql = "SELECT COUNT(*) FROM {$this->table} WHERE Estado_venta != 'Sin Stock'";
             return (int) parent::query($sql)->fetchColumn();

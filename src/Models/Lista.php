@@ -45,6 +45,13 @@ class Lista extends EmptyModel {
         }
     }
 
+    public function eliminarListasBasicas($id_usuario){
+        $sql="DELETE FROM listas WHERE id IN (SELECT id_lista FROM usuarios_listas WHERE id_usuario=:id_usuario);";
+        $stmt=$this->db->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     /**
      * Agrega un juego a una lista específica.
      *

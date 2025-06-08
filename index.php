@@ -25,7 +25,7 @@ $dotenv->load();
 $router = new Router();
 
 if(empty($_SESSION) && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/AJAX')) {
-    if(!str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/login') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/register') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']),'/favicon.ico')) {
+    if(!str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/login') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/register') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']),'/favicon.ico') && !str_starts_with(urldecode($_SERVER['REQUEST_URI']), '/public')) {
         
         // Que no se guarde ni AJAX ni Login o Register
         $uri = urldecode($_SERVER['REQUEST_URI']);

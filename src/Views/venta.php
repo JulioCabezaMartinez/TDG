@@ -154,7 +154,7 @@ require_once __DIR__ . '/Templates/header.php';
     }
     ?>
 
-    <img class="img_venta" src="/public/IMG/<?php echo $venta["img_venta"] ?>" alt="">
+    <img class="img_venta" src="/public/IMG/Productos-img/<?php echo $venta["img_venta"] ?>" alt="">
 
     <h2 class="precio_venta"><?php echo $venta["Precio"] . " €" ?></h2>
 

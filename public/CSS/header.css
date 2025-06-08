@@ -215,6 +215,10 @@
     color: var(--color-texto);
 }
 
+.link-hamburguesa h2{
+    margin: 0;
+}
+
 .btns-Sesiones{
     display: flex;
     flex-wrap: wrap;

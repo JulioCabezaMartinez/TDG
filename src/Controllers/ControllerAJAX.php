@@ -153,7 +153,7 @@ class ControllerAJAX {
         $filtros=json_decode($_POST["filtros"], true);
 
         if(empty($filtros)){
-            $total_ventas = $ventaDB->getCount();
+            $total_ventas = $ventaDB->getCountListaVentas();
         }else{
             if(!empty($filtros["fechaSalida"])){
                 $fechaFin = new DateTime($filtros["fechaSalida"]);
@@ -541,9 +541,17 @@ class ControllerAJAX {
         switch ($entidad) {
             case "usuarios":
                 $usuarioDB=new Usuario();
-                $rutaImagen= __DIR__. "/../../public/IMG/Users-img/".$usuarioDB->getById($id)["Imagen_usuario"];
+
+                $imagen=$usuarioDB->getById($id)["Imagen_usuario"];
+
+                if($imagen != "default-user.jpg"){
+                    $rutaImagen= __DIR__. "/../../public/IMG/Users-img/".$usuarioDB->getById($id)["Imagen_usuario"];
+                    $usuarioDB->eliminarImagen($rutaImagen);
+                }
+                
+                $listaDB=new Lista();
+                $listaDB->eliminarListasBasicas($id);
                 $usuarioDB->delete($id);
-                $usuarioDB->eliminarImagen($rutaImagen);
                 echo "Todo Correcto";
                 break;
             case "juegos":
@@ -744,20 +752,30 @@ class ControllerAJAX {
             unset($datos["id_PostAntiguo"]);
             unset($datos["id_CompradorAntiguo"]);
             unset($datos["FechaAntigua"]);
+        } else if($entidad == "usuarios"){
+
+        }else if($entidad == "productos"){
+
         }
 
         switch ($entidad) {
             case "usuarios":
                 $usuarioDB=new Usuario();
                 $listaDB=new Lista();
-                $datos["Password"]=Security::encryptPass($datos["Password"]);
-                
-                if($datos["Imagen_usuario"]==""){
-                    $datos["Imagen_usuario"]="default-user.png"; // Imagen por defecto si no se proporciona una imagen.
+
+                $imagen = $_FILES['img'] ?? null; // Obtener la imagen si se proporciona
+
+                if ($imagen != null) {
+                    $Nombreimagen=$usuarioDB->addImagen($imagen);
                 }
-                
-                $item=$usuarioDB->create($datos);
-                $listaDB->creaListasBasicas($datos, $item); // Crear listas basicas del usuario.
+
+                if(!empty($imagen)){
+                    // Lógica para registrar al usuario
+                    $item=$usuarioDB->register($datos["Nombre"], $datos["Apellido"], $datos["Correo"], "1234Prueba@", $datos["Nick"], $datos["Direccion"], $Nombreimagen.".jpg");
+                }else{
+                    $item=$usuarioDB->register($datos["Nombre"], $datos["Apellido"], $datos["Correo"], "1234Prueba@", $datos["Nick"], $datos["Direccion"]);
+                }
+                $listaDB->creaListasBasicas($datos["Nick"], $item); // Crear listas basicas del usuario.
                 break;
             case "juegos":
                 $juegosDB=new Juego();
@@ -769,6 +787,15 @@ class ControllerAJAX {
                 break;
             case "productos":
                 $ventaDB=new Venta();
+                $imagen = $_FILES['img'] ?? null; // Obtener la imagen si se proporciona
+
+                if ($imagen != null) {
+                    $Nombreimagen=$ventaDB->addImagen($imagen);
+                }
+
+                if(!empty($imagen)){
+                    $datos["img_venta"]=$Nombreimagen . ".jpg";
+                }
                 $item=$ventaDB->create($datos);
                 break;
             case "post_vendidos":

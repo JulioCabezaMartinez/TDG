@@ -13,7 +13,7 @@ require_once __DIR__ . '/Templates/header.php';
 
     <h3>✅ Purchase Completed!</h3>
 
-    <img class="imagen_venta" src="/public/IMG/productos<?php echo $producto["img_venta"] ?>" alt="">
+    <img class="imagen_venta" src="/public/IMG/Productos-img/<?php echo $producto["img_venta"] ?>" alt="">
 
     <h4><?php echo $producto["Titulo"] ?></h4>
 

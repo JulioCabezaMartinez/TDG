@@ -11,7 +11,7 @@ function eventos(){
         let busqueda=document.getElementById("busquedaJuego");
 
         if(busqueda.value){
-            window.location.href="/TDG/juegos?juego="+busqueda.value;
+            window.location.href="/juegos?juego="+busqueda.value;
         }
     });
 

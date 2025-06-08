@@ -63,59 +63,61 @@ function eventos(){
         });
     });
 
-    document.getElementById("btn-quitarBD-venta").addEventListener("click", () => {
-        
-        Swal.fire({
-            title: "Are you sure you want to delete the product from the Database?",
-            text: "You can't undo this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: color_neon,
-            cancelButtonColor: "#808080",
-            confirmButtonText: "Yes, delete",
-            cancelButtonText: "Cancel",
-            background: "#2C2C2E",
-            color: "#FFFFFF"
+    if(document.getElementById("btn-quitarBD-venta")){
+        document.getElementById("btn-quitarBD-venta").addEventListener("click", () => {
             
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let id_producto = document.getElementById("id_producto").value;
-                let entidad = "productos";
+            Swal.fire({
+                title: "Are you sure you want to delete the product from the Database?",
+                text: "You can't undo this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: color_neon,
+                cancelButtonColor: "#808080",
+                confirmButtonText: "Yes, delete",
+                cancelButtonText: "Cancel",
+                background: "#2C2C2E",
+                color: "#FFFFFF"
+                
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let id_producto = document.getElementById("id_producto").value;
+                    let entidad = "productos";
 
-                fetch("/AJAX/eliminarDato",{
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: new URLSearchParams({ id, entidad })
-                }).then(response => response.json())
-                .then(data => {
-                    if (data.result === "ok") {
-                        Swal.fire({
-                            title: "Product Removed",
-                            text: "Data successfully deleted from the Database.",
-                            icon: "success",
-                            confirmButtonColor: color_neon,
-                            background: "#2C2C2E",
-                            color: "#FFFFFF"
-                        }).then(() => {
-                            window.location.href = "/ventas";
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error",
-                            text: "Error deleting product from the Database.",
-                            icon: "error",
-                            confirmButtonColor: color_neon,
-                            background: "#2C2C2E",
-                            color: "#FFFFFF"
-                        });
-                    }
-                })
-                .catch(err => console.log(err));
-            }
-        });
-    })
+                    fetch("/AJAX/eliminarDato",{
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: new URLSearchParams({ id, entidad })
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.result === "ok") {
+                            Swal.fire({
+                                title: "Product Removed",
+                                text: "Data successfully deleted from the Database.",
+                                icon: "success",
+                                confirmButtonColor: color_neon,
+                                background: "#2C2C2E",
+                                color: "#FFFFFF"
+                            }).then(() => {
+                                window.location.href = "/ventas";
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Error deleting product from the Database.",
+                                icon: "error",
+                                confirmButtonColor: color_neon,
+                                background: "#2C2C2E",
+                                color: "#FFFFFF"
+                            });
+                        }
+                    })
+                    .catch(err => console.log(err));
+                }
+            });
+        })
+    }
 
     document.getElementById("btn-modificar-venta").addEventListener("click", () => {
         const id = document.getElementById("id_producto").value;

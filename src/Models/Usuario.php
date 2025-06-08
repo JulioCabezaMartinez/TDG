@@ -54,7 +54,7 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
      * @param string|null $imagen Ruta o URL de la imagen del usuario (opcional).
      * @return mixed Resultado de la operación de registro.
      */
-    public function register($nombre, $apellido, $correo, $pass, $nick, $direccion, $imagen="default-user.png") {
+    public function register($nombre, $apellido, $correo, $pass, $nick, $direccion, $imagen="default-user.jpg") {
         try {
             // Comprobar si el correo ya está registrado
             $usuarioExistente = $this->compruebaCampo('correo', $correo);

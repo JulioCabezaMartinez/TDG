@@ -180,8 +180,7 @@ function eventos() { // Cambiar data de los fetches.
 
     document.getElementById("btn_crear").addEventListener("click", () => {
         const datos = {};
-
-        
+        let img="";
 
         document.querySelectorAll("[id$='Input']").forEach(input => {
 
@@ -192,22 +191,30 @@ function eventos() { // Cambiar data de los fetches.
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
-            }
-
-            if(key == "Premium"){
+            }else if(key == "Premium"){
                 if(input.checked){
                     datos[key] = "1"; // Si el checkbox está marcado, asignar "1"
                 }else{
                     datos[key] = "0"; // Si no está marcado, asignar "0"
                 }
-            }
+            }else if(key=="img_venta" || key == "Imagen_usuario"){
 
-            datos[key] = input.value;
+                if(input.files.length > 0)
+                img = input.files[0];
+
+            }else{
+
+                datos[key] = input.value;
+
+            }
         });
 
         const formData = new FormData();
         formData.append("datos", JSON.stringify(datos));
         formData.append("entidad", entidad);
+        if(img !== ""){
+            formData.append("img", img);
+        }
 
         fetch("/AJAX/addDato", {
         method: "POST",
@@ -215,6 +222,7 @@ function eventos() { // Cambiar data de los fetches.
         })
         .then(res => res.text())
         .then(data => {
+            console.log(data);
             Swal.fire({
                 position: "top-end",
                 icon: "success",

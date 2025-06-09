@@ -169,6 +169,10 @@ function eventos(){
                     text: "Registration successful. Welcome, " + nick + "!",
                     background: "#2C2C2E",
                     color: "#FFFFFF"
+                }).then(result =>{
+                    if (result.isConfirmed){
+                        window.location.href='/login';
+                    }
                 });
                 
 

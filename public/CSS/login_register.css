@@ -1,4 +1,4 @@
-/* Css de la página Login */
+/* Css de la página Login y register */
 
 body{
     display: flex;
@@ -41,7 +41,7 @@ form{
 }
 
 .registro{
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
 }
 
 #texto-registro {

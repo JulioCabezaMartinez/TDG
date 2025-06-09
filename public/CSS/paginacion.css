@@ -1,6 +1,9 @@
+/* CSS asociado a la lista de páginacion */
+
 .paginacion{
     margin-top: 5%;
 }
+
 
 .pagination .page-link{
     color: var(--color-texto);
@@ -9,14 +12,16 @@
 }
 
 .pagination .active > .page-link{
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
     border-color: transparent;
 }
 
+/* Pagina Actual */
 .pagination.active a{
     color: var(--color-boton-texto) !important;
 }
 
+/* Hover botones de Páginas */
 .page-item:hover .page-link{
     color: var(--color-boton-texto) !important;
 }

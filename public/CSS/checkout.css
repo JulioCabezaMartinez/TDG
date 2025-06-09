@@ -33,17 +33,9 @@ body{
     align-items: center;
 
     transition: 0.1s;
-    border: 3px solid var(--color-secundario);
+    border: 3px solid var(--color-primario);
     border-radius: 10px;
 }
-
-/* .metodo_pago div:hover{
-    border: 3px solid var(--color-tarjeta-secundario);
-    border-radius: 10px;
-
-    transition: 0.1s;
-} */
-
 
 .metodo_pago div img{
     width: 50%;

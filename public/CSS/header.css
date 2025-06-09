@@ -82,6 +82,7 @@
 
 }
 
+/* Header Movil */
 .header-movil{
     position: relative;
     z-index: 1;
@@ -136,6 +137,8 @@
     background-color: var(--color-primario);
     border-radius: 8px;
 }
+
+/* Menu hamburguesa */
 
 .menu-hamburguesa{
     position: absolute;

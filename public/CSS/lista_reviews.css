@@ -22,16 +22,19 @@
     align-items: center;
     margin-left: 3%;
     padding: 8%;
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
     border-radius: 20px;
 
     color: var(--color-texto);
     cursor: pointer;
 }
 
+/* Paginacion */
 .paginacion{
     margin: 0;
 }
+
+/* Reviews */
 
 .lista_reviews{
     display: flex;
@@ -105,7 +108,7 @@
     align-items: center;
 
     color: var(--color-boton-texto);
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
 
     width: fit-content;
     padding: 2%;

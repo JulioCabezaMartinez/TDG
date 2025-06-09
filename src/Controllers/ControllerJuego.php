@@ -25,6 +25,14 @@ class ControllerJuego {
         $this->juego = new Juego();
     }
 
+    /**
+     * Muestra la lista de juegos disponibles.
+     *
+     * Si se ha enviado una búsqueda por GET, la almacena en una variable para su uso en la vista.
+     * Luego carga la vista correspondiente a la lista de juegos (`lista_juegos.php`).
+     *
+     * @return void
+     */
     public function lista_juegos(): void {
         if(!empty($_GET)){
             $juegoBusqueda=$_GET["juego"];
@@ -32,6 +40,19 @@ class ControllerJuego {
         include_once 'src/Views/lista_juegos.php'; // Cargar la vista de juegos
     }
 
+    /**
+     * Muestra la vista detallada de un juego específico, incluyendo sus géneros, plataformas y reviews.
+     *
+     * Obtiene el ID del juego desde la URL (GET), y luego recupera:
+     * - Los datos del juego,
+     * - Los géneros asociados,
+     * - Las plataformas compatibles,
+     * - Las últimas reviews del juego.
+     *
+     * Finalmente, incluye la vista del juego (`juego.php`) con todos los datos preparados.
+     *
+     * @return void
+     */
     public function view_juego(): void {
         $id_juego = $_GET['juego']; // Obtener el ID del juego desde la URL.
         $juego = new Juego();

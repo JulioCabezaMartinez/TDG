@@ -25,6 +25,15 @@ class ControllerReview {
         $this->review = new Review();
     }
 
+    /**
+     * Muestra la lista de reviews asociadas a un juego específico.
+     *
+     * Este método obtiene el ID del juego desde la URL (`$_GET["id"]`) y lo sanitiza usando el validador
+     * para evitar inyecciones. Luego recupera los datos del juego mediante el modelo `Juego`,
+     * y finalmente carga la vista `lista_reviews.php` para mostrar la información.
+     *
+     * @return void
+     */
     public function lista_reviews_juego(){
         $juegoBD=new Juego();
 

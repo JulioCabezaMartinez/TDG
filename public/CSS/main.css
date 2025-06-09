@@ -136,7 +136,7 @@ body{
     margin-left: 2%;
     padding: 1%;
 
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
 
     border-radius: 20px;
 }
@@ -182,7 +182,7 @@ body{
     align-items: center;
 
     color: var(--color-boton-texto);
-    background-color: var(--color-secundario);
+    background-color: var(--color-primario);
 
     width: fit-content;
     padding: 2%;

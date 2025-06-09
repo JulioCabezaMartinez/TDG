@@ -14,6 +14,14 @@ class ControllerAdmin{
 
     private $entidades=["usuarios", "juegos", "reviews", "productos", "post_vendidos"];
 
+    /**
+     * Muestra el panel de administración si el usuario tiene privilegios de administrador.
+     *
+     * Verifica si la sesión está activa y si el usuario tiene permisos de administrador.
+     * Si no es así, cierra la sesión. Si la verificación es exitosa, incluye la vista del panel de administrador.
+     *
+     * @return void
+     */
     public function admin(){
 
         if(empty($_SESSION) || !$_SESSION["Admin"]) {
@@ -23,6 +31,18 @@ class ControllerAdmin{
         include_once __DIR__. '/../Views/panelAdmin.php';
     }
 
+    /**
+     * Muestra una tabla de datos en el panel de administración, dependiendo de la entidad solicitada.
+     *
+     * Este método valida que el usuario sea administrador y que la entidad solicitada esté permitida.
+     * Según la entidad, obtiene columnas y registros desde la base de datos, incluyendo datos relacionados
+     * para vistas compuestas. Luego, incluye la vista correspondiente para mostrar la tabla.
+     *
+     * Entidades soportadas: `usuarios`, `juegos`, `reviews`, `productos`, `post_vendidos`.
+     * Si la entidad no es válida, redirige al inicio.
+     *
+     * @return void
+     */
     public function tabla(){
 
         if(empty($_SESSION) || !$_SESSION["Admin"]) {

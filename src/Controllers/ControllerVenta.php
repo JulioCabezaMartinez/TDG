@@ -22,8 +22,15 @@ class ControllerVenta {
     public function __construct(){
         $this->venta=new Venta();
     }
-    
 
+    /**
+     * Muestra la lista general de ventas disponibles.
+     *
+     * Recupera las consolas ordenadas alfabéticamente, las columnas de la tabla `ventas`
+     * y la lista de juegos ordenados. Posteriormente, se carga la vista `lista_ventas.php`.
+     *
+     * @return void
+     */
     public function lista_ventas(){
 
         $plataformaDB=new Plataforma();
@@ -43,6 +50,15 @@ class ControllerVenta {
         include_once __DIR__. "/../Views/lista_ventas.php";
     }
 
+    /**
+     * Muestra los detalles de una venta específica seleccionada.
+     *
+     * Obtiene la información completa de la venta, el juego asociado, sus géneros,
+     * consolas compatibles y otras ventas disponibles. También recupera las columnas
+     * de la tabla `ventas`. Finalmente, se carga la vista `venta.php`.
+     *
+     * @return void
+     */
     public function view_venta(){
         $id_venta = $_GET["id"];
 
@@ -66,6 +82,16 @@ class ControllerVenta {
 
         include_once __DIR__. "/../Views/venta.php";
     }
+
+    /**
+     * Muestra la vista de finalización de compra tras completar una venta.
+     *
+     * Elimina el identificador temporal de la venta de la sesión.
+     * Verifica que exista sesión activa, luego obtiene y muestra la información
+     * del producto comprado. Carga la vista `finalizacion_compra.php`.
+     *
+     * @return void
+     */
     public function finalizacion_compra(){
         // Eliminar la seguridad de esa venta una vez hecha.
         unset($_SESSION["id_venta"]);
@@ -81,6 +107,16 @@ class ControllerVenta {
         include_once __DIR__. "/../Views/finalizacion_compra.php";
     }
 
+    /**
+     * Procesa y muestra el formulario de checkout para una venta específica.
+     *
+     * Verifica que el usuario esté logueado. Establece el ID de la venta en sesión,
+     * luego obtiene sus datos. Si la venta no es válida o no está disponible,
+     * redirige al listado de ventas. En caso contrario, carga la vista `checkout.php`
+     * con el precio de gestión correspondiente.
+     *
+     * @return void
+     */
     public function checkout(){
         if(empty($_SESSION)) {
             Security::closeSession();

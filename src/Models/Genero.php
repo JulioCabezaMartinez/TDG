@@ -16,10 +16,21 @@ class Genero extends EmptyModel {
 
     use BusquedaAlfa;
 
+    /**
+     * Constructor de la clase Genero.
+     * Llama al constructor padre con el nombre de la tabla 'generos' y la clave primaria 'id'.
+     */
     public function __construct() {
         parent::__construct('generos', 'id');
     }
 
+    /**
+     * Elimina todos los registros de géneros asociados a un juego dado.
+     *
+     * @param int $id_juego ID del juego cuyo género se desea eliminar.
+     * @return bool True si la operación fue exitosa, false en caso contrario.
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function borrarGenerosJuego($id_juego){
         try {
             $sql = "DELETE FROM generos_juego WHERE id_juego=:id_juego";
@@ -31,6 +42,14 @@ class Genero extends EmptyModel {
         }
     }
 
+    /**
+     * Inserta una asociación entre un juego y un género en la tabla generos_juego.
+     *
+     * @param int $id_juego ID del juego.
+     * @param int $id_genero ID del género.
+     * @return bool True si la inserción fue exitosa, false en caso contrario.
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function insertarGenerosJuego($id_juego, $id_genero){
         try {
             $sql = "INSERT INTO generos_juego (id_genero, id_juego) VALUES (:id_genero, :id_juego);";
@@ -43,6 +62,14 @@ class Genero extends EmptyModel {
         }
     }
 
+    /**
+     * Inserta una asociación entre un juego y un género usando placeholders anónimos.
+     *
+     * @param int $id_juego ID del juego.
+     * @param int $id_genero ID del género.
+     * @return void
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function rellenarBDJuegosGeneros($id_juego, $id_genero): void {
         try {
             $sql = "INSERT INTO generos_juego (id_juego, id_genero) VALUES (?, ?)";
@@ -52,6 +79,14 @@ class Genero extends EmptyModel {
         }
     }
 
+    /**
+     * Inserta un nuevo género en la tabla generos.
+     *
+     * @param int $id_genero ID del género.
+     * @param string $nombre Nombre del género.
+     * @return void
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function rellenarBDGeneros($id_genero, $nombre) {
         try {
             $sql = "INSERT INTO generos (id, Nombre) VALUES (?, ?)";
@@ -61,6 +96,13 @@ class Genero extends EmptyModel {
         }
     }
 
+    /**
+     * Obtiene los nombres de los géneros asociados a un juego dado.
+     *
+     * @param int $id_juego ID del juego.
+     * @return array Lista de géneros (cada uno como arreglo asociativo con clave "Nombre").
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function getGenerosJuegoById($id_juego) {
         try {
             $sql = "SELECT g.Nombre FROM generos g
@@ -72,6 +114,13 @@ class Genero extends EmptyModel {
         }
     }
 
+    /**
+     * Obtiene los IDs de los géneros asociados a un juego dado.
+     *
+     * @param int $id_juego ID del juego.
+     * @return array Lista de IDs de géneros (cada uno como arreglo asociativo con clave "id").
+     * @throws Exception Si ocurre un error con la base de datos.
+     */
     public function getGenerosIDJuegoById($id_juego) {
         try {
             $sql = "SELECT g.id FROM generos g

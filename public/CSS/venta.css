@@ -1,3 +1,6 @@
+/* Página Css de Venta*/
+
+/* Parte de Arriba de la página */
 .principal_venta{
     position: relative;
     display: flex;
@@ -27,11 +30,12 @@ a{
     text-decoration: none;
 }
 
+/* Boton Comprar */
 #btn_comprar{
     display:flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-secundario); /* Green */
+    background-color: var(--color-primario);
 
     border-radius: 20px;
 
@@ -54,6 +58,7 @@ a{
     background-color: transparent;
 }
 
+/* Informacion del Producto */
 .caracteristicas_producto{
     margin: 2%;
 }
@@ -95,6 +100,8 @@ a{
 .descripcion_juego h2{
     margin-bottom: 2%;
 }
+
+/* Media Querys */
 
 @media screen and (max-width: 769px) {
     .nombre_venta{

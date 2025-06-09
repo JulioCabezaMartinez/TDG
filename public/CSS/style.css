@@ -5,7 +5,6 @@
     box-sizing: border-box;
 
     --color-primario: var(--color-borde-neon);
-    --color-secundario: var(--color-borde-neon);
     
     --color-fondo: linear-gradient(180deg,#1c1c1e 20%, #a6a6a6 100%);
     --color-texto: #FFFFFF;
@@ -100,6 +99,7 @@ a{
     color: rgb(206, 36, 36);
     text-shadow: /* No me deja poner la variable */
 
+    /* Sombras alrededor del texto para dar forma de contorno */
     -1px -1px 0 #2C2C2E, /*-1px -1px 0 #2C2C2E: sombra arriba a la izquierda*/ 
      1px -1px 0 #2C2C2E, /*1px -1px 0 #2C2C2E: sombra arriba a la derecha*/
     -1px  1px 0 #2C2C2E, /*-1px 1px 0 #2C2C2E: sombra abajo a la izquierda*/

@@ -78,6 +78,13 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    /**
+     * Cambia la contraseña de un usuario.
+     *
+     * @param int $id_usuario ID del usuario.
+     * @param string $pass Nueva contraseña en texto plano.
+     * @return int Cantidad de filas afectadas (1 si se actualizó, 0 si no).
+     */
     public function cambiarPass($id_usuario, $pass) {
         try {
             $passHash = Security::encryptPass($pass);
@@ -93,6 +100,14 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    /**
+     * Busca registros en modo administrador con paginación y filtrado por nombre.
+     *
+     * @param string $textoBusqueda Texto para buscar (debe incluir % para LIKE).
+     * @param int $inicio Índice inicial para la paginación.
+     * @param int $limit Número máximo de resultados.
+     * @return array Lista de registros que coinciden con la búsqueda.
+     */
     public function buscarAdmin($textoBusqueda, $inicio, $limit){
 
         try {
@@ -108,6 +123,12 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
 
     }
 
+    /**
+     * Cuenta la cantidad de registros que coinciden con la búsqueda en modo administrador.
+     *
+     * @param string $textoBusqueda Texto para buscar (debe incluir % para LIKE).
+     * @return int Cantidad total de registros que coinciden.
+     */
     public function buscarAdminCount($textoBusqueda){
 
         try {
@@ -122,6 +143,12 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    /**
+     * Otorga el estado Premium a un usuario.
+     *
+     * @param int $id_usuario ID del usuario.
+     * @return bool True si la actualización fue exitosa, false en caso contrario.
+     */
     public function conseguirPremium($id_usuario){
         try {
             return $this->query("UPDATE usuarios SET Premium = 1 WHERE id = {$id_usuario};");
@@ -131,6 +158,12 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    /**
+     * Añade una imagen al sistema, validando extensión y tamaño, y la guarda con un nombre único.
+     *
+     * @param array $imagen Array con los datos de la imagen (como $_FILES['imagen']).
+     * @return string Mensaje de error o el nombre único generado para la imagen.
+     */
     public function addImagen($imagen){
         $Nombreimagen = uniqid();
 
@@ -158,6 +191,12 @@ class Usuario extends EmptyModel implements BusquedaAdmin {
         return $Nombreimagen;
     }
 
+    /**
+     * Elimina una imagen del sistema dado su ruta.
+     *
+     * @param string $rutaImagen Ruta completa de la imagen a eliminar.
+     * @return bool True si la imagen se eliminó correctamente, false si no existía o hubo error.
+     */
     public function eliminarImagen($rutaImagen){
         try {
             if (file_exists($rutaImagen)) {

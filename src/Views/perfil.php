@@ -120,20 +120,26 @@ require_once __DIR__ . '/Templates/header.php';
     }
     ?>
     <div id="perfil-header">
-        <h2><?php echo $perfil['Nick'] ?></h2>
-        <?php
-        if($perfil["id"]==$_SESSION["usuarioActivo"]){
-        ?>
-            <div class="dropdown-toggle enlace" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa-solid fa-gear opciones"></i>
-            </div>
-            <div class="dropdown-menu">
-                <button id="btn_modificar@<?php echo $perfil["id"] ?>" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>
-                <button id="btn_cambPass@<?php echo $perfil["id"] ?>" class="dropdown-item btn btn-primary cambiarPassword">Change Password</button>
-            </div>
-        <?php
-        }
-        ?>
+        <div>
+            <img src="/public/IMG/Users-img/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen mb-3">
+        </div>
+        <div>
+            <h2><?php echo $perfil['Nick'] ?></h2>
+            <?php
+            if($perfil["id"]==$_SESSION["usuarioActivo"]){
+            ?>
+                <div class="dropdown-toggle enlace" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-gear opciones"></i>
+                </div>
+                <div class="dropdown-menu">
+                    <button id="btn_modificar@<?php echo $perfil["id"] ?>" class="dropdown-item btn btn-primary modificar-dato">Modificate</button>
+                    <button id="btn_cambPass@<?php echo $perfil["id"] ?>" class="dropdown-item btn btn-primary cambiarPassword">Change Password</button>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+        
     </div>
 
 

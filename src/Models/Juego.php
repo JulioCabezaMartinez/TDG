@@ -23,6 +23,17 @@ class Juego extends EmptyModel implements BusquedaAdmin {
         parent::__construct('juegos', 'id');
     }
 
+    /**
+     * Obtiene el conteo de registros que cumplen con ciertos filtros.
+     *
+     * @param array $filtros Array asociativo con posibles filtros:
+     *                       - 'nombre' (string): filtro por nombre con LIKE.
+     *                       - 'fechaSalida' (string): filtro de fecha mínima de salida.
+     *                       - 'fechaNextMonth' (string): filtro de fecha máxima de salida.
+     *                       - 'calificacion' (float|int): filtro de calificación.
+     * @return int Cantidad de registros que cumplen los filtros.
+     * @throws \Exception Si ocurre un error en la consulta a la base de datos.
+     */
     public function getCountFiltros($filtros){
         try {
             $sql = "SELECT COUNT(*) FROM {$this->table}";
@@ -52,11 +63,24 @@ class Juego extends EmptyModel implements BusquedaAdmin {
         }
     }
 
-
+    /**
+     * Obtiene los 10 juegos más recientes ordenados por fecha de salida descendente.
+     *
+     * @return array Lista de juegos en formato asociativo.
+     */
     public function getNew(): array {
         return parent::query("SELECT * FROM {$this->table} ORDER BY Anyo_salida DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Obtiene una lista de juegos con paginación y filtros opcionales.
+     *
+     * @param int $inicio Índice inicial para la paginación.
+     * @param int $limit Cantidad máxima de resultados a devolver.
+     * @param array $filtros (Opcional) Array asociativo con filtros similares a getCountFiltros.
+     * @return array Lista de juegos filtrados y paginados.
+     * @throws \Exception Si ocurre un error en la consulta.
+     */
     public function getListGames(int $inicio, int $limit, $filtros = []){
         try {
             $sql = "SELECT * FROM {$this->table}";
@@ -88,7 +112,15 @@ class Juego extends EmptyModel implements BusquedaAdmin {
         }
     }
 
-
+    /**
+     * Busca juegos para administración filtrando por texto con paginación.
+     *
+     * @param string $textoBusqueda Texto para búsqueda en el campo Nombre (debe incluir comodines SQL).
+     * @param int $inicio Índice inicial para la paginación.
+     * @param int $limit Cantidad máxima de resultados.
+     * @return array Lista de juegos encontrados.
+     * @throws \Exception Si ocurre un error en la consulta.
+     */
     public function buscarAdmin($textoBusqueda, $inicio, $limit){
         try {
             $sql = "SELECT * FROM {$this->table} WHERE Nombre LIKE :textoBusqueda LIMIT {$inicio}, {$limit}";
@@ -101,6 +133,13 @@ class Juego extends EmptyModel implements BusquedaAdmin {
         }
     }
 
+    /**
+     * Cuenta la cantidad de resultados para búsqueda administrativa con filtro por texto.
+     *
+     * @param string $textoBusqueda Texto para búsqueda en el campo Nombre (debe incluir comodines SQL).
+     * @return int Cantidad de resultados encontrados.
+     * @throws \Exception Si ocurre un error en la consulta.
+     */
     public function buscarAdminCount($textoBusqueda){
         try {
             $sql = "SELECT COUNT(*) FROM {$this->table} WHERE Nombre LIKE :textoBusqueda";
@@ -113,7 +152,15 @@ class Juego extends EmptyModel implements BusquedaAdmin {
         }
     }
 
-
+    /**
+     * Rellena la base de datos con juegos obtenidos de la API RAWG.
+     *
+     * @param int $countAPI Cantidad total de juegos obtenidos de la API para paginar.
+     * @return void
+     * 
+     * Este método hace múltiples llamadas a la API para obtener juegos y sus detalles,
+     * verifica si ya existen en la base de datos, y si no, los inserta junto con sus géneros y plataformas.
+     */
     public function rellenarBD($countAPI){
 
         $pages=$countAPI/40; // Asegurarse de que countAPI es un entero.

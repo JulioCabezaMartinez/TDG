@@ -23,6 +23,15 @@ class ControllerUsuario {
         $this->usuario = new Usuario();
     }
 
+    /**
+     * Muestra el perfil del usuario activo con sus datos y columnas de la base de datos.
+     *
+     * Verifica que haya una sesión activa; si no la hay, se cierra la sesión.
+     * Recupera los datos del usuario actualmente logueado y la lista de columnas de la tabla `usuarios`
+     * para pasarlos a la vista del perfil.
+     *
+     * @return void
+     */
     public function perfil_listas(): void {
 
         if (empty($_SESSION)) {
@@ -42,6 +51,15 @@ class ControllerUsuario {
         include_once __DIR__.'/../Views/perfil.php';
     }
 
+    /**
+     * Muestra la vista de ventas relacionadas con el perfil del usuario activo.
+     *
+     * Verifica si hay una sesión activa. Luego obtiene los datos del usuario
+     * actual y asegura que siempre haya una imagen de perfil (usa una por defecto si no existe).
+     * Carga la vista correspondiente a las ventas del perfil.
+     *
+     * @return void
+     */
     public function ventas_perfil(): void {
 
         if (empty($_SESSION)) {
@@ -55,6 +73,15 @@ class ControllerUsuario {
         include_once __DIR__.'/../Views/ventas_perfil.php';
     }
 
+    /**
+     * Muestra la vista para conseguir una cuenta premium, si el usuario aún no es premium.
+     *
+     * Verifica si hay sesión activa y si el usuario no es premium.
+     * Si ya es premium, lo redirige al perfil. En caso contrario, carga la vista
+     * con la opción para obtener cuenta premium.
+     *
+     * @return void
+     */
     public function conseguirPremium(){
 
         if(empty($_SESSION)) {

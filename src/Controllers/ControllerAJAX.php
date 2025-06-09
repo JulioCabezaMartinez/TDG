@@ -24,6 +24,20 @@ use PDOStatement;
 
 class ControllerAJAX {
 
+    // Juegos
+
+    /**
+     * Devuelve el estado de un juego en relación con las listas del usuario autenticado.
+     *
+     * Verifica si el juego está incluido en alguna de las listas del usuario (wishlist, backlog,
+     * completado o en curso) y devuelve esta información como un array JSON codificado.
+     *
+     * @return void Devuelve un JSON con la clave 'estados', que contiene un array de booleanos indicando:
+     *              - [0] => wishlist
+     *              - [1] => backlog
+     *              - [2] => completed
+     *              - [3] => playing
+     */
     public function botones_juego(){
 
         if(empty($_SESSION)){
@@ -69,6 +83,20 @@ class ControllerAJAX {
         echo json_encode(["estados"=> $estados]);
     }
 
+    /**
+     * Devuelve una lista de juegos paginada con sus estados de lista para el usuario, si ha iniciado sesión.
+     *
+     * Aplica filtros opcionales recibidos por POST (como fecha de salida), calcula el número total de páginas,
+     * y devuelve los juegos para la página solicitada. También marca cada juego con su estado en las listas
+     * del usuario autenticado (si existe sesión).
+     *
+     * @return void Devuelve un JSON que incluye:
+     *              - 'filtros' => filtros aplicados
+     *              - 'juegos' => array de juegos con sus estados en listas
+     *              - 'pagina' => número de la página actual
+     *              - 'total_paginas' => total de páginas disponibles
+     *              - 'sesion' => ID del usuario (si hay sesión activa)
+     */
     public function lista_juegos(){
         
         $juegoDB=new Juego();
@@ -142,6 +170,128 @@ class ControllerAJAX {
         
     }
 
+    /**
+     * Añade un juego a una de las listas del usuario autenticado (wishlist, backlog, completed, playing).
+     *
+     * Este método se espera que sea llamado vía AJAX desde el frontend. Los datos necesarios
+     * son enviados por POST. Valida que exista sesión y los datos requeridos antes de intentar
+     * agregar el juego a la lista correspondiente.
+     *
+     * Parámetros esperados por POST:
+     * - 'id_juego' => ID del juego a agregar
+     * - 'lista'    => Código corto de la lista ('wish', 'back', 'comp', 'play')
+     *
+     * Requiere que el usuario esté autenticado y que exista $_SESSION['usuarioActivo'].
+     *
+     * @return void Devuelve un JSON con:
+     *              - 'result' => mensaje de éxito si se agrega correctamente
+     *              - 'error'  => mensaje de error en caso de fallo o datos incompletos
+     */
+       public function addJuegoLista(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $id_juego = $_POST['id_juego'] ?? null;
+        $lista = $_POST['lista'] ?? null;
+        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+
+        $nombre_lista = match ($lista) {
+            'wish' => 'wishlist',
+            'back' => 'backlog',
+            'comp' => 'completed',
+            'play' => 'playing',
+            default => null
+        };
+
+        if ($id_juego && $lista && $id_usuario) {
+            $lista_bd = new Lista();
+            
+            if ($lista_bd->addJuegoToLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
+
+                echo json_encode(["result" =>"Game added to list {$nombre_lista} correctly."]);
+            } else {
+
+                echo json_encode(["error" =>"The game could not be added to the list."]);
+            }
+        } else {
+            echo json_encode(["error" =>"Incomplete data."]);
+        }
+    }
+
+    /**
+     * Elimina un juego de una de las listas del usuario autenticado (wishlist, backlog, completed, playing).
+     *
+     * Este método es invocado típicamente mediante una petición AJAX. Valida que el usuario esté
+     * autenticado mediante la sesión y que se reciban los parámetros necesarios por POST.
+     *
+     * Parámetros esperados por POST:
+     * - 'id_juego' => ID del juego que se desea eliminar
+     * - 'lista'    => Código corto de la lista desde la que se elimina ('wish', 'back', 'comp', 'play')
+     *
+     * Requiere que exista una sesión activa con el identificador del usuario (`$_SESSION['usuarioActivo']`).
+     *
+     * @return void Devuelve un JSON con:
+     *              - 'result' => mensaje de éxito si se elimina correctamente
+     *                         => mensaje de error si fallan los datos o la eliminación
+     */
+    public function eliminarJuegoLista(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $id_juego = $_POST['id_juego'] ?? null;
+        $lista = $_POST['lista'] ?? null;
+        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+
+        $nombre_lista = match ($lista) {
+            'wish' => 'wishlist',
+            'back' => 'backlog',
+            'comp' => 'completed',
+            'play' => 'playing',
+            default => null
+        };
+
+        if ($id_juego && $lista && $id_usuario) {
+            $lista_bd = new Lista();
+
+            if ($lista_bd->deleteJuegoOfLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
+
+                echo json_encode(["result" =>"Game removed from the list {$nombre_lista} correctly."]);
+            } else {
+
+                echo json_encode(["result" =>"Error: The game could not be removed from the list."]);
+            }
+        } else {
+            echo json_encode(["result" =>"Error: Incomplete data."]);
+        }
+    }
+
+    // Ventas
+
+    /**
+     * Obtiene y devuelve una lista paginada de ventas filtradas, con información de la consola.
+     *
+     * Recibe por POST:
+     *  - "pagina": número de página actual
+     *  - "limite": cantidad de resultados por página
+     *  - "inicio": índice inicial para la consulta
+     *  - "filtros": JSON con filtros aplicables (p.ej. fechaSalida)
+     *
+     * Si se incluye el filtro "fechaSalida", se añade un filtro adicional de un año después de esa fecha.
+     * Luego se calcula el total de páginas, y se obtienen las ventas para la página solicitada.
+     * Cada venta incluye el nombre de la consola, obtenido desde la tabla de plataformas.
+     *
+     * Devuelve un JSON con:
+     *  - "filtros": filtros aplicados
+     *  - "ventas": array de ventas con datos y nombre de consola
+     *  - "pagina": página actual
+     *  - "total_paginas": total de páginas calculado
+     *
+     * @return void Imprime JSON con la información descrita.
+     */
     public function lista_ventas(){
         
         $ventaDB=new Venta();
@@ -180,114 +330,32 @@ class ControllerAJAX {
         echo json_encode(["filtros"=>$filtros ,"ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
-    public function lista_reviews(){
-        $reviewDB=new Review();
-        $usuarioDB=new Usuario();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_juego = $_POST["id_juego"];
-        $sesion_activa = $_SESSION["usuarioActivo"] ?? null; // Obtener el ID del usuario desde la sesión.
-        $admin = $_SESSION["Admin"] ?? null; // Comprobar si el usuario es admin.
-        // $filtros=json_decode($_POST["filtros"], true);
-
-
-        $total_reviews = $reviewDB->countAllReviewsJuego($id_juego);
-
-        $total_paginas = ceil($total_reviews / $limite);
-
-        $reviews= $reviewDB->getAllReviewsJuego($id_juego, (int)$inicio, (int)$limite);
-
-        foreach($reviews as &$review){
-            $usuario = $usuarioDB->getbyId($review["id_Escritor"]);
-            $review["Nick_Usuario"] = $usuario["Nick"]; // Añadir el Nick del usuario a la review.
-            $review["Imagen_Usuario"] = $usuario["Imagen_usuario"]; // Añadir la imagen del usuario a la review.
-
-            if(($sesion_activa != null && $admin != null) && ($admin==true)){ // Comprobar si el usuario es el autor de la review o si es admin.
-                $review["editable"] = true; // Añadir un campo editable a la review.
-            }else{
-                $review["editable"] = false; // Añadir un campo editable a la review.
-            }
-
-            if($sesion_activa != null && $review["id_Escritor"] == $sesion_activa){ // Comprobar si el usuario es el autor de la review o si es admin.
-                $review["editable"] = true; // Añadir un campo editable a la review.
-            }else{
-                $review["editable"] = false; // Añadir un campo editable a la review.
-            }
-
-            if(strlen($review["Contenido"]) > 10){ 
-                $contenido_reducido = str_split($review['Contenido'], 10)[0];
-                $contenido_reducido .= " ...";
-                $review["contenidoReducido"] = $contenido_reducido; // Reducir el contenido de la review.
-            }
-        }
-
-        echo json_encode(["reviews"=>$reviews, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);  
-    }
-
-    public function lista_compras_perfil(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $ventaDB=new Venta();
-        $plataformaDB=new Plataforma();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-
-        $total_compras = $ventaDB->getCountComprasUsuario($id_usuario);
-        
-
-        $total_paginas = ceil($total_compras / $limite);
-        
-        $compras = $ventaDB->getListComprasUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
-
-        foreach ($compras as &$compra) {
-            $compraID=$ventaDB->getById($compra["id_Post"]);
-
-            $compra["Producto"]=["id"=>$compraID["id"], "Titulo"=>$compraID["Titulo"], "Imagen"=>$compraID["img_venta"]];
-        }
-
-        echo json_encode(["compras"=>$compras, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
-    public function lista_ventas_perfil(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $ventaDB=new Venta();
-        $plataformaDB=new Plataforma();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-
-        $total_ventas = $ventaDB->getCountProductosUsuario($id_usuario);
-        
-
-        $total_paginas = ceil($total_ventas / $limite);
-        
-        $ventas = $ventaDB->getListProductosUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
-
-        foreach ($ventas as &$venta) {
-            $consola=$plataformaDB->getById($venta["Consola"]);
-
-            $venta["Consola"]=$consola["Nombre"];
-        }
-
-        echo json_encode(["ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
+    /**
+     * Registra un nuevo producto en la base de datos asociado a una venta.
+     *
+     * Requiere sesión activa.
+     *
+     * Recibe por POST un JSON en "datos" con los siguientes campos:
+     *  - "Titulo": título del producto
+     *  - "Estado": estado del producto
+     *  - "Consola": ID o identificador de la consola
+     *  - "Precio": precio del producto
+     *  - "Estado_Venta": estado de la venta (p.ej. "Disponible", "Sin Stock")
+     *  - "Stock": cantidad en stock (opcional si "Estado_Venta" es "Sin Stock")
+     *  - "id_juego": ID del juego asociado (opcional)
+     *
+     * También puede recibir un archivo de imagen en 'img'.
+     *
+     * Se valida que los datos no estén vacíos y se previenen inyecciones.
+     * Si hay imagen, se guarda en el servidor y se usa el nombre generado.
+     * Finalmente se crea el registro en la base de datos.
+     *
+     * Responde con JSON indicando:
+     *  - "result": "ok" si éxito, "fail" o "error" en caso contrario
+     *  - "mensaje": mensaje descriptivo en caso de fallo
+     *
+     * @return void Imprime JSON con resultado de la operación.
+     */
     public function registrarProducto(){
 
         if(empty($_SESSION)){
@@ -353,6 +421,269 @@ class ControllerAJAX {
         }
     }
 
+    /**
+     * Gestiona la compra de un producto.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "id_producto": ID del producto a comprar.
+     *
+     * Si el producto es -1, se verifica si el usuario tiene Premium.
+     * Si es otro producto, se intenta bajar el stock.
+     * Luego se registra la venta para el usuario con la fecha actual.
+     *
+     * Responde con JSON indicando éxito o error.
+     *
+     * @return void Imprime JSON con resultado de la operación.
+     */
+    public function gestionarCompra(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $ventaDB=new Venta();
+        $usuarioDB=new Usuario();
+
+        $id_producto=Validators::evitarInyeccion($_POST["id_producto"]);
+        $id_usuario=$_SESSION["usuarioActivo"];
+        $fecha_compra=date("Y-m-d H:i:s");
+
+        if($id_producto==-1){
+            $premium=$usuarioDB->conseguirPremium($id_usuario);
+        }else{
+            $baja_stock=$ventaDB->bajarStock($id_producto);
+        }
+
+        
+        $agregar_vendido=$ventaDB->agregarVendido($id_producto, $id_usuario, $fecha_compra);
+
+        if( ($baja_stock || $premium) && $agregar_vendido){
+            echo json_encode(["result"=> "Product Sold Successfully."]);
+        }else{
+            echo json_encode(["error"=>"Database Error."]);
+        }
+    }
+
+    /**
+     * Vacía (limpia) la información o stock de un producto.
+     *
+     * Requiere sesión activa.
+     * Recibe un JSON en el cuerpo de la petición con:
+     *  - "id_producto": ID del producto a vaciar.
+     *
+     * Valida que el ID esté presente, luego intenta vaciar el producto en la base de datos.
+     *
+     * Responde con JSON indicando si la operación fue exitosa o si hubo error.
+     *
+     * @return void Imprime JSON con resultado de la operación.
+     */
+    public function vaciarProducto(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $ventaDB = new Venta();
+        
+        $datos =  json_decode(file_get_contents('php://input'), true);
+
+        $id_producto = Validators::evitarInyeccion($datos["id_producto"]);
+        if (empty($id_producto)) {
+            echo json_encode(["result" => "error", "mensaje" => "Product ID not provided."]);
+            exit;
+        }
+
+        if ($ventaDB->vaciarProducto($id_producto)) {
+            echo json_encode(["result" => "ok", "mensaje" => "Product emptied correctly."]);
+        } else {
+            echo json_encode(["result" => "error", "mensaje" => "Error emptying the product."]);
+        }
+    }
+
+    /**
+     * Gestiona la creación de una orden de pago con PayPal (Sandbox).
+     *
+     * Requiere sesión activa.
+     * Lee JSON en el cuerpo de la petición con:
+     *  - "productoId": ID del producto a comprar.
+     *
+     * Valida que el producto coincida con la sesión o sea -1 (caso especial).
+     * Obtiene el precio del producto, aplicando recargo si el usuario no es Premium.
+     * Solicita token de acceso a PayPal Sandbox.
+     * Crea una orden de pago en PayPal Sandbox.
+     *
+     * Devuelve JSON con:
+     *  - "orderID": ID de la orden si se creó correctamente.
+     *  - "error": mensaje de error en caso de fallo.
+     *
+     * @return void Imprime JSON con resultado de la creación de la orden.
+     */
+    public function AJAXPaypal(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $clientId = $_ENV['PAYPAL_CLIENT_ID'];
+        $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
+        $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
+        $productoId = $body['productoId'] ?? null;
+
+        if($productoId==-1){
+
+        }else if($productoId != $_SESSION["id_venta"]){
+            echo json_encode(["error" => "The product ID has been modified"]);
+            exit;
+        }
+
+        $ventaBD=new Venta();
+
+        $precio_producto = $ventaBD->getById($productoId)["Precio"];
+
+        
+
+        if($_SESSION["Premium"]==true || $productoId==-1){
+            $precio=$precio_producto;
+        }else{
+            $precio=number_format($precio_producto + 2.99, 2, '.');
+        }
+
+        // SANDBOX: Obtener token
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v1/oauth2/token");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, "$clientId:$clientSecret");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Accept: application/json",
+            "Accept-Language: en_US" //Se obtiene el token en inglés para evitar problemas de codificación. 
+        ]);
+        $tokenResponse = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+
+        if (!isset($tokenResponse['access_token'])) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Could not get PayPal token']);
+            exit;
+        }
+
+        $accessToken = $tokenResponse['access_token'];
+
+        // Crear orden en SANDBOX
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v2/checkout/orders");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            "intent" => "CAPTURE",
+            "purchase_units" => [[
+                "amount" => [
+                    "currency_code" => "EUR",
+                    "value" => $precio
+                ]
+            ]]
+        ]));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json",
+            "Authorization: Bearer $accessToken"
+        ]);
+        $orderResponse = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+
+        // Devuelve el orderID al frontend
+        if (isset($orderResponse['id'])) {
+            echo json_encode(['orderID' => $orderResponse['id']]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'The order could not be created']);
+        }
+    }
+
+    // Reviews
+
+    /**
+     * Obtiene y lista las reviews de un juego con paginación.
+     *
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de reviews por página.
+     *  - "inicio": índice inicial para consulta.
+     *  - "id_juego": ID del juego cuyas reviews se consultan.
+     *
+     * Añade a cada review:
+     *  - Nick e imagen del usuario que la escribió.
+     *  - Campo "editable" indicando si la review puede ser editada por el usuario actual (autor o admin).
+     *  - Campo "contenidoReducido" con una versión abreviada del contenido si es muy largo.
+     *
+     * Devuelve JSON con:
+     *  - reviews: array con las reviews y campos adicionales.
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con las reviews paginadas.
+     */
+    public function lista_reviews(){
+        $reviewDB=new Review();
+        $usuarioDB=new Usuario();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_juego = $_POST["id_juego"];
+        $sesion_activa = $_SESSION["usuarioActivo"] ?? null; // Obtener el ID del usuario desde la sesión.
+        $admin = $_SESSION["Admin"] ?? null; // Comprobar si el usuario es admin.
+        // $filtros=json_decode($_POST["filtros"], true);
+
+
+        $total_reviews = $reviewDB->countAllReviewsJuego($id_juego);
+
+        $total_paginas = ceil($total_reviews / $limite);
+
+        $reviews= $reviewDB->getAllReviewsJuego($id_juego, (int)$inicio, (int)$limite);
+
+        foreach($reviews as &$review){
+            $usuario = $usuarioDB->getbyId($review["id_Escritor"]);
+            $review["Nick_Usuario"] = $usuario["Nick"]; // Añadir el Nick del usuario a la review.
+            $review["Imagen_Usuario"] = $usuario["Imagen_usuario"]; // Añadir la imagen del usuario a la review.
+
+            if(($sesion_activa != null && $admin != null) && ($admin==true)){ // Comprobar si el usuario es el autor de la review o si es admin.
+                $review["editable"] = true; // Añadir un campo editable a la review.
+            }else{
+                $review["editable"] = false; // Añadir un campo editable a la review.
+            }
+
+            if($sesion_activa != null && $review["id_Escritor"] == $sesion_activa){ // Comprobar si el usuario es el autor de la review o si es admin.
+                $review["editable"] = true; // Añadir un campo editable a la review.
+            }else{
+                $review["editable"] = false; // Añadir un campo editable a la review.
+            }
+
+            if(strlen($review["Contenido"]) > 10){ 
+                $contenido_reducido = str_split($review['Contenido'], 10)[0];
+                $contenido_reducido .= " ...";
+                $review["contenidoReducido"] = $contenido_reducido; // Reducir el contenido de la review.
+            }
+        }
+
+        echo json_encode(["reviews"=>$reviews, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);  
+    }
+
+    /**
+     * Añade una nueva review para un juego.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "id_juego": ID del juego a revisar.
+     *  - "review": contenido de la review.
+     *
+     * Crea una nueva review asociada al usuario activo.
+     *
+     * Responde con JSON indicando éxito o error.
+     *
+     * @return void Imprime JSON con resultado de la operación.
+     */
     public function add_review(){
 
         if(empty($_SESSION)){
@@ -378,72 +709,317 @@ class ControllerAJAX {
         }
     }
 
-    public function addJuegoLista(){
+    /**
+     * Elimina una review dada su ID.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "id": ID de la review a eliminar.
+     *
+     * Realiza la eliminación en la base de datos.
+     *
+     * No devuelve respuesta explícita.
+     *
+     * @return void
+     */
+    public function eliminarReview(){
 
         if(empty($_SESSION)){
             Security::closeSession();
         }
 
-        $id_juego = $_POST['id_juego'] ?? null;
-        $lista = $_POST['lista'] ?? null;
-        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $reviewDB=new Review();
 
-        $nombre_lista = match ($lista) {
-            'wish' => 'wishlist',
-            'back' => 'backlog',
-            'comp' => 'completed',
-            'play' => 'playing',
-            default => null
-        };
+        $id=Validators::evitarInyeccion($_POST["id"]);
 
-        if ($id_juego && $lista && $id_usuario) {
-            $lista_bd = new Lista();
-            
-            if ($lista_bd->addJuegoToLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
-
-                echo json_encode(["result" =>"Game added to list {$nombre_lista} correctly."]);
-            } else {
-
-                echo json_encode(["error" =>"The game could not be added to the list."]);
-            }
-        } else {
-            echo json_encode(["error" =>"Incomplete data."]);
-        }
+        $reviewDB->delete($id);
     }
 
-    public function eliminarJuegoLista(){
+    // Perfil
+
+    /**
+     * Lista las compras realizadas por el usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de compras por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de compras del usuario activo y añade información básica
+     * del producto comprado (id, título, imagen).
+     *
+     * Devuelve JSON con:
+     *  - compras: array con las compras y datos del producto.
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con las compras paginadas del usuario.
+     */
+    public function lista_compras_perfil(){
 
         if(empty($_SESSION)){
             Security::closeSession();
         }
 
-        $id_juego = $_POST['id_juego'] ?? null;
-        $lista = $_POST['lista'] ?? null;
-        $id_usuario = $_SESSION['usuarioActivo'] ?? null; // Obtener el ID del usuario desde la sesión.
+        $ventaDB=new Venta();
+        $plataformaDB=new Plataforma();
 
-        $nombre_lista = match ($lista) {
-            'wish' => 'wishlist',
-            'back' => 'backlog',
-            'comp' => 'completed',
-            'play' => 'playing',
-            default => null
-        };
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
 
-        if ($id_juego && $lista && $id_usuario) {
-            $lista_bd = new Lista();
 
-            if ($lista_bd->deleteJuegoOfLista(id_Juego: $id_juego, lista: $lista, id_user: $id_usuario)) { // Agregar el juego a la lista.
+        $total_compras = $ventaDB->getCountComprasUsuario($id_usuario);
+        
 
-                echo json_encode(["result" =>"Game removed from the list {$nombre_lista} correctly."]);
-            } else {
+        $total_paginas = ceil($total_compras / $limite);
+        
+        $compras = $ventaDB->getListComprasUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
 
-                echo json_encode(["result" =>"Error: The game could not be removed from the list."]);
-            }
-        } else {
-            echo json_encode(["result" =>"Error: Incomplete data."]);
+        foreach ($compras as &$compra) {
+            $compraID=$ventaDB->getById($compra["id_Post"]);
+
+            $compra["Producto"]=["id"=>$compraID["id"], "Titulo"=>$compraID["Titulo"], "Imagen"=>$compraID["img_venta"]];
         }
+
+        echo json_encode(["compras"=>$compras, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
+    /**
+     * Lista los productos puestos a la venta por el usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de productos por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de productos a la venta y añade el nombre de la consola correspondiente.
+     *
+     * Devuelve JSON con:
+     *  - ventas: array con productos a la venta y datos asociados.
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con los productos en venta del usuario.
+     */
+    public function lista_ventas_perfil(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $ventaDB=new Venta();
+        $plataformaDB=new Plataforma();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+
+        $total_ventas = $ventaDB->getCountProductosUsuario($id_usuario);
+        
+
+        $total_paginas = ceil($total_ventas / $limite);
+        
+        $ventas = $ventaDB->getListProductosUsuario((int)$id_usuario, (int)$inicio, (int)$limite); 
+
+        foreach ($ventas as &$venta) {
+            $consola=$plataformaDB->getById($venta["Consola"]);
+
+            $venta["Consola"]=$consola["Nombre"];
+        }
+
+        echo json_encode(["ventas"=>$ventas, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    /**
+     * Lista los juegos en la wishlist del usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de juegos por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de juegos marcados en la wishlist del usuario.
+     *
+     * Devuelve JSON con:
+     *  - juegos: array con los juegos en wishlist.
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con los juegos en wishlist del usuario.
+     */
+    public function lista_whislist(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_wish = $listaDB->getCountListasUsuario($id_usuario, "wishlist");
+
+        $total_paginas = ceil($total_wish / $limite);
+
+        $whislist = $listaDB->getUserLists($id_usuario, "wishlist", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["juegos"=>$whislist, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    /**
+     * Lista los juegos en la lista "playing" del usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de juegos por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de juegos que el usuario está jugando actualmente.
+     *
+     * Devuelve JSON con:
+     *  - juegos: array con los juegos en la lista "playing".
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con los juegos en la lista "playing" del usuario.
+     */
+    public function lista_playing(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_play = $listaDB->getCountListasUsuario($id_usuario, "playing");
+
+        $total_paginas = ceil($total_play / $limite);
+
+        $playing = $listaDB->getUserLists((int)$id_usuario, "playing", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["juegos"=>$playing, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    /**
+     * Lista los juegos en la lista "completed" del usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de juegos por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de juegos que el usuario ha completado.
+     *
+     * Devuelve JSON con:
+     *  - juegos: array con los juegos en la lista "completed".
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con los juegos en la lista "completed" del usuario.
+     */
+    public function lista_completed(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_comp = $listaDB->getCountListasUsuario($id_usuario, "completed");
+
+        $total_paginas = ceil($total_comp / $limite);
+
+        $completed = $listaDB->getUserLists((int)$id_usuario, "completed", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["juegos"=>$completed, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    /**
+     * Lista los juegos en la lista "backlog" del usuario activo con paginación.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - "pagina": página actual para paginación.
+     *  - "limite": cantidad de juegos por página.
+     *  - "inicio": índice inicial para consulta.
+     *
+     * Obtiene la lista de juegos que el usuario tiene pendientes para jugar.
+     *
+     * Devuelve JSON con:
+     *  - juegos: array con los juegos en la lista "backlog".
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * @return void Imprime JSON con los juegos en la lista "backlog" del usuario.
+     */
+    public function lista_backlog(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $listaDB=new Lista();
+
+        $pagina = $_POST["pagina"];
+        $limite = $_POST["limite"];
+        $inicio = $_POST["inicio"];
+        $id_usuario = $_SESSION["usuarioActivo"];
+
+        $total_back = $listaDB->getCountListasUsuario($id_usuario, "backlog");
+
+        $total_paginas = ceil($total_back / $limite);
+
+        $backlog = $listaDB->getUserLists((int)$id_usuario, "backlog", (int)$inicio, (int)$limite); 
+
+        echo json_encode(["juegos"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
+    }
+
+    // Home
+
+    /**
+     * Registra un nuevo usuario en el sistema.
+     *
+     * Recibe los datos del usuario por POST:
+     *  - nombre
+     *  - apellido
+     *  - email
+     *  - password
+     *  - nick
+     *  - direccion
+     *  - imagen_perfil (archivo opcional)
+     *
+     * La imagen de perfil, si se proporciona, se procesa y guarda.
+     * Valida y evita inyección en los datos recibidos.
+     * Crea las listas básicas para el usuario registrado.
+     *
+     * Responde con JSON:
+     *  - result: "ok" si el registro fue exitoso.
+     *  - result: "error" y Error: "correo" si el correo ya está registrado.
+     *
+     * @return void Envía respuesta JSON con el resultado del registro.
+     */
     public function registrarUsuario(){
         $usuario = new Usuario();
         $listaDB=new Lista();
@@ -477,6 +1053,21 @@ class ControllerAJAX {
         }
     }
 
+    /**
+     * Comprueba las credenciales de login del usuario.
+     *
+     * Recibe por POST:
+     *  - correo
+     *  - password
+     *
+     * Valida los datos para evitar inyección.
+     * Si el login es correcto, inicializa la sesión con datos del usuario,
+     * incluyendo flags para admin y premium.
+     * Envía JSON con resultado y último lugar visitado (cookie).
+     * Si el login falla, responde con error.
+     *
+     * @return void Envía JSON con resultado "ok" o "error".
+     */
     public function compruebaLogin(){
         $usuarioDB=new Usuario();
         $correoValido=Validators::evitarInyeccion($_POST["correo"]);
@@ -512,10 +1103,67 @@ class ControllerAJAX {
         }
     }
 
+    /**
+     * Cierra la sesión del usuario activo.
+     *
+     * Llama a Security::closeSession() para destruir la sesión.
+     *
+     * @return void No devuelve contenido.
+     */
     public function logout(){
         Security::closeSession();
     }
 
+    /**
+     * Verifica si la contraseña actual proporcionada coincide con la almacenada.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - passActual: contraseña actual del usuario.
+     *
+     * Compara la contraseña con la almacenada en la base de datos (hash).
+     * Responde con JSON:
+     *  - result: "ok" si la contraseña es correcta.
+     *  - result: "fail" con mensaje si es incorrecta.
+     *
+     * @return void Envía JSON con el resultado de la verificación.
+     */
+    public function compruebaPass(){
+
+        if(empty($_SESSION)){
+            Security::closeSession();
+        }
+
+        $usuarioDB=new Usuario();
+
+        $passActual=Validators::evitarInyeccion($_POST["passActual"]);
+        $id_usuario=$_SESSION["usuarioActivo"];
+
+        $usuario=$usuarioDB->getById($id_usuario);
+
+        if(password_verify($passActual, $usuario["Password"])){
+            echo json_encode(["result"=>"ok"]);
+        }else{
+            echo json_encode(["result"=>"fail", "mensaje"=>"Incorrect password."]);
+        }
+    }
+
+    // Admin
+
+    /**
+     * Elimina un dato de la base de datos según la entidad indicada.
+     *
+     * Requiere sesión activa y que el usuario sea admin.
+     * Recibe por POST:
+     *  - entidad: tipo de dato a eliminar (usuarios, juegos, reviews, productos, post_vendidos).
+     *  - id: identificador del dato (excepto para post_vendidos, que usa producto, comprador y fecha).
+     *
+     * Para usuarios y productos elimina también la imagen asociada si no es la imagen por defecto.
+     * Para usuarios elimina también las listas básicas asociadas.
+     * Responde con un mensaje de texto "Todo Correcto" o "Error de Entidad".
+     *
+     * @return void Imprime mensaje de estado.
+     */
     public function eliminarDato(){
 
         if(empty($_SESSION)){
@@ -586,19 +1234,19 @@ class ControllerAJAX {
         }
     }
 
-    public function eliminarReview(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $reviewDB=new Review();
-
-        $id=Validators::evitarInyeccion($_POST["id"]);
-
-        $reviewDB->delete($id);
-    }
-
+    /**
+     * Obtiene los datos de una entidad para modificarla.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - entidad: tipo de dato (usuarios, juegos, reviews, productos, post_vendidos).
+     *  - id (o producto, comprador y fecha para post_vendidos).
+     *
+     * Devuelve un JSON con los datos recuperados para la edición,
+     * o un JSON con error si la entidad no existe.
+     *
+     * @return void Envía respuesta JSON con los datos o el error.
+     */
    public function datosModificarDato(){
 
         if(empty($_SESSION)){
@@ -648,6 +1296,23 @@ class ControllerAJAX {
         }
     }
 
+    /**
+     * Modifica un dato existente en la base de datos según la entidad indicada.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - entidad: tipo de dato a modificar (usuarios, juegos, reviews, productos, post_vendidos).
+     *  - datos: JSON con los campos a actualizar (se desinfectan contra inyección).
+     *  - img (opcional): archivo de imagen para actualizar la imagen asociada.
+     *
+     * Para usuarios y productos, si se proporciona una nueva imagen, elimina la antigua (si no es la por defecto)
+     * y guarda la nueva.
+     * Para post_vendidos actualiza usando un método específico.
+     *
+     * Responde con JSON indicando si la modificación fue exitosa o fallida.
+     *
+     * @return void Envía JSON con resultado "ok" o "fail".
+     */
     public function modificarDato(){
 
         if(empty($_SESSION)){
@@ -739,6 +1404,23 @@ class ControllerAJAX {
         }
     }
 
+    /**
+     * Añade un nuevo dato a la base de datos según la entidad indicada.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - entidad: tipo de dato a crear (usuarios, juegos, reviews, productos, post_vendidos).
+     *  - datos: JSON con los campos del nuevo dato (se desinfectan contra inyección).
+     *  - img (opcional): archivo de imagen para asociar al nuevo dato.
+     *
+     * Para usuarios y productos, si se proporciona imagen, la guarda y asocia.
+     * Para usuarios, genera listas básicas después de crear el usuario.
+     * Para post_vendidos usa un método específico para crear la compra.
+     *
+     * En caso de error en la entidad, imprime mensaje de error.
+     *
+     * @return void
+     */
     public function addDato(){
 
         if(empty($_SESSION)){
@@ -807,36 +1489,30 @@ class ControllerAJAX {
                 break;
         }
     }
-    
-    public function gestionarCompra(){
 
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $ventaDB=new Venta();
-        $usuarioDB=new Usuario();
-
-        $id_producto=Validators::evitarInyeccion($_POST["id_producto"]);
-        $id_usuario=$_SESSION["usuarioActivo"];
-        $fecha_compra=date("Y-m-d H:i:s");
-
-        if($id_producto==-1){
-            $premium=$usuarioDB->conseguirPremium($id_usuario);
-        }else{
-            $baja_stock=$ventaDB->bajarStock($id_producto);
-        }
-
-        
-        $agregar_vendido=$ventaDB->agregarVendido($id_producto, $id_usuario, $fecha_compra);
-
-        if( ($baja_stock || $premium) && $agregar_vendido){
-            echo json_encode(["result"=> "Product Sold Successfully."]);
-        }else{
-            echo json_encode(["error"=>"Database Error."]);
-        }
-    }
-
+    /**
+     * Obtiene una lista paginada de datos para administración según la entidad indicada.
+     *
+     * Requiere sesión activa y que el usuario sea administrador.
+     * Recibe por POST:
+     *  - pagina: número de página actual.
+     *  - limite: cantidad de registros por página.
+     *  - inicio: índice desde donde iniciar la consulta.
+     *  - entidad: tipo de datos a listar (usuarios, juegos, reviews, productos, post_vendidos).
+     *  - busqueda (opcional): término para filtrar resultados.
+     *
+     * Soporta búsqueda con comodines (%).
+     * Para la entidad "post_vendidos" utiliza métodos específicos para contar y listar.
+     * Devuelve en JSON:
+     *  - columnas: nombres de columnas del resultado.
+     *  - datos: registros obtenidos.
+     *  - pagina: página actual.
+     *  - total_paginas: total de páginas disponibles.
+     *
+     * En caso de entidad inválida, muestra error.
+     *
+     * @return void Envía JSON con los datos solicitados.
+     */
     public function listaAdmin(){
 
         if(empty($_SESSION) || !$_SESSION["Admin"]) {
@@ -903,199 +1579,20 @@ class ControllerAJAX {
         echo json_encode(["columnas"=>$columnas ,"datos"=>$datos, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
     }
 
-    public function lista_whislist(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $listaDB=new Lista();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-        $total_wish = $listaDB->getCountListasUsuario($id_usuario, "wishlist");
-
-        $total_paginas = ceil($total_wish / $limite);
-
-        $whislist = $listaDB->getUserLists($id_usuario, "wishlist", (int)$inicio, (int)$limite); 
-
-        echo json_encode(["juegos"=>$whislist, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
-    public function lista_playing(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $listaDB=new Lista();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-        $total_play = $listaDB->getCountListasUsuario($id_usuario, "playing");
-
-        $total_paginas = ceil($total_play / $limite);
-
-        $playing = $listaDB->getUserLists((int)$id_usuario, "playing", (int)$inicio, (int)$limite); 
-
-        echo json_encode(["juegos"=>$playing, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
-    public function lista_completed(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $listaDB=new Lista();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-        $total_comp = $listaDB->getCountListasUsuario($id_usuario, "completed");
-
-        $total_paginas = ceil($total_comp / $limite);
-
-        $completed = $listaDB->getUserLists((int)$id_usuario, "completed", (int)$inicio, (int)$limite); 
-
-        echo json_encode(["juegos"=>$completed, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
-    public function lista_backlog(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $listaDB=new Lista();
-
-        $pagina = $_POST["pagina"];
-        $limite = $_POST["limite"];
-        $inicio = $_POST["inicio"];
-        $id_usuario = $_SESSION["usuarioActivo"];
-
-        $total_back = $listaDB->getCountListasUsuario($id_usuario, "backlog");
-
-        $total_paginas = ceil($total_back / $limite);
-
-        $backlog = $listaDB->getUserLists((int)$id_usuario, "backlog", (int)$inicio, (int)$limite); 
-
-        echo json_encode(["juegos"=>$backlog, "pagina"=>$pagina, "total_paginas"=>$total_paginas]);
-    }
-
-    public function vaciarProducto(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $ventaDB = new Venta();
-        
-        $datos =  json_decode(file_get_contents('php://input'), true);
-
-        $id_producto = Validators::evitarInyeccion($datos["id_producto"]);
-        if (empty($id_producto)) {
-            echo json_encode(["result" => "error", "mensaje" => "Product ID not provided."]);
-            exit;
-        }
-
-        if ($ventaDB->vaciarProducto($id_producto)) {
-            echo json_encode(["result" => "ok", "mensaje" => "Product emptied correctly."]);
-        } else {
-            echo json_encode(["result" => "error", "mensaje" => "Error emptying the product."]);
-        }
-    }
-
-    public function AJAXPaypal(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $clientId = $_ENV['PAYPAL_CLIENT_ID'];
-        $clientSecret = $_ENV['PAYPAL_CLIENT_SECRET'];
-        $body = json_decode(file_get_contents('php://input'), true); //php://input permite leer el cuerpo de la solicitud POST cuando es un JSON.
-        $productoId = $body['productoId'] ?? null;
-
-        if($productoId==-1){
-
-        }else if($productoId != $_SESSION["id_venta"]){
-            echo json_encode(["error" => "The product ID has been modified"]);
-            exit;
-        }
-
-        $ventaBD=new Venta();
-
-        $precio_producto = $ventaBD->getById($productoId)["Precio"];
-
-        
-
-        if($_SESSION["Premium"]==true || $productoId==-1){
-            $precio=$precio_producto;
-        }else{
-            $precio=number_format($precio_producto + 2.99, 2, '.');
-        }
-
-        // SANDBOX: Obtener token
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v1/oauth2/token");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERPWD, "$clientId:$clientSecret");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Accept: application/json",
-            "Accept-Language: en_US" //Se obtiene el token en inglés para evitar problemas de codificación. 
-        ]);
-        $tokenResponse = json_decode(curl_exec($ch), true);
-        curl_close($ch);
-
-        if (!isset($tokenResponse['access_token'])) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Could not get PayPal token']);
-            exit;
-        }
-
-        $accessToken = $tokenResponse['access_token'];
-
-        // Crear orden en SANDBOX
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api-m.sandbox.paypal.com/v2/checkout/orders");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            "intent" => "CAPTURE",
-            "purchase_units" => [[
-                "amount" => [
-                    "currency_code" => "EUR",
-                    "value" => $precio
-                ]
-            ]]
-        ]));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json",
-            "Authorization: Bearer $accessToken"
-        ]);
-        $orderResponse = json_decode(curl_exec($ch), true);
-        curl_close($ch);
-
-        // Devuelve el orderID al frontend
-        if (isset($orderResponse['id'])) {
-            echo json_encode(['orderID' => $orderResponse['id']]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'The order could not be created']);
-        }
-    }
-
+    /**
+     * Cambia la contraseña de un usuario determinado.
+     *
+     * Requiere sesión activa.
+     * Recibe por POST:
+     *  - id_usuario: ID del usuario al que cambiar la contraseña.
+     *  - Pass: nueva contraseña (en texto plano, se debe manejar hasheo internamente).
+     *
+     * Retorna JSON con:
+     *  - result: "ok" si la actualización fue exitosa, "fail" si no.
+     *  - Columnas afectadas: número de filas modificadas (en caso de fallo).
+     *
+     * @return void Envía JSON con resultado de la operación.
+     */
     public function cambiarPass(){
 
         if (empty($_SESSION)) {
@@ -1116,26 +1613,19 @@ class ControllerAJAX {
         }
     }
 
-    public function compruebaPass(){
-
-        if(empty($_SESSION)){
-            Security::closeSession();
-        }
-
-        $usuarioDB=new Usuario();
-
-        $passActual=Validators::evitarInyeccion($_POST["passActual"]);
-        $id_usuario=$_SESSION["usuarioActivo"];
-
-        $usuario=$usuarioDB->getById($id_usuario);
-
-        if(password_verify($passActual, $usuario["Password"])){
-            echo json_encode(["result"=>"ok"]);
-        }else{
-            echo json_encode(["result"=>"fail", "mensaje"=>"Incorrect password."]);
-        }
-    }
-
+    /**
+     * Obtiene los géneros y plataformas asociados a un juego específico.
+     *
+     * Requiere sesión activa y que el usuario sea administrador.
+     * Recibe por POST:
+     *  - id_juego: ID del juego para obtener sus géneros y plataformas.
+     *
+     * Retorna JSON con:
+     *  - generos: lista de géneros asociados.
+     *  - plataformas: lista de plataformas asociadas.
+     *
+     * @return void Envía JSON con géneros y plataformas del juego.
+     */
     public function getGenPlatJuegoAdmin(){
 
         if(empty($_SESSION)){
@@ -1157,6 +1647,27 @@ class ControllerAJAX {
         echo json_encode(["generos"=>$generos, "plataformas"=>$plataformas]);
     }
 
+    /**
+     * Actualiza los géneros y plataformas asociados a un juego específico.
+     *
+     * Requiere sesión activa y que el usuario tenga permisos de administrador.
+     * Recibe por POST:
+     *  - id_juego: ID del juego al que se le actualizarán géneros y plataformas.
+     *  - generos: arreglo con los IDs de géneros a asociar.
+     *  - plataformas: arreglo con los IDs de plataformas a asociar.
+     *
+     * El método elimina primero todos los géneros y plataformas existentes para el juego.
+     * Luego intenta insertar los nuevos géneros y plataformas recibidos.
+     * 
+     * Si ocurre un fallo al insertar géneros, se revierten los cambios a los géneros anteriores.
+     * Si ocurre un fallo al insertar plataformas, se revierten los cambios a las plataformas anteriores.
+     *
+     * Devuelve JSON con:
+     *  - result: "ok" si la operación fue exitosa,
+     *            "fail" si hubo un error, junto con un mensaje explicativo.
+     *
+     * @return void Envía JSON con el resultado de la actualización.
+     */
     public function addGenerosPlataformas(){
         if(empty($_SESSION) || !$_SESSION["Admin"]) {
             Security::closeSession();

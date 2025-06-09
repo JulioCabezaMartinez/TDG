@@ -1,4 +1,4 @@
-
+/* Página Css del Perfil */
 #perfil {
     display: flex;
     flex-direction: column;
@@ -13,6 +13,20 @@
 #perfil .fa-crown{
     color: var(--color-texto);
 }
+
+#perfil-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.perfil_imagen{
+    max-width: 200px;
+    clip-path: circle(100px at 50% 50%);
+}
+
+
+/* Listas */
 
 .juegos{
     display: flex;
@@ -50,6 +64,8 @@
     align-self: flex-start;
 }
 
+
+/* Juego individual */
 .juego a{
     
     display: flex;

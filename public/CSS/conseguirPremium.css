@@ -1,7 +1,10 @@
+/* Pagina Css de ConseguirPremium */
+
 body{
     justify-content: unset;
 }
 
+/* Listas de ventajas */
 ul{
     list-style: none;
 }
@@ -10,6 +13,8 @@ li{
     font-size: 200%;
     color: var(--color-texto);
 }
+
+/* Imagen TDG Premium */
 
 .premiumImg{
     display: flex;
@@ -21,6 +26,8 @@ li{
     width: 8%;
     border-radius: 20px;
 }
+
+/* Boton conseguir Premium */
 
 .btn-premium.boton-perso{
     padding: 15px;

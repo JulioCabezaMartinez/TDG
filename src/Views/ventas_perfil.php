@@ -6,7 +6,7 @@ require_once __DIR__ . '/Templates/header.php';
 ?>
 
 <div id="perfil">
-    <img src="/public/IMG/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen">
+    <img src="/public/IMG/Users-img/<?php echo $perfil["Imagen_usuario"] ?>" alt="" class="perfil_imagen">
     <h2><?php echo $perfil['Nick'] ?></h2>
 </div>
 

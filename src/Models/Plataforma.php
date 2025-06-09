@@ -23,6 +23,13 @@ class Plataforma extends EmptyModel {
         parent::__construct('plataformas', 'id');
     }
 
+    /**
+     * Borra todas las plataformas asociadas a un juego.
+     *
+     * @param int $id_juego ID del juego.
+     * @return bool Resultado de la ejecución (true si tuvo éxito).
+     * @throws Exception Si ocurre un error en la consulta.
+     */
     public function borrarPlataformasJuego($id_juego){
         try {
             $sql = "DELETE FROM plataformas_juego WHERE id_juego=:id_juego";
@@ -34,6 +41,14 @@ class Plataforma extends EmptyModel {
         }
     }
 
+    /**
+     * Inserta una plataforma para un juego específico.
+     *
+     * @param int $id_juego ID del juego.
+     * @param int $id_plataforma ID de la plataforma.
+     * @return bool Resultado de la ejecución (true si tuvo éxito).
+     * @throws Exception Si ocurre un error en la consulta.
+     */
     public function insertarPlataformasJuego($id_juego, $id_plataforma){
         try {
             $sql = "INSERT INTO plataformas_juego (id_plataforma, id_juego) VALUES (:id_plataforma, :id_juego);";
@@ -46,6 +61,13 @@ class Plataforma extends EmptyModel {
         }
     }
 
+    /**
+     * Inserta una relación juego-plataforma en la base de datos.
+     *
+     * @param int $id_juego ID del juego.
+     * @param int $id_plataforma ID de la plataforma.
+     * @return void
+     */
     public function rellenarBDJuegosPlataforma($id_juego, $id_plataforma): void {
         try {
             $sql = "INSERT INTO plataformas_juego (id_juego, id_plataforma) VALUES (?, ?)";
@@ -56,6 +78,13 @@ class Plataforma extends EmptyModel {
         
     }
 
+    /**
+     * Inserta una plataforma en la base de datos.
+     *
+     * @param int $id_genero ID de la plataforma.
+     * @param string $nombre Nombre de la plataforma.
+     * @return void
+     */
     public function rellenarBDPlataformas($id_genero, $nombre) {
         try {
             $sql = "INSERT INTO plataformas (id, Nombre) VALUES (?, ?)";
@@ -65,6 +94,12 @@ class Plataforma extends EmptyModel {
         }
     }
 
+    /**
+     * Obtiene los nombres de las plataformas asociadas a un juego.
+     *
+     * @param int $id_juego ID del juego.
+     * @return array Array de arrays asociativos con el campo 'Nombre'.
+     */
     public function getPlataformasJuegobyId($id_juego) {
         try {
             $sql = "SELECT p.Nombre FROM plataformas p
@@ -77,6 +112,12 @@ class Plataforma extends EmptyModel {
         }
     }
 
+    /**
+     * Obtiene los IDs de las plataformas asociadas a un juego.
+     *
+     * @param int $id_juego ID del juego.
+     * @return array Array de arrays asociativos con el campo 'id'.
+     */
     public function getPlataformasIDJuegobyId($id_juego) {
         try {
             $sql = "SELECT p.id FROM plataformas p
